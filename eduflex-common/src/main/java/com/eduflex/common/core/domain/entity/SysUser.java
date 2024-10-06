@@ -3,6 +3,11 @@ package com.eduflex.common.core.domain.entity;
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.eduflex.common.annotation.Excel;
@@ -17,6 +22,9 @@ import com.eduflex.common.xss.Xss;
  * 
  * @author ruoyi
  */
+@Data
+@AllArgsConstructor
+@Builder
 public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;

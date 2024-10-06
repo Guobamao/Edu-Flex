@@ -42,10 +42,11 @@ public class CollegeController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('manage:college:list')")
     @GetMapping("/list")
-    public AjaxResult list(College college)
+    public TableDataInfo list(College college)
     {
+        startPage();
         List<College> colleges = collegeService.selectCollegeList(college);
-        return success(colleges);
+        return getDataTable(colleges);
     }
 
     /**
