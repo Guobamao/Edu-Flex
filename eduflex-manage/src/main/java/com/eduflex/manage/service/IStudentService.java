@@ -3,6 +3,7 @@ package com.eduflex.manage.service;
 import java.util.List;
 import com.eduflex.manage.domain.Student;
 import com.eduflex.manage.domain.dto.StudentDto;
+import com.eduflex.manage.domain.vo.StudentVo;
 
 /**
  * 学生管理Service接口
@@ -14,11 +15,11 @@ public interface IStudentService
 {
     /**
      * 查询学生管理
-     * 
+     *
      * @param id 学生管理主键
      * @return 学生管理
      */
-    public Student selectStudentById(Long id);
+    public StudentVo selectStudentById(Long id);
 
     /**
      * 查询学生管理列表

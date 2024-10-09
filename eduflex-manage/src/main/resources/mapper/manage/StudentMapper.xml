@@ -26,10 +26,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark" column="remark" />
     </resultMap>
 
+    <resultMap type="StudentVo" id="StudentVoResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="collegeId"    column="college_id"    />
+        <result property="collegeName" column="college_name" />
+        <result property="gradeId"    column="grade_id"    />
+        <result property="gradeName" column="grade_name" />
+        <result property="userName" column="user_name" />
+        <result property="nickName"    column="nick_name"    />
+        <result property="email"    column="email"    />
+        <result property="phonenumber"    column="phonenumber"    />
+        <result property="sex"    column="sex"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="password"    column="password"    />
+        <result property="status"    column="status"    />
+        <result property="loginIp" column="login_ip"    />
+        <result property="loginDate" column="login_date" />
+        <result property="createBy" column="create_by" />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy" column="update_by" />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
     <sql id="selectStudentVo">
-        select s.*, u.user_name, u.nick_name, u.email, u.phonenumber, u.sex, u.avatar, u.status, u.login_ip, u.login_date
+        select s.*, u.user_name, u.nick_name, u.email, u.phonenumber, u.sex, u.avatar, u.status, u.login_ip, u.login_date, c.name as college_name, g.name as grade_name
         from tb_student s
         left join sys_user u on s.user_id = u.user_id
+        left join tb_college c on s.college_id = c.id
+        left join tb_grade g on s.grade_id = g.id
     </sql>
 
     <select id="selectStudentList" parameterType="Student" resultMap="StudentResult">
@@ -43,9 +69,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectStudentById" parameterType="Long" resultMap="StudentResult">
+    <select id="selectStudentById" parameterType="Long" resultMap="StudentVoResult">
         <include refid="selectStudentVo"/>
-        where id = #{id}
+        where s.id = #{id}
     </select>
     <select id="selectUserIdsByStudentIds">
         select user_id from tb_student where id in

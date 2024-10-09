@@ -5,6 +5,7 @@ import java.util.List;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.domain.dto.StudentDto;
+import com.eduflex.manage.domain.vo.StudentVo;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,12 @@ public class StudentServiceImpl implements IStudentService
     private ISysUserService userService;
     /**
      * 查询学生管理
-     * 
+     *
      * @param id 学生管理主键
      * @return 学生管理
      */
     @Override
-    public Student selectStudentById(Long id)
+    public StudentVo selectStudentById(Long id)
     {
         return studentMapper.selectStudentById(id);
     }
