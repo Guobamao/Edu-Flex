@@ -109,7 +109,7 @@ public class CollegeController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('manage:college:remove')")
     @Log(title = "学院管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+	@DeleteMapping("/{collegeId}")
     public AjaxResult remove(@PathVariable Long collegeId)
     {
         if (collegeService.hasChildByCollegeId(collegeId)) {
