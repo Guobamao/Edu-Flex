@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduflex.manage.mapper.CourseChapterMapper">
+    
+    <resultMap type="CourseChapter" id="CourseChapterResult">
+        <result property="id"    column="id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="name"    column="name"    />
+        <result property="parentId"    column="parentId"    />
+        <result property="ancestors"    column="ancestors"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCourseChapterVo">
+        select id, course_id, name, parentId, ancestors, order_num, create_by, create_time, update_by, update_time from tb_course_chapter
+    </sql>
+
+    <select id="selectCourseChapterList" parameterType="CourseChapter" resultMap="CourseChapterResult">
+        <include refid="selectCourseChapterVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectCourseChapterById" parameterType="Long" resultMap="CourseChapterResult">
+        <include refid="selectCourseChapterVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectMaxOrderNum" resultType="java.lang.Integer">
+        select ifnull(max(order_num), 0) from tb_course_chapter where parentId = 9#{parentId}
+    </select>
+
+    <insert id="insertCourseChapter" parameterType="CourseChapter" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_course_chapter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="parentId != null">parentId,</if>
+            <if test="ancestors != null">ancestors,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="ancestors != null">#{ancestors},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourseChapter" parameterType="CourseChapter">
+        update tb_course_chapter
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="parentId != null">parentId = #{parentId},</if>
+            <if test="ancestors != null">ancestors = #{ancestors},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCourseChapterById" parameterType="Long">
+        delete from tb_course_chapter where id = #{id}
+    </delete>
+
+    <delete id="deleteCourseChapterByIds" parameterType="String">
+        delete from tb_course_chapter where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
