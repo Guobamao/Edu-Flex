@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduflex.manage.mapper.CourseGradeMapper">
+    
+    <resultMap type="CourseGrade" id="CourseGradeResult">
+        <result property="id"    column="id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="gradeId"    column="grade_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <resultMap id="CourseGradeVoResult" type="CourseGradeVo">
+        <result property="id" column="id" />
+        <result property="courseId" column="course_id" />
+        <result property="courseName" column="course_name" />
+        <result property="gradeId" column="grade_id" />
+        <result property="gradeName" column="grade_name" />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCourseGradeVo">
+        select cg.*, c.name as course_name, g.name as grade_name from tb_course_grade cg
+                             left join tb_course c on cg.course_id = c.id
+                             left join tb_grade g on cg.grade_id = g.id
+    </sql>
+
+    <select id="selectCourseGradeList" parameterType="CourseGradeVo" resultMap="CourseGradeVoResult">
+        <include refid="selectCourseGradeVo"/>
+        <where>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="gradeId != null "> and grade_id = #{gradeId}</if>
+            <if test="courseName != null "> and c.name like concat('%',#{courseName},'%')</if>
+            <if test="gradeName != null "> and g.name like concat('%',#{gradeName},'%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCourseGradeById" parameterType="Long" resultMap="CourseGradeVoResult">
+        <include refid="selectCourseGradeVo"/>
+        where cg.id = #{id}
+    </select>
+
+    <insert id="insertCourseGrade" parameterType="CourseGrade" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_course_grade
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="gradeId != null">grade_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="gradeId != null">#{gradeId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourseGrade" parameterType="CourseGrade">
+        update tb_course_grade
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="gradeId != null">grade_id = #{gradeId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCourseGradeById" parameterType="Long">
+        delete from tb_course_grade where id = #{id}
+    </delete>
+
+    <delete id="deleteCourseGradeByIds" parameterType="String">
+        delete from tb_course_grade where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
