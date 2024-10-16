@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="courseId"    column="course_id"    />
         <result property="name"    column="name"    />
         <result property="parentId"    column="parentId"    />
+        <result property="hasChildren"    column="hasChildren"    />
         <result property="ancestors"    column="ancestors"    />
         <result property="orderNum"    column="order_num"    />
         <result property="createBy"    column="create_by"    />
@@ -18,12 +19,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCourseChapterVo">
-        select id, course_id, name, parentId, ancestors, order_num, create_by, create_time, update_by, update_time from tb_course_chapter
+        select id, course_id, name, parentId, ancestors, hasChildren, order_num, create_by, create_time, update_by, update_time from tb_course_chapter
     </sql>
 
     <select id="selectCourseChapterList" parameterType="CourseChapter" resultMap="CourseChapterResult">
         <include refid="selectCourseChapterVo"/>
-        <where>  
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="courseId != null ">and course_id = #{courseId}</if>
+            <if test="name != null and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="parentId != null ">and parentId = #{parentId}</if>
+            <if test="hasChildren != null"> and hasChildren = #{hasChildren}</if>
         </where>
     </select>
     
@@ -47,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
+            <if test="hasChildren != null">hasChildren,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="courseId != null">#{courseId},</if>
@@ -58,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
+            <if test="hasChildren != null">#{hasChildren},</if>
          </trim>
     </insert>
 
@@ -73,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="hasChildren != null">hasChildren = #{hasChildren},</if>
         </trim>
         where id = #{id}
     </update>

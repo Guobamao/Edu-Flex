@@ -25,7 +25,9 @@ public class CourseChapter extends TreeEntity
     @Excel(name = "章节名称")
     private String name;
 
-    public void setId(Long id) 
+    /** 是否关联资料 */
+    private Long hasChildren;
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -51,6 +53,14 @@ public class CourseChapter extends TreeEntity
     public String getName() 
     {
         return name;
+    }
+
+    public Long getHasChildren() {
+        return hasChildren;
+    }
+
+    public void setHasChildren(Long hasChildren) {
+        this.hasChildren = hasChildren;
     }
 
     @Override

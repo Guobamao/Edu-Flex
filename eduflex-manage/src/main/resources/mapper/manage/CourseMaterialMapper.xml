@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduflex.manage.mapper.CourseMaterialMapper">
+    
+    <resultMap type="CourseMaterial" id="CourseMaterialResult">
+        <result property="id"    column="id"    />
+        <result property="chapterId"    column="chapter_id"    />
+        <result property="name"    column="name"    />
+        <result property="url"    column="url"    />
+        <result property="materialType" column="material_type" />
+    </resultMap>
+
+    <sql id="selectCourseMaterialVo">
+        select id, chapter_id, name, url, material_type from tb_course_material
+    </sql>
+
+    <select id="selectCourseMaterialList" parameterType="CourseMaterial" resultMap="CourseMaterialResult">
+        <include refid="selectCourseMaterialVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="chapterId != null" > and chapter_id = #{chapterId}</if>
+            <if test="materialType != null" > and material_type = #{materialType}</if>
+        </where>
+    </select>
+    
+    <select id="selectCourseMaterialById" parameterType="Long" resultMap="CourseMaterialResult">
+        <include refid="selectCourseMaterialVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCourseMaterial" parameterType="CourseMaterial" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_course_material
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="chapterId != null">chapter_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="url != null and url != ''">url,</if>
+            <if test="materialType != null and materialType != ''">material_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="chapterId != null">#{chapterId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="url != null and url != ''">#{url},</if>
+            <if test="materialType != null and materialType != ''">#{materialType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourseMaterial" parameterType="CourseMaterial">
+        update tb_course_material
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="chapterId != null">chapter_id = #{chapterId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="url != null and url != ''">url = #{url},</if>
+            <if test="materialType != null and materialType != ''">material_type = #{materialType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCourseMaterialById" parameterType="Long">
+        delete from tb_course_material where id = #{id}
+    </delete>
+
+    <delete id="deleteCourseMaterialByIds" parameterType="String">
+        delete from tb_course_material where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

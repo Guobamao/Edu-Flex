@@ -1,8 +1,12 @@
 package com.eduflex.manage.service.impl;
 
 import java.util.List;
+
+import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.StringUtils;
+import com.eduflex.manage.domain.CourseMaterial;
+import com.eduflex.manage.service.ICourseMaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eduflex.manage.mapper.CourseChapterMapper;
@@ -20,6 +24,8 @@ public class CourseChapterServiceImpl implements ICourseChapterService
 {
     @Autowired
     private CourseChapterMapper courseChapterMapper;
+    @Autowired
+    private ICourseMaterialService courseMaterialService;
 
     /**
      * 查询课程内容章节管理
@@ -89,6 +95,20 @@ public class CourseChapterServiceImpl implements ICourseChapterService
     @Override
     public int deleteCourseChapterByIds(Long[] ids)
     {
+        // 判断其是否关联资料
+        for (Long id : ids) {
+            CourseChapter courseChapter = new CourseChapter();
+            courseChapter.setParentId(id);
+            if (StringUtils.isNotEmpty(courseChapterMapper.selectCourseChapterList(courseChapter))) {
+                throw new ServiceException("该章节下存在小节，无法删除！");
+            }
+
+            CourseMaterial courseMaterial = new CourseMaterial();
+            courseMaterial.setChapterId(id);
+            if (StringUtils.isNotEmpty(courseMaterialService.selectCourseMaterialList(courseMaterial))) {
+                throw new ServiceException("该章节下存在资料，无法删除！");
+            }
+        }
         return courseChapterMapper.deleteCourseChapterByIds(ids);
     }
 
