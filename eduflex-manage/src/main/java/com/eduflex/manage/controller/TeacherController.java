@@ -43,7 +43,7 @@ public class TeacherController extends BaseController
     /**
      * 查询教师管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:teacher:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(TeacherDto teacherDto)
     {
@@ -55,20 +55,20 @@ public class TeacherController extends BaseController
     /**
      * 导出教师管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:teacher:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "教师管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TeacherDto teacherDto)
     {
         List<Teacher> list = teacherService.selectTeacherList(teacherDto);
-        ExcelUtil<Teacher> util = new ExcelUtil<Teacher>(Teacher.class);
+        ExcelUtil<Teacher> util = new ExcelUtil<>(Teacher.class);
         util.exportExcel(response, list, "教师管理数据");
     }
 
     /**
      * 获取教师管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:teacher:query')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -78,7 +78,7 @@ public class TeacherController extends BaseController
     /**
      * 新增教师管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:teacher:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "教师管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TeacherDto teacherDto)
@@ -102,7 +102,7 @@ public class TeacherController extends BaseController
     /**
      * 修改教师管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:teacher:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "教师管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TeacherDto teacherDto)
@@ -124,7 +124,7 @@ public class TeacherController extends BaseController
     /**
      * 删除教师管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:teacher:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "教师管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

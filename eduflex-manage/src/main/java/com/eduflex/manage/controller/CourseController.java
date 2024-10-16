@@ -1,10 +1,12 @@
 package com.eduflex.manage.controller;
 
-import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.core.domain.model.LoginUser;
 import com.eduflex.common.utils.DateUtils;
+import com.eduflex.common.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,13 +42,23 @@ public class CourseController extends BaseController
     /**
      * 查询课程管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:course:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(Course course)
     {
         // 获取course的params Map中startTime的值
         course.setStartTime(DateUtils.parseDate(course.getParams().get("startTime")));
         course.setEndTime(DateUtils.parseDate(course.getParams().get("endTime")));
+
+        LoginUser loginUser = SecurityUtils.getLoginUser(); // 获取当前登录用户信息
+        SysUser currentUser = loginUser.getUser(); // 获取当前登录用户对象
+
+        // 判断当前用户是否为管理员
+        if (!currentUser.isAdmin()) {
+            // 若不是管理员角色，则只能查看教师自己的课程
+            course.setTeacherId(currentUser.getUserId());
+        }
+
         startPage();
         List<Course> list = courseService.selectCourseList(course);
         return getDataTable(list);
@@ -55,20 +67,20 @@ public class CourseController extends BaseController
     /**
      * 导出课程管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:course:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Course course)
     {
         List<Course> list = courseService.selectCourseList(course);
-        ExcelUtil<Course> util = new ExcelUtil<Course>(Course.class);
+        ExcelUtil<Course> util = new ExcelUtil<>(Course.class);
         util.exportExcel(response, list, "课程管理数据");
     }
 
     /**
      * 获取课程管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:course:query')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -78,7 +90,7 @@ public class CourseController extends BaseController
     /**
      * 新增课程管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:course:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Course course)
@@ -89,7 +101,7 @@ public class CourseController extends BaseController
     /**
      * 修改课程管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:course:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Course course)
@@ -101,7 +113,7 @@ public class CourseController extends BaseController
     /**
      * 删除课程管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:course:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

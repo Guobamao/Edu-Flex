@@ -37,7 +37,7 @@ public class GradeController extends BaseController
     /**
      * 查询班级管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:grade:list')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping("/list")
     public TableDataInfo list(Grade grade)
     {
@@ -49,20 +49,20 @@ public class GradeController extends BaseController
     /**
      * 导出班级管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:grade:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "班级管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Grade grade)
     {
         List<Grade> list = gradeService.selectGradeList(grade);
-        ExcelUtil<Grade> util = new ExcelUtil<Grade>(Grade.class);
+        ExcelUtil<Grade> util = new ExcelUtil<>(Grade.class);
         util.exportExcel(response, list, "班级管理数据");
     }
 
     /**
      * 获取班级管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:grade:query')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class GradeController extends BaseController
     /**
      * 新增班级管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:grade:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "班级管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Grade grade)
@@ -83,7 +83,7 @@ public class GradeController extends BaseController
     /**
      * 修改班级管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:grade:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "班级管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Grade grade)
@@ -94,7 +94,7 @@ public class GradeController extends BaseController
     /**
      * 删除班级管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:grade:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "班级管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

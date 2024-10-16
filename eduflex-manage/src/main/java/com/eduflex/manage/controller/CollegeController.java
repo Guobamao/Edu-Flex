@@ -1,7 +1,6 @@
 package com.eduflex.manage.controller;
 
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +20,6 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.enums.BusinessType;
 import com.eduflex.manage.domain.College;
 import com.eduflex.manage.service.ICollegeService;
-import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
 
 /**
@@ -40,7 +38,7 @@ public class CollegeController extends BaseController
     /**
      * 查询学院管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:college:list')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping("/list")
     public TableDataInfo list(College college)
     {
@@ -52,7 +50,7 @@ public class CollegeController extends BaseController
     /**
      * 查询学院列表（排除节点）
      */
-    @PreAuthorize("@ss.hasPermi('manage:college:list')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping("/list/exclude/{id}")
     public AjaxResult excludeChild(@PathVariable(value = "id", required = false) Long id) {
         List<College> colleges = collegeService.selectCollegeList(new College());
@@ -63,7 +61,7 @@ public class CollegeController extends BaseController
     /**
      * 获取学院管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:college:query')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -73,7 +71,7 @@ public class CollegeController extends BaseController
     /**
      * 新增学院管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:college:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学院管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody College college)
@@ -89,7 +87,7 @@ public class CollegeController extends BaseController
     /**
      * 修改学院管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:college:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学院管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody College college)
@@ -107,7 +105,7 @@ public class CollegeController extends BaseController
     /**
      * 删除学院管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:college:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学院管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{collegeId}")
     public AjaxResult remove(@PathVariable Long collegeId)

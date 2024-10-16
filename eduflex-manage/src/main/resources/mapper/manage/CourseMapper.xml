@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="startTime != null "> and start_time &gt;= #{startTime}</if>
             <if test="endTime != null "> and end_time &lt;= #{endTime}</if>
             <if test="status != null "> and status = #{status}</if>
+             <if test="teacherId != null" > and teacher_id = #{teacherId}</if>
         </where>
     </select>
     

@@ -37,7 +37,7 @@ public class SemesterController extends BaseController
     /**
      * 查询学期管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:semester:list')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping("/list")
     public TableDataInfo list(Semester semester)
     {
@@ -49,20 +49,20 @@ public class SemesterController extends BaseController
     /**
      * 导出学期管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:semester:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学期管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Semester semester)
     {
         List<Semester> list = semesterService.selectSemesterList(semester);
-        ExcelUtil<Semester> util = new ExcelUtil<Semester>(Semester.class);
+        ExcelUtil<Semester> util = new ExcelUtil<>(Semester.class);
         util.exportExcel(response, list, "学期管理数据");
     }
 
     /**
      * 获取学期管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:semester:query')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class SemesterController extends BaseController
     /**
      * 新增学期管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:semester:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学期管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Semester semester)
@@ -83,7 +83,7 @@ public class SemesterController extends BaseController
     /**
      * 修改学期管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:semester:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学期管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Semester semester)
@@ -94,7 +94,7 @@ public class SemesterController extends BaseController
     /**
      * 删除学期管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:semester:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学期管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

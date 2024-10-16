@@ -36,7 +36,7 @@ public class CourseChapterController extends BaseController
     /**
      * 查询课程内容章节管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:chapter:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public AjaxResult list(CourseChapter courseChapter)
     {
@@ -47,20 +47,20 @@ public class CourseChapterController extends BaseController
     /**
      * 导出课程内容章节管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:chapter:export')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程内容章节管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CourseChapter courseChapter)
     {
         List<CourseChapter> list = courseChapterService.selectCourseChapterList(courseChapter);
-        ExcelUtil<CourseChapter> util = new ExcelUtil<CourseChapter>(CourseChapter.class);
+        ExcelUtil<CourseChapter> util = new ExcelUtil<>(CourseChapter.class);
         util.exportExcel(response, list, "课程内容章节管理数据");
     }
 
     /**
      * 获取课程内容章节管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:chapter:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -70,7 +70,7 @@ public class CourseChapterController extends BaseController
     /**
      * 新增课程内容章节管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:chapter:add')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程内容章节管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CourseChapter courseChapter)
@@ -81,7 +81,7 @@ public class CourseChapterController extends BaseController
     /**
      * 修改课程内容章节管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:chapter:edit')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程内容章节管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CourseChapter courseChapter)
@@ -92,7 +92,7 @@ public class CourseChapterController extends BaseController
     /**
      * 删除课程内容章节管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:chapter:remove')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程内容章节管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

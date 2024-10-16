@@ -95,4 +95,14 @@ public class CourseGradeServiceImpl implements ICourseGradeService
     {
         return courseGradeMapper.deleteCourseGradeById(id);
     }
+
+    /**
+     * 查询班级课程管理是否已存在
+     * @param courseGrade
+     * @return
+     */
+    @Override
+    public boolean selectCourseGradeByGradeIdAndCourseId(CourseGrade courseGrade) {
+        return courseGradeMapper.selectCourseGradeByGradeIdAndCourseId(courseGrade) > 0;
+    }
 }

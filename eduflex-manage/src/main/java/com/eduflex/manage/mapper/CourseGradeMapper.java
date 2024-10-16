@@ -60,4 +60,11 @@ public interface CourseGradeMapper
      * @return 结果
      */
     public int deleteCourseGradeByIds(Long[] ids);
+
+    /**
+     * 查询班级课程管理是否已存在
+     * @param courseGrade
+     * @return
+     */
+    int selectCourseGradeByGradeIdAndCourseId(CourseGrade courseGrade);
 }

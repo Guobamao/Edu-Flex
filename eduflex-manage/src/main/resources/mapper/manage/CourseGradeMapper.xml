@@ -46,6 +46,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCourseGradeVo"/>
         where cg.id = #{id}
     </select>
+    <select id="selectCourseGradeByGradeIdAndCourseId" resultType="java.lang.Integer"
+            parameterType="com.eduflex.manage.domain.CourseGrade">
+        select count(1) from tb_course_grade where course_id = #{courseId} and grade_id = #{gradeId}
+    </select>
 
     <insert id="insertCourseGrade" parameterType="CourseGrade" useGeneratedKeys="true" keyProperty="id">
         insert into tb_course_grade

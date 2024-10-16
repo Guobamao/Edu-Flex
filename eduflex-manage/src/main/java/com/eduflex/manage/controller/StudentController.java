@@ -43,7 +43,7 @@ public class StudentController extends BaseController
     /**
      * 查询学生管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:student:list')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping("/list")
     public TableDataInfo list(StudentDto studentDto)
     {
@@ -55,20 +55,20 @@ public class StudentController extends BaseController
     /**
      * 导出学生管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:student:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学生管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, StudentDto studentDto)
     {
         List<Student> list = studentService.selectStudentList(studentDto);
-        ExcelUtil<Student> util = new ExcelUtil<Student>(Student.class);
+        ExcelUtil<Student> util = new ExcelUtil<>(Student.class);
         util.exportExcel(response, list, "学生管理数据");
     }
 
     /**
      * 获取学生管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:student:query')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -78,7 +78,7 @@ public class StudentController extends BaseController
     /**
      * 新增学生管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:student:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学生管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody StudentDto studentDto)
@@ -106,7 +106,7 @@ public class StudentController extends BaseController
     /**
      * 修改学生管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:student:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学生管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody StudentDto studentDto)
@@ -127,7 +127,7 @@ public class StudentController extends BaseController
     /**
      * 删除学生管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:student:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学生管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
@@ -138,7 +138,7 @@ public class StudentController extends BaseController
     /**
      * 重置密码
      */
-    @PreAuthorize("@ss.hasPermi('manage:student:resetPwd')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学生管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwd")
     public AjaxResult resetPwd(@RequestBody StudentDto studentDto) {

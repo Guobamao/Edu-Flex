@@ -3,7 +3,6 @@ package com.eduflex.manage.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import org.dromara.x.file.storage.core.FileStorageService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +38,7 @@ public class CourseMaterialController extends BaseController
     /**
      * 查询课程资料列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:material:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(CourseMaterial courseMaterial)
     {
@@ -51,20 +50,20 @@ public class CourseMaterialController extends BaseController
     /**
      * 导出课程资料列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:material:export')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程资料", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CourseMaterial courseMaterial)
     {
         List<CourseMaterial> list = courseMaterialService.selectCourseMaterialList(courseMaterial);
-        ExcelUtil<CourseMaterial> util = new ExcelUtil<CourseMaterial>(CourseMaterial.class);
+        ExcelUtil<CourseMaterial> util = new ExcelUtil<>(CourseMaterial.class);
         util.exportExcel(response, list, "课程资料数据");
     }
 
     /**
      * 获取课程资料详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:material:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -74,7 +73,7 @@ public class CourseMaterialController extends BaseController
     /**
      * 新增课程资料
      */
-    @PreAuthorize("@ss.hasPermi('manage:material:add')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程资料", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CourseMaterial courseMaterial)
@@ -85,7 +84,7 @@ public class CourseMaterialController extends BaseController
     /**
      * 修改课程资料
      */
-    @PreAuthorize("@ss.hasPermi('manage:material:edit')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程资料", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CourseMaterial courseMaterial)
@@ -96,7 +95,7 @@ public class CourseMaterialController extends BaseController
     /**
      * 删除课程资料
      */
-    @PreAuthorize("@ss.hasPermi('manage:material:remove')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程资料", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

@@ -60,4 +60,11 @@ public interface ICourseGradeService
      * @return 结果
      */
     public int deleteCourseGradeById(Long id);
+
+    /**
+     * 根据班级id和课程id查询班级课程管理
+     * @param courseGrade
+     * @return
+     */
+    boolean selectCourseGradeByGradeIdAndCourseId(CourseGrade courseGrade);
 }

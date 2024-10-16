@@ -40,7 +40,7 @@ public class CourseGradeController extends BaseController
     /**
      * 查询班级课程管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:courseGrade:list')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping("/list")
     public TableDataInfo list(CourseGradeDto courseGradeDto)
     {
@@ -52,20 +52,20 @@ public class CourseGradeController extends BaseController
     /**
      * 导出班级课程管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:courseGrade:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "班级课程管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CourseGradeDto courseGradeDto)
     {
         List<CourseGradeVo> list = courseGradeService.selectCourseGradeList(courseGradeDto);
-        ExcelUtil<CourseGradeVo> util = new ExcelUtil<CourseGradeVo>(CourseGradeVo.class);
+        ExcelUtil<CourseGradeVo> util = new ExcelUtil<>(CourseGradeVo.class);
         util.exportExcel(response, list, "班级课程管理数据");
     }
 
     /**
      * 获取班级课程管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:courseGrade:query')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -75,11 +75,15 @@ public class CourseGradeController extends BaseController
     /**
      * 新增班级课程管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:courseGrade:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "班级课程管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CourseGrade courseGrade)
     {
+        // 判断是否重复
+        if (courseGradeService.selectCourseGradeByGradeIdAndCourseId(courseGrade)) {
+            return AjaxResult.warn("该班级已选该课程，请勿重复添加");
+        }
         courseGrade.setCreateBy(getUsername());
         return toAjax(courseGradeService.insertCourseGrade(courseGrade));
     }
@@ -87,7 +91,7 @@ public class CourseGradeController extends BaseController
     /**
      * 修改班级课程管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:courseGrade:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "班级课程管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CourseGrade courseGrade)
@@ -99,7 +103,7 @@ public class CourseGradeController extends BaseController
     /**
      * 删除班级课程管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:courseGrade:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "班级课程管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

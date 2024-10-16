@@ -84,16 +84,15 @@ public class CommonController
     {
         try
         {
-            // 指定oss保存文件路径 eduflex-material/2024/10/15/文件名
-            String objectName = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + "/";
-            // 上传文件，返回文件信息
-            FileInfo fileInfo = fileStorageService.of(file)
-                    .setPath(objectName)
-                    .upload();
+            // 上传文件路径
+            String filePath = RuoYiConfig.getUploadPath();
+            // 上传并返回新文件名称
+            String fileName = FileUploadUtils.upload(filePath, file);
+            String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
-            ajax.put("url", fileInfo.getUrl());
-            ajax.put("fileName", fileInfo.getUrl());
-            ajax.put("newFileName", fileInfo.getUrl());
+            ajax.put("url", url);
+            ajax.put("fileName", fileName);
+            ajax.put("newFileName", FileUtils.getName(fileName));
             ajax.put("originalFilename", file.getOriginalFilename());
             return ajax;
         }

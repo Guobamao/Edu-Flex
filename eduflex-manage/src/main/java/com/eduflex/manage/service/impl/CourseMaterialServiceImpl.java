@@ -1,6 +1,8 @@
 package com.eduflex.manage.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.eduflex.manage.domain.CourseChapter;
 import com.eduflex.manage.service.ICourseChapterService;
@@ -88,18 +90,25 @@ public class CourseMaterialServiceImpl implements ICourseMaterialService
      * @return 结果
      */
     @Override
+    @Transactional
     public int deleteCourseMaterialByIds(Long[] ids)
     {
+        // 用HashSet存储根据ids查询的chapterId
+        Set<Long> chapterIds = new HashSet<>();
+        for (Long id : ids) {
+            chapterIds.add(courseMaterialMapper.selectCourseMaterialById(id).getChapterId());
+        }
+
         int result = courseMaterialMapper.deleteCourseMaterialByIds(ids);
-        if (result > 0) {
-            // 查询章节还剩下多少个资料，如果为0，则更新hasChildren为0
-            for (Long id : ids) {
-                CourseMaterial courseMaterial = courseMaterialMapper.selectCourseMaterialById(id);
-                CourseChapter courseChapter = new CourseChapter();
-                courseChapter.setId(courseMaterial.getChapterId());
-                courseChapter.setHasChildren(courseMaterialMapper.selectCourseMaterialList(courseMaterial).isEmpty() ? 0L : 1L);
-                courseChapterService.updateCourseChapter(courseChapter);
-            }
+
+        for (Long chapterId : chapterIds) {
+            CourseChapter courseChapter = new CourseChapter();
+            courseChapter.setId(chapterId);
+
+            CourseMaterial courseMaterial = new CourseMaterial();
+            courseMaterial.setChapterId(chapterId);
+            courseChapter.setHasChildren(courseMaterialMapper.selectCourseMaterialList(courseMaterial).isEmpty() ? 0L : 1L);
+            courseChapterService.updateCourseChapter(courseChapter);
         }
         return result;
     }
