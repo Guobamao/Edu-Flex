@@ -111,6 +111,10 @@ mybatis-plus:
     use-generated-keys: true
     default-executor-type: simple
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      id-type: assign_id # id 为雪花算法生成
+      update-strategy: not_null # 更新策略：只更新非空字段
 
 # PageHelper分页插件
 pagehelper:
