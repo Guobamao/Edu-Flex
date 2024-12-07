@@ -2,6 +2,10 @@ package com.eduflex.system.domain;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.eduflex.common.annotation.Excel;
@@ -13,27 +17,33 @@ import com.eduflex.common.core.domain.BaseEntity;
  * 
  * @author ruoyi
  */
+@TableName("sys_config")
 public class SysConfig extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 参数主键 */
+    @TableId("config_id")
     @Excel(name = "参数主键", cellType = ColumnType.NUMERIC)
     private Long configId;
 
     /** 参数名称 */
+    @TableField
     @Excel(name = "参数名称")
     private String configName;
 
     /** 参数键名 */
     @Excel(name = "参数键名")
+    @TableField
     private String configKey;
 
     /** 参数键值 */
     @Excel(name = "参数键值")
+    @TableField
     private String configValue;
 
     /** 系统内置（Y是 N否） */
+    @TableField
     @Excel(name = "系统内置", readConverterExp = "Y=是,N=否")
     private String configType;
 
