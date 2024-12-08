@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.*;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ import com.eduflex.common.xss.Xss;
 @Data
 @AllArgsConstructor
 @Builder
+@TableName("sys_user")
 public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;

@@ -1,7 +1,10 @@
 package com.eduflex.manage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import cn.hutool.core.collection.CollUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,7 +69,7 @@ public class HomeworkController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(homeworkService.selectHomeworkById(id));
+        return success(homeworkService.getById(id));
     }
 
     /**
@@ -77,7 +80,7 @@ public class HomeworkController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Homework homework)
     {
-        return toAjax(homeworkService.insertHomework(homework));
+        return toAjax(homeworkService.save(homework));
     }
 
     /**
@@ -88,7 +91,7 @@ public class HomeworkController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Homework homework)
     {
-        return toAjax(homeworkService.updateHomework(homework));
+        return toAjax(homeworkService.updateById(homework));
     }
 
     /**
@@ -99,6 +102,7 @@ public class HomeworkController extends BaseController
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(homeworkService.deleteHomeworkByIds(ids));
+        ArrayList<Long> idList = CollUtil.toList(ids);
+        return toAjax(homeworkService.removeByIds(idList));
     }
 }

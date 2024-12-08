@@ -1,6 +1,8 @@
 package com.eduflex.manage.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.College;
 
 /**
@@ -9,16 +11,8 @@ import com.eduflex.manage.domain.College;
  * @author 林煜鋒
  * @date 2024-10-05
  */
-public interface ICollegeService 
+public interface ICollegeService extends IService<College>
 {
-    /**
-     * 查询学院管理
-     * 
-     * @param id 学院管理主键
-     * @return 学院管理
-     */
-    public College selectCollegeById(Long id);
-
     /**
      * 查询学院管理列表
      * 
@@ -42,14 +36,6 @@ public interface ICollegeService
      * @return 结果
      */
     public int updateCollege(College college);
-
-    /**
-     * 删除学院管理信息
-     * 
-     * @param collegeId 学院管理主键
-     * @return 结果
-     */
-    public int deleteCollegeByCollegeId(Long collegeId);
 
     /**
      * 检验学院名称唯一性

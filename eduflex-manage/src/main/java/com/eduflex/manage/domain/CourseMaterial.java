@@ -1,5 +1,14 @@
 package com.eduflex.manage.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.eduflex.common.annotation.Excel;
@@ -11,14 +20,22 @@ import com.eduflex.common.core.domain.BaseEntity;
  * @author 林煜鋒
  * @date 2024-10-14
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("tb_course_material")
 public class CourseMaterial extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 主键ID */
+    @TableId(type = IdType.ASSIGN_ID)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 关联章节ID */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long chapterId;
 
     /** 资料名称 */
@@ -31,59 +48,4 @@ public class CourseMaterial extends BaseEntity
 
     /** 资料类型 0视频 1图片 2纯文本 3PPT 4PDF */
     private String materialType;
-
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
-
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setChapterId(Long chapterId) 
-    {
-        this.chapterId = chapterId;
-    }
-
-    public Long getChapterId() 
-    {
-        return chapterId;
-    }
-    public void setName(String name) 
-    {
-        this.name = name;
-    }
-
-    public String getName() 
-    {
-        return name;
-    }
-    public void setUrl(String url) 
-    {
-        this.url = url;
-    }
-
-    public String getUrl() 
-    {
-        return url;
-    }
-
-    public String getMaterialType() {
-        return materialType;
-    }
-
-    public void setMaterialType(String materialType) {
-        this.materialType = materialType;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("chapterId", getChapterId())
-            .append("name", getName())
-            .append("url", getUrl())
-            .toString();
-    }
 }

@@ -33,71 +33,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeacherList" parameterType="Teacher" resultMap="TeacherResult">
         <include refid="selectTeacherVo"/>
-        <where>
-            <if test="collegeId != null "> and college_id = #{collegeId}</if>
-            <if test="nickName != null"> and nick_name like concat('%', #{nickName}, '%')</if>
-            <if test="phonenumber != null" > and phonenumber like concat('%', #{phonenumber}, '%')</if>
-        </where>
+        ${ew.customSqlSegment}
     </select>
 
-    <select id="selectTeacherById" parameterType="Long" resultMap="TeacherResult">
+    <select id="seleteTeacherById" resultType="com.eduflex.manage.domain.Teacher"
+            parameterType="java.lang.Long">
         <include refid="selectTeacherVo"/>
-        where id = #{id}
+        where t.id = #{id}
     </select>
-
-    <select id="checkUserNameUnique" resultType="java.lang.Integer">
-        select count(1) from tb_teacher t
-        left join sys_user u on t.user_id = u.user_id
-        where u.user_name = #{userName}
-    </select>
-
-    <select id="checkPhoneUnique" resultType="java.lang.Integer">
-        select count(1) from tb_teacher t
-        left join sys_user u on t.user_id = u.user_id
-        where u.phonenumber = #{phonenumber}
-    </select>
-
-    <select id="checkEmailUnique" resultType="java.lang.Integer">
-        select count(1) from tb_teacher t
-        left join sys_user u on t.user_id = u.user_id
-        where u.email = #{email}
-    </select>
-    <select id="selectUserIdsByTeacherIds">
-        select user_id from tb_teacher where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </select>
-
-    <insert id="insertTeacher" parameterType="Teacher" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_teacher
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="userId != null">user_id,</if>
-            <if test="collegeId != null">college_id,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="userId != null">#{userId},</if>
-            <if test="collegeId != null">#{collegeId},</if>
-         </trim>
-    </insert>
-
-    <update id="updateTeacher" parameterType="Teacher">
-        update tb_teacher
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="userId != null">user_id = #{userId},</if>
-            <if test="collegeId != null">college_id = #{collegeId},</if>
-        </trim>
-        where id = #{id}
-    </update>
-
-    <delete id="deleteTeacherById" parameterType="Long">
-        delete from tb_teacher where id = #{id}
-    </delete>
-
-    <delete id="deleteTeacherByIds" parameterType="String">
-        delete from tb_teacher where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
 </mapper>

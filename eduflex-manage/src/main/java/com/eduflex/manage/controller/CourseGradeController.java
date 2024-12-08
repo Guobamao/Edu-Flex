@@ -1,8 +1,11 @@
 package com.eduflex.manage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.collection.CollUtil;
+import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.domain.dto.CourseGradeDto;
 import com.eduflex.manage.domain.vo.CourseGradeVo;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -85,7 +88,8 @@ public class CourseGradeController extends BaseController
             return AjaxResult.warn("该班级已选该课程，请勿重复添加");
         }
         courseGrade.setCreateBy(getUsername());
-        return toAjax(courseGradeService.insertCourseGrade(courseGrade));
+        courseGrade.setCreateTime(DateUtils.getNowDate());
+        return toAjax(courseGradeService.save(courseGrade));
     }
 
     /**
@@ -97,7 +101,8 @@ public class CourseGradeController extends BaseController
     public AjaxResult edit(@RequestBody CourseGrade courseGrade)
     {
         courseGrade.setUpdateBy(getUsername());
-        return toAjax(courseGradeService.updateCourseGrade(courseGrade));
+        courseGrade.setUpdateTime(DateUtils.getNowDate());
+        return toAjax(courseGradeService.updateById(courseGrade));
     }
 
     /**
@@ -108,6 +113,7 @@ public class CourseGradeController extends BaseController
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(courseGradeService.deleteCourseGradeByIds(ids));
+        ArrayList<Long> idList = CollUtil.toList(ids);
+        return toAjax(courseGradeService.removeByIds(idList));
     }
 }

@@ -1,8 +1,10 @@
 package com.eduflex.manage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.core.domain.model.LoginUser;
 import com.eduflex.common.utils.DateUtils;
@@ -50,8 +52,10 @@ public class CourseController extends BaseController
         course.setStartTime(DateUtils.parseDate(course.getParams().get("startTime")));
         course.setEndTime(DateUtils.parseDate(course.getParams().get("endTime")));
 
-        LoginUser loginUser = SecurityUtils.getLoginUser(); // 获取当前登录用户信息
-        SysUser currentUser = loginUser.getUser(); // 获取当前登录用户对象
+        // 获取当前登录用户信息
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        // 获取当前登录用户对象
+        SysUser currentUser = loginUser.getUser();
 
         // 判断当前用户是否为管理员
         if (!currentUser.isAdmin()) {
@@ -84,7 +88,7 @@ public class CourseController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(courseService.selectCourseById(id));
+        return success(courseService.getById(id));
     }
 
     /**
@@ -95,7 +99,8 @@ public class CourseController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Course course)
     {
-        return toAjax(courseService.insertCourse(course));
+        course.setCreateBy(getUsername());
+        return toAjax(courseService.save(course));
     }
 
     /**
@@ -107,7 +112,7 @@ public class CourseController extends BaseController
     public AjaxResult edit(@RequestBody Course course)
     {
         course.setUpdateBy(getUsername());
-        return toAjax(courseService.updateCourse(course));
+        return toAjax(courseService.updateById(course));
     }
 
     /**
@@ -118,6 +123,8 @@ public class CourseController extends BaseController
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(courseService.deleteCourseByIds(ids));
+        // 数组改成列表
+        ArrayList<Long> idList = CollUtil.toList(ids);
+        return toAjax(courseService.removeByIds(idList));
     }
 }

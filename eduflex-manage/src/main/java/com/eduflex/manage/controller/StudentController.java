@@ -84,7 +84,7 @@ public class StudentController extends BaseController
     public AjaxResult add(@RequestBody StudentDto studentDto)
     {
         // 检验字段唯一性
-        if (!studentService.checkUserNameUnique(studentDto)) { // 检验登录名唯一性
+        if (!studentService.checkUserNameUnique(studentDto)) {
             return error("新增学生‘" + studentDto.getUserName() + "'失败，登录账号已存在");
         } else if (StringUtils.isNotEmpty(studentDto.getPhonenumber()) && !studentService.checkPhoneUnique(studentDto)) {
             return error("新增学生‘" + studentDto.getUserName() + "'失败，手机号码已存在");
@@ -144,6 +144,7 @@ public class StudentController extends BaseController
     public AjaxResult resetPwd(@RequestBody StudentDto studentDto) {
         studentDto.setPassword(SecurityUtils.encryptPassword("Axy" + studentDto.getUserName()));
         studentDto.setUpdateBy(getUsername());
+        studentDto.setUpdateTime(DateUtils.getNowDate());
         return toAjax(studentService.resetPwd(studentDto));
     }
 }

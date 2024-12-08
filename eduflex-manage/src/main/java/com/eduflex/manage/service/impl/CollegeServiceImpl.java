@@ -2,6 +2,8 @@ package com.eduflex.manage.service.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.UserConstants;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.StringUtils;
@@ -18,22 +20,10 @@ import com.eduflex.manage.service.ICollegeService;
  * @date 2024-10-05
  */
 @Service
-public class CollegeServiceImpl implements ICollegeService 
+public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College> implements ICollegeService
 {
     @Autowired
     private CollegeMapper collegeMapper;
-
-    /**
-     * 查询学院管理
-     * 
-     * @param id 学院管理主键
-     * @return 学院管理
-     */
-    @Override
-    public College selectCollegeById(Long id)
-    {
-        return collegeMapper.selectCollegeById(id);
-    }
 
     /**
      * 查询学院管理列表
@@ -44,7 +34,11 @@ public class CollegeServiceImpl implements ICollegeService
     @Override
     public List<College> selectCollegeList(College college)
     {
-        return collegeMapper.selectCollegeList(college);
+        LambdaQueryWrapper<College> wrapper = new LambdaQueryWrapper<College>()
+                .eq(college.getId() != null && college.getId() != 0, College::getId, college.getId())
+                .eq(college.getParentId() != null && college.getParentId() != 0, College::getParentId, college.getParentId())
+                .like(college.getName() != null && !college.getName().isEmpty(), College::getName, college.getName());
+        return collegeMapper.selectList(wrapper);
     }
 
     /**
@@ -56,10 +50,10 @@ public class CollegeServiceImpl implements ICollegeService
     @Override
     public int insertCollege(College college)
     {
-        College info = collegeMapper.selectCollegeById(college.getParentId());
+        College info = collegeMapper.selectById(college.getParentId());
         college.setAncestors(info.getAncestors() + "," + college.getParentId());
         college.setCreateTime(DateUtils.getNowDate());
-        return collegeMapper.insertCollege(college);
+        return collegeMapper.insert(college);
     }
 
     /**
@@ -71,20 +65,7 @@ public class CollegeServiceImpl implements ICollegeService
     @Override
     public int updateCollege(College college)
     {
-        college.setUpdateTime(DateUtils.getNowDate());
-        return collegeMapper.updateCollege(college);
-    }
-
-    /**
-     * 删除学院管理信息
-     * 
-     * @param collegeId 学院管理主键
-     * @return 结果
-     */
-    @Override
-    public int deleteCollegeByCollegeId(Long collegeId)
-    {
-        return collegeMapper.deleteCollegeByCollegeId(collegeId);
+        return collegeMapper.updateById(college);
     }
 
     /**

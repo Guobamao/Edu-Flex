@@ -2,7 +2,10 @@ package com.eduflex.manage.service.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.domain.dto.TeacherDto;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
@@ -13,6 +16,8 @@ import com.eduflex.manage.domain.Teacher;
 import com.eduflex.manage.service.ITeacherService;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.eduflex.common.utils.SecurityUtils.getUsername;
+
 /**
  * 教师管理Service业务层处理
  * 
@@ -20,24 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 2024-10-05
  */
 @Service
-public class TeacherServiceImpl implements ITeacherService 
+public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements ITeacherService
 {
     @Autowired
     private TeacherMapper teacherMapper;
     @Autowired
     private ISysUserService userService;
-
-    /**
-     * 查询教师管理
-     * 
-     * @param id 教师管理主键
-     * @return 教师管理
-     */
-    @Override
-    public Teacher selectTeacherById(Long id)
-    {
-        return teacherMapper.selectTeacherById(id);
-    }
 
     /**
      * 查询教师管理列表
@@ -48,7 +41,11 @@ public class TeacherServiceImpl implements ITeacherService
     @Override
     public List<Teacher> selectTeacherList(TeacherDto teacherDto)
     {
-        return teacherMapper.selectTeacherList(teacherDto);
+        QueryWrapper<Teacher> wrapper = new QueryWrapper<Teacher>()
+                .eq(teacherDto.getCollegeId() != null, "t.college_id", teacherDto.getCollegeId())
+                .like(teacherDto.getNickName() != null && !teacherDto.getNickName().isEmpty(), "u.nick_name", teacherDto.getNickName())
+                .like(teacherDto.getPhonenumber() != null && !teacherDto.getPhonenumber().isEmpty(), "u.phonenumber", teacherDto.getPhonenumber());
+        return teacherMapper.selectTeacherList(wrapper);
     }
 
     /**
@@ -68,9 +65,13 @@ public class TeacherServiceImpl implements ITeacherService
         userService.insertUser(sysUser);
 
         // 再新增教师表信息
-        teacherDto.setUserId(sysUser.getUserId()); // 取到新增用户的id
+        Teacher teacher = new Teacher();
+        teacher.setUserId(sysUser.getUserId());
+        teacher.setCollegeId(teacherDto.getCollegeId());
+        teacher.setCreateBy(getUsername());
+        teacher.setCreateTime(DateUtils.getNowDate());
 
-        return teacherMapper.insertTeacher(teacherDto);
+        return teacherMapper.insert(teacher);
     }
 
     /**
@@ -88,38 +89,12 @@ public class TeacherServiceImpl implements ITeacherService
         sysUser.setRoleIds(new Long[] { teacherDto.getRoleId() });
         userService.updateUser(sysUser);
 
-        return teacherMapper.updateTeacher(teacherDto);
-    }
-
-    /**
-     * 批量删除教师管理
-     * 
-     * @param ids 需要删除的教师管理主键
-     * @return 结果
-     */
-    @Override
-    public int deleteTeacherByIds(Long[] ids)
-    {
-        // 查询关联的userId
-        Long[] userIds = teacherMapper.selectUserIdsByTeacherIds(ids);
-        // 先删除sys_user表中的数据
-        userService.deleteUserByIds(userIds);
-        // 再删除教师表的数据
-        return teacherMapper.deleteTeacherByIds(ids);
-    }
-
-    /**
-     * 删除教师管理信息
-     * 
-     * @param id 教师管理主键
-     * @return 结果
-     */
-    @Override
-    public int deleteTeacherById(Long id)
-    {
-        Long userId = teacherMapper.selectTeacherById(id).getUserId();
-        userService.deleteUserById(userId);
-        return teacherMapper.deleteTeacherById(id);
+        Teacher teacher = new Teacher();
+        teacher.setId(teacherDto.getId());
+        teacher.setCollegeId(teacherDto.getCollegeId());
+        teacher.setCreateBy(getUsername());
+        teacher.setCreateTime(DateUtils.getNowDate());
+        return teacherMapper.updateById(teacher);
     }
 
     /**
@@ -156,5 +131,15 @@ public class TeacherServiceImpl implements ITeacherService
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(teacherDto, sysUser);
         return userService.checkEmailUnique(sysUser);
+    }
+
+    /**
+     * 根据ID查询教师信息
+     * @param id 教师ID
+     * @return
+     */
+    @Override
+    public Teacher selectTeacherById(Long id) {
+        return teacherMapper.seleteTeacherById(id);
     }
 }

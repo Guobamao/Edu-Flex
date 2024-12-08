@@ -2,6 +2,7 @@ package com.eduflex.manage.controller;
 
 import java.util.List;
 
+import com.eduflex.common.utils.DateUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -65,7 +66,7 @@ public class CollegeController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(collegeService.selectCollegeById(id));
+        return success(collegeService.getById(id));
     }
 
     /**
@@ -99,6 +100,7 @@ public class CollegeController extends BaseController
             return warn("修改学院'" + college.getName() + "'失败，上级学院不能选择自己");
         }
         college.setUpdateBy(getUsername());
+        college.setUpdateTime(DateUtils.getNowDate());
         return toAjax(collegeService.updateCollege(college));
     }
 
@@ -114,6 +116,7 @@ public class CollegeController extends BaseController
             return warn("存在下级学院,不允许删除");
         }
         // TODO: 增加检验学院是否存在教师或学生的判断
-        return toAjax(collegeService.deleteCollegeByCollegeId(collegeId));
+        boolean b = collegeService.removeById(collegeId);
+        return toAjax(b);
     }
 }

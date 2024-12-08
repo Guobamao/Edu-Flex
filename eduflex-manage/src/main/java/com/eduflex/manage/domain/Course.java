@@ -1,9 +1,16 @@
 package com.eduflex.manage.domain;
 
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.core.domain.BaseEntity;
 
@@ -13,11 +20,17 @@ import com.eduflex.common.core.domain.BaseEntity;
  * @author 林煜鋒
  * @date 2024-10-10
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("tb_course")
 public class Course extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 课程ID */
+    @TableId(type = IdType.ASSIGN_ID)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 课程名称 */
@@ -29,7 +42,11 @@ public class Course extends BaseEntity
 
     /** 任课老师ID */
     @Excel(name = "任课老师ID")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long teacherId;
+
+    /** 课程封面 */
+    private String cover;
 
     /** 开始时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -44,85 +61,4 @@ public class Course extends BaseEntity
     /** 课程状态(0=未开始 1=进行中 2=已结束) */
     @Excel(name = "课程状态(0=未开始 1=进行中 2=已结束)")
     private String status;
-
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
-
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setName(String name) 
-    {
-        this.name = name;
-    }
-
-    public String getName() 
-    {
-        return name;
-    }
-    public void setDescription(String description) 
-    {
-        this.description = description;
-    }
-
-    public String getDescription() 
-    {
-        return description;
-    }
-    public void setTeacherId(Long teacherId) 
-    {
-        this.teacherId = teacherId;
-    }
-
-    public Long getTeacherId() 
-    {
-        return teacherId;
-    }
-    public void setStartTime(Date startTime) 
-    {
-        this.startTime = startTime;
-    }
-
-    public Date getStartTime() 
-    {
-        return startTime;
-    }
-    public void setEndTime(Date endTime) 
-    {
-        this.endTime = endTime;
-    }
-
-    public Date getEndTime() 
-    {
-        return endTime;
-    }
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("name", getName())
-            .append("description", getDescription())
-            .append("teacherId", getTeacherId())
-            .append("startTime", getStartTime())
-            .append("endTime", getEndTime())
-            .append("status", getStatus())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .toString();
-    }
 }

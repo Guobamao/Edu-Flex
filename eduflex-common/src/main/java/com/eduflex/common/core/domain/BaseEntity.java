@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -39,11 +40,16 @@ public class BaseEntity implements Serializable
     private Date updateTime;
 
     /** 备注 */
+    @TableField(exist = false)
     private String remark;
 
     /** 请求参数 */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @TableField(exist = false)
     private Map<String, Object> params;
+
+    @TableLogic
+    private Integer deleted;
 
     public String getSearchValue()
     {
