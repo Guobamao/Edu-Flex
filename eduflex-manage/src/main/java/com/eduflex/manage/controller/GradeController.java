@@ -1,7 +1,11 @@
 package com.eduflex.manage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import cn.hutool.core.collection.CollUtil;
+import com.eduflex.common.utils.DateUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,7 +70,7 @@ public class GradeController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(gradeService.selectGradeById(id));
+        return success(gradeService.getById(id));
     }
 
     /**
@@ -77,7 +81,9 @@ public class GradeController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Grade grade)
     {
-        return toAjax(gradeService.insertGrade(grade));
+        grade.setCreateBy(getUsername());
+        grade.setCreateTime(DateUtils.getNowDate());
+        return toAjax(gradeService.save(grade));
     }
 
     /**
@@ -88,7 +94,9 @@ public class GradeController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Grade grade)
     {
-        return toAjax(gradeService.updateGrade(grade));
+        grade.setUpdateBy(getUsername());
+        grade.setUpdateTime(DateUtils.getNowDate());
+        return toAjax(gradeService.updateById(grade));
     }
 
     /**
@@ -99,6 +107,7 @@ public class GradeController extends BaseController
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(gradeService.deleteGradeByIds(ids));
+        ArrayList<Long> idList = CollUtil.toList(ids);
+        return toAjax(gradeService.removeByIds(idList));
     }
 }

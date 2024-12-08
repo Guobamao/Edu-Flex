@@ -1,8 +1,10 @@
 package com.eduflex.manage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
@@ -92,7 +94,8 @@ public class TeacherController extends BaseController
             return error("新增教师‘" + teacherDto.getUserName() + "'失败，邮箱账号已存在");
         }
 
-        teacherDto.setRoleId(EduFlexConstants.ROLE_TEACHER); // 设置角色ID为教师
+        // 设置角色ID为教师
+        teacherDto.setRoleId(EduFlexConstants.ROLE_TEACHER);
         teacherDto.setCreateBy(getUsername());
         teacherDto.setStatus(EduFlexConstants.TEACHER_STATUS_ENABLED);
         teacherDto.setPassword(SecurityUtils.encryptPassword(teacherDto.getPassword()));
@@ -129,6 +132,7 @@ public class TeacherController extends BaseController
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(teacherService.deleteTeacherByIds(ids));
+        ArrayList<Long> idList = CollUtil.toList(ids);
+        return toAjax(teacherService.removeByIds(idList));
     }
 }

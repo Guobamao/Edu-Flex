@@ -2,6 +2,8 @@ package com.eduflex.manage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.eduflex.common.utils.DateUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +66,7 @@ public class CourseChapterController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(courseChapterService.selectCourseChapterById(id));
+        return success(courseChapterService.getById(id));
     }
 
     /**
@@ -86,7 +88,8 @@ public class CourseChapterController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody CourseChapter courseChapter)
     {
-        return toAjax(courseChapterService.updateCourseChapter(courseChapter));
+        courseChapter.setUpdateTime(DateUtils.getNowDate());
+        return toAjax(courseChapterService.updateById(courseChapter));
     }
 
     /**

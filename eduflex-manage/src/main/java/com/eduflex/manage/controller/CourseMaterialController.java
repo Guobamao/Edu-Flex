@@ -67,7 +67,7 @@ public class CourseMaterialController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(courseMaterialService.selectCourseMaterialById(id));
+        return success(courseMaterialService.getById(id));
     }
 
     /**
@@ -89,7 +89,7 @@ public class CourseMaterialController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody CourseMaterial courseMaterial)
     {
-        return toAjax(courseMaterialService.updateCourseMaterial(courseMaterial));
+        return toAjax(courseMaterialService.updateById(courseMaterial));
     }
 
     /**

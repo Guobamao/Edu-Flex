@@ -1,7 +1,9 @@
 package com.eduflex.manage.service.impl;
 
 import java.util.List;
-import com.eduflex.common.utils.DateUtils;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.manage.domain.dto.CourseGradeDto;
 import com.eduflex.manage.domain.vo.CourseGradeVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import com.eduflex.manage.service.ICourseGradeService;
  * @date 2024-10-11
  */
 @Service
-public class CourseGradeServiceImpl implements ICourseGradeService 
+public class CourseGradeServiceImpl extends ServiceImpl<CourseGradeMapper, CourseGrade> implements ICourseGradeService
 {
     @Autowired
     private CourseGradeMapper courseGradeMapper;
@@ -43,63 +45,19 @@ public class CourseGradeServiceImpl implements ICourseGradeService
     @Override
     public List<CourseGradeVo> selectCourseGradeList(CourseGradeDto courseGradeDto)
     {
-        return courseGradeMapper.selectCourseGradeList(courseGradeDto);
-    }
-
-    /**
-     * 新增班级课程管理
-     * 
-     * @param courseGrade 班级课程管理
-     * @return 结果
-     */
-    @Override
-    public int insertCourseGrade(CourseGrade courseGrade)
-    {
-        courseGrade.setCreateTime(DateUtils.getNowDate());
-        return courseGradeMapper.insertCourseGrade(courseGrade);
-    }
-
-    /**
-     * 修改班级课程管理
-     * 
-     * @param courseGrade 班级课程管理
-     * @return 结果
-     */
-    @Override
-    public int updateCourseGrade(CourseGrade courseGrade)
-    {
-        courseGrade.setUpdateTime(DateUtils.getNowDate());
-        return courseGradeMapper.updateCourseGrade(courseGrade);
-    }
-
-    /**
-     * 批量删除班级课程管理
-     * 
-     * @param ids 需要删除的班级课程管理主键
-     * @return 结果
-     */
-    @Override
-    public int deleteCourseGradeByIds(Long[] ids)
-    {
-        return courseGradeMapper.deleteCourseGradeByIds(ids);
-    }
-
-    /**
-     * 删除班级课程管理信息
-     * 
-     * @param id 班级课程管理主键
-     * @return 结果
-     */
-    @Override
-    public int deleteCourseGradeById(Long id)
-    {
-        return courseGradeMapper.deleteCourseGradeById(id);
+        QueryWrapper<CourseGrade> wrapper = new QueryWrapper<CourseGrade>()
+                .eq(courseGradeDto.getCourseId() != null, "cg.course_id", courseGradeDto.getCourseId())
+                .eq(courseGradeDto.getGradeId() != null, "cg.grade_id", courseGradeDto.getGradeId())
+                .like(courseGradeDto.getCourseName() != null && !courseGradeDto.getCourseName().isEmpty(), "c.name", courseGradeDto.getCourseName())
+                .like(courseGradeDto.getGradeName() != null && !courseGradeDto.getGradeName().isEmpty(), "g.name", courseGradeDto.getGradeName());
+        wrapper.eq("cg.deleted", 0);
+        return courseGradeMapper.selectCourseGradeList(wrapper);
     }
 
     /**
      * 查询班级课程管理是否已存在
-     * @param courseGrade
-     * @return
+     * @param courseGrade 班级课程管理
+     * @return 布尔值
      */
     @Override
     public boolean selectCourseGradeByGradeIdAndCourseId(CourseGrade courseGrade) {

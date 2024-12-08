@@ -1,9 +1,12 @@
 package com.eduflex.manage.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.eduflex.manage.domain.Student;
-import com.eduflex.manage.domain.dto.StudentDto;
 import com.eduflex.manage.domain.vo.StudentVo;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 学生管理Mapper接口
@@ -11,55 +14,8 @@ import com.eduflex.manage.domain.vo.StudentVo;
  * @author 林煜鋒
  * @date 2024-10-07
  */
-public interface StudentMapper 
+public interface StudentMapper extends BaseMapper<Student>
 {
-    /**
-     * 查询学生管理
-     * 
-     * @param id 学生管理主键
-     * @return 学生管理
-     */
-    public StudentVo selectStudentById(Long id);
-
-    /**
-     * 查询学生管理列表
-     * 
-     * @param studentDto 学生管理dto
-     * @return 学生管理集合
-     */
-    public List<Student> selectStudentList(StudentDto studentDto);
-
-    /**
-     * 新增学生管理
-     * 
-     * @param studentDto 学生管理
-     * @return 结果
-     */
-    public int insertStudent(StudentDto studentDto);
-
-    /**
-     * 修改学生管理
-     * 
-     * @param studentDto 学生管理
-     * @return 结果
-     */
-    public int updateStudent(StudentDto studentDto);
-
-    /**
-     * 删除学生管理
-     * 
-     * @param id 学生管理主键
-     * @return 结果
-     */
-    public int deleteStudentById(Long id);
-
-    /**
-     * 批量删除学生管理
-     * 
-     * @param ids 需要删除的数据主键集合
-     * @return 结果
-     */
-    public int deleteStudentByIds(Long[] ids);
 
     /**
      * 根据学生id查询用户id
@@ -67,4 +23,16 @@ public interface StudentMapper
      * @return 用户id列表
      */
     Long[] selectUserIdsByStudentIds(Long[] ids);
+
+    /**
+     * 分页查询学生列表
+     * @param wrapper 查询条件
+     * @return 学生列表
+     */
+    List<Student> selectStudentList(@Param("ew") QueryWrapper<Student> wrapper);
+
+    /**
+     * 根据学生ID查询学生信息
+     */
+    StudentVo selectStudentById(Long id);
 }

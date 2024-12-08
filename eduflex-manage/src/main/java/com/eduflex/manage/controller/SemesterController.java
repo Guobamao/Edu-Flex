@@ -1,7 +1,11 @@
 package com.eduflex.manage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import cn.hutool.core.collection.CollUtil;
+import com.eduflex.common.utils.DateUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,7 +70,7 @@ public class SemesterController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(semesterService.selectSemesterById(id));
+        return success(semesterService.getById(id));
     }
 
     /**
@@ -77,7 +81,9 @@ public class SemesterController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Semester semester)
     {
-        return toAjax(semesterService.insertSemester(semester));
+        semester.setCreateBy(getUsername());
+        semester.setCreateTime(DateUtils.getNowDate());
+        return toAjax(semesterService.save(semester));
     }
 
     /**
@@ -88,7 +94,9 @@ public class SemesterController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Semester semester)
     {
-        return toAjax(semesterService.updateSemester(semester));
+        semester.setUpdateBy(getUsername());
+        semester.setUpdateTime(DateUtils.getNowDate());
+        return toAjax(semesterService.updateById(semester));
     }
 
     /**
@@ -99,6 +107,7 @@ public class SemesterController extends BaseController
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(semesterService.deleteSemesterByIds(ids));
+        ArrayList<Long> idList = CollUtil.toList(ids);
+        return toAjax(semesterService.removeByIds(idList));
     }
 }

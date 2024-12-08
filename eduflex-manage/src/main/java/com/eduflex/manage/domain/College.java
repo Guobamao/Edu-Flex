@@ -1,7 +1,15 @@
 package com.eduflex.manage.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.core.domain.BaseEntity;
 
@@ -14,14 +22,22 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2024-10-05
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("tb_college")
 public class College extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 学院ID */
+    @TableId(type = IdType.ASSIGN_ID)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 父级学院ID */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long parentId;
 
     /** 祖级列表 */
@@ -32,75 +48,10 @@ public class College extends BaseEntity
     private String name;
 
     /** 父级学院名称 */
+    @TableField(exist = false)
     private String parentName;
 
     /** 子部门 */
+    @TableField(exist = false)
     private List<College> children = new ArrayList<College>();
-
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
-
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setParentId(Long parentId) 
-    {
-        this.parentId = parentId;
-    }
-
-    public Long getParentId() 
-    {
-        return parentId;
-    }
-    public void setAncestors(String ancestors) 
-    {
-        this.ancestors = ancestors;
-    }
-
-    public String getAncestors() 
-    {
-        return ancestors;
-    }
-    public void setName(String name) 
-    {
-        this.name = name;
-    }
-
-    public String getName() 
-    {
-        return name;
-    }
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
-    public List<College> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<College> children) {
-        this.children = children;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("parentId", getParentId())
-            .append("ancestors", getAncestors())
-            .append("name", getName())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .toString();
-    }
 }

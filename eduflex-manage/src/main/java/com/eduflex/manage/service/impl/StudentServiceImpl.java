@@ -1,8 +1,13 @@
 package com.eduflex.manage.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.domain.dto.StudentDto;
 import com.eduflex.manage.domain.vo.StudentVo;
@@ -14,6 +19,8 @@ import com.eduflex.manage.domain.Student;
 import com.eduflex.manage.service.IStudentService;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.eduflex.common.utils.SecurityUtils.getUsername;
+
 /**
  * 学生管理Service业务层处理
  * 
@@ -21,23 +28,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 2024-10-07
  */
 @Service
-public class StudentServiceImpl implements IStudentService 
+public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService
 {
     @Autowired
     private StudentMapper studentMapper;
     @Autowired
     private ISysUserService userService;
-    /**
-     * 查询学生管理
-     *
-     * @param id 学生管理主键
-     * @return 学生管理
-     */
-    @Override
-    public StudentVo selectStudentById(Long id)
-    {
-        return studentMapper.selectStudentById(id);
-    }
 
     /**
      * 查询学生管理列表
@@ -48,7 +44,13 @@ public class StudentServiceImpl implements IStudentService
     @Override
     public List<Student> selectStudentList(StudentDto studentDto)
     {
-        return studentMapper.selectStudentList(studentDto);
+        QueryWrapper<Student> wrapper = new QueryWrapper<Student>()
+                .eq(studentDto.getCollegeId() != null, "s.college_id", studentDto.getCollegeId())
+                .eq(studentDto.getGradeId() != null, "s.grade_id", studentDto.getGradeId())
+                .like(studentDto.getUserName() != null && !studentDto.getUserName().isEmpty(), "u.user_name", studentDto.getUserName())
+                .like(studentDto.getNickName() != null && !studentDto.getNickName().isEmpty(), "u.nick_name", studentDto.getNickName())
+                .like(studentDto.getPhonenumber() != null && !studentDto.getPhonenumber().isEmpty(), "u.phonenumber", studentDto.getPhonenumber());
+        return studentMapper.selectStudentList(wrapper);
     }
 
     /**
@@ -68,8 +70,11 @@ public class StudentServiceImpl implements IStudentService
         userService.insertUser(sysUser);
 
         // 新增学生表信息
-        studentDto.setUserId(sysUser.getUserId());
-        return studentMapper.insertStudent(studentDto);
+        Student student = new Student();
+        student.setUserId(sysUser.getUserId());
+        student.setCollegeId(studentDto.getCollegeId());
+        student.setGradeId(studentDto.getGradeId());
+        return studentMapper.insert(student);
     }
 
     /**
@@ -86,7 +91,14 @@ public class StudentServiceImpl implements IStudentService
         BeanUtils.copyProperties(studentDto, sysUser);
         sysUser.setRoleIds(new Long[] { studentDto.getRoleId() });
         userService.updateUser(sysUser);
-        return studentMapper.updateStudent(studentDto);
+
+        Student student = new Student();
+        student.setId(studentDto.getId());
+        student.setCollegeId(studentDto.getCollegeId());
+        student.setGradeId(studentDto.getGradeId());
+        student.setUpdateBy(getUsername());
+        student.setUpdateTime(DateUtils.getNowDate());
+        return studentMapper.updateById(student);
     }
 
     /**
@@ -102,27 +114,14 @@ public class StudentServiceImpl implements IStudentService
         Long[] userIds = studentMapper.selectUserIdsByStudentIds(ids);
         userService.deleteUserByIds(userIds);
         // 在删除学生表的数据
-        return studentMapper.deleteStudentByIds(ids);
-    }
-
-    /**
-     * 删除学生管理信息
-     * 
-     * @param id 学生管理主键
-     * @return 结果
-     */
-    @Override
-    public int deleteStudentById(Long id)
-    {
-        Long userId = studentMapper.selectStudentById(id).getUserId();
-        userService.deleteUserById(userId);
-        return studentMapper.deleteStudentById(id);
+        ArrayList<Long> idList = CollUtil.toList(ids);
+        return studentMapper.deleteByIds(idList);
     }
 
     /**
      * 检验学生登录名唯一性
-     * @param studentDto
-     * @return
+     * @param studentDto 查询条件
+     * @return 布尔值
      */
     @Override
     public boolean checkUserNameUnique(StudentDto studentDto) {
@@ -133,8 +132,8 @@ public class StudentServiceImpl implements IStudentService
 
     /**
      * 检验学生登录名唯一性
-     * @param studentDto
-     * @return
+     * @param studentDto 查询条件
+     * @return 布尔值
      */
     @Override
     public boolean checkPhoneUnique(StudentDto studentDto) {
@@ -145,8 +144,8 @@ public class StudentServiceImpl implements IStudentService
 
     /**
      * 检验学生邮箱唯一性
-     * @param studentDto
-     * @return
+     * @param studentDto 查询条件
+     * @return 布尔值
      */
     @Override
     public boolean checkEmailUnique(StudentDto studentDto) {
@@ -163,5 +162,15 @@ public class StudentServiceImpl implements IStudentService
     @Override
     public int resetPwd(StudentDto studentDto) {
         return userService.resetPwd(studentDto);
+    }
+
+    /**
+     * 根据ID查询学生信息
+     * @param id 学生ID
+     * @return 学生信息
+     */
+    @Override
+    public StudentVo selectStudentById(Long id) {
+        return studentMapper.selectStudentById(id);
     }
 }

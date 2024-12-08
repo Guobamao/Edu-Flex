@@ -1,6 +1,8 @@
 package com.eduflex.manage.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.Teacher;
 import com.eduflex.manage.domain.dto.TeacherDto;
 
@@ -10,16 +12,8 @@ import com.eduflex.manage.domain.dto.TeacherDto;
  * @author 林煜鋒
  * @date 2024-10-05
  */
-public interface ITeacherService 
+public interface ITeacherService extends IService<Teacher>
 {
-    /**
-     * 查询教师管理
-     * 
-     * @param id 教师管理主键
-     * @return 教师管理
-     */
-    public Teacher selectTeacherById(Long id);
-
     /**
      * 查询教师管理列表
      *
@@ -45,22 +39,6 @@ public interface ITeacherService
     public int updateTeacher(TeacherDto teacherDto);
 
     /**
-     * 批量删除教师管理
-     * 
-     * @param ids 需要删除的教师管理主键集合
-     * @return 结果
-     */
-    public int deleteTeacherByIds(Long[] ids);
-
-    /**
-     * 删除教师管理信息
-     * 
-     * @param id 教师管理主键
-     * @return 结果
-     */
-    public int deleteTeacherById(Long id);
-
-    /**
      * 检验登录名唯一性
      * @param teacherDto 教师DTO
      * @return 结果
@@ -80,4 +58,11 @@ public interface ITeacherService
      * @return 结果
      */
     boolean checkEmailUnique(TeacherDto teacherDto);
+
+    /**
+     * 根据ID查询教师信息
+     * @param id 教师ID
+     * @return
+     */
+    Teacher selectTeacherById(Long id);
 }

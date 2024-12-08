@@ -1,10 +1,16 @@
 package com.eduflex.manage.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.manage.domain.CourseChapter;
+import com.eduflex.manage.mapper.CourseChapterMapper;
 import com.eduflex.manage.service.ICourseChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,24 +26,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 2024-10-14
  */
 @Service
-public class CourseMaterialServiceImpl implements ICourseMaterialService 
+public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper, CourseMaterial> implements ICourseMaterialService
 {
     @Autowired
     private CourseMaterialMapper courseMaterialMapper;
     @Autowired
-    private ICourseChapterService courseChapterService;
-
-    /**
-     * 查询课程资料
-     * 
-     * @param id 课程资料主键
-     * @return 课程资料
-     */
-    @Override
-    public CourseMaterial selectCourseMaterialById(Long id)
-    {
-        return courseMaterialMapper.selectCourseMaterialById(id);
-    }
+    private CourseChapterMapper courseChapterMapper;
 
     /**
      * 查询课程资料列表
@@ -48,7 +42,11 @@ public class CourseMaterialServiceImpl implements ICourseMaterialService
     @Override
     public List<CourseMaterial> selectCourseMaterialList(CourseMaterial courseMaterial)
     {
-        return courseMaterialMapper.selectCourseMaterialList(courseMaterial);
+        LambdaQueryWrapper<CourseMaterial> wrapper = new LambdaQueryWrapper<CourseMaterial>()
+                .eq(courseMaterial.getId() != null, CourseMaterial::getId, courseMaterial.getId())
+                .eq(courseMaterial.getChapterId() != null, CourseMaterial::getChapterId, courseMaterial.getChapterId())
+                .eq(courseMaterial.getMaterialType() != null, CourseMaterial::getMaterialType, courseMaterial.getMaterialType());
+        return courseMaterialMapper.selectList(wrapper);
     }
 
     /**
@@ -61,27 +59,16 @@ public class CourseMaterialServiceImpl implements ICourseMaterialService
     @Override
     public int insertCourseMaterial(CourseMaterial courseMaterial)
     {
-        int result = courseMaterialMapper.insertCourseMaterial(courseMaterial);
+        int result = courseMaterialMapper.insert(courseMaterial);
         if (result > 0) {
-            CourseChapter courseChapter = new CourseChapter();
-            courseChapter.setId(courseMaterial.getChapterId());
-            courseChapter.setHasChildren(1L);
-            courseChapterService.updateCourseChapter(courseChapter);
+            LambdaUpdateWrapper<CourseChapter> updateWrapper = new LambdaUpdateWrapper<CourseChapter>()
+                    .eq(CourseChapter::getId, courseMaterial.getChapterId())
+                    .set(CourseChapter::getHasChildren, 1L);
+            courseChapterMapper.update(null, updateWrapper);
         }
         return result;
     }
 
-    /**
-     * 修改课程资料
-     * 
-     * @param courseMaterial 课程资料
-     * @return 结果
-     */
-    @Override
-    public int updateCourseMaterial(CourseMaterial courseMaterial)
-    {
-        return courseMaterialMapper.updateCourseMaterial(courseMaterial);
-    }
 
     /**
      * 批量删除课程资料
@@ -99,29 +86,18 @@ public class CourseMaterialServiceImpl implements ICourseMaterialService
             chapterIds.add(courseMaterialMapper.selectCourseMaterialById(id).getChapterId());
         }
 
-        int result = courseMaterialMapper.deleteCourseMaterialByIds(ids);
+        ArrayList<Long> idList = CollUtil.toList(ids);
+        int result = courseMaterialMapper.deleteByIds(idList);
 
+        LambdaQueryWrapper<CourseMaterial> wrapper = new LambdaQueryWrapper<>();
         for (Long chapterId : chapterIds) {
             CourseChapter courseChapter = new CourseChapter();
             courseChapter.setId(chapterId);
 
-            CourseMaterial courseMaterial = new CourseMaterial();
-            courseMaterial.setChapterId(chapterId);
-            courseChapter.setHasChildren(courseMaterialMapper.selectCourseMaterialList(courseMaterial).isEmpty() ? 0L : 1L);
-            courseChapterService.updateCourseChapter(courseChapter);
+            wrapper.eq(CourseMaterial::getChapterId, chapterId);
+            courseChapter.setHasChildren(courseMaterialMapper.selectList(wrapper).isEmpty() ? 0L : 1L);
+            courseChapterMapper.updateById(courseChapter);
         }
         return result;
-    }
-
-    /**
-     * 删除课程资料信息
-     * 
-     * @param id 课程资料主键
-     * @return 结果
-     */
-    @Override
-    public int deleteCourseMaterialById(Long id)
-    {
-        return courseMaterialMapper.deleteCourseMaterialById(id);
     }
 }

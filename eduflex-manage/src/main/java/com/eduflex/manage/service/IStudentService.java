@@ -1,6 +1,8 @@
 package com.eduflex.manage.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.Student;
 import com.eduflex.manage.domain.dto.StudentDto;
 import com.eduflex.manage.domain.vo.StudentVo;
@@ -11,15 +13,8 @@ import com.eduflex.manage.domain.vo.StudentVo;
  * @author 林煜鋒
  * @date 2024-10-07
  */
-public interface IStudentService 
+public interface IStudentService extends IService<Student>
 {
-    /**
-     * 查询学生管理
-     *
-     * @param id 学生管理主键
-     * @return 学生管理
-     */
-    public StudentVo selectStudentById(Long id);
 
     /**
      * 查询学生管理列表
@@ -54,14 +49,6 @@ public interface IStudentService
     public int deleteStudentByIds(Long[] ids);
 
     /**
-     * 删除学生管理信息
-     * 
-     * @param id 学生管理主键
-     * @return 结果
-     */
-    public int deleteStudentById(Long id);
-
-    /**
      * 检验学生登录名唯一性
      * @param studentDto
      * @return
@@ -88,4 +75,11 @@ public interface IStudentService
      * @return 结果
      */
     int resetPwd(StudentDto studentDto);
+
+    /**
+     * 获取学生信息
+     * @param id 学生ID
+     * @return
+     */
+    StudentVo selectStudentById(Long id);
 }
