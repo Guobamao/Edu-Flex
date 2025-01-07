@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * 学院管理对象 tb_college
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-05
  */
@@ -33,11 +33,9 @@ public class College extends BaseEntity
 
     /** 学院ID */
     @TableId(type = IdType.ASSIGN_ID)
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 父级学院ID */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long parentId;
 
     /** 祖级列表 */

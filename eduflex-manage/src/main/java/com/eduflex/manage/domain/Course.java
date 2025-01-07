@@ -16,7 +16,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 
 /**
  * 课程管理对象 tb_course
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-10
  */
@@ -30,7 +30,6 @@ public class Course extends BaseEntity
 
     /** 课程ID */
     @TableId(type = IdType.ASSIGN_ID)
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 课程名称 */
@@ -40,13 +39,15 @@ public class Course extends BaseEntity
     /** 课程描述 */
     private String description;
 
+    /** 分类ID */
+    private Long categoryId;
+
     /** 任课老师ID */
     @Excel(name = "任课老师ID")
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long teacherId;
 
     /** 课程封面 */
-    private String cover;
+    private Long cover;
 
     /** 开始时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")

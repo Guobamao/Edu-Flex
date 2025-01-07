@@ -14,7 +14,7 @@ import com.eduflex.common.core.domain.TreeEntity;
 
 /**
  * 课程内容章节管理对象 tb_course_chapter
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-14
  */
@@ -29,11 +29,9 @@ public class CourseChapter extends TreeEntity
 
     /** 主键ID */
     @TableId(type = IdType.ASSIGN_ID)
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 关联课程ID */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long courseId;
 
     /** 章节名称 */

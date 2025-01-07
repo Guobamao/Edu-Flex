@@ -17,7 +17,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 
 /**
  * 教师管理对象 tb_teacher
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-05
  */
@@ -32,15 +32,12 @@ public class Teacher extends SysUser
 
     /** 教师ID */
     @TableId(type = IdType.ASSIGN_ID)
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 关联sys_user表的id */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
 
     /** 所属学院ID */
     @Excel(name = "所属学院ID")
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long collegeId;
 }

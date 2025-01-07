@@ -13,19 +13,4 @@ import com.eduflex.manage.domain.CourseMaterial;
  */
 public interface CourseMaterialMapper extends BaseMapper<CourseMaterial>
 {
-    /**
-     * 查询课程资料
-     * 
-     * @param id 课程资料主键
-     * @return 课程资料
-     */
-    public CourseMaterial selectCourseMaterialById(Long id);
-
-    /**
-     * 查询课程资料列表
-     * 
-     * @param courseMaterial 课程资料
-     * @return 课程资料集合
-     */
-    public List<CourseMaterial> selectCourseMaterialList(CourseMaterial courseMaterial);
 }

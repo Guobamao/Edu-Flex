@@ -16,7 +16,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 
 /**
  * 班级课程管理对象 tb_course_grade
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-11
  */
@@ -31,16 +31,13 @@ public class CourseGrade extends BaseEntity
 
     /** 关系主键 */
     @TableId(type = IdType.ASSIGN_ID)
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 课程ID */
     @Excel(name = "课程ID")
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long courseId;
 
     /** 班级ID */
     @Excel(name = "班级ID")
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long gradeId;
 }

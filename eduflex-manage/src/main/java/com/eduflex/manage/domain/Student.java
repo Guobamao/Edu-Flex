@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * 学生管理对象 tb_student
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-07
  */
@@ -39,21 +39,17 @@ public class Student extends SysUser
 
     /** 学生ID */
     @TableId(type = IdType.ASSIGN_ID)
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 关联sys_user表的ID */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
 
     /** 所属学院ID */
     @Excel(name = "所属学院ID")
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long collegeId;
 
     /** 所属班级ID */
     @Excel(name = "所属班级ID")
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long gradeId;
 
     /** 部门ID */

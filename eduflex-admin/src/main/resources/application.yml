@@ -7,7 +7,7 @@ ruoyi:
   # 版权年份
   copyrightYear: 2024
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: C:/ruoyi/uploadPath
+  profile: D:/ruoyi/uploadPath
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
@@ -141,18 +141,16 @@ xss:
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
 
-# 文件上传
 dromara:
   x-file-storage: #文件存储配置
-    default-platform: aliyun-oss-1 #默认使用的存储平台
+    default-platform: local-plus-1 #默认使用的存储平台
     thumbnail-suffix: ".min.jpg" #缩略图后缀，例如【.min.jpg】【.png】
     #对应平台的配置写在这里，注意缩进要对齐
-    aliyun-oss:
-      - platform: aliyun-oss-1 # 存储平台标识
-        enable-storage: true  # 启用存储
-        access-key: LTAI5tRX3UALKE4QL6yBkVRo
-        secret-key: 7bRBz7MoFJ2zmU6vkxBcHVG744c67S
-        end-point: oss-cn-beijing.aliyuncs.com
-        bucket-name: eduflex
-        domain: https://eduflex.oss-cn-beijing.aliyuncs.com/ # 访问域名，注意“/”结尾，例如：https://abc.oss-cn-shanghai.aliyuncs.com/
-        base-path: eduflex-material/ # 基础路径
+    local-plus:
+      - platform: local-plus-1 # 存储平台标识
+        enable-storage: true  #启用存储
+        enable-access: true #启用访问（线上请使用 Nginx 配置，效率更高）
+        domain: http://127.0.0.1:8080/file/ # 访问域名，例如：“http://127.0.0.1:8030/file/”，注意后面要和 path-patterns 保持一致，“/”结尾，本地存储建议使用相对路径，方便后期更换域名
+        base-path: local-plus/ # 基础路径
+        path-patterns: /file/** # 访问路径
+        storage-path: D:/Temp/ # 存储路径

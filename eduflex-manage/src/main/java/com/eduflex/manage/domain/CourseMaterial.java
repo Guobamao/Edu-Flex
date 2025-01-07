@@ -16,7 +16,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 
 /**
  * 课程资料对象 tb_course_material
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-14
  */
@@ -31,11 +31,9 @@ public class CourseMaterial extends BaseEntity
 
     /** 主键ID */
     @TableId(type = IdType.ASSIGN_ID)
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 关联章节ID */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long chapterId;
 
     /** 资料名称 */
@@ -44,7 +42,7 @@ public class CourseMaterial extends BaseEntity
 
     /** 链接 */
     @Excel(name = "链接")
-    private String url;
+    private Long fileId;
 
     /** 资料类型 0视频 1图片 2纯文本 3PPT 4PDF */
     private String materialType;

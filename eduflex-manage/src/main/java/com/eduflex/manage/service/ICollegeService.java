@@ -30,14 +30,6 @@ public interface ICollegeService extends IService<College>
     public int insertCollege(College college);
 
     /**
-     * 修改学院管理
-     * 
-     * @param college 学院管理
-     * @return 结果
-     */
-    public int updateCollege(College college);
-
-    /**
      * 检验学院名称唯一性
      * @param college
      * @return

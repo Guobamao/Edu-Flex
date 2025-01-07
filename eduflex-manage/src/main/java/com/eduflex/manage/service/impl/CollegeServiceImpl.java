@@ -57,18 +57,6 @@ public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College> impl
     }
 
     /**
-     * 修改学院管理
-     * 
-     * @param college 学院管理
-     * @return 结果
-     */
-    @Override
-    public int updateCollege(College college)
-    {
-        return collegeMapper.updateById(college);
-    }
-
-    /**
      * 检验学院名称唯一性
      * @param college
      * @return

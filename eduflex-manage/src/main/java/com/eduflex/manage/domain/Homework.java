@@ -19,7 +19,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 
 /**
  * 作业管理对象 tb_homework
- * 
+ *
  * @author 林煜鋒
  * @date 2024-11-23
  */
@@ -34,12 +34,10 @@ public class Homework extends BaseEntity
 
     /** 作业ID */
     @TableId(type = IdType.ASSIGN_ID)
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 所属课程ID */
     @Excel(name = "所属课程ID")
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long courseId;
 
     /** 作业标题 */

@@ -55,7 +55,7 @@ public class CollegeController extends BaseController
     @GetMapping("/list/exclude/{id}")
     public AjaxResult excludeChild(@PathVariable(value = "id", required = false) Long id) {
         List<College> colleges = collegeService.selectCollegeList(new College());
-        colleges.removeIf(c -> c.getId().intValue() == id || ArrayUtils.contains(StringUtils.split(c.getAncestors(), ","), id + ""));
+        colleges.removeIf(c -> c.getId().longValue() == id || ArrayUtils.contains(StringUtils.split(c.getAncestors(), ","), id + ""));
         return success(colleges);
     }
 
@@ -101,7 +101,7 @@ public class CollegeController extends BaseController
         }
         college.setUpdateBy(getUsername());
         college.setUpdateTime(DateUtils.getNowDate());
-        return toAjax(collegeService.updateCollege(college));
+        return toAjax(collegeService.updateById(college));
     }
 
     /**

@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Tree基类
- * 
+ *
  * @author ruoyi
  */
 @EqualsAndHashCode(callSuper = true)
@@ -27,7 +27,6 @@ public class TreeEntity extends BaseEntity
     private String parentName;
 
     /** 父菜单ID */
-    @TableField(value = "parent_id")
     private Long parentId;
 
     /** 显示顺序 */

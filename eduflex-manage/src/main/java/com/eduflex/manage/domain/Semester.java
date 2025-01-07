@@ -16,7 +16,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 
 /**
  * 学期管理对象 tb_semester
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-05
  */
@@ -31,7 +31,6 @@ public class Semester extends BaseEntity
 
     /** 学期ID */
     @TableId(type = IdType.ASSIGN_ID)
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /** 学期名称 */
