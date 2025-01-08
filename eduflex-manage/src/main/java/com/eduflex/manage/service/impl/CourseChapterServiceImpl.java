@@ -2,6 +2,8 @@ package com.eduflex.manage.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -11,7 +13,6 @@ import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.StringUtils;
 import com.eduflex.manage.domain.CourseMaterial;
 import com.eduflex.manage.mapper.CourseMaterialMapper;
-import com.eduflex.manage.service.ICourseMaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eduflex.manage.mapper.CourseChapterMapper;
@@ -20,7 +21,7 @@ import com.eduflex.manage.service.ICourseChapterService;
 
 /**
  * 课程内容章节管理Service业务层处理
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-14
  */
@@ -34,25 +35,24 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
 
     /**
      * 查询课程内容章节管理列表
-     * 
+     *
      * @param courseChapter 课程内容章节管理
      * @return 课程内容章节管理
      */
     @Override
     public List<CourseChapter> selectCourseChapterList(CourseChapter courseChapter)
     {
-        LambdaQueryWrapper<CourseChapter> wrapper = new LambdaQueryWrapper<CourseChapter>()
+        LambdaQueryWrapper<CourseChapter> chapterWrapper = new LambdaQueryWrapper<CourseChapter>()
                 .eq(courseChapter.getId() != null, CourseChapter::getId, courseChapter.getId())
                 .eq(courseChapter.getCourseId() != null, CourseChapter::getCourseId, courseChapter.getCourseId())
                 .like(courseChapter.getName() != null && !courseChapter.getName().isEmpty(), CourseChapter::getName, courseChapter.getName())
-                .eq(courseChapter.getParentId() != null, CourseChapter::getParentId, courseChapter.getParentId())
-                .eq(courseChapter.getHasChildren() != null, CourseChapter::getHasChildren, courseChapter.getHasChildren());
-        return courseChapterMapper.selectList(wrapper);
+                .eq(courseChapter.getParentId() != null, CourseChapter::getParentId, courseChapter.getParentId());
+        return buildTree(courseChapterMapper.selectList(chapterWrapper));
     }
 
     /**
      * 新增课程内容章节管理
-     * 
+     *
      * @param courseChapter 课程内容章节管理
      * @return 结果
      */
@@ -74,14 +74,14 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
 
     /**
      * 批量删除课程内容章节管理
-     * 
+     *
      * @param ids 需要删除的课程内容章节管理主键
      * @return 结果
      */
     @Override
     public int deleteCourseChapterByIds(Long[] ids)
     {
-        LambdaQueryWrapper<CourseChapter> chapterWrapper =  new LambdaQueryWrapper<CourseChapter>();
+        LambdaQueryWrapper<CourseChapter> chapterWrapper = new LambdaQueryWrapper<>();
         LambdaQueryWrapper<CourseMaterial> materialWrapper =  new LambdaQueryWrapper<>();
         // 判断其是否关联资料
         for (Long id : ids) {
@@ -100,5 +100,39 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
 
         ArrayList<Long> idList = CollUtil.toList(ids);
         return courseChapterMapper.deleteByIds(idList);
+    }
+
+    private List<CourseChapter> buildTree(List<CourseChapter> chapterList) {
+
+        Map<Long, CourseChapter> idMap = chapterList.stream()
+                .collect(Collectors.toMap(CourseChapter::getId, chapter -> chapter));
+
+        List<CourseChapter> tree = new ArrayList<>();
+
+        for (CourseChapter chapter : chapterList) {
+            Long parentId = chapter.getParentId();
+            if (parentId == 0) {
+                // 根节点直接放入树中
+                tree.add(chapter);
+            } else {
+                // 子节点加入父节点的 children 列表
+                CourseChapter parent = idMap.get(parentId);
+                if (parent != null) {
+                    if (parent.getChildren() == null) {
+                        parent.setChildren(new ArrayList<>());
+                    }
+                    parent.getChildren().add(chapter);
+                    parent.setHasChildren(true);
+                }
+            }
+        }
+
+        for (CourseChapter chapter : chapterList) {
+            LambdaQueryWrapper<CourseMaterial> materialWrapper = new LambdaQueryWrapper<CourseMaterial>()
+                    .eq(chapter.getId() != null, CourseMaterial::getChapterId, chapter.getId());
+            Long count = courseMaterialMapper.selectCount(materialWrapper);
+            chapter.setHasChildren(count > 0);
+        }
+        return tree;
     }
 }

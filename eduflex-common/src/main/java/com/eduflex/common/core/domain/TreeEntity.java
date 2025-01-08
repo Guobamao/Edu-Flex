@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TreeEntity extends BaseEntity
+public class TreeEntity<C extends TreeEntity> extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -37,5 +37,5 @@ public class TreeEntity extends BaseEntity
 
     /** 子部门 */
     @TableField(exist = false)
-    private List<?> children = new ArrayList<>();
+    private List<C> children = new ArrayList<>();
 }

@@ -85,7 +85,7 @@ public class CommonController extends BaseController
         String path = ossFile.getPath();
         OutputStream os = null;
         try {
-            BufferedImage image = ImageIO.read(new FileInputStream(new File("D:\\Temp\\" + path)));
+            BufferedImage image = ImageIO.read(new FileInputStream("D:\\Temp\\" + path));
             response.setContentType(ossFile.getType());
             os = response.getOutputStream();
             if (image != null) {
@@ -105,7 +105,7 @@ public class CommonController extends BaseController
      * 通用上传请求（单个）
      */
     @PostMapping("/upload")
-    public AjaxResult uploadFile(MultipartFile file) throws Exception {
+    public AjaxResult uploadFile(MultipartFile file) {
         try {
             FileInfo info = fileStorageService.of(file).upload();
 
@@ -121,6 +121,7 @@ public class CommonController extends BaseController
 
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileId", ossFile.getId());
+            ajax.put("fileName", ossFile.getName());
             return ajax;
         }
         catch (Exception e) {
@@ -132,14 +133,14 @@ public class CommonController extends BaseController
      * 通用上传请求（多个）
      */
     @PostMapping("/uploads")
-    public AjaxResult uploadFiles(List<MultipartFile> files) throws Exception {
+    public AjaxResult uploadFiles(List<MultipartFile> files) {
         try {
             // 上传文件路径
             String filePath = RuoYiConfig.getUploadPath();
-            List<String> urls = new ArrayList<String>();
-            List<String> fileNames = new ArrayList<String>();
-            List<String> newFileNames = new ArrayList<String>();
-            List<String> originalFilenames = new ArrayList<String>();
+            List<String> urls = new ArrayList<>();
+            List<String> fileNames = new ArrayList<>();
+            List<String> newFileNames = new ArrayList<>();
+            List<String> originalFilenames = new ArrayList<>();
             for (MultipartFile file : files) {
                 // 上传并返回新文件名称
                 String fileName = FileUploadUtils.upload(filePath, file);

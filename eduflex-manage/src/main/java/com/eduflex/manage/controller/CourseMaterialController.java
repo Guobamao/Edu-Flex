@@ -24,7 +24,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 
 /**
  * 课程资料Controller
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-14
  */
@@ -78,7 +78,7 @@ public class CourseMaterialController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody CourseMaterial courseMaterial)
     {
-        return toAjax(courseMaterialService.insertCourseMaterial(courseMaterial));
+        return toAjax(courseMaterialService.save(courseMaterial));
     }
 
     /**

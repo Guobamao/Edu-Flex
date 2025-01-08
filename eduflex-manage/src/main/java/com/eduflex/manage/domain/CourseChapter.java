@@ -1,10 +1,9 @@
 package com.eduflex.manage.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +22,7 @@ import com.eduflex.common.core.domain.TreeEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_course_chapter")
-public class CourseChapter extends TreeEntity
+public class CourseChapter extends TreeEntity<CourseChapter>
 {
     private static final long serialVersionUID = 1L;
 
@@ -39,5 +38,6 @@ public class CourseChapter extends TreeEntity
     private String name;
 
     /** 是否关联资料 */
-    private Long hasChildren;
+    @TableField(exist = false)
+    private Boolean hasChildren;
 }

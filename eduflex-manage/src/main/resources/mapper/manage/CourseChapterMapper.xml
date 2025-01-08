@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eduflex.manage.mapper.CourseChapterMapper">
-    
+
     <resultMap type="CourseChapter" id="CourseChapterResult">
         <result property="id"    column="id"    />
         <result property="courseId"    column="course_id"    />
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCourseChapterVo">
-        select id, course_id, name, parentId, ancestors, hasChildren, order_num, create_by, create_time, update_by, update_time from tb_course_chapter
+        select id, course_id, name, parent_id, ancestors, order_num, create_by, create_time, update_by, update_time from tb_course_chapter
     </sql>
 
     <select id="selectMaxOrderNum" resultType="java.lang.Integer">
