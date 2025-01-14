@@ -1,0 +1,57 @@
+package com.eduflex.manage.domain;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
+
+/**
+ * 试卷管理对象 tb_exam_paper
+ *
+ * @author 林煜鋒
+ * @date 2025-01-10
+ */
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("tb_exam_paper")
+public class ExamPaper extends BaseEntity {
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 试卷ID
+     */
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
+
+    /**
+     * 试卷名称
+     */
+    @Excel(name = "试卷名称")
+    private String title;
+
+    /**
+     * 总分
+     */
+    @Excel(name = "总分")
+    private Long totalScore;
+
+    /**
+     * 考试时长（分钟）
+     */
+    @Excel(name = "考试时长", readConverterExp = "分=钟")
+    private Long duration;
+
+    /**
+     * 是否发布（0-未发布 1-已发布）
+     */
+    @Excel(name = "是否发布", readConverterExp = "0=-未发布,1=-已发布")
+    private Long isPublished;
+}
