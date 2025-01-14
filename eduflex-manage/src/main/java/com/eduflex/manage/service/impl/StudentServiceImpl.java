@@ -23,7 +23,7 @@ import static com.eduflex.common.utils.SecurityUtils.getUsername;
 
 /**
  * 学生管理Service业务层处理
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-07
  */
@@ -31,13 +31,11 @@ import static com.eduflex.common.utils.SecurityUtils.getUsername;
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService
 {
     @Autowired
-    private StudentMapper studentMapper;
-    @Autowired
     private ISysUserService userService;
 
     /**
      * 查询学生管理列表
-     * 
+     *
      * @param studentDto 学生管理dto
      * @return 学生管理
      */
@@ -50,12 +48,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
                 .like(studentDto.getUserName() != null && !studentDto.getUserName().isEmpty(), "u.user_name", studentDto.getUserName())
                 .like(studentDto.getNickName() != null && !studentDto.getNickName().isEmpty(), "u.nick_name", studentDto.getNickName())
                 .like(studentDto.getPhonenumber() != null && !studentDto.getPhonenumber().isEmpty(), "u.phonenumber", studentDto.getPhonenumber());
-        return studentMapper.selectStudentList(wrapper);
+        return baseMapper.selectStudentList(wrapper);
     }
 
     /**
      * 新增学生管理
-     * 
+     *
      * @param studentDto 学生管理
      * @return 结果
      */
@@ -74,12 +72,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         student.setUserId(sysUser.getUserId());
         student.setCollegeId(studentDto.getCollegeId());
         student.setGradeId(studentDto.getGradeId());
-        return studentMapper.insert(student);
+        return baseMapper.insert(student);
     }
 
     /**
      * 修改学生管理
-     * 
+     *
      * @param studentDto 学生管理
      * @return 结果
      */
@@ -98,12 +96,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         student.setGradeId(studentDto.getGradeId());
         student.setUpdateBy(getUsername());
         student.setUpdateTime(DateUtils.getNowDate());
-        return studentMapper.updateById(student);
+        return baseMapper.updateById(student);
     }
 
     /**
      * 批量删除学生管理
-     * 
+     *
      * @param ids 需要删除的学生管理主键
      * @return 结果
      */
@@ -111,11 +109,11 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     public int deleteStudentByIds(Long[] ids)
     {
         // 查询关联的userId
-        Long[] userIds = studentMapper.selectUserIdsByStudentIds(ids);
+        Long[] userIds = baseMapper.selectUserIdsByStudentIds(ids);
         userService.deleteUserByIds(userIds);
         // 在删除学生表的数据
         ArrayList<Long> idList = CollUtil.toList(ids);
-        return studentMapper.deleteByIds(idList);
+        return baseMapper.deleteByIds(idList);
     }
 
     /**
@@ -171,6 +169,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
      */
     @Override
     public StudentVo selectStudentById(Long id) {
-        return studentMapper.selectStudentById(id);
+        return baseMapper.selectStudentById(id);
     }
 }

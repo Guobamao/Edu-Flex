@@ -12,19 +12,16 @@ import com.eduflex.manage.service.IHomeworkService;
 
 /**
  * 作业管理Service业务层处理
- * 
+ *
  * @author 林煜鋒
  * @date 2024-11-23
  */
 @Service
 public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> implements IHomeworkService
 {
-    @Autowired
-    private HomeworkMapper homeworkMapper;
-
     /**
      * 查询作业管理列表
-     * 
+     *
      * @param homework 作业管理
      * @return 作业管理
      */
@@ -36,6 +33,6 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
                 .like(homework.getTitle() != null && !homework.getTitle().isEmpty(), Homework::getTitle, homework.getTitle())
                 .ge(homework.getParams().get("startTime") != null, Homework::getDeadline, homework.getParams().get("startTime"))
                 .le(homework.getParams().get("endTime") != null, Homework::getDeadline, homework.getParams().get("endTime"));
-        return homeworkMapper.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 }

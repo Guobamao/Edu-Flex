@@ -20,15 +20,13 @@ import static com.eduflex.common.utils.SecurityUtils.getUsername;
 
 /**
  * 教师管理Service业务层处理
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-05
  */
 @Service
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements ITeacherService
 {
-    @Autowired
-    private TeacherMapper teacherMapper;
     @Autowired
     private ISysUserService userService;
 
@@ -45,12 +43,12 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
                 .eq(teacherDto.getCollegeId() != null, "t.college_id", teacherDto.getCollegeId())
                 .like(teacherDto.getNickName() != null && !teacherDto.getNickName().isEmpty(), "u.nick_name", teacherDto.getNickName())
                 .like(teacherDto.getPhonenumber() != null && !teacherDto.getPhonenumber().isEmpty(), "u.phonenumber", teacherDto.getPhonenumber());
-        return teacherMapper.selectTeacherList(wrapper);
+        return baseMapper.selectTeacherList(wrapper);
     }
 
     /**
      * 新增教师管理
-     * 
+     *
      * @param teacherDto 教师管理
      * @return 结果
      */
@@ -71,7 +69,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         teacher.setCreateBy(getUsername());
         teacher.setCreateTime(DateUtils.getNowDate());
 
-        return teacherMapper.insert(teacher);
+        return baseMapper.insert(teacher);
     }
 
     /**
@@ -94,7 +92,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         teacher.setCollegeId(teacherDto.getCollegeId());
         teacher.setCreateBy(getUsername());
         teacher.setCreateTime(DateUtils.getNowDate());
-        return teacherMapper.updateById(teacher);
+        return baseMapper.updateById(teacher);
     }
 
     /**
@@ -140,6 +138,6 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
      */
     @Override
     public Teacher selectTeacherById(Long id) {
-        return teacherMapper.seleteTeacherById(id);
+        return baseMapper.seleteTeacherById(id);
     }
 }

@@ -12,19 +12,17 @@ import com.eduflex.manage.service.ISemesterService;
 
 /**
  * 学期管理Service业务层处理
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-05
  */
 @Service
 public class SemesterServiceImpl extends ServiceImpl<SemesterMapper, Semester> implements ISemesterService
 {
-    @Autowired
-    private SemesterMapper semesterMapper;
 
     /**
      * 查询学期管理列表
-     * 
+     *
      * @param semester 学期管理
      * @return 学期管理
      */
@@ -33,6 +31,6 @@ public class SemesterServiceImpl extends ServiceImpl<SemesterMapper, Semester> i
     {
         LambdaQueryWrapper<Semester> wrapper = new LambdaQueryWrapper<Semester>()
                 .like(semester.getName() != null && !semester.getName().isEmpty(), Semester::getName, semester.getName());
-        return semesterMapper.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 }

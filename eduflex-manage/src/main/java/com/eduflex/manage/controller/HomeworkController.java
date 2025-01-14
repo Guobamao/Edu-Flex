@@ -26,7 +26,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 
 /**
  * 作业管理Controller
- * 
+ *
  * @author 林煜鋒
  * @date 2024-11-23
  */
@@ -40,7 +40,7 @@ public class HomeworkController extends BaseController
     /**
      * 查询作业管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:homework:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(Homework homework)
     {
@@ -52,7 +52,7 @@ public class HomeworkController extends BaseController
     /**
      * 导出作业管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:homework:export')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "作业管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Homework homework)
@@ -65,7 +65,7 @@ public class HomeworkController extends BaseController
     /**
      * 获取作业管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:homework:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -75,7 +75,7 @@ public class HomeworkController extends BaseController
     /**
      * 新增作业管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:homework:add')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "作业管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Homework homework)
@@ -86,7 +86,7 @@ public class HomeworkController extends BaseController
     /**
      * 修改作业管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:homework:edit')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "作业管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Homework homework)
@@ -97,7 +97,7 @@ public class HomeworkController extends BaseController
     /**
      * 删除作业管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:homework:remove')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "作业管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

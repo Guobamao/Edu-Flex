@@ -22,7 +22,7 @@ import com.eduflex.common.core.domain.TreeEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_course_category")
-public class CourseCategory extends TreeEntity<TreeEntity> {
+public class CourseCategory extends TreeEntity<CourseCategory> {
     private static final long serialVersionUID = 1L;
 
     /**

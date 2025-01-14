@@ -19,9 +19,6 @@ import com.eduflex.manage.service.ICourseCategoryService;
 @Service
 public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper, CourseCategory> implements ICourseCategoryService {
 
-    @Autowired
-    private CourseCategoryMapper courseCategoryMapper;
-
     /**
      * 查询课程分类列表
      *
@@ -33,7 +30,7 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper,
         LambdaQueryWrapper<CourseCategory> wrapper = new LambdaQueryWrapper<CourseCategory>()
                 .like(courseCategory.getName() != null && !courseCategory.getName().isEmpty(), CourseCategory::getName, courseCategory.getName())
                 .eq(courseCategory.getParentId() != null, CourseCategory::getParentId, courseCategory.getParentId());
-        return courseCategoryMapper.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 
     /**
@@ -43,7 +40,7 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper,
      */
     @Override
     public boolean hasChildByCategoryId(Long categoryId) {
-        int result = courseCategoryMapper.hasChildByCategoryId(categoryId);
+        int result = baseMapper.hasChildByCategoryId(categoryId);
         return result > 0;
     }
 
@@ -54,12 +51,12 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper,
      */
     @Override
     public int insertCategory(CourseCategory courseCategory) {
-        CourseCategory info = courseCategoryMapper.selectById(courseCategory.getParentId());
+        CourseCategory info = baseMapper.selectById(courseCategory.getParentId());
         if (info != null) {
             courseCategory.setAncestors(info.getAncestors() + "," + courseCategory.getParentId());
         } else {
             courseCategory.setAncestors("0");
         }
-        return courseCategoryMapper.insert(courseCategory);
+        return baseMapper.insert(courseCategory);
     }
 }

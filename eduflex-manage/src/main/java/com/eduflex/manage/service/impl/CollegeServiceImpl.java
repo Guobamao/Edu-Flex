@@ -15,19 +15,16 @@ import com.eduflex.manage.service.ICollegeService;
 
 /**
  * 学院管理Service业务层处理
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-05
  */
 @Service
 public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College> implements ICollegeService
 {
-    @Autowired
-    private CollegeMapper collegeMapper;
-
     /**
      * 查询学院管理列表
-     * 
+     *
      * @param college 学院管理
      * @return 学院管理
      */
@@ -38,22 +35,22 @@ public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College> impl
                 .eq(college.getId() != null && college.getId() != 0, College::getId, college.getId())
                 .eq(college.getParentId() != null && college.getParentId() != 0, College::getParentId, college.getParentId())
                 .like(college.getName() != null && !college.getName().isEmpty(), College::getName, college.getName());
-        return collegeMapper.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 
     /**
      * 新增学院管理
-     * 
+     *
      * @param college 学院管理
      * @return 结果
      */
     @Override
     public int insertCollege(College college)
     {
-        College info = collegeMapper.selectById(college.getParentId());
+        College info = baseMapper.selectById(college.getParentId());
         college.setAncestors(info.getAncestors() + "," + college.getParentId());
         college.setCreateTime(DateUtils.getNowDate());
-        return collegeMapper.insert(college);
+        return baseMapper.insert(college);
     }
 
     /**
@@ -64,7 +61,7 @@ public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College> impl
     @Override
     public boolean checkCollegeNameUnique(College college) {
         long collegeId = StringUtils.isNull(college.getId()) ? -1L : college.getId();
-        College info = collegeMapper.checkCollegeNameUnique(college.getName(), college.getParentId());
+        College info = baseMapper.checkCollegeNameUnique(college.getName(), college.getParentId());
         if (StringUtils.isNotNull(info) && info.getId() != collegeId) {
             return UserConstants.NOT_UNIQUE;
         }
@@ -78,7 +75,7 @@ public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College> impl
      */
     @Override
     public boolean hasChildByCollegeId(Long collegeId) {
-        int result = collegeMapper.hasChildByCollegeId(collegeId);
+        int result = baseMapper.hasChildByCollegeId(collegeId);
         return result > 0;
     }
 }

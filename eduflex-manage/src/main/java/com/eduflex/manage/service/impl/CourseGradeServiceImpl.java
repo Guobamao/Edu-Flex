@@ -14,26 +14,24 @@ import com.eduflex.manage.service.ICourseGradeService;
 
 /**
  * 班级课程管理Service业务层处理
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-11
  */
 @Service
 public class CourseGradeServiceImpl extends ServiceImpl<CourseGradeMapper, CourseGrade> implements ICourseGradeService
 {
-    @Autowired
-    private CourseGradeMapper courseGradeMapper;
 
     /**
      * 查询班级课程管理
-     * 
+     *
      * @param id 班级课程管理主键
      * @return 班级课程管理
      */
     @Override
     public CourseGrade selectCourseGradeById(Long id)
     {
-        return courseGradeMapper.selectCourseGradeById(id);
+        return baseMapper.selectCourseGradeById(id);
     }
 
     /**
@@ -51,7 +49,7 @@ public class CourseGradeServiceImpl extends ServiceImpl<CourseGradeMapper, Cours
                 .like(courseGradeDto.getCourseName() != null && !courseGradeDto.getCourseName().isEmpty(), "c.name", courseGradeDto.getCourseName())
                 .like(courseGradeDto.getGradeName() != null && !courseGradeDto.getGradeName().isEmpty(), "g.name", courseGradeDto.getGradeName());
         wrapper.eq("cg.deleted", 0);
-        return courseGradeMapper.selectCourseGradeList(wrapper);
+        return baseMapper.selectCourseGradeList(wrapper);
     }
 
     /**
@@ -61,6 +59,6 @@ public class CourseGradeServiceImpl extends ServiceImpl<CourseGradeMapper, Cours
      */
     @Override
     public boolean selectCourseGradeByGradeIdAndCourseId(CourseGrade courseGrade) {
-        return courseGradeMapper.selectCourseGradeByGradeIdAndCourseId(courseGrade) > 0;
+        return baseMapper.selectCourseGradeByGradeIdAndCourseId(courseGrade) > 0;
     }
 }

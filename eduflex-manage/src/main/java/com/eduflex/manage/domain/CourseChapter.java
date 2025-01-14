@@ -36,8 +36,4 @@ public class CourseChapter extends TreeEntity<CourseChapter>
     /** 章节名称 */
     @Excel(name = "章节名称")
     private String name;
-
-    /** 是否关联资料 */
-    @TableField(exist = false)
-    private Boolean hasChildren;
 }

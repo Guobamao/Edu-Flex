@@ -27,8 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper, CourseMaterial> implements ICourseMaterialService
 {
     @Autowired
-    private CourseMaterialMapper courseMaterialMapper;
-    @Autowired
     private CourseChapterMapper courseChapterMapper;
 
     /**
@@ -44,7 +42,7 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
                 .eq(courseMaterial.getId() != null, CourseMaterial::getId, courseMaterial.getId())
                 .eq(courseMaterial.getChapterId() != null, CourseMaterial::getChapterId, courseMaterial.getChapterId())
                 .eq(courseMaterial.getMaterialType() != null, CourseMaterial::getMaterialType, courseMaterial.getMaterialType());
-        return courseMaterialMapper.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 
     /**
@@ -60,11 +58,11 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
         // 用HashSet存储根据ids查询的chapterId
         Set<Long> chapterIds = new HashSet<>();
         for (Long id : ids) {
-            chapterIds.add(courseMaterialMapper.selectById(id).getChapterId());
+            chapterIds.add(baseMapper.selectById(id).getChapterId());
         }
 
         ArrayList<Long> idList = CollUtil.toList(ids);
-        int result = courseMaterialMapper.deleteByIds(idList);
+        int result = baseMapper.deleteByIds(idList);
 
         LambdaQueryWrapper<CourseMaterial> wrapper = new LambdaQueryWrapper<>();
         for (Long chapterId : chapterIds) {
@@ -72,7 +70,7 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
             courseChapter.setId(chapterId);
 
             wrapper.eq(CourseMaterial::getChapterId, chapterId);
-            courseChapter.setHasChildren(courseMaterialMapper.selectList(wrapper).isEmpty() ? Boolean.FALSE : Boolean.TRUE);
+            courseChapter.setHasChildren(baseMapper.selectList(wrapper).isEmpty() ? Boolean.FALSE : Boolean.TRUE);
             courseChapterMapper.updateById(courseChapter);
         }
         return result;

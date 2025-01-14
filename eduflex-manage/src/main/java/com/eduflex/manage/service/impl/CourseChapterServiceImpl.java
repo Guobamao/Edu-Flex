@@ -29,16 +29,8 @@ import com.eduflex.manage.service.ICourseChapterService;
 public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, CourseChapter> implements ICourseChapterService
 {
     @Autowired
-    private CourseChapterMapper courseChapterMapper;
-    @Autowired
     private CourseMaterialMapper courseMaterialMapper;
 
-    /**
-     * 查询课程内容章节管理列表
-     *
-     * @param courseChapter 课程内容章节管理
-     * @return 课程内容章节管理
-     */
     @Override
     public List<CourseChapter> selectCourseChapterList(CourseChapter courseChapter)
     {
@@ -47,15 +39,9 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
                 .eq(courseChapter.getCourseId() != null, CourseChapter::getCourseId, courseChapter.getCourseId())
                 .like(courseChapter.getName() != null && !courseChapter.getName().isEmpty(), CourseChapter::getName, courseChapter.getName())
                 .eq(courseChapter.getParentId() != null, CourseChapter::getParentId, courseChapter.getParentId());
-        return buildTree(courseChapterMapper.selectList(chapterWrapper));
+        return buildTree(baseMapper.selectList(chapterWrapper));
     }
 
-    /**
-     * 新增课程内容章节管理
-     *
-     * @param courseChapter 课程内容章节管理
-     * @return 结果
-     */
     @Override
     public int insertCourseChapter(CourseChapter courseChapter)
     {
@@ -65,19 +51,13 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
         }
         // 判断排序字段是否存在
         if (StringUtils.isNull(courseChapter.getOrderNum())) {
-            int maxOrderNum = courseChapterMapper.selectMaxOrderNum(courseChapter.getParentId());
+            int maxOrderNum = baseMapper.selectMaxOrderNum(courseChapter.getParentId());
             courseChapter.setOrderNum(maxOrderNum + 1);
         }
         courseChapter.setCreateTime(DateUtils.getNowDate());
-        return courseChapterMapper.insert(courseChapter);
+        return baseMapper.insert(courseChapter);
     }
 
-    /**
-     * 批量删除课程内容章节管理
-     *
-     * @param ids 需要删除的课程内容章节管理主键
-     * @return 结果
-     */
     @Override
     public int deleteCourseChapterByIds(Long[] ids)
     {
@@ -88,7 +68,7 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
 
             chapterWrapper.eq(CourseChapter::getParentId, id);
 
-            if (StringUtils.isNotEmpty(courseChapterMapper.selectList(chapterWrapper))) {
+            if (StringUtils.isNotEmpty(baseMapper.selectList(chapterWrapper))) {
                 throw new ServiceException("该章节下存在小节，无法删除！");
             }
 
@@ -99,7 +79,7 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
         }
 
         ArrayList<Long> idList = CollUtil.toList(ids);
-        return courseChapterMapper.deleteByIds(idList);
+        return baseMapper.deleteByIds(idList);
     }
 
     private List<CourseChapter> buildTree(List<CourseChapter> chapterList) {
