@@ -61,10 +61,10 @@ public class ExamQuestion extends BaseEntity {
     private String analysis;
 
     /**
-     * 关联知识点ID
+     * 困难程度
      */
-    @Excel(name = "关联知识点ID")
-    private Long knowledgeId;
+    @Excel(name = "困难程度")
+    private Integer difficulty;
 
     /**
      * 关联课程ID
