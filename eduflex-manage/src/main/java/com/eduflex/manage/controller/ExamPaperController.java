@@ -2,6 +2,10 @@ package com.eduflex.manage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import cn.hutool.core.collection.CollUtil;
+import com.eduflex.manage.domain.ExamPaperQuestion;
+import com.eduflex.manage.service.IExamPaperQuestionService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +27,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 
 /**
  * 试卷管理Controller
- * 
+ *
  * @author 林煜鋒
  * @date 2025-01-10
  */
@@ -34,10 +38,13 @@ public class ExamPaperController extends BaseController
     @Autowired
     private IExamPaperService examPaperService;
 
+    @Autowired
+    private IExamPaperQuestionService examPaperQuestionService;
+
     /**
      * 查询试卷管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:paper:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(ExamPaper examPaper)
     {
@@ -49,56 +56,71 @@ public class ExamPaperController extends BaseController
     /**
      * 导出试卷管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:paper:export')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ExamPaper examPaper)
     {
         List<ExamPaper> list = examPaperService.selectExamPaperList(examPaper);
-        ExcelUtil<ExamPaper> util = new ExcelUtil<ExamPaper>(ExamPaper.class);
+        ExcelUtil<ExamPaper> util = new ExcelUtil<>(ExamPaper.class);
         util.exportExcel(response, list, "试卷管理数据");
     }
 
     /**
      * 获取试卷管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:paper:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(examPaperService.selectExamPaperById(id));
+        return success(examPaperService.getById(id));
     }
 
     /**
      * 新增试卷管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:paper:add')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ExamPaper examPaper)
     {
-        return toAjax(examPaperService.insertExamPaper(examPaper));
+        return toAjax(examPaperService.save(examPaper));
     }
 
     /**
      * 修改试卷管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:paper:edit')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody ExamPaper examPaper)
     {
-        return toAjax(examPaperService.updateExamPaper(examPaper));
+        return toAjax(examPaperService.updateById(examPaper));
     }
 
     /**
      * 删除试卷管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:paper:remove')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(examPaperService.deleteExamPaperByIds(ids));
+        List<Long> idList = CollUtil.toList(ids);
+        return toAjax(examPaperService.removeByIds(idList));
+    }
+
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @Log(title = "试卷题目管理", businessType = BusinessType.INSERT)
+    @PostMapping("/question")
+    public AjaxResult addQuestion(@RequestBody List<ExamPaperQuestion> questionList)
+    {
+        return toAjax(examPaperQuestionService.saveOrUpdateBatch(questionList));
+    }
+
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @GetMapping("/question/{id}")
+    public AjaxResult getPaperQuestion(@PathVariable Long id) {
+        return success(examPaperQuestionService.selectQuestionByPaperId(id));
     }
 }
