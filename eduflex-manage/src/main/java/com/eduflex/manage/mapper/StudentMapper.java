@@ -2,15 +2,14 @@ package com.eduflex.manage.mapper;
 
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.eduflex.manage.domain.Student;
-import com.eduflex.manage.domain.vo.StudentVo;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * 学生管理Mapper接口
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-07
  */
@@ -29,10 +28,10 @@ public interface StudentMapper extends BaseMapper<Student>
      * @param wrapper 查询条件
      * @return 学生列表
      */
-    List<Student> selectStudentList(@Param("ew") QueryWrapper<Student> wrapper);
+    List<Student> selectStudentList(@Param("ew") LambdaQueryWrapper<Student> wrapper);
 
     /**
      * 根据学生ID查询学生信息
      */
-    StudentVo selectStudentById(Long id);
+    Student selectStudentById(Long id);
 }

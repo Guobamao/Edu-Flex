@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.domain.dto.StudentDto;
-import com.eduflex.manage.domain.vo.StudentVo;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,30 +33,26 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Autowired
     private ISysUserService userService;
 
-    /**
-     * 查询学生管理列表
-     *
-     * @param studentDto 学生管理dto
-     * @return 学生管理
-     */
     @Override
     public List<Student> selectStudentList(StudentDto studentDto)
     {
-        QueryWrapper<Student> wrapper = new QueryWrapper<Student>()
-                .eq(studentDto.getCollegeId() != null, "s.college_id", studentDto.getCollegeId())
-                .eq(studentDto.getGradeId() != null, "s.grade_id", studentDto.getGradeId())
-                .like(studentDto.getUserName() != null && !studentDto.getUserName().isEmpty(), "u.user_name", studentDto.getUserName())
-                .like(studentDto.getNickName() != null && !studentDto.getNickName().isEmpty(), "u.nick_name", studentDto.getNickName())
-                .like(studentDto.getPhonenumber() != null && !studentDto.getPhonenumber().isEmpty(), "u.phonenumber", studentDto.getPhonenumber());
+        LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<Student>()
+                .like(StrUtil.isNotBlank(studentDto.getUserName()), Student::getUserName, studentDto.getUserName())
+                .like(StrUtil.isNotBlank(studentDto.getNickName()), Student::getNickName, studentDto.getNickName())
+                .like(StrUtil.isNotBlank(studentDto.getPhonenumber()), Student::getPhonenumber, studentDto.getPhonenumber());
+
+        if (StrUtil.isNotBlank(studentDto.getSearchValue())) {
+            wrapper.and(w -> w.like(Student::getUserName, studentDto.getSearchValue())
+                    .or()
+                    .like(Student::getNickName, studentDto.getSearchValue())
+                    .or()
+                    .like(Student::getPhonenumber, studentDto.getSearchValue())
+                    .or()
+                    .like(Student::getEmail, studentDto.getSearchValue()));
+        }
         return baseMapper.selectStudentList(wrapper);
     }
 
-    /**
-     * 新增学生管理
-     *
-     * @param studentDto 学生管理
-     * @return 结果
-     */
     @Transactional
     @Override
     public int insertStudent(StudentDto studentDto)
@@ -70,17 +66,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         // 新增学生表信息
         Student student = new Student();
         student.setUserId(sysUser.getUserId());
-        student.setCollegeId(studentDto.getCollegeId());
-        student.setGradeId(studentDto.getGradeId());
         return baseMapper.insert(student);
     }
 
-    /**
-     * 修改学生管理
-     *
-     * @param studentDto 学生管理
-     * @return 结果
-     */
     @Transactional
     @Override
     public int updateStudent(StudentDto studentDto)
@@ -92,19 +80,11 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
         Student student = new Student();
         student.setId(studentDto.getId());
-        student.setCollegeId(studentDto.getCollegeId());
-        student.setGradeId(studentDto.getGradeId());
         student.setUpdateBy(getUsername());
         student.setUpdateTime(DateUtils.getNowDate());
         return baseMapper.updateById(student);
     }
 
-    /**
-     * 批量删除学生管理
-     *
-     * @param ids 需要删除的学生管理主键
-     * @return 结果
-     */
     @Override
     public int deleteStudentByIds(Long[] ids)
     {
@@ -116,59 +96,34 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return baseMapper.deleteByIds(idList);
     }
 
-    /**
-     * 检验学生登录名唯一性
-     * @param studentDto 查询条件
-     * @return 布尔值
-     */
     @Override
     public boolean checkUserNameUnique(StudentDto studentDto) {
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(studentDto, sysUser);
-        return userService.checkUserNameUnique(sysUser);
+        return !userService.checkUserNameUnique(sysUser);
     }
 
-    /**
-     * 检验学生登录名唯一性
-     * @param studentDto 查询条件
-     * @return 布尔值
-     */
     @Override
     public boolean checkPhoneUnique(StudentDto studentDto) {
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(studentDto, sysUser);
-        return userService.checkPhoneUnique(sysUser);
+        return !userService.checkPhoneUnique(sysUser);
     }
 
-    /**
-     * 检验学生邮箱唯一性
-     * @param studentDto 查询条件
-     * @return 布尔值
-     */
     @Override
     public boolean checkEmailUnique(StudentDto studentDto) {
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(studentDto, sysUser);
-        return userService.checkEmailUnique(sysUser);
+        return !userService.checkEmailUnique(sysUser);
     }
 
-    /**
-     * 重置密码
-     * @param studentDto 学生信息
-     * @return 结果
-     */
     @Override
     public int resetPwd(StudentDto studentDto) {
         return userService.resetPwd(studentDto);
     }
 
-    /**
-     * 根据ID查询学生信息
-     * @param id 学生ID
-     * @return 学生信息
-     */
     @Override
-    public StudentVo selectStudentById(Long id) {
+    public Student selectStudentById(Long id) {
         return baseMapper.selectStudentById(id);
     }
 }

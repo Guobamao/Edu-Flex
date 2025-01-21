@@ -5,11 +5,10 @@ import java.util.List;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.Student;
 import com.eduflex.manage.domain.dto.StudentDto;
-import com.eduflex.manage.domain.vo.StudentVo;
 
 /**
  * 学生管理Service接口
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-07
  */
@@ -18,35 +17,35 @@ public interface IStudentService extends IService<Student>
 
     /**
      * 查询学生管理列表
-     * 
+     *
      * @param studentDto 学生管理
      * @return 学生管理集合
      */
-    public List<Student> selectStudentList(StudentDto studentDto);
+    List<Student> selectStudentList(StudentDto studentDto);
 
     /**
      * 新增学生管理
-     * 
+     *
      * @param studentDto 学生管理
      * @return 结果
      */
-    public int insertStudent(StudentDto studentDto);
+    int insertStudent(StudentDto studentDto);
 
     /**
      * 修改学生管理
-     * 
+     *
      * @param studentDto 学生管理
      * @return 结果
      */
-    public int updateStudent(StudentDto studentDto);
+    int updateStudent(StudentDto studentDto);
 
     /**
      * 批量删除学生管理
-     * 
+     *
      * @param ids 需要删除的学生管理主键集合
      * @return 结果
      */
-    public int deleteStudentByIds(Long[] ids);
+    int deleteStudentByIds(Long[] ids);
 
     /**
      * 检验学生登录名唯一性
@@ -78,8 +77,9 @@ public interface IStudentService extends IService<Student>
 
     /**
      * 获取学生信息
+     *
      * @param id 学生ID
      * @return
      */
-    StudentVo selectStudentById(Long id);
+    Student selectStudentById(Long id);
 }

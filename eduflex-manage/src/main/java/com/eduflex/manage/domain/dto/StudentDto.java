@@ -21,4 +21,6 @@ public class StudentDto extends Student {
     private String avatar;
     // 角色ID
     private Long roleId;
+
+    private String searchValue;
 }

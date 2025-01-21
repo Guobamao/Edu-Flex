@@ -2,7 +2,8 @@ package com.eduflex.manage.service.impl;
 
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.utils.DateUtils;
@@ -39,10 +40,9 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
     @Override
     public List<Teacher> selectTeacherList(TeacherDto teacherDto)
     {
-        QueryWrapper<Teacher> wrapper = new QueryWrapper<Teacher>()
-                .eq(teacherDto.getCollegeId() != null, "t.college_id", teacherDto.getCollegeId())
-                .like(teacherDto.getNickName() != null && !teacherDto.getNickName().isEmpty(), "u.nick_name", teacherDto.getNickName())
-                .like(teacherDto.getPhonenumber() != null && !teacherDto.getPhonenumber().isEmpty(), "u.phonenumber", teacherDto.getPhonenumber());
+        LambdaQueryWrapper<Teacher> wrapper = new LambdaQueryWrapper<Teacher>()
+                .like(StrUtil.isNotBlank(teacherDto.getNickName()), Teacher::getNickName, teacherDto.getNickName())
+                .like(StrUtil.isNotBlank(teacherDto.getPhonenumber()), Teacher::getPhonenumber, teacherDto.getPhonenumber());
         return baseMapper.selectTeacherList(wrapper);
     }
 
@@ -65,7 +65,6 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         // 再新增教师表信息
         Teacher teacher = new Teacher();
         teacher.setUserId(sysUser.getUserId());
-        teacher.setCollegeId(teacherDto.getCollegeId());
         teacher.setCreateBy(getUsername());
         teacher.setCreateTime(DateUtils.getNowDate());
 
@@ -89,7 +88,6 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
         Teacher teacher = new Teacher();
         teacher.setId(teacherDto.getId());
-        teacher.setCollegeId(teacherDto.getCollegeId());
         teacher.setCreateBy(getUsername());
         teacher.setCreateTime(DateUtils.getNowDate());
         return baseMapper.updateById(teacher);
@@ -138,6 +136,6 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
      */
     @Override
     public Teacher selectTeacherById(Long id) {
-        return baseMapper.seleteTeacherById(id);
+        return baseMapper.selectTeacherById(id);
     }
 }

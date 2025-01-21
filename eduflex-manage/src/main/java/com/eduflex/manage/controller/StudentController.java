@@ -3,10 +3,10 @@ package com.eduflex.manage.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.util.StrUtil;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
-import com.eduflex.common.utils.StringUtils;
 import com.eduflex.manage.domain.dto.StudentDto;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 
 /**
  * 学生管理Controller
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-07
  */
@@ -84,18 +84,18 @@ public class StudentController extends BaseController
     public AjaxResult add(@RequestBody StudentDto studentDto)
     {
         // 检验字段唯一性
-        if (!studentService.checkUserNameUnique(studentDto)) {
+        if (studentService.checkUserNameUnique(studentDto)) {
             return error("新增学生‘" + studentDto.getUserName() + "'失败，登录账号已存在");
-        } else if (StringUtils.isNotEmpty(studentDto.getPhonenumber()) && !studentService.checkPhoneUnique(studentDto)) {
+        } else if (StrUtil.isNotBlank(studentDto.getPhonenumber()) && studentService.checkPhoneUnique(studentDto)) {
             return error("新增学生‘" + studentDto.getUserName() + "'失败，手机号码已存在");
-        } else if (StringUtils.isNotEmpty(studentDto.getEmail()) && !studentService.checkEmailUnique(studentDto)) {
+        } else if (StrUtil.isNotBlank(studentDto.getEmail()) && studentService.checkEmailUnique(studentDto)) {
             return error("新增学生‘" + studentDto.getUserName() + "'失败，邮箱账号已存在");
         }
 
         studentDto.setRoleId(EduFlexConstants.ROLE_STUDENT); // 设置角色为学生
         studentDto.setCreateBy(getUsername());
         studentDto.setStatus(EduFlexConstants.STUDENT_STATUS_ENABLED);
-        if (StringUtils.isNotNull(studentDto.getPassword())) {
+        if (StrUtil.isNotBlank(studentDto.getPassword())) {
             studentDto.setPassword(SecurityUtils.encryptPassword(studentDto.getPassword()));
         } else {
             studentDto.setPassword(SecurityUtils.encryptPassword("Axy" + studentDto.getUserName()));
@@ -111,11 +111,11 @@ public class StudentController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody StudentDto studentDto)
     {
-        if (!studentService.checkUserNameUnique(studentDto)) {
+        if (studentService.checkUserNameUnique(studentDto)) {
             return error("修改学生‘" + studentDto.getUserName() + "'失败，登录账号已存在");
-        } else if (StringUtils.isNotEmpty(studentDto.getPhonenumber()) && !studentService.checkPhoneUnique(studentDto)) {
+        } else if (StrUtil.isNotBlank(studentDto.getPhonenumber()) && studentService.checkPhoneUnique(studentDto)) {
             return error("修改学生‘" + studentDto.getUserName() + "'失败，手机号码已存在");
-        } else if (StringUtils.isNotEmpty(studentDto.getEmail()) && !studentService.checkEmailUnique(studentDto)) {
+        } else if (StrUtil.isNotBlank(studentDto.getEmail()) && studentService.checkEmailUnique(studentDto)) {
             return error("修改学生'" + studentDto.getUserName() + "'失败，邮箱账号已存在");
         }
         studentDto.setRoleId(EduFlexConstants.ROLE_STUDENT);

@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 20/01/2025 18:02:20
+ Date: 21/01/2025 14:24:27
 */
 
 SET NAMES utf8mb4;
@@ -44,7 +44,7 @@ CREATE TABLE `gen_table`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gen_table
@@ -63,6 +63,8 @@ INSERT INTO `gen_table` VALUES (14, 'tb_course_category', '课程分类表', '',
 INSERT INTO `gen_table` VALUES (15, 'tb_exam_paper', '试卷表', NULL, NULL, 'ExamPaper', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'paper', '试卷管理', '林煜鋒', '0', '/', '{\"parentMenuId\":\"2068\"}', 'admin', '2025-01-10 16:09:03', '', '2025-01-10 16:12:18', NULL);
 INSERT INTO `gen_table` VALUES (16, 'tb_exam_question', '题目表', NULL, NULL, 'ExamQuestion', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'question', '题目管理', '林煜鋒', '0', '/', '{\"parentMenuId\":\"2068\"}', 'admin', '2025-01-10 16:09:03', '', '2025-01-10 16:18:15', NULL);
 INSERT INTO `gen_table` VALUES (17, 'tb_knowledge', '知识点分类表', '', '', 'Knowledge', 'tree', 'element-plus', 'com.eduflex.manage', 'manage', 'knowledge', '知识点分类', '林煜鋒', '0', '/', '{\"treeCode\":\"id\",\"treeName\":\"name\",\"treeParentCode\":\"parent_id\",\"parentMenuId\":\"2068\"}', 'admin', '2025-01-10 16:09:03', '', '2025-01-10 16:32:16', NULL);
+INSERT INTO `gen_table` VALUES (18, 'tb_comments', '评论表', '', '', 'Comments', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'comments', '评论管理', '林煜鋒', '0', '/', '{\"treeCode\":\"id\",\"treeName\":\"content\",\"treeParentCode\":\"parent_id\",\"parentMenuId\":\"2087\"}', 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:50', NULL);
+INSERT INTO `gen_table` VALUES (19, 'tb_oss_file', '文件管理表', NULL, NULL, 'OssFile', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'file', '资源管理', '林煜鋒', '0', '/', '{}', 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15', NULL);
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -92,7 +94,7 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 146 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 167 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -209,6 +211,27 @@ INSERT INTO `gen_table_column` VALUES (142, 17, 'create_time', '创建时间', '
 INSERT INTO `gen_table_column` VALUES (143, 17, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'input', '', 9, 'admin', '2025-01-10 16:09:03', '', '2025-01-10 16:32:16');
 INSERT INTO `gen_table_column` VALUES (144, 17, 'update_time', '更新时间', 'timestamp', 'Date', 'updateTime', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'datetime', '', 10, 'admin', '2025-01-10 16:09:03', '', '2025-01-10 16:32:16');
 INSERT INTO `gen_table_column` VALUES (145, 17, 'deleted', '逻辑删除字段', 'tinyint', 'Long', 'deleted', '0', '0', '0', '0', '0', '0', '0', 'EQ', 'input', '', 11, 'admin', '2025-01-10 16:09:03', '', '2025-01-10 16:32:16');
+INSERT INTO `gen_table_column` VALUES (146, 18, 'id', '评论ID', 'bigint', 'Long', 'id', '1', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:50');
+INSERT INTO `gen_table_column` VALUES (147, 18, 'course_id', '课程ID', 'bigint', 'Long', 'courseId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:50');
+INSERT INTO `gen_table_column` VALUES (148, 18, 'user_id', '用户ID', 'bigint', 'Long', 'userId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:50');
+INSERT INTO `gen_table_column` VALUES (149, 18, 'content', '评论内容', 'text', 'String', 'content', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'editor', '', 4, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:50');
+INSERT INTO `gen_table_column` VALUES (150, 18, 'parent_id', '父级评论ID', 'bigint', 'Long', 'parentId', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:50');
+INSERT INTO `gen_table_column` VALUES (151, 18, 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 6, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:51');
+INSERT INTO `gen_table_column` VALUES (152, 18, 'create_time', '创建时间', 'timestamp', 'Date', 'createTime', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'datetime', '', 7, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:51');
+INSERT INTO `gen_table_column` VALUES (153, 18, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'input', '', 8, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:51');
+INSERT INTO `gen_table_column` VALUES (154, 18, 'update_time', '更新时间', 'timestamp', 'Date', 'updateTime', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'datetime', '', 9, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:51');
+INSERT INTO `gen_table_column` VALUES (155, 18, 'deleted', '逻辑删除字段', 'tinyint', 'Long', 'deleted', '0', '0', '0', '0', '0', '0', '0', 'EQ', 'input', '', 10, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:51');
+INSERT INTO `gen_table_column` VALUES (156, 19, 'id', 'ID', 'bigint', 'Long', 'id', '1', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (157, 19, 'name', '文件名', 'varchar(255)', 'String', 'name', '0', '0', '0', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (158, 19, 'suffix', '文件后缀名', 'varchar(255)', 'String', 'suffix', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (159, 19, 'path', '文件路径', 'varchar(255)', 'String', 'path', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (160, 19, 'type', '文件类型', 'varchar(255)', 'String', 'type', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'select', '', 5, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (161, 19, 'size', '文件大小', 'bigint', 'Long', 'size', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (162, 19, 'deleted', '是否已删除', 'tinyint', 'Long', 'deleted', '0', '0', '0', '0', '0', '0', '0', 'EQ', 'input', '', 7, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (163, 19, 'create_by', '创建人', 'varchar(64)', 'String', 'createBy', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 8, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (164, 19, 'create_time', '创建时间', 'timestamp', 'Date', 'createTime', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'datetime', '', 9, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (165, 19, 'update_by', '修改人', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'input', '', 10, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
+INSERT INTO `gen_table_column` VALUES (166, 19, 'update_time', '更新时间', 'timestamp', 'Date', 'updateTime', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'datetime', '', 11, 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15');
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -669,7 +692,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 202 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -774,6 +797,8 @@ INSERT INTO `sys_logininfor` VALUES (196, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (197, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-01-15 14:26:30');
 INSERT INTO `sys_logininfor` VALUES (198, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-01-20 13:20:27');
 INSERT INTO `sys_logininfor` VALUES (199, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-01-20 17:52:03');
+INSERT INTO `sys_logininfor` VALUES (200, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-01-21 11:40:20');
+INSERT INTO `sys_logininfor` VALUES (201, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-01-21 13:02:38');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -801,7 +826,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2087 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -892,24 +917,6 @@ INSERT INTO `sys_menu` VALUES (1058, '导入代码', 116, 4, '#', '', '', '', 1,
 INSERT INTO `sys_menu` VALUES (1059, '预览代码', 116, 5, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', '2024-10-05 13:28:48', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1060, '生成代码', 116, 6, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2024-10-05 13:28:48', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2000, '基础管理', 0, 1, 'base', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '基础管理', 'admin', '2024-10-05 14:55:21', 'admin', '2024-10-05 17:47:12', '');
-INSERT INTO `sys_menu` VALUES (2001, '学院管理', 2000, 1, 'college', 'manage/college/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:college:list', '学院管理', 'admin', '2024-10-05 15:01:53', 'admin', '2024-10-05 17:46:41', '学院管理菜单');
-INSERT INTO `sys_menu` VALUES (2002, '学院管理查询', 2001, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:college:query', '#', 'admin', '2024-10-05 15:01:53', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2003, '学院管理新增', 2001, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:college:add', '#', 'admin', '2024-10-05 15:01:53', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2004, '学院管理修改', 2001, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:college:edit', '#', 'admin', '2024-10-05 15:01:53', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2005, '学院管理删除', 2001, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:college:remove', '#', 'admin', '2024-10-05 15:01:53', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2006, '学院管理导出', 2001, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:college:export', '#', 'admin', '2024-10-05 15:01:53', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2007, '班级管理', 2000, 1, 'grade', 'manage/grade/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:grade:list', '班级管理', 'admin', '2024-10-05 19:52:25', 'admin', '2024-10-05 19:57:53', '班级管理菜单');
-INSERT INTO `sys_menu` VALUES (2008, '班级管理查询', 2007, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:grade:query', '#', 'admin', '2024-10-05 19:52:25', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2009, '班级管理新增', 2007, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:grade:add', '#', 'admin', '2024-10-05 19:52:25', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2010, '班级管理修改', 2007, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:grade:edit', '#', 'admin', '2024-10-05 19:52:25', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2011, '班级管理删除', 2007, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:grade:remove', '#', 'admin', '2024-10-05 19:52:25', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2012, '班级管理导出', 2007, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:grade:export', '#', 'admin', '2024-10-05 19:52:25', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2013, '学期管理', 2000, 1, 'semester', 'manage/semester/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:semester:list', '学期管理', 'admin', '2024-10-05 21:20:06', 'admin', '2024-10-05 21:35:05', '学期管理菜单');
-INSERT INTO `sys_menu` VALUES (2014, '学期管理查询', 2013, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:semester:query', '#', 'admin', '2024-10-05 21:20:06', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2015, '学期管理新增', 2013, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:semester:add', '#', 'admin', '2024-10-05 21:20:06', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2016, '学期管理修改', 2013, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:semester:edit', '#', 'admin', '2024-10-05 21:20:06', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2017, '学期管理删除', 2013, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:semester:remove', '#', 'admin', '2024-10-05 21:20:06', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2018, '学期管理导出', 2013, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:semester:export', '#', 'admin', '2024-10-05 21:20:06', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2019, '教师管理', 2000, 1, 'teacher', 'manage/teacher/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:teacher:list', '教师管理', 'admin', '2024-10-05 23:35:45', 'admin', '2024-10-06 16:58:58', '教师管理菜单');
 INSERT INTO `sys_menu` VALUES (2020, '教师管理查询', 2019, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:teacher:query', '#', 'admin', '2024-10-05 23:35:45', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2021, '教师管理新增', 2019, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:teacher:add', '#', 'admin', '2024-10-05 23:35:45', '', NULL, '');
@@ -929,12 +936,6 @@ INSERT INTO `sys_menu` VALUES (2034, '课程管理新增', 2032, 2, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2035, '课程管理修改', 2032, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:course:edit', '#', 'admin', '2024-10-10 20:58:03', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2036, '课程管理删除', 2032, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:course:remove', '#', 'admin', '2024-10-10 20:58:03', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2037, '课程管理导出', 2032, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:course:export', '#', 'admin', '2024-10-10 20:58:03', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2038, '班级课程管理', 2031, 1, 'courseGrade', 'manage/courseGrade/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:courseGrade:list', '班级课程', 'admin', '2024-10-13 22:02:10', 'admin', '2024-10-14 10:27:05', '班级课程管理菜单');
-INSERT INTO `sys_menu` VALUES (2039, '班级课程管理查询', 2038, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:courseGrade:query', '#', 'admin', '2024-10-13 22:02:10', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2040, '班级课程管理新增', 2038, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:courseGrade:add', '#', 'admin', '2024-10-13 22:02:10', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2041, '班级课程管理修改', 2038, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:courseGrade:edit', '#', 'admin', '2024-10-13 22:02:10', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2042, '班级课程管理删除', 2038, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:courseGrade:remove', '#', 'admin', '2024-10-13 22:02:10', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2043, '班级课程管理导出', 2038, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:courseGrade:export', '#', 'admin', '2024-10-13 22:02:10', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2044, '课程内容章节管理', 2031, 2, 'chapter', 'manage/chapter/index', NULL, '', 1, 0, 'C', '1', '0', 'manage:chapter:list', '#', 'admin', '2024-10-16 23:05:06', 'admin', '2024-10-16 23:07:46', '课程内容章节管理菜单');
 INSERT INTO `sys_menu` VALUES (2045, '课程内容章节管理查询', 2044, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:chapter:query', '#', 'admin', '2024-10-16 23:05:06', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2046, '课程内容章节管理新增', 2044, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:chapter:add', '#', 'admin', '2024-10-16 23:05:06', '', NULL, '');
@@ -972,6 +973,19 @@ INSERT INTO `sys_menu` VALUES (2083, '题目管理新增', 2081, 2, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2084, '题目管理修改', 2081, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:question:edit', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2085, '题目管理删除', 2081, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:question:remove', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2086, '题目管理导出', 2081, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:question:export', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2087, '评论管理', 0, 4, 'comments', NULL, NULL, '', 1, 0, 'M', '0', '0', NULL, 'wechat', 'admin', '2025-01-21 12:00:23', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2088, '评论管理', 2087, 1, 'comments', 'manage/comments/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:comments:list', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '评论管理菜单');
+INSERT INTO `sys_menu` VALUES (2089, '评论管理查询', 2088, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:query', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2090, '评论管理新增', 2088, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:add', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2091, '评论管理修改', 2088, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:edit', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2092, '评论管理删除', 2088, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:remove', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2093, '评论管理导出', 2088, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:export', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2094, '资源管理', 3, 1, 'file', 'manage/file/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:file:list', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '资源管理菜单');
+INSERT INTO `sys_menu` VALUES (2095, '资源管理查询', 2094, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:query', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2096, '资源管理新增', 2094, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:add', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2097, '资源管理修改', 2094, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:edit', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2098, '资源管理删除', 2094, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:remove', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2099, '资源管理导出', 2094, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:export', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -1023,7 +1037,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 665 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 670 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1593,6 +1607,11 @@ INSERT INTO `sys_oper_log` VALUES (661, '试卷题目管理', 1, 'com.eduflex.ma
 INSERT INTO `sys_oper_log` VALUES (662, '试卷题目管理', 1, 'com.eduflex.manage.controller.ExamPaperController.addQuestion()', 'POST', 1, 'admin', '研发部门', '/manage/paper/question', '127.0.0.1', '内网IP', '[{\"id\":1879082351088553986,\"orderNum\":2,\"paperId\":1879418666678198274,\"questionId\":1879082351088553986,\"score\":5},{\"id\":1879096369215885314,\"orderNum\":2,\"paperId\":1879418666678198274,\"questionId\":1879096369215885314,\"score\":5},{\"id\":1879096505274912770,\"orderNum\":3,\"paperId\":1879418666678198274,\"questionId\":1879096505274912770,\"score\":5},{\"id\":1879096608295407618,\"orderNum\":4,\"paperId\":1879418666678198274,\"questionId\":1879096608295407618,\"score\":5},{\"id\":1879096862541533186,\"orderNum\":1,\"paperId\":1879418666678198274,\"questionId\":1879096862541533186,\"score\":5}]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-20 15:12:35', 26);
 INSERT INTO `sys_oper_log` VALUES (663, '试卷题目管理', 1, 'com.eduflex.manage.controller.ExamPaperController.addQuestion()', 'POST', 1, 'admin', '研发部门', '/manage/paper/question', '127.0.0.1', '内网IP', '[{\"id\":1879096862541533186,\"orderNum\":1,\"paperId\":1879418666678198274,\"questionId\":1879096862541533186,\"score\":5},{\"id\":1879082351088553986,\"orderNum\":2,\"paperId\":1879418666678198274,\"questionId\":1879082351088553986,\"score\":5},{\"id\":1879096369215885314,\"orderNum\":2,\"paperId\":1879418666678198274,\"questionId\":1879096369215885314,\"score\":5},{\"id\":1879096505274912770,\"orderNum\":3,\"paperId\":1879418666678198274,\"questionId\":1879096505274912770,\"score\":5},{\"id\":1879096608295407618,\"orderNum\":4,\"paperId\":1879418666678198274,\"questionId\":1879096608295407618,\"score\":5},{\"id\":1879082351088553986,\"orderNum\":6,\"paperId\":1879418666678198274,\"questionId\":1879082351088553986,\"score\":5}]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-20 15:13:53', 29);
 INSERT INTO `sys_oper_log` VALUES (664, '试卷题目管理', 1, 'com.eduflex.manage.controller.ExamPaperController.addQuestion()', 'POST', 1, 'admin', '研发部门', '/manage/paper/question', '127.0.0.1', '内网IP', '[{\"id\":1879096862541533186,\"orderNum\":1,\"paperId\":1879418666678198274,\"questionId\":1879096862541533186,\"score\":5},{\"id\":1879096369215885314,\"orderNum\":2,\"paperId\":1879418666678198274,\"questionId\":1879096369215885314,\"score\":5},{\"id\":1879096505274912770,\"orderNum\":3,\"paperId\":1879418666678198274,\"questionId\":1879096505274912770,\"score\":5},{\"id\":1879096608295407618,\"orderNum\":4,\"paperId\":1879418666678198274,\"questionId\":1879096608295407618,\"score\":5},{\"id\":1879082351088553986,\"orderNum\":6,\"paperId\":1879418666678198274,\"questionId\":1879082351088553986,\"score\":5}]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-20 15:14:14', 18);
+INSERT INTO `sys_oper_log` VALUES (665, '菜单管理', 1, 'com.eduflex.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createBy\":\"admin\",\"icon\":\"wechat\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"评论管理\",\"menuType\":\"M\",\"orderNum\":4,\"params\":{},\"parentId\":0,\"path\":\"comments\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-21 12:00:23', 12);
+INSERT INTO `sys_oper_log` VALUES (666, '代码生成', 6, 'com.eduflex.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\"tables\":\"tb_comments,tb_oss_file\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-21 12:00:48', 96);
+INSERT INTO `sys_oper_log` VALUES (667, '代码生成', 2, 'com.eduflex.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"comments\",\"className\":\"Comments\",\"columns\":[{\"capJavaField\":\"Id\",\"columnComment\":\"评论ID\",\"columnId\":146,\"columnName\":\"id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-21 12:00:48\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":false,\"insert\":false,\"isIncrement\":\"0\",\"isInsert\":\"0\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":18,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"CourseId\",\"columnComment\":\"课程ID\",\"columnId\":147,\"columnName\":\"course_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-21 12:00:48\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"courseId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":18,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"UserId\",\"columnComment\":\"用户ID\",\"columnId\":148,\"columnName\":\"user_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-21 12:00:48\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"userId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":18,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Content\",\"columnComment\":\"评论内容\",\"columnId\":149,\"columnName\":\"content\",\"columnType\":\"text\",\"createBy\":\"admin\",\"createTime\":\"2025-01-21 12:00:48\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"editor\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"content\",\"javaT', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-21 13:04:51', 43);
+INSERT INTO `sys_oper_log` VALUES (668, '代码生成', 2, 'com.eduflex.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"file\",\"className\":\"OssFile\",\"columns\":[{\"capJavaField\":\"Id\",\"columnComment\":\"ID\",\"columnId\":156,\"columnName\":\"id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-21 12:00:48\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":false,\"insert\":false,\"isIncrement\":\"0\",\"isInsert\":\"0\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":19,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Name\",\"columnComment\":\"文件名\",\"columnId\":157,\"columnName\":\"name\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2025-01-21 12:00:48\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"0\",\"javaField\":\"name\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"LIKE\",\"required\":false,\"sort\":2,\"superColumn\":false,\"tableId\":19,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Suffix\",\"columnComment\":\"文件后缀名\",\"columnId\":158,\"columnName\":\"suffix\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2025-01-21 12:00:48\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"0\",\"javaField\":\"suffix\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":false,\"sort\":3,\"superColumn\":false,\"tableId\":19,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Path\",\"columnComment\":\"文件路径\",\"columnId\":159,\"columnName\":\"path\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2025-01-21 12:00:48\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"0\",\"javaField\":\"path\",\"javaType', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-21 13:06:15', 40);
+INSERT INTO `sys_oper_log` VALUES (669, '代码生成', 8, 'com.eduflex.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"tb_comments,tb_oss_file\"}', NULL, 0, NULL, '2025-01-21 13:06:23', 195);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1815,7 +1834,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/avatar/2024/12/31/logo_20241231152013A001.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-01-20 17:52:03', 'admin', '2024-10-05 13:28:48', '', '2025-01-20 17:52:03', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/avatar/2024/12/31/logo_20241231152013A001.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-01-21 13:02:38', 'admin', '2024-10-05 13:28:48', '', '2025-01-21 13:02:38', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '2', '127.0.0.1', '2024-10-05 13:28:48', 'admin', '2024-10-05 13:28:48', 'admin', '2024-10-06 16:03:47', '测试员');
 INSERT INTO `sys_user` VALUES (100, NULL, 'zhangsan', '张三', '00', '1972212424@qq.com', '15815161605', '0', '', '$2a$10$gnDVpc1oEeeHL9oMuVrRaulVsqNuT1SPeSdpqkIh7ERDD65pPmkJa', '0', '0', '127.0.0.1', '2024-10-16 23:49:02', 'admin', '2024-10-06 00:52:44', 'admin', '2024-12-08 17:22:31', NULL);
 INSERT INTO `sys_user` VALUES (102, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$nZvTWdZ1BlIHdGlwHMkGMOTKKagqC8yN9piQ.6gHtaSzCHF1Bl0A2', '0', '2', '', NULL, 'admin', '2024-10-06 16:56:27', '', NULL, NULL);
@@ -1864,31 +1883,26 @@ INSERT INTO `sys_user_role` VALUES (107, 4);
 INSERT INTO `sys_user_role` VALUES (110, 4);
 
 -- ----------------------------
--- Table structure for tb_college
+-- Table structure for tb_comments
 -- ----------------------------
-DROP TABLE IF EXISTS `tb_college`;
-CREATE TABLE `tb_college`  (
-  `id` bigint NOT NULL COMMENT '学院ID',
-  `parent_id` bigint NULL DEFAULT NULL COMMENT '父级学院ID',
-  `ancestors` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '祖级列表',
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '学院名称',
+DROP TABLE IF EXISTS `tb_comments`;
+CREATE TABLE `tb_comments`  (
+  `id` bigint NOT NULL COMMENT '评论ID',
+  `course_id` bigint NOT NULL COMMENT '关联课程ID',
+  `user_id` bigint NOT NULL COMMENT '关联用户ID',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
+  `parent_id` bigint NULL DEFAULT NULL COMMENT '父级评论ID',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学院表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of tb_college
+-- Records of tb_comments
 -- ----------------------------
-INSERT INTO `tb_college` VALUES (1, 0, '0', '华南农业大学珠江学院', NULL, '2024-10-05 15:04:55', NULL, '2024-10-05 15:04:54', 0);
-INSERT INTO `tb_college` VALUES (2, 1, '0,1', '人工智能学院', 'admin', '2024-10-05 15:42:06', 'admin', '2024-12-08 01:15:39', 0);
-INSERT INTO `tb_college` VALUES (3, 1, '0,1', '艺术设计学院', 'admin', '2024-10-05 16:30:52', NULL, '2024-10-05 16:30:51', 0);
-INSERT INTO `tb_college` VALUES (1865591653756346369, 1, '0,1', '123', 'admin', '2024-12-08 10:58:06', NULL, '2024-12-08 10:58:05', 1);
-INSERT INTO `tb_college` VALUES (1865594995446435842, 1, '0,1', '123123', 'admin', '2024-12-08 11:11:23', NULL, '2024-12-08 11:11:22', 1);
-INSERT INTO `tb_college` VALUES (1865598717656371201, 1, '0,1', '123111', 'admin', '2024-12-08 11:26:10', NULL, '2024-12-08 11:26:10', 1);
 
 -- ----------------------------
 -- Table structure for tb_course
@@ -1931,25 +1945,25 @@ CREATE TABLE `tb_course_category`  (
   `parent_id` bigint NOT NULL DEFAULT 0 COMMENT '父级分类ID',
   `ancestors` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '祖级列表',
   `order_num` int NULL DEFAULT NULL COMMENT '显示顺序',
-  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程分类表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_course_category
 -- ----------------------------
-INSERT INTO `tb_course_category` VALUES (1865772427033673729, '计算机科学', 0, '0', NULL, 0, 'admin', '2024-12-08 22:56:26', NULL, '2024-12-08 22:56:25');
-INSERT INTO `tb_course_category` VALUES (1865773357393215489, '编程语言', 1865772427033673729, '0,1865772427033673729', NULL, 0, 'admin', '2024-12-08 23:00:07', NULL, '2024-12-08 23:00:07');
-INSERT INTO `tb_course_category` VALUES (1865774804440600577, '计算机网络', 1865772427033673729, '0,1865772427033673729', NULL, 0, 'admin', '2024-12-08 23:05:52', NULL, '2024-12-08 23:05:52');
-INSERT INTO `tb_course_category` VALUES (1865774893179490305, '数学', 0, '0', NULL, 0, 'admin', '2024-12-08 23:06:14', NULL, '2024-12-08 23:06:13');
-INSERT INTO `tb_course_category` VALUES (1865774917003137026, '高等数学', 1865774893179490305, '0,1865774893179490305', NULL, 0, 'admin', '2024-12-08 23:06:19', NULL, '2024-12-08 23:06:19');
-INSERT INTO `tb_course_category` VALUES (1865774943993483266, '离散数学', 1865774893179490305, '0,1865774893179490305', NULL, 0, 'admin', '2024-12-08 23:06:26', NULL, '2024-12-08 23:06:25');
-INSERT INTO `tb_course_category` VALUES (1865777547125346306, '操作系统', 1865772427033673729, '0,1865772427033673729', NULL, 0, 'admin', '2024-12-08 23:16:46', NULL, '2024-12-08 23:16:46');
-INSERT INTO `tb_course_category` VALUES (1865777929406795777, 'Java', 1865773357393215489, '0,1865772427033673729,1865773357393215489', NULL, 0, 'admin', '2024-12-08 23:18:18', 'admin', '2024-12-08 23:18:23');
+INSERT INTO `tb_course_category` VALUES (1865772427033673729, '计算机科学', 0, '0', NULL, 'admin', '2024-12-08 22:56:26', NULL, '2024-12-08 22:56:25', 0);
+INSERT INTO `tb_course_category` VALUES (1865773357393215489, '编程语言', 1865772427033673729, '0,1865772427033673729', NULL, 'admin', '2024-12-08 23:00:07', NULL, '2024-12-08 23:00:07', 0);
+INSERT INTO `tb_course_category` VALUES (1865774804440600577, '计算机网络', 1865772427033673729, '0,1865772427033673729', NULL, 'admin', '2024-12-08 23:05:52', NULL, '2024-12-08 23:05:52', 0);
+INSERT INTO `tb_course_category` VALUES (1865774893179490305, '数学', 0, '0', NULL, 'admin', '2024-12-08 23:06:14', NULL, '2024-12-08 23:06:13', 0);
+INSERT INTO `tb_course_category` VALUES (1865774917003137026, '高等数学', 1865774893179490305, '0,1865774893179490305', NULL, 'admin', '2024-12-08 23:06:19', NULL, '2024-12-08 23:06:19', 0);
+INSERT INTO `tb_course_category` VALUES (1865774943993483266, '离散数学', 1865774893179490305, '0,1865774893179490305', NULL, 'admin', '2024-12-08 23:06:26', NULL, '2024-12-08 23:06:25', 0);
+INSERT INTO `tb_course_category` VALUES (1865777547125346306, '操作系统', 1865772427033673729, '0,1865772427033673729', NULL, 'admin', '2024-12-08 23:16:46', NULL, '2024-12-08 23:16:46', 0);
+INSERT INTO `tb_course_category` VALUES (1865777929406795777, 'Java', 1865773357393215489, '0,1865772427033673729,1865773357393215489', NULL, 'admin', '2024-12-08 23:18:18', 'admin', '2024-12-08 23:18:23', 0);
 
 -- ----------------------------
 -- Table structure for tb_course_chapter
@@ -1989,30 +2003,6 @@ INSERT INTO `tb_course_chapter` VALUES (21, 3, '操作系统的发展过程', 20
 INSERT INTO `tb_course_chapter` VALUES (22, 3, '无操作系统', 20, NULL, 1, NULL, '2024-12-03 22:25:24', NULL, '2024-12-03 22:25:23', 0);
 INSERT INTO `tb_course_chapter` VALUES (1876896342196232193, 1, 'Springboot', 0, NULL, 3, NULL, '2025-01-08 15:38:54', NULL, '2025-01-08 15:38:53', 0);
 INSERT INTO `tb_course_chapter` VALUES (1876896403235938306, 1, 'Springboot 入门', 1876896342196232193, NULL, 1, NULL, '2025-01-08 15:39:08', NULL, '2025-01-08 15:39:08', 0);
-
--- ----------------------------
--- Table structure for tb_course_grade
--- ----------------------------
-DROP TABLE IF EXISTS `tb_course_grade`;
-CREATE TABLE `tb_course_grade`  (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '关系主键',
-  `course_id` bigint NULL DEFAULT NULL COMMENT '课程ID',
-  `grade_id` bigint NULL DEFAULT NULL COMMENT '班级ID',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1865691152902320130 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程-班级关系表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of tb_course_grade
--- ----------------------------
-INSERT INTO `tb_course_grade` VALUES (1, 1, 1, NULL, '2024-10-13 22:26:37', 'admin', '2024-12-08 17:33:23', 0);
-INSERT INTO `tb_course_grade` VALUES (2, 1, 2, NULL, '2024-10-14 10:18:32', NULL, '2024-10-14 10:18:32', 0);
-INSERT INTO `tb_course_grade` VALUES (4, 1, 3, 'admin', '2024-11-23 16:36:54', NULL, '2024-11-23 16:36:54', 0);
-INSERT INTO `tb_course_grade` VALUES (1865691152902320129, 3, 1, 'admin', '2024-12-08 17:33:28', NULL, '2024-12-08 17:33:28', 1);
 
 -- ----------------------------
 -- Table structure for tb_course_material
@@ -2118,34 +2108,6 @@ INSERT INTO `tb_exam_question` VALUES (1879096862541533186, '请填写以下代�
 INSERT INTO `tb_exam_question` VALUES (1879096950579974145, '编写一段 Python 代码，输出从 1 到 10 的所有偶数。', 5, '[]', '[\"for i in range(1, 11):\\n    if i % 2 == 0:\\n        print(i)\"]', '通过 for 循环遍历范围内的数值，用 if 判断是否为偶数，输出结果即可。', 2, 1, 'admin', '2025-01-14 17:23:20', 'admin', '2025-01-14 18:01:01', 0);
 
 -- ----------------------------
--- Table structure for tb_grade
--- ----------------------------
-DROP TABLE IF EXISTS `tb_grade`;
-CREATE TABLE `tb_grade`  (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '班级ID',
-  `college_id` bigint NULL DEFAULT NULL COMMENT '所属学院ID',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '班级名称',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '班级表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of tb_grade
--- ----------------------------
-INSERT INTO `tb_grade` VALUES (1, 2, '计算机科学与技术2103插本班', NULL, '2024-10-05 20:08:12', 'admin', '2024-12-08 13:05:05', 0);
-INSERT INTO `tb_grade` VALUES (2, 2, '计算机科学与技术2104插本班', NULL, '2024-10-05 20:15:33', NULL, '2024-10-05 20:15:46', 0);
-INSERT INTO `tb_grade` VALUES (3, 2, '网络工程2101插本班', NULL, '2024-10-05 20:16:25', NULL, '2024-10-05 20:16:25', 0);
-INSERT INTO `tb_grade` VALUES (4, 2, '计算机科学与技术2105插本班', NULL, '2024-10-05 20:16:34', NULL, '2024-10-05 20:16:34', 0);
-INSERT INTO `tb_grade` VALUES (5, 2, '电子信息工程2101插本班', NULL, '2024-10-05 20:16:44', NULL, '2024-10-05 20:16:43', 0);
-INSERT INTO `tb_grade` VALUES (6, 2, '电气工程及其自动化2102插本班', NULL, '2024-10-05 20:16:51', NULL, '2024-10-05 20:16:50', 0);
-INSERT INTO `tb_grade` VALUES (7, 3, '产品设计2101插本班', NULL, '2024-10-05 20:17:14', NULL, '2024-10-05 20:17:14', 0);
-INSERT INTO `tb_grade` VALUES (8, 3, '环境设计2101插本班', NULL, '2024-12-08 01:27:01', NULL, '2024-12-08 01:27:01', 0);
-
--- ----------------------------
 -- Table structure for tb_homework
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_homework`;
@@ -2198,38 +2160,12 @@ INSERT INTO `tb_oss_file` VALUES (1876562447399587842, '677cf4963389506af672f2d5
 INSERT INTO `tb_oss_file` VALUES (1876885518002102274, '677e21783389de14f3ef462e.jpeg', 'jpeg', 'local-plus/677e21783389de14f3ef462e.jpeg', 'image/jpeg', 34131, 0, 'admin', '2025-01-08 14:55:53', NULL, '2025-01-08 14:55:53');
 
 -- ----------------------------
--- Table structure for tb_semester
--- ----------------------------
-DROP TABLE IF EXISTS `tb_semester`;
-CREATE TABLE `tb_semester`  (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '学期ID',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '学期名称',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1865681153945837571 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学期表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of tb_semester
--- ----------------------------
-INSERT INTO `tb_semester` VALUES (1, '2023春', NULL, '2024-10-05 21:22:45', 'admin', '2024-12-08 16:53:39', 0);
-INSERT INTO `tb_semester` VALUES (2, '2023秋', NULL, '2024-10-05 21:22:50', NULL, '2024-10-05 21:22:49', 0);
-INSERT INTO `tb_semester` VALUES (3, '2024春', NULL, '2024-10-05 21:22:57', NULL, '2024-10-05 21:22:56', 0);
-INSERT INTO `tb_semester` VALUES (4, '2024秋', NULL, '2024-10-05 21:23:02', NULL, '2024-10-05 21:23:02', 0);
-INSERT INTO `tb_semester` VALUES (1865681153945837570, '2025春', 'admin', '2024-12-08 16:53:44', NULL, '2024-12-08 16:53:44', 1);
-
--- ----------------------------
 -- Table structure for tb_student
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_student`;
 CREATE TABLE `tb_student`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '学生ID',
   `user_id` bigint NULL DEFAULT NULL COMMENT '关联sys_user表的ID',
-  `college_id` bigint NULL DEFAULT NULL COMMENT '所属学院ID',
-  `grade_id` bigint NULL DEFAULT NULL COMMENT '所属班级ID',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
@@ -2242,10 +2178,10 @@ CREATE TABLE `tb_student`  (
 -- ----------------------------
 -- Records of tb_student
 -- ----------------------------
-INSERT INTO `tb_student` VALUES (1, 104, 2, 1, NULL, '2024-12-08 01:35:51', NULL, '2024-12-08 01:35:51', NULL, 0);
-INSERT INTO `tb_student` VALUES (2, 105, 3, 7, NULL, '2024-12-08 01:35:51', NULL, '2024-12-08 01:35:51', NULL, 0);
-INSERT INTO `tb_student` VALUES (3, 107, 2, 1, NULL, '2024-12-08 13:49:32', 'admin', '2024-12-08 16:47:58', NULL, 0);
-INSERT INTO `tb_student` VALUES (1865679792990621698, 110, 2, 1, NULL, '2024-12-08 16:48:19', 'admin', '2024-12-08 17:22:41', NULL, 0);
+INSERT INTO `tb_student` VALUES (1, 104, NULL, '2024-12-08 01:35:51', NULL, '2024-12-08 01:35:51', NULL, 0);
+INSERT INTO `tb_student` VALUES (2, 105, NULL, '2024-12-08 01:35:51', NULL, '2024-12-08 01:35:51', NULL, 0);
+INSERT INTO `tb_student` VALUES (3, 107, NULL, '2024-12-08 13:49:32', 'admin', '2024-12-08 16:47:58', NULL, 0);
+INSERT INTO `tb_student` VALUES (1865679792990621698, 110, NULL, '2024-12-08 16:48:19', 'admin', '2024-12-08 17:22:41', NULL, 0);
 
 -- ----------------------------
 -- Table structure for tb_teacher
@@ -2254,7 +2190,6 @@ DROP TABLE IF EXISTS `tb_teacher`;
 CREATE TABLE `tb_teacher`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '教师ID',
   `user_id` bigint NULL DEFAULT NULL COMMENT '关联sys_user表的id',
-  `college_id` bigint NULL DEFAULT NULL COMMENT '所属学院ID',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
@@ -2267,8 +2202,8 @@ CREATE TABLE `tb_teacher`  (
 -- ----------------------------
 -- Records of tb_teacher
 -- ----------------------------
-INSERT INTO `tb_teacher` VALUES (1, 100, 2, 'admin', '2024-12-08 17:22:31', NULL, '2024-12-08 01:36:53', NULL, 0);
-INSERT INTO `tb_teacher` VALUES (4, 103, 3, NULL, '2024-12-08 01:36:53', NULL, '2024-12-08 01:36:53', NULL, 0);
-INSERT INTO `tb_teacher` VALUES (5, 106, 2, NULL, '2024-12-08 01:36:53', NULL, '2024-12-08 01:36:53', NULL, 0);
+INSERT INTO `tb_teacher` VALUES (1, 100, 'admin', '2024-12-08 17:22:31', NULL, '2024-12-08 01:36:53', NULL, 0);
+INSERT INTO `tb_teacher` VALUES (4, 103, NULL, '2024-12-08 01:36:53', NULL, '2024-12-08 01:36:53', NULL, 0);
+INSERT INTO `tb_teacher` VALUES (5, 106, NULL, '2024-12-08 01:36:53', NULL, '2024-12-08 01:36:53', NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
