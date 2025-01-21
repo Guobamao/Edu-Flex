@@ -3,41 +3,55 @@ package com.eduflex.manage.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.core.domain.BaseEntity;
 
 /**
- * 班级课程管理对象 tb_course_grade
+ * 评论管理对象 tb_comments
  *
  * @author 林煜鋒
- * @date 2024-10-11
+ * @date 2025-01-21
  */
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_course_grade")
-public class CourseGrade extends BaseEntity
-{
+@TableName("tb_comments")
+public class Comments extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    /** 关系主键 */
-    @TableId(type = IdType.ASSIGN_ID)
+    /**
+     * 评论ID
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    /** 课程ID */
+    /**
+     * 课程ID
+     */
     @Excel(name = "课程ID")
     private Long courseId;
 
-    /** 班级ID */
-    @Excel(name = "班级ID")
-    private Long gradeId;
+    /**
+     * 用户ID
+     */
+    @Excel(name = "用户ID")
+    private Long userId;
+
+    /**
+     * 评论内容
+     */
+    @Excel(name = "评论内容")
+    private String content;
+
+    /**
+     * 父级评论ID
+     */
+    @Excel(name = "父级评论ID")
+    private Long parentId;
 }
