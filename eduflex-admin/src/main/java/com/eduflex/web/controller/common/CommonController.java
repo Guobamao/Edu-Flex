@@ -2,6 +2,7 @@ package com.eduflex.web.controller.common;
 
 import com.eduflex.common.config.RuoYiConfig;
 import com.eduflex.common.constant.Constants;
+import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.utils.StringUtils;
@@ -23,7 +24,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -37,8 +37,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/common")
-public class CommonController extends BaseController
-{
+public class CommonController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
     @Autowired
@@ -56,7 +55,7 @@ public class CommonController extends BaseController
      * 通用下载请求
      *
      * @param fileName 文件名称
-     * @param delete 是否删除
+     * @param delete   是否删除
      */
     @GetMapping("/download")
     public void fileDownload(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request) {
@@ -73,8 +72,7 @@ public class CommonController extends BaseController
             if (delete) {
                 FileUtils.deleteFile(filePath);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("下载文件失败", e);
         }
     }
@@ -115,16 +113,39 @@ public class CommonController extends BaseController
             ossFile.setSize(info.getSize());
             ossFile.setType(info.getContentType());
             ossFile.setPath(info.getBasePath() + info.getFilename());
+            ossFile.setOriginName(info.getOriginalFilename());
             ossFile.setCreateBy(getUsername());
+
+            if (EduFlexConstants.FILE_TYPE_TEXT_LIST.contains(info.getContentType())) {
+                // 纯文本类型
+                ossFile.setFileType(EduFlexConstants.FILE_TYPE_TEXT);
+            } else if (EduFlexConstants.FILE_TYPE_IMAGE_LIST.contains(info.getContentType())) {
+                // 图片类型
+                ossFile.setFileType(EduFlexConstants.FILE_TYPE_IMAGE);
+            } else if (EduFlexConstants.FILE_TYPE_VIDEO_LIST.contains(info.getContentType())) {
+                // 音视频类型
+                ossFile.setFileType(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO);
+            } else if (EduFlexConstants.FILE_TYPE_AUDIO_LIST.contains(info.getContentType())) {
+                // 音视频类型
+                ossFile.setFileType(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO);
+            } else if (EduFlexConstants.FILE_TYPE_PPT_LIST.contains(info.getContentType())) {
+                // PPT 类型
+                ossFile.setFileType(EduFlexConstants.FILE_TYPE_PPT);
+            } else if (EduFlexConstants.FILE_tYPE_PDF_LIST.contains(info.getContentType())) {
+                // PDF 类型
+                ossFile.setFileType(EduFlexConstants.FILE_TYPE_PDF);
+            } else {
+                ossFile.setFileType(EduFlexConstants.FILE_TYPE_OTHER);
+            }
 
             ossFileService.save(ossFile);
 
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileId", ossFile.getId());
-            ajax.put("fileName", ossFile.getName());
+            ajax.put("fileName", ossFile.getOriginName());
+            ajax.put("type", ossFile.getFileType());
             return ajax;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return AjaxResult.error(e.getMessage());
         }
     }
@@ -156,8 +177,7 @@ public class CommonController extends BaseController
             ajax.put("newFileNames", StringUtils.join(newFileNames, FILE_DELIMETER));
             ajax.put("originalFilenames", StringUtils.join(originalFilenames, FILE_DELIMETER));
             return ajax;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return AjaxResult.error(e.getMessage());
         }
     }
@@ -166,13 +186,9 @@ public class CommonController extends BaseController
      * 本地资源通用下载
      */
     @GetMapping("/download/resource")
-    public void resourceDownload(String resource, HttpServletRequest request, HttpServletResponse response)
-            throws Exception
-    {
-        try
-        {
-            if (!FileUtils.checkAllowDownload(resource))
-            {
+    public void resourceDownload(String resource, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            if (!FileUtils.checkAllowDownload(resource)) {
                 throw new Exception(StringUtils.format("资源文件({})非法，不允许下载。 ", resource));
             }
             // 本地资源路径
@@ -184,9 +200,7 @@ public class CommonController extends BaseController
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
             FileUtils.setAttachmentResponseHeader(response, downloadName);
             FileUtils.writeBytes(downloadPath, response.getOutputStream());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error("下载文件失败", e);
         }
     }

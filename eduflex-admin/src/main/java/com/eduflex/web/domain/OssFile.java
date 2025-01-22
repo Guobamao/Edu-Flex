@@ -5,13 +5,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import com.eduflex.common.core.domain.BaseEntity;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * <p>
@@ -47,5 +45,11 @@ public class OssFile extends BaseEntity {
 
     @ApiModelProperty(value = "文件大小")
     private Long size;
+
+    @ApiModelProperty(value = "源文件名称")
+    private String originName;
+
+    @Autowired
+    private Integer fileType;
 
 }
