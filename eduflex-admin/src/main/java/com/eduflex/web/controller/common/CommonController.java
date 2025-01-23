@@ -77,6 +77,22 @@ public class CommonController extends BaseController {
         }
     }
 
+    @PostMapping("/download/{id}")
+    public void download(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        OssFile ossFile = ossFileService.getById(id);
+        String path = "D:\\Temp\\" + ossFile.getPath();
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        FileUtils.setAttachmentResponseHeader(response, ossFile.getOriginName());
+        FileUtils.writeBytes(path, response.getOutputStream());
+    }
+
+    /**
+     * 通用图片预览请求
+     * @param id 文件ID
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @throws IOException
+     */
     @GetMapping("/preview/{id}")
     public void preview(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
         OssFile ossFile = ossFileService.getById(id);
@@ -87,7 +103,7 @@ public class CommonController extends BaseController {
             response.setContentType(ossFile.getType());
             os = response.getOutputStream();
             if (image != null) {
-                ImageIO.write(image, "png", os);
+                ImageIO.write(image, ossFile.getSuffix(), os);
             }
         } catch (IOException e) {
             log.error("预览文件失败", e);
@@ -156,26 +172,53 @@ public class CommonController extends BaseController {
     @PostMapping("/uploads")
     public AjaxResult uploadFiles(List<MultipartFile> files) {
         try {
-            // 上传文件路径
-            String filePath = RuoYiConfig.getUploadPath();
-            List<String> urls = new ArrayList<>();
-            List<String> fileNames = new ArrayList<>();
-            List<String> newFileNames = new ArrayList<>();
-            List<String> originalFilenames = new ArrayList<>();
+
+            List<OssFile> ossFileList = new ArrayList<>();
             for (MultipartFile file : files) {
-                // 上传并返回新文件名称
-                String fileName = FileUploadUtils.upload(filePath, file);
-                String url = serverConfig.getUrl() + fileName;
-                urls.add(url);
-                fileNames.add(fileName);
-                newFileNames.add(FileUtils.getName(fileName));
-                originalFilenames.add(file.getOriginalFilename());
+                FileInfo info = fileStorageService.of(file).upload();
+                OssFile ossFile = new OssFile();
+                ossFile.setName(info.getFilename());
+                ossFile.setSuffix(info.getExt());
+                ossFile.setSize(info.getSize());
+                ossFile.setType(info.getContentType());
+                ossFile.setPath(info.getBasePath() + info.getFilename());
+                ossFile.setOriginName(info.getOriginalFilename());
+                ossFile.setCreateBy(getUsername());
+
+                if (EduFlexConstants.FILE_TYPE_TEXT_LIST.contains(info.getContentType())) {
+                    // 纯文本类型
+                    ossFile.setFileType(EduFlexConstants.FILE_TYPE_TEXT);
+                } else if (EduFlexConstants.FILE_TYPE_IMAGE_LIST.contains(info.getContentType())) {
+                    // 图片类型
+                    ossFile.setFileType(EduFlexConstants.FILE_TYPE_IMAGE);
+                } else if (EduFlexConstants.FILE_TYPE_VIDEO_LIST.contains(info.getContentType())) {
+                    // 音视频类型
+                    ossFile.setFileType(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO);
+                } else if (EduFlexConstants.FILE_TYPE_AUDIO_LIST.contains(info.getContentType())) {
+                    // 音视频类型
+                    ossFile.setFileType(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO);
+                } else if (EduFlexConstants.FILE_TYPE_PPT_LIST.contains(info.getContentType())) {
+                    // PPT 类型
+                    ossFile.setFileType(EduFlexConstants.FILE_TYPE_PPT);
+                } else if (EduFlexConstants.FILE_tYPE_PDF_LIST.contains(info.getContentType())) {
+                    // PDF 类型
+                    ossFile.setFileType(EduFlexConstants.FILE_TYPE_PDF);
+                } else {
+                    ossFile.setFileType(EduFlexConstants.FILE_TYPE_OTHER);
+                }
+
+                ossFileList.add(ossFile);
             }
+
+            ossFileService.saveBatch(ossFileList);
             AjaxResult ajax = AjaxResult.success();
-            ajax.put("urls", StringUtils.join(urls, FILE_DELIMETER));
-            ajax.put("fileNames", StringUtils.join(fileNames, FILE_DELIMETER));
-            ajax.put("newFileNames", StringUtils.join(newFileNames, FILE_DELIMETER));
-            ajax.put("originalFilenames", StringUtils.join(originalFilenames, FILE_DELIMETER));
+
+            List<Long> fileIdList = ossFileList.stream().map(OssFile::getId).toList();
+            List<String> fileNameList = ossFileList.stream().map(OssFile::getOriginName).toList();
+            List<Integer> typeList = ossFileList.stream().map(OssFile::getFileType).toList();
+            ajax.put("fileIds", StringUtils.join(fileIdList, FILE_DELIMETER));
+            ajax.put("fileNames", StringUtils.join(fileNameList, FILE_DELIMETER));
+            ajax.put("types", StringUtils.join(typeList, FILE_DELIMETER));
             return ajax;
         } catch (Exception e) {
             return AjaxResult.error(e.getMessage());
