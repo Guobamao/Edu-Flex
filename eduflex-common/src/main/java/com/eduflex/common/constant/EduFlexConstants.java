@@ -30,7 +30,10 @@ public class EduFlexConstants {
     public static final List<String> FILE_TYPE_VIDEO_LIST = List.of("video/mp4", "video/webm");
 
     // 文件类型列表 - 文本
-    public static final List<String> FILE_TYPE_TEXT_LIST = List.of("text/plain", "text/html", "text/xml", "text/css", "text/javascript", "text/csv", "application/json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+    public static final List<String> FILE_TYPE_TEXT_LIST = List.of("text/plain", "text/html", "text/xml",
+            "text/css", "text/javascript", "text/csv", "application/json",
+            "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel");
 
     // 文件类型列表 - 图片
     public static final List<String> FILE_TYPE_IMAGE_LIST = List.of("image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp");

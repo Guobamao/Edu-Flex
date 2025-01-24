@@ -59,7 +59,7 @@ public class PDFConverter {
 
             document.getPageCount();
             Document page = document.extractPages(0, document.getPageCount());
-            page.save(baos, com.aspose.cells.SaveFormat.PDF);
+            page.save(baos, com.aspose.words.SaveFormat.PDF);
 
         } catch (Exception e) {
             log.error("转换失败", e);
@@ -112,6 +112,24 @@ public class PDFConverter {
                 BufferedImage bufferedImage = pdfRenderer.renderImage(page, scale);
                 ByteArrayOutputStream imageBaos = new ByteArrayOutputStream();
 
+                ImageIO.write(bufferedImage, "PNG", imageBaos);
+                imageList.add(imageBaos.toByteArray());
+            }
+        } catch (Exception e) {
+            log.error("转换失败", e);
+        }
+        return imageList;
+    }
+
+    public static List<byte[]> convertPDFToImages(String filePath) {
+        List<byte[]> imageList = new ArrayList<>();
+        try (PDDocument document = Loader.loadPDF(new File(filePath))){
+            int dpi = 300;
+            PDFRenderer pdfRenderer = new PDFRenderer(document);
+            for (int page = 0; page < document.getNumberOfPages(); page ++) {
+                float scale = dpi / 72f;
+                BufferedImage bufferedImage = pdfRenderer.renderImage(page, scale);
+                ByteArrayOutputStream imageBaos = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage, "PNG", imageBaos);
                 imageList.add(imageBaos.toByteArray());
             }

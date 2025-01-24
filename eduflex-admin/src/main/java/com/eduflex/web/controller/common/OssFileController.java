@@ -7,13 +7,23 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.web.domain.FileImages;
 import com.eduflex.web.domain.OssFile;
+import com.eduflex.web.service.FileImagesService;
 import com.eduflex.web.service.OssFileService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -26,16 +36,19 @@ import java.util.List;
 @RequestMapping("/manage/files")
 public class OssFileController extends BaseController {
 
+    private static final Logger log = LoggerFactory.getLogger(OssFileController.class);
     @Autowired
     private OssFileService ossFileService;
+
+    @Autowired
+    private FileImagesService fileImagesService;
 
     /**
      * 查询资源管理列表
      */
     @PreAuthorize("@ss.hasAnyRoles('admin')")
     @GetMapping("/list")
-    public TableDataInfo list(OssFile ossFile)
-    {
+    public TableDataInfo list(OssFile ossFile) {
         startPage();
         List<OssFile> list = ossFileService.selectOssFileList(ossFile);
         return getDataTable(list);
@@ -84,4 +97,33 @@ public class OssFileController extends BaseController {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(ossFileService.removeByIds(idList));
     }
+
+    @GetMapping("/preview/{id}")
+    public AjaxResult preview(@PathVariable Long id) {
+        return success(fileImagesService.getByFileId(id));
+    }
+
+    @GetMapping("/previewFile/{id}")
+    public void previewFile(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FileImages fileImages = fileImagesService.getById(id);
+        OutputStream os = null;
+        String path = "D:\\Temp\\" + fileImages.getPath();
+        try {
+            response.setContentType("image/png");
+            os = response.getOutputStream();
+            BufferedImage image = ImageIO.read(new FileInputStream(path));
+            if (image != null) {
+                ImageIO.write(image, "png", os);
+            }
+        } catch (IOException e) {
+            log.error("预览文件失败", e);
+        } finally {
+            if (os != null) {
+                os.flush();
+                os.close();
+            }
+        }
+
+    }
+
 }

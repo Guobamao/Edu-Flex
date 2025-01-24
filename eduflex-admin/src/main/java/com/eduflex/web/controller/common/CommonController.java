@@ -6,9 +6,7 @@ import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.utils.StringUtils;
-import com.eduflex.common.utils.file.FileUploadUtils;
 import com.eduflex.common.utils.file.FileUtils;
-import com.eduflex.framework.config.ServerConfig;
 import com.eduflex.web.domain.OssFile;
 import com.eduflex.web.service.OssFileService;
 import org.dromara.x.file.storage.core.FileInfo;
@@ -39,9 +37,6 @@ import java.util.List;
 @RequestMapping("/common")
 public class CommonController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
-
-    @Autowired
-    private ServerConfig serverConfig;
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -96,14 +91,17 @@ public class CommonController extends BaseController {
     @GetMapping("/preview/{id}")
     public void preview(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
         OssFile ossFile = ossFileService.getById(id);
-        String path = ossFile.getPath();
         OutputStream os = null;
+        String path = "D:\\Temp\\" + ossFile.getPath();
         try {
-            BufferedImage image = ImageIO.read(new FileInputStream("D:\\Temp\\" + path));
             response.setContentType(ossFile.getType());
             os = response.getOutputStream();
-            if (image != null) {
-                ImageIO.write(image, ossFile.getSuffix(), os);
+            if (ossFile.getFileType().equals(EduFlexConstants.FILE_TYPE_IMAGE)) {
+                BufferedImage image = ImageIO.read(new FileInputStream(path));
+
+                if (image != null) {
+                    ImageIO.write(image, ossFile.getSuffix(), os);
+                }
             }
         } catch (IOException e) {
             log.error("预览文件失败", e);
