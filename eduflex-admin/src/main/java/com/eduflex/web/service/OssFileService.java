@@ -27,4 +27,12 @@ public interface OssFileService extends IService<OssFile> {
      * @return 结果
      */
     int updateOssFile(OssFile ossFile);
+
+    /**
+     * 批量删除资源信息（包括课程资料）
+     *
+     * @param idList 资源id集合
+     * @return 结果
+     */
+    boolean removeWithMaterialByIds(List<Long> idList);
 }

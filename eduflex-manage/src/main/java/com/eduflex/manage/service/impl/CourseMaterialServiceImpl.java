@@ -75,4 +75,18 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
         }
         return result;
     }
+
+    @Override
+    public int getByFileId(Long id) {
+        LambdaQueryWrapper<CourseMaterial> wrapper = new LambdaQueryWrapper<CourseMaterial>()
+                .eq(CourseMaterial::getFileId, id);
+        return baseMapper.selectCount(wrapper).intValue();
+    }
+
+    @Override
+    public void removeByFileId(Long id) {
+        LambdaQueryWrapper<CourseMaterial> wrapper = new LambdaQueryWrapper<CourseMaterial>()
+                .eq(CourseMaterial::getFileId, id);
+        baseMapper.delete(wrapper);
+    }
 }

@@ -30,4 +30,17 @@ public interface ICourseMaterialService extends IService<CourseMaterial>
      */
     int deleteCourseMaterialByIds(Long[] ids);
 
+    /**
+     * 根据文件id查询课程资料
+     * @param id 文件id
+     * @return 结果
+     */
+    int getByFileId(Long id);
+
+    /**
+     * 根据文件id删除课程资料
+     *
+     * @param id
+     */
+    void removeByFileId(Long id);
 }

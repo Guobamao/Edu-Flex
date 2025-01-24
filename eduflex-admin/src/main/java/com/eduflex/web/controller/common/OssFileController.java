@@ -95,7 +95,7 @@ public class OssFileController extends BaseController {
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
-        return toAjax(ossFileService.removeByIds(idList));
+        return toAjax(ossFileService.removeWithMaterialByIds(idList));
     }
 
     @GetMapping("/preview/{id}")
