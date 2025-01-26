@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduflex.manage.mapper.StudyRecordMapper">
+    
+    <resultMap type="StudyRecord" id="StudyRecordResult">
+        <result property="id"    column="id"    />
+        <result property="stuId"    column="stu_id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="completionTime"    column="completion_time"    />
+        <result property="status"    column="status"    />
+        <result property="progress"    column="progress"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectStudyRecordVo">
+        select id, stu_id, course_id, completion_time, status, progress, create_by, create_time, update_by, update_time, deleted from tb_study_record
+    </sql>
+
+    <select id="selectStudyRecordList" parameterType="StudyRecord" resultMap="StudyRecordResult">
+        <include refid="selectStudyRecordVo"/>
+        <where>  
+            <if test="stuId != null "> and stu_id = #{stuId}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectStudyRecordById" parameterType="Long" resultMap="StudyRecordResult">
+        <include refid="selectStudyRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertStudyRecord" parameterType="StudyRecord">
+        insert into tb_study_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="stuId != null">stu_id,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="completionTime != null">completion_time,</if>
+            <if test="status != null">status,</if>
+            <if test="progress != null">progress,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleted != null">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="stuId != null">#{stuId},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="completionTime != null">#{completionTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="progress != null">#{progress},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleted != null">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStudyRecord" parameterType="StudyRecord">
+        update tb_study_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stuId != null">stu_id = #{stuId},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="completionTime != null">completion_time = #{completionTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="progress != null">progress = #{progress},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStudyRecordById" parameterType="Long">
+        delete from tb_study_record where id = #{id}
+    </delete>
+
+    <delete id="deleteStudyRecordByIds" parameterType="String">
+        delete from tb_study_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

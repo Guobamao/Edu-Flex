@@ -1,10 +1,12 @@
 package ${packageName}.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.List;
     #foreach ($column in $columns)
         #if($column.javaField == 'createTime' || $column.javaField == 'updateTime')
-        import com.rchuing.common.utils.DateUtils;
+        import com.eduflex.common.utils.DateUtils;
             #break
         #end
     #end
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
     #if($table.sub)
     import java.util.ArrayList;
+
     import com.rchuing.common.utils.StringUtils;
     import org.springframework.transaction.annotation.Transactional;
     import ${packageName}.domain.${subClassName};
@@ -28,29 +31,11 @@ import ${packageName}.service.I${ClassName}Service;
  */
 @Service
 public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${ClassName}> implements I${ClassName}Service {
-    @Autowired
-    private ${ClassName}Mapper ${className}Mapper;
 
-    /**
-     * 查询${functionName}
-     *
-     * @param ${pkColumn.javaField} ${functionName}主键
-     * @return ${functionName}
-     */
-    @Override
-    public ${ClassName} select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField}) {
-        return ${className}Mapper.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField});
-    }
-
-    /**
-     * 查询${functionName}列表
-     *
-     * @param ${className} ${functionName}
-     * @return ${functionName}
-     */
     @Override
     public List<${ClassName}> select${ClassName}List(${ClassName} ${className}) {
-        return ${className}Mapper.select${ClassName}List(${className});
+        LambdaQueryWrapper<${ClassName}> wrapper = new LambdaQueryWrapper<${ClassName}>();
+        return baseMapper.selectList(wrapper);
     }
 
     /**
@@ -95,7 +80,8 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
             #end
         #end
         #if($table.sub)
-                ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}());
+                ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}())
+            ;
             insert${subClassName}(${className});
         #end
         return ${className}Mapper.update${ClassName}(${className});
@@ -144,16 +130,14 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
         public void insert${subClassName}(${ClassName} ${className}) {
             List<${subClassName}> ${subclassName}List = ${className}.get${subClassName}List();
             ${pkColumn.javaType} ${pkColumn.javaField} = ${className}.get${pkColumn.capJavaField}();
-            if (StringUtils.isNotNull(${subclassName}List))
-            {
+            if (StringUtils.isNotNull(${subclassName}List)) {
                 List<${subClassName}> list = new ArrayList<${subClassName}>();
-                for (${subClassName} ${subclassName} : ${subclassName}List)
+                for (${subClassName} ${subclassName} :${subclassName}List)
                 {
                     ${subclassName}.set${subTableFkClassName}(${pkColumn.javaField});
                     list.add(${subclassName});
                 }
-                if (list.size() > 0)
-                {
+                if (list.size() > 0) {
                         ${className}Mapper.batch${subClassName}(list);
                 }
             }
