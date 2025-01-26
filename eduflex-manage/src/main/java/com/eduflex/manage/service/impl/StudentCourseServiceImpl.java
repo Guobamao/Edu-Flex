@@ -1,0 +1,74 @@
+package com.eduflex.manage.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.manage.domain.dto.StudentCourseDto;
+import com.eduflex.manage.domain.vo.StudentCourseVo;
+import com.eduflex.manage.service.ICourseService;
+import com.eduflex.system.service.ISysUserService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.eduflex.manage.mapper.StudentCourseMapper;
+import com.eduflex.manage.domain.StudentCourse;
+import com.eduflex.manage.service.IStudentCourseService;
+
+/**
+ * 学生选课Service业务层处理
+ *
+ * @author 林煜鋒
+ * @date 2025-01-26
+ */
+@Service
+public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, StudentCourse> implements IStudentCourseService {
+    @Autowired
+    private ISysUserService sysUserService;
+
+    @Autowired
+    private ICourseService courseService;
+
+    @Override
+    public List<StudentCourseVo> selectStudentCourseList(StudentCourseDto studentCourseDto) {
+        LambdaQueryWrapper<StudentCourse> wrapper = new LambdaQueryWrapper<StudentCourse>()
+                .eq(studentCourseDto.getUserId() != null, StudentCourse::getUserId, studentCourseDto.getUserId())
+                .eq(studentCourseDto.getCourseId() != null, StudentCourse::getCourseId, studentCourseDto.getCourseId())
+                .eq(studentCourseDto.getStatus() != null, StudentCourse::getStatus, studentCourseDto.getStatus());
+        if (studentCourseDto.getProgress() != null) {
+            wrapper.between(StudentCourse::getProgress, studentCourseDto.getProgress().get(0), studentCourseDto.getProgress().get(1));
+        }
+
+        List<StudentCourse> studentCourses = baseMapper.selectList(wrapper);
+        List<StudentCourseVo> studentCourseVos = new ArrayList<>();
+        for (StudentCourse studentCourse : studentCourses) {
+            StudentCourseVo studentCourseVo = new StudentCourseVo();
+            BeanUtils.copyProperties(studentCourse, studentCourseVo);
+
+            SysUser sysUser = sysUserService.selectUserById(studentCourse.getUserId());
+            studentCourseVo.setUserName(sysUser.getUserName());
+            studentCourseVo.setNickName(sysUser.getNickName());
+
+            studentCourseVo.setCourseName(courseService.getById(studentCourse.getCourseId()).getName());
+
+            studentCourseVos.add(studentCourseVo);
+        }
+
+        return studentCourseVos;
+    }
+
+    @Override
+    public StudentCourseVo getInfoById(Long id) {
+        StudentCourse studentCourse = baseMapper.selectById(id);
+        StudentCourseVo studentCourseVo = new StudentCourseVo();
+        BeanUtils.copyProperties(studentCourse, studentCourseVo);
+
+        SysUser sysUser = sysUserService.selectUserById(studentCourse.getUserId());
+        studentCourseVo.setUserName(sysUser.getUserName());
+        studentCourseVo.setNickName(sysUser.getNickName());
+        return studentCourseVo;
+    }
+}
