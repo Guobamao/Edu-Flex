@@ -23,4 +23,7 @@ public class StudentDto extends Student {
     private Long roleId;
 
     private String searchValue;
+
+    // 学习目标ID
+    private Long goalId;
 }

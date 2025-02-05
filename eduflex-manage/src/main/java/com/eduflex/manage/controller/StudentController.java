@@ -8,6 +8,7 @@ import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.manage.domain.dto.StudentDto;
+import com.eduflex.manage.domain.vo.StudentGoalVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +50,14 @@ public class StudentController extends BaseController
     {
         startPage();
         List<Student> list = studentService.selectStudentList(studentDto);
+        return getDataTable(list);
+    }
+
+    @PreAuthorize("@ss.hasRole('admin')")
+    @GetMapping("/goal/list")
+    public TableDataInfo listWithGoal(StudentDto studentDto) {
+        startPage();
+        List<StudentGoalVo> list = studentService.selectStudentListWithGoal(studentDto);
         return getDataTable(list);
     }
 

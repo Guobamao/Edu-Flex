@@ -5,6 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.Student;
 import com.eduflex.manage.domain.dto.StudentDto;
+import com.eduflex.manage.domain.vo.StudentGoalVo;
 
 /**
  * 学生管理Service接口
@@ -82,4 +83,11 @@ public interface IStudentService extends IService<Student>
      * @return
      */
     Student selectStudentById(Long id);
+
+    /**
+     * 查询学生列表 - 包含学习目标信息
+     * @param studentDto 学生查询条件
+     * @return
+     */
+    List<StudentGoalVo> selectStudentListWithGoal(StudentDto studentDto);
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.manage.domain.Goal;
+import com.eduflex.manage.domain.dto.GoalStudentDto;
 import com.eduflex.manage.domain.vo.GoalStudentVo;
 import com.eduflex.manage.service.IGoalService;
 import com.eduflex.system.service.ISysUserService;
@@ -33,7 +34,7 @@ public class GoalStudentServiceImpl extends ServiceImpl<GoalStudentMapper, GoalS
     private IGoalService goalService;
 
     @Override
-    public List<GoalStudentVo> selectGoalStudentList(GoalStudent goalStudent) {
+    public List<GoalStudentVo> selectGoalStudentList(GoalStudentDto goalStudent) {
         LambdaQueryWrapper<GoalStudent> wrapper = new LambdaQueryWrapper<GoalStudent>()
                 .eq(goalStudent.getUserId() != null, GoalStudent::getUserId, goalStudent.getUserId())
                 .eq(goalStudent.getStatus() != null, GoalStudent::getStatus, goalStudent.getStatus());
@@ -67,5 +68,25 @@ public class GoalStudentServiceImpl extends ServiceImpl<GoalStudentMapper, GoalS
                 .eq(GoalStudent::getUserId, goalStudent.getUserId())
                 .eq(GoalStudent::getGoalId, goalStudent.getGoalId());
         return baseMapper.selectCount(wrapper) > 0;
+    }
+
+    @Override
+    public GoalStudent getByUserId(Long userId) {
+        LambdaQueryWrapper<GoalStudent> wrapper = new LambdaQueryWrapper<GoalStudent>()
+                .eq(GoalStudent::getUserId, userId);
+        return baseMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public GoalStudentVo getGoalStudentVoById(Long id) {
+        GoalStudent goalStudent = getById(id);
+        GoalStudentVo goalStudentVo = new GoalStudentVo();
+        BeanUtils.copyProperties(goalStudent, goalStudentVo);
+
+        SysUser sysUser = sysUserService.selectUserById(goalStudent.getUserId());
+        Goal goal = goalService.getById(goalStudent.getGoalId());
+        goalStudentVo.setNickName(sysUser.getNickName());
+        goalStudentVo.setGoalName(goal.getGoalName());
+        return goalStudentVo;
     }
 }

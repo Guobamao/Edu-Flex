@@ -10,7 +10,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.manage.domain.GoalStudent;
 import com.eduflex.manage.domain.dto.StudentDto;
+import com.eduflex.manage.domain.vo.StudentGoalVo;
+import com.eduflex.manage.service.IGoalStudentService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 {
     @Autowired
     private ISysUserService userService;
+
+    @Autowired
+    private IGoalStudentService goalStudentService;
 
     @Override
     public List<Student> selectStudentList(StudentDto studentDto)
@@ -125,5 +131,20 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public Student selectStudentById(Long id) {
         return baseMapper.selectStudentById(id);
+    }
+
+    @Override
+    public List<StudentGoalVo> selectStudentListWithGoal(StudentDto studentDto) {
+        List<Student> studentList = selectStudentList(studentDto);
+
+        List<StudentGoalVo> studentGoalVos = new ArrayList<>();
+        for (Student student : studentList) {
+            StudentGoalVo studentGoalVo = new StudentGoalVo();
+            BeanUtils.copyProperties(student, studentGoalVo);
+            GoalStudent goalStudent = goalStudentService.getByUserId(student.getUserId());
+            studentGoalVo.setIsSelected(goalStudent != null);
+            studentGoalVos.add(studentGoalVo);
+        }
+        return studentGoalVos;
     }
 }

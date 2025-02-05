@@ -2,7 +2,6 @@ package com.eduflex.manage.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -58,7 +57,7 @@ public class GoalStudent extends BaseEntity {
      * 学习进度百分比
      */
     @Excel(name = "学习进度百分比")
-    private List<BigDecimal> progress;
+    private BigDecimal progress;
 
     /**
      * 学习目标结束时间

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.utils.DateUtils;
+import com.eduflex.manage.domain.dto.GoalStudentDto;
 import com.eduflex.manage.domain.vo.GoalStudentVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class GoalStudentController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('manage:goalStudent:list')")
     @GetMapping("/list")
-    public TableDataInfo list(GoalStudent goalStudent)
+    public TableDataInfo list(GoalStudentDto goalStudent)
     {
         startPage();
         List<GoalStudentVo> list = goalStudentService.selectGoalStudentList(goalStudent);
@@ -56,7 +57,7 @@ public class GoalStudentController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:goalStudent:export')")
     @Log(title = "学习目标-学生关联", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, GoalStudent goalStudent)
+    public void export(HttpServletResponse response, GoalStudentDto goalStudent)
     {
         List<GoalStudentVo> list = goalStudentService.selectGoalStudentList(goalStudent);
         ExcelUtil<GoalStudentVo> util = new ExcelUtil<>(GoalStudentVo.class);
@@ -70,7 +71,7 @@ public class GoalStudentController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(goalStudentService.getById(id));
+        return success(goalStudentService.getGoalStudentVoById(id));
     }
 
     /**
