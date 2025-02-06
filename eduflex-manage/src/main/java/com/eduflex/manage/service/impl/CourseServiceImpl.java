@@ -1,22 +1,25 @@
 package com.eduflex.manage.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.utils.DateUtils;
+import com.eduflex.manage.domain.Course;
 import com.eduflex.manage.domain.CourseCategory;
+import com.eduflex.manage.domain.LearningRoute;
+import com.eduflex.manage.domain.dto.CourseDto;
 import com.eduflex.manage.domain.vo.CourseVo;
+import com.eduflex.manage.mapper.CourseMapper;
 import com.eduflex.manage.service.ICourseCategoryService;
-import com.eduflex.manage.service.ITeacherService;
+import com.eduflex.manage.service.ICourseService;
+import com.eduflex.manage.service.ILearningRouteService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.mapper.CourseMapper;
-import com.eduflex.manage.domain.Course;
-import com.eduflex.manage.service.ICourseService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 课程管理Service业务层处理
@@ -32,6 +35,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private ISysUserService userService;
+
+    @Autowired
+    private ILearningRouteService learningRouteService;
 
     /**
      * 查询课程管理列表
@@ -63,6 +69,27 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         List<Course> courseList = baseMapper.selectList(wrapper);
 
         return buildVo(courseList);
+    }
+
+    @Override
+    public List<CourseVo> selectCourseListByIds(List<Long> ids) {
+        return buildVo(listByIds(ids));
+    }
+
+    @Override
+    public List<CourseVo> selectCourseListForRoute(CourseDto course) {
+        List<CourseVo> courseVos = selectCourseList(course);
+
+        LearningRoute route = learningRouteService.getById(course.getRouteId());
+
+        String[] split = route.getCoursesId().replace("[", "").replace("]", "").replace("\"", "").split(",");
+        List<Long> coursesId = Arrays.stream(split).map(Long::parseLong).toList();
+
+        for (CourseVo courseVo : courseVos) {
+            courseVo.setIsSelected(coursesId.contains(courseVo.getId()));
+        }
+
+        return courseVos;
     }
 
     public List<CourseVo> buildVo(List<Course> courseList) {

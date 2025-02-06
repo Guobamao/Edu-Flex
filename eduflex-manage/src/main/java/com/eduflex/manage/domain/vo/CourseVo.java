@@ -7,4 +7,5 @@ import lombok.Data;
 public class CourseVo extends Course {
     private String teacherName;
     private String categoryName;
+    private Boolean isSelected;
 }

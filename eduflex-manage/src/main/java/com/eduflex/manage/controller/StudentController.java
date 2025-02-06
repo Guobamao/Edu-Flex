@@ -55,9 +55,9 @@ public class StudentController extends BaseController
 
     @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping("/goal/list")
-    public TableDataInfo listWithGoal(StudentDto studentDto) {
+    public TableDataInfo listForGoal(StudentDto studentDto) {
         startPage();
-        List<StudentGoalVo> list = studentService.selectStudentListWithGoal(studentDto);
+        List<StudentGoalVo> list = studentService.selectStudentListForGoal(studentDto);
         return getDataTable(list);
     }
 

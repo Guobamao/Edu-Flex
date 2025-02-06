@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.core.domain.model.LoginUser;
-import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
+import com.eduflex.manage.domain.dto.CourseDto;
 import com.eduflex.manage.domain.vo.CourseVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +66,17 @@ public class CourseController extends BaseController
     }
 
     /**
+     * 查询课程列表 - 学习路线
+     */
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @GetMapping("/route/list")
+    public TableDataInfo listForRoute(CourseDto course) {
+        startPage();
+        List<CourseVo> list = courseService.selectCourseListForRoute(course);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出课程管理列表
      */
     @PreAuthorize("@ss.hasRole('admin')")
@@ -91,7 +102,7 @@ public class CourseController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @PostMapping("/listByIds")
     public AjaxResult getInfoByIds(@RequestBody List<Long> ids) {
-        return success(courseService.listByIds(ids));
+        return success(courseService.selectCourseListByIds(ids));
     }
     /**
      * 新增课程管理

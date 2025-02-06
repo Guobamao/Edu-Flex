@@ -134,7 +134,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
-    public List<StudentGoalVo> selectStudentListWithGoal(StudentDto studentDto) {
+    public List<StudentGoalVo> selectStudentListForGoal(StudentDto studentDto) {
         List<Student> studentList = selectStudentList(studentDto);
 
         List<StudentGoalVo> studentGoalVos = new ArrayList<>();

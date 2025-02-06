@@ -89,5 +89,5 @@ public interface IStudentService extends IService<Student>
      * @param studentDto 学生查询条件
      * @return
      */
-    List<StudentGoalVo> selectStudentListWithGoal(StudentDto studentDto);
+    List<StudentGoalVo> selectStudentListForGoal(StudentDto studentDto);
 }
