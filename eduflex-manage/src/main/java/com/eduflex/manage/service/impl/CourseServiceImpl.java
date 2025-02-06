@@ -1,11 +1,17 @@
 package com.eduflex.manage.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.domain.CourseCategory;
+import com.eduflex.manage.domain.vo.CourseVo;
 import com.eduflex.manage.service.ICourseCategoryService;
+import com.eduflex.manage.service.ITeacherService;
+import com.eduflex.system.service.ISysUserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eduflex.manage.mapper.CourseMapper;
@@ -24,6 +30,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Autowired
     private ICourseCategoryService categoryService;
 
+    @Autowired
+    private ISysUserService userService;
+
     /**
      * 查询课程管理列表
      *
@@ -31,8 +40,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
      * @return 课程管理
      */
     @Override
-    public List<Course> selectCourseList(Course course)
+    public List<CourseVo> selectCourseList(Course course)
     {
+        // 获取course的params Map中startTime的值
+        course.setStartTime(DateUtils.parseDate(course.getParams().get("startTime")));
+        course.setEndTime(DateUtils.parseDate(course.getParams().get("endTime")));
+
         LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
                 .like(course.getName() != null && !course.getName().isEmpty(), Course::getName, course.getName())
                 .ge(course.getStartTime() != null, Course::getStartTime, course.getStartTime())
@@ -47,6 +60,20 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
                     .map(CourseCategory::getId).toList();
             wrapper.in(!categoryIds.isEmpty(), Course::getCategoryId, categoryIds);
         }
-        return baseMapper.selectList(wrapper);
+        List<Course> courseList = baseMapper.selectList(wrapper);
+
+        return buildVo(courseList);
+    }
+
+    public List<CourseVo> buildVo(List<Course> courseList) {
+        List<CourseVo> courseVoList = new ArrayList<>();
+        for (Course course : courseList) {
+            CourseVo courseVo = new CourseVo();
+            BeanUtils.copyProperties(course, courseVo);
+            courseVo.setTeacherName(userService.selectUserById(course.getTeacherId()).getNickName());
+            courseVo.setCategoryName(categoryService.getById(course.getCategoryId()).getName());
+            courseVoList.add(courseVo);
+        }
+        return courseVoList;
     }
 }

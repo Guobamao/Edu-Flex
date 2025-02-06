@@ -9,6 +9,7 @@ import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.core.domain.model.LoginUser;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
+import com.eduflex.manage.domain.vo.CourseVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 
 /**
  * 课程管理Controller
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-10
  */
@@ -48,10 +49,6 @@ public class CourseController extends BaseController
     @GetMapping("/list")
     public TableDataInfo list(Course course)
     {
-        // 获取course的params Map中startTime的值
-        course.setStartTime(DateUtils.parseDate(course.getParams().get("startTime")));
-        course.setEndTime(DateUtils.parseDate(course.getParams().get("endTime")));
-
         // 获取当前登录用户信息
         LoginUser loginUser = SecurityUtils.getLoginUser();
         // 获取当前登录用户对象
@@ -64,7 +61,7 @@ public class CourseController extends BaseController
         }
 
         startPage();
-        List<Course> list = courseService.selectCourseList(course);
+        List<CourseVo> list = courseService.selectCourseList(course);
         return getDataTable(list);
     }
 
@@ -76,8 +73,8 @@ public class CourseController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, Course course)
     {
-        List<Course> list = courseService.selectCourseList(course);
-        ExcelUtil<Course> util = new ExcelUtil<>(Course.class);
+        List<CourseVo> list = courseService.selectCourseList(course);
+        ExcelUtil<CourseVo> util = new ExcelUtil<>(CourseVo.class);
         util.exportExcel(response, list, "课程管理数据");
     }
 
@@ -91,6 +88,11 @@ public class CourseController extends BaseController
         return success(courseService.getById(id));
     }
 
+    @PreAuthorize("@ss.hasRole('admin')")
+    @PostMapping("/listByIds")
+    public AjaxResult getInfoByIds(@RequestBody List<Long> ids) {
+        return success(courseService.listByIds(ids));
+    }
     /**
      * 新增课程管理
      */

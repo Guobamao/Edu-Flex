@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.Course;
+import com.eduflex.manage.domain.vo.CourseVo;
 
 /**
  * 课程管理Service接口
@@ -19,5 +20,5 @@ public interface ICourseService extends IService<Course>
      * @param course 课程管理
      * @return 课程管理集合
      */
-    List<Course> selectCourseList(Course course);
+    List<CourseVo> selectCourseList(Course course);
 }
