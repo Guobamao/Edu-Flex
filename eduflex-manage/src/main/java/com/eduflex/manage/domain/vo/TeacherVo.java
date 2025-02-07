@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 教室Vo
+ */
 @Data
 public class TeacherVo extends Teacher {
     private String nickName;

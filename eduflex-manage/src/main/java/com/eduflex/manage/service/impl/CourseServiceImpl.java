@@ -80,13 +80,15 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public List<CourseVo> selectCourseListForRoute(CourseDto course) {
         List<CourseVo> courseVos = selectCourseList(course);
 
-        Route route = learningRouteService.getById(course.getRouteId());
+        if (course.getRouteId() != null) {
+            Route route = learningRouteService.getById(course.getRouteId());
 
-        String[] split = route.getCoursesId().replace("[", "").replace("]", "").replace("\"", "").split(",");
-        List<Long> coursesId = Arrays.stream(split).map(Long::parseLong).toList();
+            String[] split = route.getCoursesId().replace("[", "").replace("]", "").replace("\"", "").split(",");
+            List<Long> coursesId = Arrays.stream(split).map(Long::parseLong).toList();
 
-        for (CourseVo courseVo : courseVos) {
-            courseVo.setIsSelected(coursesId.contains(courseVo.getId()));
+            for (CourseVo courseVo : courseVos) {
+                courseVo.setIsSelected(coursesId.contains(courseVo.getId()));
+            }
         }
 
         return courseVos;
