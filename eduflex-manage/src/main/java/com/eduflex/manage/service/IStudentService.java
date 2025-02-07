@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.Student;
 import com.eduflex.manage.domain.dto.StudentDto;
 import com.eduflex.manage.domain.vo.StudentGoalVo;
+import com.eduflex.manage.domain.vo.StudentVo;
 
 /**
  * 学生管理Service接口
@@ -22,7 +23,7 @@ public interface IStudentService extends IService<Student>
      * @param studentDto 学生管理
      * @return 学生管理集合
      */
-    List<Student> selectStudentList(StudentDto studentDto);
+    List<StudentVo> selectStudentList(StudentDto studentDto);
 
     /**
      * 新增学生管理
@@ -43,10 +44,10 @@ public interface IStudentService extends IService<Student>
     /**
      * 批量删除学生管理
      *
-     * @param ids 需要删除的学生管理主键集合
+     * @param idList 需要删除的学生管理主键集合
      * @return 结果
      */
-    int deleteStudentByIds(Long[] ids);
+    int deleteStudentByIds(List<Long> idList);
 
     /**
      * 检验学生登录名唯一性
@@ -82,7 +83,7 @@ public interface IStudentService extends IService<Student>
      * @param id 学生ID
      * @return
      */
-    Student selectStudentById(Long id);
+    StudentVo selectStudentById(Long id);
 
     /**
      * 查询学生列表 - 包含学习目标信息

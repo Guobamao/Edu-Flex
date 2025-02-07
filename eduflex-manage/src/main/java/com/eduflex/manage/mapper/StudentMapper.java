@@ -1,11 +1,7 @@
 package com.eduflex.manage.mapper;
 
-import java.util.List;
-
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.eduflex.manage.domain.Student;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * 学生管理Mapper接口
@@ -15,23 +11,4 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface StudentMapper extends BaseMapper<Student>
 {
-
-    /**
-     * 根据学生id查询用户id
-     * @param ids 学生id集合
-     * @return 用户id列表
-     */
-    Long[] selectUserIdsByStudentIds(Long[] ids);
-
-    /**
-     * 分页查询学生列表
-     * @param wrapper 查询条件
-     * @return 学生列表
-     */
-    List<Student> selectStudentList(@Param("ew") LambdaQueryWrapper<Student> wrapper);
-
-    /**
-     * 根据学生ID查询学生信息
-     */
-    Student selectStudentById(Long id);
 }

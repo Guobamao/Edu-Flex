@@ -5,10 +5,11 @@ import java.util.List;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.Teacher;
 import com.eduflex.manage.domain.dto.TeacherDto;
+import com.eduflex.manage.domain.vo.TeacherVo;
 
 /**
  * 教师管理Service接口
- * 
+ *
  * @author 林煜鋒
  * @date 2024-10-05
  */
@@ -20,23 +21,23 @@ public interface ITeacherService extends IService<Teacher>
      * @param teacherDto 教师管理
      * @return 教师管理集合
      */
-    public List<Teacher> selectTeacherList(TeacherDto teacherDto);
+    List<TeacherVo> selectTeacherList(TeacherDto teacherDto);
 
     /**
      * 新增教师管理
-     * 
+     *
      * @param teacherDto 教师管理
      * @return 结果
      */
-    public int insertTeacher(TeacherDto teacherDto);
+    int insertTeacher(TeacherDto teacherDto);
 
     /**
      * 修改教师管理
-     * 
+     *
      * @param teacherDto 教师管理
      * @return 结果
      */
-    public int updateTeacher(TeacherDto teacherDto);
+    int updateTeacher(TeacherDto teacherDto);
 
     /**
      * 检验登录名唯一性

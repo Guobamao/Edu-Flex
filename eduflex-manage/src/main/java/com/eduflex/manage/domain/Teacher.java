@@ -3,7 +3,7 @@ package com.eduflex.manage.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_teacher")
-public class Teacher extends SysUser
+public class Teacher extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

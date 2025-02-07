@@ -3,6 +3,7 @@ package com.eduflex.manage.service;
 import java.util.List;
 import com.eduflex.manage.domain.StudyRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.domain.vo.StudyRecordVo;
 
 /**
  * 学习记录管理Service接口
@@ -17,7 +18,7 @@ public interface IStudyRecordService extends IService<StudyRecord> {
      * @param id 学习记录管理主键
      * @return 学习记录管理
      */
-    public StudyRecord selectStudyRecordById(Long id);
+    StudyRecord selectStudyRecordById(Long id);
 
     /**
      * 查询学习记录管理列表
@@ -25,7 +26,7 @@ public interface IStudyRecordService extends IService<StudyRecord> {
      * @param studyRecord 学习记录管理
      * @return 学习记录管理集合
      */
-    public List<StudyRecord> selectStudyRecordList(StudyRecord studyRecord);
+    List<StudyRecordVo> selectStudyRecordList(StudyRecord studyRecord);
 
     /**
      * 新增学习记录管理
@@ -33,7 +34,7 @@ public interface IStudyRecordService extends IService<StudyRecord> {
      * @param studyRecord 学习记录管理
      * @return 结果
      */
-    public int insertStudyRecord(StudyRecord studyRecord);
+    int insertStudyRecord(StudyRecord studyRecord);
 
     /**
      * 修改学习记录管理
@@ -41,7 +42,7 @@ public interface IStudyRecordService extends IService<StudyRecord> {
      * @param studyRecord 学习记录管理
      * @return 结果
      */
-    public int updateStudyRecord(StudyRecord studyRecord);
+    int updateStudyRecord(StudyRecord studyRecord);
 
     /**
      * 批量删除学习记录管理
@@ -49,13 +50,5 @@ public interface IStudyRecordService extends IService<StudyRecord> {
      * @param ids 需要删除的学习记录管理主键集合
      * @return 结果
      */
-    public int deleteStudyRecordByIds(Long[] ids);
-
-    /**
-     * 删除学习记录管理信息
-     *
-     * @param id 学习记录管理主键
-     * @return 结果
-     */
-    public int deleteStudyRecordById(Long id);
+    int deleteStudyRecordByIds(Long[] ids);
 }

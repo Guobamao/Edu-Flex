@@ -1,6 +1,9 @@
 package com.eduflex.manage.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -8,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.domain.dto.TeacherDto;
+import com.eduflex.manage.domain.vo.TeacherVo;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +30,7 @@ import static com.eduflex.common.utils.SecurityUtils.getUsername;
  * @date 2024-10-05
  */
 @Service
-public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements ITeacherService
-{
+public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements ITeacherService {
     @Autowired
     private ISysUserService userService;
 
@@ -38,12 +41,17 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
      * @return 教师管理
      */
     @Override
-    public List<Teacher> selectTeacherList(TeacherDto teacherDto)
-    {
-        LambdaQueryWrapper<Teacher> wrapper = new LambdaQueryWrapper<Teacher>()
-                .like(StrUtil.isNotBlank(teacherDto.getNickName()), Teacher::getNickName, teacherDto.getNickName())
-                .like(StrUtil.isNotBlank(teacherDto.getPhonenumber()), Teacher::getPhonenumber, teacherDto.getPhonenumber());
-        return baseMapper.selectTeacherList(wrapper);
+    public List<TeacherVo> selectTeacherList(TeacherDto teacherDto) {
+        LambdaQueryWrapper<Teacher> teacherWrapper = new LambdaQueryWrapper<Teacher>()
+                .select(Teacher::getId, Teacher::getUserId);
+
+        List<Long> idList = baseMapper.selectList(teacherWrapper).stream().map(Teacher::getUserId).toList();
+
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<SysUser>()
+                .in(SysUser::getUserId, idList)
+                .like(StrUtil.isNotBlank(teacherDto.getNickName()), SysUser::getNickName, teacherDto.getNickName())
+                .like(StrUtil.isNotBlank(teacherDto.getPhonenumber()), SysUser::getPhonenumber, teacherDto.getPhonenumber());
+        return buildVo(baseMapper.selectList(teacherWrapper), userService.list(wrapper));
     }
 
     /**
@@ -54,12 +62,11 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
      */
     @Transactional
     @Override
-    public int insertTeacher(TeacherDto teacherDto)
-    {
+    public int insertTeacher(TeacherDto teacherDto) {
         // 先新增用户
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(teacherDto, sysUser);
-        sysUser.setRoleIds(new Long[] { teacherDto.getRoleId() });
+        sysUser.setRoleIds(new Long[]{teacherDto.getRoleId()});
         userService.insertUser(sysUser);
 
         // 再新增教师表信息
@@ -79,11 +86,10 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
      */
     @Transactional
     @Override
-    public int updateTeacher(TeacherDto teacherDto)
-    {
+    public int updateTeacher(TeacherDto teacherDto) {
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(teacherDto, sysUser);
-        sysUser.setRoleIds(new Long[] { teacherDto.getRoleId() });
+        sysUser.setRoleIds(new Long[]{teacherDto.getRoleId()});
         userService.updateUser(sysUser);
 
         Teacher teacher = new Teacher();
@@ -95,6 +101,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     /**
      * 检验登录名唯一性
+     *
      * @param teacherDto 教师DTO
      * @return 结果
      */
@@ -107,6 +114,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     /**
      * 检验手机号唯一性
+     *
      * @param teacherDto 教师DTO
      * @return 结果
      */
@@ -119,6 +127,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     /**
      * 检验邮箱唯一性
+     *
      * @param teacherDto 教师DTO
      * @return 结果
      */
@@ -131,11 +140,40 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     /**
      * 根据ID查询教师信息
+     *
      * @param id 教师ID
      * @return
      */
     @Override
-    public Teacher selectTeacherById(Long id) {
-        return baseMapper.selectTeacherById(id);
+    public TeacherVo selectTeacherById(Long id) {
+        Teacher teacher = baseMapper.selectById(id);
+        SysUser sysUser = userService.selectUserById(teacher.getUserId());
+        return buildVo(teacher, sysUser);
+    }
+
+    private List<TeacherVo> buildVo(List<Teacher> teacherList, List<SysUser> userList) {
+        Map<Long, Teacher> teacherMap = new HashMap<>();
+        for (Teacher teacher : teacherList) {
+            teacherMap.put(teacher.getUserId(), teacher);
+        }
+
+        List<TeacherVo> teacherVoList = new ArrayList<>();
+        for (SysUser user : userList) {
+            TeacherVo teacherVo = new TeacherVo();
+            BeanUtils.copyProperties(user, teacherVo);
+            Teacher teacher = teacherMap.get(user.getUserId());
+            if (teacher != null) {
+                BeanUtils.copyProperties(teacher, teacherVo);
+            }
+            teacherVoList.add(teacherVo);
+        }
+        return teacherVoList;
+    }
+
+    private TeacherVo buildVo(Teacher teacher, SysUser sysUser) {
+        TeacherVo teacherVo = new TeacherVo();
+        BeanUtils.copyProperties(teacher, teacherVo);
+        BeanUtils.copyProperties(sysUser, teacherVo);
+        return teacherVo;
     }
 }

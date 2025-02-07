@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 
     @Autowired
     private ISysUserService userService;
-    
+
     @Autowired
     private SysPasswordService passwordService;
 
@@ -43,11 +43,11 @@ public class UserDetailsServiceImpl implements UserDetailsService
             log.info("登录用户：{} 不存在.", username);
             throw new ServiceException(MessageUtils.message("user.not.exists"));
         }
-        else if (UserStatus.DELETED.getCode().equals(user.getDelFlag()))
-        {
-            log.info("登录用户：{} 已被删除.", username);
-            throw new ServiceException(MessageUtils.message("user.password.delete"));
-        }
+//        else if (UserStatus.DELETED.getCode().equals(user.getDelFlag()))
+//        {
+//            log.info("登录用户：{} 已被删除.", username);
+//            throw new ServiceException(MessageUtils.message("user.password.delete"));
+//        }
         else if (UserStatus.DISABLE.getCode().equals(user.getStatus()))
         {
             log.info("登录用户：{} 已被停用.", username);

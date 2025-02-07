@@ -1,9 +1,10 @@
 package com.eduflex.manage.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,6 +14,7 @@ import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.domain.GoalStudent;
 import com.eduflex.manage.domain.dto.StudentDto;
 import com.eduflex.manage.domain.vo.StudentGoalVo;
+import com.eduflex.manage.domain.vo.StudentVo;
 import com.eduflex.manage.service.IGoalStudentService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,23 +42,29 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     private IGoalStudentService goalStudentService;
 
     @Override
-    public List<Student> selectStudentList(StudentDto studentDto)
+    public List<StudentVo> selectStudentList(StudentDto studentDto)
     {
-        LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<Student>()
-                .like(StrUtil.isNotBlank(studentDto.getUserName()), Student::getUserName, studentDto.getUserName())
-                .like(StrUtil.isNotBlank(studentDto.getNickName()), Student::getNickName, studentDto.getNickName())
-                .like(StrUtil.isNotBlank(studentDto.getPhonenumber()), Student::getPhonenumber, studentDto.getPhonenumber());
+        LambdaQueryWrapper<Student> studentWrapper = new LambdaQueryWrapper<Student>()
+                .select(Student::getId, Student::getUserId);
+
+        List<Long> idList = baseMapper.selectList(studentWrapper).stream().map(Student::getUserId).toList();
+
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<SysUser>()
+                .in(SysUser::getUserId, idList)
+                .like(StrUtil.isNotBlank(studentDto.getUserName()), SysUser::getUserName, studentDto.getUserName())
+                .like(StrUtil.isNotBlank(studentDto.getNickName()), SysUser::getNickName, studentDto.getNickName())
+                .like(StrUtil.isNotBlank(studentDto.getPhonenumber()), SysUser::getPhonenumber, studentDto.getPhonenumber());
 
         if (StrUtil.isNotBlank(studentDto.getSearchValue())) {
-            wrapper.and(w -> w.like(Student::getUserName, studentDto.getSearchValue())
+            wrapper.and(w -> w.like(SysUser::getUserName, studentDto.getSearchValue())
                     .or()
-                    .like(Student::getNickName, studentDto.getSearchValue())
+                    .like(SysUser::getNickName, studentDto.getSearchValue())
                     .or()
-                    .like(Student::getPhonenumber, studentDto.getSearchValue())
+                    .like(SysUser::getPhonenumber, studentDto.getSearchValue())
                     .or()
-                    .like(Student::getEmail, studentDto.getSearchValue()));
+                    .like(SysUser::getEmail, studentDto.getSearchValue()));
         }
-        return baseMapper.selectStudentList(wrapper);
+        return buildVo(baseMapper.selectList(studentWrapper), userService.list(wrapper));
     }
 
     @Transactional
@@ -92,14 +100,21 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
-    public int deleteStudentByIds(Long[] ids)
+    @Transactional
+    public int deleteStudentByIds(List<Long> idList)
     {
         // 查询关联的userId
-        Long[] userIds = baseMapper.selectUserIdsByStudentIds(ids);
-        userService.deleteUserByIds(userIds);
+        LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<Student>()
+                .select(Student::getUserId)
+                .in(Student::getId, idList);
+        List<Student> studentList = baseMapper.selectList(wrapper);
+
+        List<Long> userIdList = studentList.stream().map(Student::getUserId).toList();
+        userService.deleteUserByIds(userIdList);
+
         // 在删除学生表的数据
-        ArrayList<Long> idList = CollUtil.toList(ids);
-        return baseMapper.deleteByIds(idList);
+        List<Long> ids = studentList.stream().map(Student::getId).toList();
+        return baseMapper.deleteByIds(ids);
     }
 
     @Override
@@ -125,20 +140,24 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Override
     public int resetPwd(StudentDto studentDto) {
-        return userService.resetPwd(studentDto);
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyProperties(studentDto, sysUser);
+        return userService.resetPwd(sysUser);
     }
 
     @Override
-    public Student selectStudentById(Long id) {
-        return baseMapper.selectStudentById(id);
+    public StudentVo selectStudentById(Long id) {
+        Student student = baseMapper.selectById(id);
+        SysUser sysUser = userService.selectUserById(student.getUserId());
+        return buildVo(student, sysUser);
     }
 
     @Override
     public List<StudentGoalVo> selectStudentListForGoal(StudentDto studentDto) {
-        List<Student> studentList = selectStudentList(studentDto);
+        List<StudentVo> studentList = selectStudentList(studentDto);
 
         List<StudentGoalVo> studentGoalVos = new ArrayList<>();
-        for (Student student : studentList) {
+        for (StudentVo student : studentList) {
             StudentGoalVo studentGoalVo = new StudentGoalVo();
             BeanUtils.copyProperties(student, studentGoalVo);
             GoalStudent goalStudent = goalStudentService.getByUserId(student.getUserId());
@@ -146,5 +165,31 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             studentGoalVos.add(studentGoalVo);
         }
         return studentGoalVos;
+    }
+
+    private List<StudentVo> buildVo(List<Student> studentList, List<SysUser> userList) {
+        Map<Long, Student> studentMap = new HashMap<>();
+        for (Student student : studentList) {
+            studentMap.put(student.getUserId(), student);
+        }
+
+        List<StudentVo> studentVoList = new ArrayList<>();
+        for (SysUser user : userList) {
+            StudentVo studentVo = new StudentVo();
+            BeanUtils.copyProperties(user, studentVo);
+            Student student = studentMap.get(user.getUserId());
+            if (student != null) {
+                BeanUtils.copyProperties(student, studentVo);
+            }
+            studentVoList.add(studentVo);
+        }
+        return studentVoList;
+    }
+
+    private StudentVo buildVo(Student student, SysUser sysUser) {
+        StudentVo studentVo = new StudentVo();
+        BeanUtils.copyProperties(student, studentVo);
+        BeanUtils.copyProperties(sysUser, studentVo);
+        return studentVo;
     }
 }
