@@ -27,7 +27,7 @@ import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
 
 /**
- * 学习目标-学生关联Controller
+ * 学习目标-学生关联 Controller
  *
  * @author 林煜鋒
  * @date 2025-01-26

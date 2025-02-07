@@ -25,14 +25,14 @@ import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
 
 /**
- * 学习目标管理Controller
+ * 学习目标管理 Controller
  *
  * @author 林煜鋒
  * @date 2025-01-24
  */
 @RestController
 @RequestMapping("/manage/goal")
-public class LearningGoalController extends BaseController
+public class GoalController extends BaseController
 {
     @Autowired
     private IGoalService learningGoalService;

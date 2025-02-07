@@ -21,7 +21,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_learning_goal")
+@TableName("tb_goal")
 public class Goal extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
