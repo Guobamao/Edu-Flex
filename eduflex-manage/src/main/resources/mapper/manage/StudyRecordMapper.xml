@@ -3,10 +3,10 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eduflex.manage.mapper.StudyRecordMapper">
-    
+
     <resultMap type="StudyRecord" id="StudyRecordResult">
         <result property="id"    column="id"    />
-        <result property="stuId"    column="stu_id"    />
+        <result property="studentId"    column="student_id"    />
         <result property="courseId"    column="course_id"    />
         <result property="completionTime"    column="completion_time"    />
         <result property="status"    column="status"    />
@@ -19,18 +19,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectStudyRecordVo">
-        select id, stu_id, course_id, completion_time, status, progress, create_by, create_time, update_by, update_time, deleted from tb_study_record
+        select id, student_id, course_id, completion_time, status, progress, create_by, create_time, update_by, update_time, deleted from tb_study_record
     </sql>
 
     <select id="selectStudyRecordList" parameterType="StudyRecord" resultMap="StudyRecordResult">
         <include refid="selectStudyRecordVo"/>
-        <where>  
-            <if test="stuId != null "> and stu_id = #{stuId}</if>
+        <where>
+            <if test="studentId != null "> and student_id = #{studentId}</if>
             <if test="courseId != null "> and course_id = #{courseId}</if>
             <if test="status != null "> and status = #{status}</if>
         </where>
     </select>
-    
+
     <select id="selectStudyRecordById" parameterType="Long" resultMap="StudyRecordResult">
         <include refid="selectStudyRecordVo"/>
         where id = #{id}
@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteStudyRecordByIds" parameterType="String">
-        delete from tb_study_record where id in 
+        delete from tb_study_record where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

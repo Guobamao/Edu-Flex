@@ -1,9 +1,18 @@
 package com.eduflex.manage.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.eduflex.common.utils.DateUtils;
+import com.eduflex.manage.domain.Student;
+import com.eduflex.manage.domain.vo.StudyRecordVo;
+import com.eduflex.manage.service.ICourseService;
+import com.eduflex.manage.service.IStudentService;
+import com.eduflex.system.service.ISysUserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eduflex.manage.mapper.StudyRecordMapper;
@@ -19,18 +28,13 @@ import com.eduflex.manage.service.IStudyRecordService;
 @Service
 public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, StudyRecord> implements IStudyRecordService {
     @Autowired
-    private StudyRecordMapper studyRecordMapper;
+    private ICourseService courseService;
 
-    /**
-     * 查询学习记录管理
-     *
-     * @param id 学习记录管理主键
-     * @return 学习记录管理
-     */
-    @Override
-    public StudyRecord selectStudyRecordById(Long id) {
-        return studyRecordMapper.selectStudyRecordById(id);
-    }
+    @Autowired
+    private IStudentService studentService;
+
+    @Autowired
+    private ISysUserService userService;
 
     /**
      * 查询学习记录管理列表
@@ -39,53 +43,37 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
      * @return 学习记录管理
      */
     @Override
-    public List<StudyRecord> selectStudyRecordList(StudyRecord studyRecord) {
-        return studyRecordMapper.selectStudyRecordList(studyRecord);
+    public List<StudyRecordVo> selectStudyRecordList(StudyRecord studyRecord) {
+        LambdaQueryWrapper<StudyRecord> wrapper = new LambdaQueryWrapper<StudyRecord>()
+                .eq(studyRecord.getStudentId() != null, StudyRecord::getStudentId, studyRecord.getStudentId())
+                .eq(studyRecord.getCourseId() != null, StudyRecord::getCourseId, studyRecord.getCourseId())
+                .eq(studyRecord.getStatus() != null, StudyRecord::getStatus, studyRecord.getStatus());
+
+        return buildVo(baseMapper.selectList(wrapper));
     }
 
-    /**
-     * 新增学习记录管理
-     *
-     * @param studyRecord 学习记录管理
-     * @return 结果
-     */
     @Override
-    public int insertStudyRecord(StudyRecord studyRecord) {
-                studyRecord.setCreateTime(DateUtils.getNowDate());
-            return studyRecordMapper.insertStudyRecord(studyRecord);
+    public StudyRecordVo selectById(Long id) {
+        return buildVo(baseMapper.selectById(id));
     }
 
-    /**
-     * 修改学习记录管理
-     *
-     * @param studyRecord 学习记录管理
-     * @return 结果
-     */
-    @Override
-    public int updateStudyRecord(StudyRecord studyRecord) {
-                studyRecord.setUpdateTime(DateUtils.getNowDate());
-        return studyRecordMapper.updateStudyRecord(studyRecord);
+    private StudyRecordVo buildVo(StudyRecord studyRecord) {
+        StudyRecordVo studyRecordVo = new StudyRecordVo();
+        BeanUtils.copyProperties(studyRecord, studyRecordVo);
+        Student student = studentService.selectStudentById(studyRecord.getStudentId());
+        studyRecordVo.setNickName(userService.selectUserById(student.getUserId()).getNickName());
+        studyRecordVo.setUserName(userService.selectUserById(student.getUserId()).getUserName());
+        studyRecordVo.setCourseName(courseService.getById(studyRecord.getCourseId()).getName());
+        return studyRecordVo;
     }
 
-    /**
-     * 批量删除学习记录管理
-     *
-     * @param ids 需要删除的学习记录管理主键
-     * @return 结果
-     */
-    @Override
-    public int deleteStudyRecordByIds(Long[] ids) {
-        return studyRecordMapper.deleteStudyRecordByIds(ids);
-    }
+    private List<StudyRecordVo> buildVo(List<StudyRecord> studyRecordList) {
+        List<StudyRecordVo> studyRecordVoList = new ArrayList<>();
+        for (StudyRecord studyRecord : studyRecordList) {
+            StudyRecordVo studyRecordVo = buildVo(studyRecord);
 
-    /**
-     * 删除学习记录管理信息
-     *
-     * @param id 学习记录管理主键
-     * @return 结果
-     */
-    @Override
-    public int deleteStudyRecordById(Long id) {
-        return studyRecordMapper.deleteStudyRecordById(id);
+            studyRecordVoList.add(studyRecordVo);
+        }
+        return studyRecordVoList;
     }
 }

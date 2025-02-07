@@ -1,7 +1,11 @@
 package com.eduflex.manage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import cn.hutool.core.collection.CollUtil;
+import com.eduflex.manage.domain.vo.StudyRecordVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +27,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 
 /**
  * 学习记录管理Controller
- * 
+ *
  * @author 林煜鋒
  * @date 2025-01-24
  */
@@ -42,7 +46,7 @@ public class StudyRecordController extends BaseController
     public TableDataInfo list(StudyRecord studyRecord)
     {
         startPage();
-        List<StudyRecord> list = studyRecordService.selectStudyRecordList(studyRecord);
+        List<StudyRecordVo> list = studyRecordService.selectStudyRecordList(studyRecord);
         return getDataTable(list);
     }
 
@@ -54,8 +58,8 @@ public class StudyRecordController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, StudyRecord studyRecord)
     {
-        List<StudyRecord> list = studyRecordService.selectStudyRecordList(studyRecord);
-        ExcelUtil<StudyRecord> util = new ExcelUtil<StudyRecord>(StudyRecord.class);
+        List<StudyRecordVo> list = studyRecordService.selectStudyRecordList(studyRecord);
+        ExcelUtil<StudyRecordVo> util = new ExcelUtil<>(StudyRecordVo.class);
         util.exportExcel(response, list, "学习记录管理数据");
     }
 
@@ -66,7 +70,7 @@ public class StudyRecordController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(studyRecordService.selectStudyRecordById(id));
+        return success(studyRecordService.selectById(id));
     }
 
     /**
@@ -77,7 +81,7 @@ public class StudyRecordController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody StudyRecord studyRecord)
     {
-        return toAjax(studyRecordService.insertStudyRecord(studyRecord));
+        return toAjax(studyRecordService.save(studyRecord));
     }
 
     /**
@@ -88,7 +92,7 @@ public class StudyRecordController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody StudyRecord studyRecord)
     {
-        return toAjax(studyRecordService.updateStudyRecord(studyRecord));
+        return toAjax(studyRecordService.updateById(studyRecord));
     }
 
     /**
@@ -99,6 +103,7 @@ public class StudyRecordController extends BaseController
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(studyRecordService.deleteStudyRecordByIds(ids));
+        List<Long> idList = CollUtil.toList(ids);
+        return toAjax(studyRecordService.removeByIds(idList));
     }
 }

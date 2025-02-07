@@ -17,7 +17,7 @@ public interface StudyRecordMapper extends BaseMapper<StudyRecord> {
      * @param id 学习记录管理主键
      * @return 学习记录管理
      */
-    public StudyRecord selectStudyRecordById(Long id);
+    StudyRecord selectStudyRecordById(Long id);
 
     /**
      * 查询学习记录管理列表
@@ -25,7 +25,7 @@ public interface StudyRecordMapper extends BaseMapper<StudyRecord> {
      * @param studyRecord 学习记录管理
      * @return 学习记录管理集合
      */
-    public List<StudyRecord> selectStudyRecordList(StudyRecord studyRecord);
+    List<StudyRecord> selectStudyRecordList(StudyRecord studyRecord);
 
     /**
      * 新增学习记录管理
@@ -33,7 +33,7 @@ public interface StudyRecordMapper extends BaseMapper<StudyRecord> {
      * @param studyRecord 学习记录管理
      * @return 结果
      */
-    public int insertStudyRecord(StudyRecord studyRecord);
+    int insertStudyRecord(StudyRecord studyRecord);
 
     /**
      * 修改学习记录管理
@@ -41,7 +41,7 @@ public interface StudyRecordMapper extends BaseMapper<StudyRecord> {
      * @param studyRecord 学习记录管理
      * @return 结果
      */
-    public int updateStudyRecord(StudyRecord studyRecord);
+    int updateStudyRecord(StudyRecord studyRecord);
 
     /**
      * 删除学习记录管理
@@ -49,7 +49,7 @@ public interface StudyRecordMapper extends BaseMapper<StudyRecord> {
      * @param id 学习记录管理主键
      * @return 结果
      */
-    public int deleteStudyRecordById(Long id);
+    int deleteStudyRecordById(Long id);
 
     /**
      * 批量删除学习记录管理
@@ -57,5 +57,5 @@ public interface StudyRecordMapper extends BaseMapper<StudyRecord> {
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteStudyRecordByIds(Long[] ids);
+    int deleteStudyRecordByIds(Long[] ids);
 }

@@ -39,7 +39,7 @@ public class StudyRecord extends BaseEntity {
      * 学习者
      */
     @Excel(name = "学习者")
-    private Long stuId;
+    private Long studentId;
 
     /**
      * 课程
