@@ -22,7 +22,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_learning_route")
-public class LearningRoute extends BaseEntity {
+public class Route extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

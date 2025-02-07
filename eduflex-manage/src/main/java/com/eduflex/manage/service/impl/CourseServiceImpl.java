@@ -5,13 +5,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.domain.Course;
 import com.eduflex.manage.domain.CourseCategory;
-import com.eduflex.manage.domain.LearningRoute;
+import com.eduflex.manage.domain.Route;
 import com.eduflex.manage.domain.dto.CourseDto;
 import com.eduflex.manage.domain.vo.CourseVo;
 import com.eduflex.manage.mapper.CourseMapper;
 import com.eduflex.manage.service.ICourseCategoryService;
 import com.eduflex.manage.service.ICourseService;
-import com.eduflex.manage.service.ILearningRouteService;
+import com.eduflex.manage.service.IRouteService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     private ISysUserService userService;
 
     @Autowired
-    private ILearningRouteService learningRouteService;
+    private IRouteService learningRouteService;
 
     /**
      * 查询课程管理列表
@@ -80,7 +80,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public List<CourseVo> selectCourseListForRoute(CourseDto course) {
         List<CourseVo> courseVos = selectCourseList(course);
 
-        LearningRoute route = learningRouteService.getById(course.getRouteId());
+        Route route = learningRouteService.getById(course.getRouteId());
 
         String[] split = route.getCoursesId().replace("[", "").replace("]", "").replace("\"", "").split(",");
         List<Long> coursesId = Arrays.stream(split).map(Long::parseLong).toList();

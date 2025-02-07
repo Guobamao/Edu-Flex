@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.utils.DateUtils;
-import com.eduflex.manage.domain.vo.LearningRouteVo;
+import com.eduflex.manage.domain.vo.RouteVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +20,8 @@ import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.domain.LearningRoute;
-import com.eduflex.manage.service.ILearningRouteService;
+import com.eduflex.manage.domain.Route;
+import com.eduflex.manage.service.IRouteService;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
 
@@ -33,20 +33,20 @@ import com.eduflex.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/manage/route")
-public class LearningRouteController extends BaseController
+public class RouteController extends BaseController
 {
     @Autowired
-    private ILearningRouteService learningRouteService;
+    private IRouteService learningRouteService;
 
     /**
      * 查询学习路线管理列表
      */
     @PreAuthorize("@ss.hasPermi('manage:route:list')")
     @GetMapping("/list")
-    public TableDataInfo list(LearningRoute learningRoute)
+    public TableDataInfo list(Route route)
     {
         startPage();
-        List<LearningRouteVo> list = learningRouteService.selectLearningRouteList(learningRoute);
+        List<RouteVo> list = learningRouteService.selectLearningRouteList(route);
         return getDataTable(list);
     }
 
@@ -56,10 +56,10 @@ public class LearningRouteController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:route:export')")
     @Log(title = "学习路线管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, LearningRoute learningRoute)
+    public void export(HttpServletResponse response, Route route)
     {
-        List<LearningRouteVo> list = learningRouteService.selectLearningRouteList(learningRoute);
-        ExcelUtil<LearningRouteVo> util = new ExcelUtil<>(LearningRouteVo.class);
+        List<RouteVo> list = learningRouteService.selectLearningRouteList(route);
+        ExcelUtil<RouteVo> util = new ExcelUtil<>(RouteVo.class);
         util.exportExcel(response, list, "学习路线管理数据");
     }
 
@@ -79,11 +79,11 @@ public class LearningRouteController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:route:add')")
     @Log(title = "学习路线管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody LearningRoute learningRoute)
+    public AjaxResult add(@RequestBody Route route)
     {
-        learningRoute.setCreateBy(getUsername());
-        learningRoute.setCreateTime(DateUtils.getNowDate());
-        return toAjax(learningRouteService.save(learningRoute));
+        route.setCreateBy(getUsername());
+        route.setCreateTime(DateUtils.getNowDate());
+        return toAjax(learningRouteService.save(route));
     }
 
     /**
@@ -92,11 +92,11 @@ public class LearningRouteController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:route:edit')")
     @Log(title = "学习路线管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody LearningRoute learningRoute)
+    public AjaxResult edit(@RequestBody Route route)
     {
-        learningRoute.setUpdateBy(getUsername());
-        learningRoute.setUpdateTime(DateUtils.getNowDate());
-        return toAjax(learningRouteService.updateById(learningRoute));
+        route.setUpdateBy(getUsername());
+        route.setUpdateTime(DateUtils.getNowDate());
+        return toAjax(learningRouteService.updateById(route));
     }
 
     /**

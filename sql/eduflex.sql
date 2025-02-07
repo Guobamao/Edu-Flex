@@ -2477,7 +2477,7 @@ INSERT INTO `tb_learning_goal` VALUES (1883389243721973762, '50天学会Java', '
 -- ----------------------------
 -- Table structure for tb_learning_route
 -- ----------------------------
-DROP TABLE IF EXISTS `tb_learning_route`;
+DROP TABLE IF EXISTS tb_route;
 CREATE TABLE `tb_learning_route`  (
   `id` bigint NOT NULL COMMENT '学习路线ID',
   `goal_id` bigint NOT NULL COMMENT '学习目标ID',
