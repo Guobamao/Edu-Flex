@@ -3,6 +3,7 @@ package com.eduflex.manage.service;
 import java.util.List;
 import com.eduflex.manage.domain.ExamPaper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.domain.vo.ExamPaperVo;
 
 /**
  * 试卷管理Service接口
@@ -17,5 +18,5 @@ public interface IExamPaperService extends IService<ExamPaper> {
      * @param examPaper 试卷管理
      * @return 试卷管理集合
      */
-    List<ExamPaper> selectExamPaperList(ExamPaper examPaper);
+    List<ExamPaperVo> selectExamPaperList(ExamPaper examPaper);
 }

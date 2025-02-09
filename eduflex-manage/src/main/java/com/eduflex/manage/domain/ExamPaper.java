@@ -43,15 +43,6 @@ public class ExamPaper extends BaseEntity {
     @Excel(name = "总分")
     private Long totalScore;
 
-    /**
-     * 考试时长（分钟）
-     */
-    @Excel(name = "考试时长", readConverterExp = "分=钟")
-    private Long duration;
-
-    /**
-     * 是否发布（0-未发布 1-已发布）
-     */
-    @Excel(name = "是否发布", readConverterExp = "0=-未发布,1=-已发布")
-    private Long isPublished;
+    @Excel(name = "关联课程")
+    private Long courseId;
 }
