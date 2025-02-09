@@ -4,11 +4,11 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.manage.domain.ExamPaperQuestion;
-import com.eduflex.manage.domain.ExamQuestion;
+import com.eduflex.manage.domain.Question;
 import com.eduflex.manage.domain.vo.ExamPaperQuestionVo;
 import com.eduflex.manage.mapper.ExamPaperQuestionMapper;
 import com.eduflex.manage.service.IExamPaperQuestionService;
-import com.eduflex.manage.service.IExamQuestionService;
+import com.eduflex.manage.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ import java.util.List;
 public class ExamPaperQuestionServiceImpl extends ServiceImpl<ExamPaperQuestionMapper, ExamPaperQuestion> implements IExamPaperQuestionService {
 
     @Autowired
-    private IExamQuestionService examQuestionService;
+    private IQuestionService examQuestionService;
 
     @Override
     public List<ExamPaperQuestionVo> selectQuestionByPaperId(Long id) {
@@ -37,7 +37,7 @@ public class ExamPaperQuestionServiceImpl extends ServiceImpl<ExamPaperQuestionM
 
         List<ExamPaperQuestionVo> examPaperQuestionVos = new ArrayList<>();
         examPaperQuestions.forEach(v -> {
-            ExamQuestion question = examQuestionService.getById(v.getQuestionId());
+            Question question = examQuestionService.getById(v.getQuestionId());
             ExamPaperQuestionVo examPaperQuestionVo = new ExamPaperQuestionVo();
             BeanUtil.copyProperties(v, examPaperQuestionVo);
             BeanUtil.copyProperties(question, examPaperQuestionVo);

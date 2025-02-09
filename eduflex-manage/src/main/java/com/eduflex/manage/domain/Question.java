@@ -21,8 +21,8 @@ import com.eduflex.common.core.domain.BaseEntity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_exam_question")
-public class ExamQuestion extends BaseEntity {
+@TableName("tb_question")
+public class Question extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -67,8 +67,8 @@ public class ExamQuestion extends BaseEntity {
     private Integer difficulty;
 
     /**
-     * 关联课程ID
+     * 关联题库ID
      */
-    @Excel(name = "关联课程ID")
-    private Long courseId;
+    @Excel(name = "关联题库ID")
+    private Long repoId;
 }

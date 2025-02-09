@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.manage.domain.vo.RepoVo;
 import com.eduflex.manage.service.ICourseService;
+import com.eduflex.manage.service.IQuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements IR
     @Autowired
     private ICourseService courseService;
 
+    @Autowired
+    private IQuestionService questionService;
+
     @Override
     public List<RepoVo> selectRepoList(Repo repo) {
         LambdaQueryWrapper<Repo> wrapper = new LambdaQueryWrapper<Repo>()
@@ -42,6 +47,11 @@ public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements IR
             RepoVo repoVo = new RepoVo();
             BeanUtils.copyProperties(repo, repoVo);
             repoVo.setCourseName(courseService.getById(repo.getCourseId()).getName());
+            repoVo.setSingleChoiceCount(questionService.getQuestionCount(repo.getId(), EduFlexConstants.SINGLE_CHOICE));
+            repoVo.setMultipleChoiceCount(questionService.getQuestionCount(repo.getId(), EduFlexConstants.MULTIPLE_CHOICE));
+            repoVo.setJudgeCount(questionService.getQuestionCount(repo.getId(), EduFlexConstants.JUDGMENT));
+            repoVo.setBlankCount(questionService.getQuestionCount(repo.getId(), EduFlexConstants.FILL_BLANK));
+            repoVo.setShortAnswerCount(questionService.getQuestionCount(repo.getId(), EduFlexConstants.SHORT_ANSWER));
             repoVoList.add(repoVo);
         }
         return repoVoList;

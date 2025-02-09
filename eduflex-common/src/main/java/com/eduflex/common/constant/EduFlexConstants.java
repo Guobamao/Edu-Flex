@@ -50,4 +50,16 @@ public class EduFlexConstants {
     public static final Integer FILE_TYPE_PPT = 4;
     public static final Integer FILE_TYPE_PDF = 5;
     public static final Integer FILE_TYPE_OTHER = 6;
+
+    // 单选题
+    public static final Integer SINGLE_CHOICE = 1;
+    // 多选题
+    public static final Integer MULTIPLE_CHOICE = 2;
+    // 判断题
+    public static final Integer JUDGMENT = 3;
+    // 填空题
+    public static final Integer FILL_BLANK = 4;
+    // 简答题
+    public static final Integer SHORT_ANSWER = 5;
+
 }
