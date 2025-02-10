@@ -2,7 +2,7 @@ package com.eduflex.manage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.PaperQuestion;
-import com.eduflex.manage.domain.Question;
+import com.eduflex.manage.domain.vo.PaperQuestionVo;
 
 import java.util.List;
 import java.util.Map;
@@ -14,5 +14,5 @@ import java.util.Map;
  * @date 2025-01-20
  */
 public interface IPaperQuestionService extends IService<PaperQuestion> {
-    Map<Integer, List<Question>> selectQuestionByPaperId(Long id);
+    Map<Integer, List<PaperQuestionVo>> selectQuestionByPaperId(Long id);
 }

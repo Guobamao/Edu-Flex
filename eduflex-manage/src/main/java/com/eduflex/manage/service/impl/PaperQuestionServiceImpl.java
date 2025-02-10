@@ -2,8 +2,10 @@ package com.eduflex.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.domain.PaperQuestion;
 import com.eduflex.manage.domain.Question;
+import com.eduflex.manage.domain.vo.PaperQuestionVo;
 import com.eduflex.manage.mapper.PaperQuestionMapper;
 import com.eduflex.manage.service.IPaperQuestionService;
 import com.eduflex.manage.service.IQuestionService;
@@ -28,16 +30,21 @@ public class PaperQuestionServiceImpl extends ServiceImpl<PaperQuestionMapper, P
     private IQuestionService examQuestionService;
 
     @Override
-    public Map<Integer, List<Question>> selectQuestionByPaperId(Long id) {
+    public Map<Integer, List<PaperQuestionVo>> selectQuestionByPaperId(Long id) {
         LambdaQueryWrapper<PaperQuestion> wrapper = new LambdaQueryWrapper<PaperQuestion>()
                 .eq(PaperQuestion::getPaperId, id);
 
         List<PaperQuestion> paperQuestions = baseMapper.selectList(wrapper);
 
-        List<Question> questionList = new ArrayList<>();
+        List<PaperQuestionVo> questionList = new ArrayList<>();
+
+
         paperQuestions.forEach(v -> {
             Question question = examQuestionService.getById(v.getQuestionId());
-            questionList.add(question);
+            PaperQuestionVo paperQuestionVo = new PaperQuestionVo();
+            BeanUtils.copyProperties(question, paperQuestionVo);
+            paperQuestionVo.setOrderNum(v.getOrderNum());
+            questionList.add(paperQuestionVo);
         });
 
         return questionList.stream()

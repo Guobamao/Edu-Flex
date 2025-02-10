@@ -27,5 +27,5 @@ public interface IQuestionService extends IService<Question> {
      * @param type   题目类型
      * @return 数量
      */
-    Long getQuestionCount(Long repoId, Integer type);
+    Integer getQuestionCount(Long repoId, Integer type);
 }

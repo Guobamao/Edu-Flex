@@ -1,17 +1,17 @@
 /*
  Navicat Premium Dump SQL
 
- Source Server         : localhost
+ Source Server         : MySQL
  Source Server Type    : MySQL
- Source Server Version : 80039 (8.0.39)
+ Source Server Version : 80034 (8.0.34)
  Source Host           : localhost:3306
  Source Schema         : eduflex
 
  Target Server Type    : MySQL
- Target Server Version : 80039 (8.0.39)
+ Target Server Version : 80034 (8.0.34)
  File Encoding         : 65001
 
- Date: 10/02/2025 17:58:51
+ Date: 11/02/2025 00:33:45
 */
 
 SET NAMES utf8mb4;
@@ -668,11 +668,11 @@ INSERT INTO `sys_dict_data` VALUES (106, 2, '图片', '2', 'material_type', NULL
 INSERT INTO `sys_dict_data` VALUES (107, 1, '纯文本', '1', 'material_type', NULL, 'default', 'N', '0', 'admin', '2024-10-16 10:41:39', 'admin', '2025-01-24 11:57:52', NULL);
 INSERT INTO `sys_dict_data` VALUES (108, 4, '幻灯片', '4', 'material_type', NULL, 'warning', 'N', '0', 'admin', '2024-10-16 10:41:52', 'admin', '2025-01-24 11:57:40', NULL);
 INSERT INTO `sys_dict_data` VALUES (109, 5, 'PDF文档', '5', 'material_type', NULL, 'primary', 'N', '0', 'admin', '2024-10-16 10:42:02', 'admin', '2025-01-22 17:18:56', NULL);
-INSERT INTO `sys_dict_data` VALUES (110, 1, '单选题', '1', 'question_type', NULL, 'default', 'N', '0', 'admin', '2025-01-10 15:42:59', 'admin', '2025-01-10 15:43:20', NULL);
-INSERT INTO `sys_dict_data` VALUES (111, 2, '多选题', '2', 'question_type', NULL, 'default', 'N', '0', 'admin', '2025-01-10 15:43:14', 'admin', '2025-01-10 15:43:23', NULL);
-INSERT INTO `sys_dict_data` VALUES (112, 3, '判断题', '3', 'question_type', NULL, 'default', 'N', '0', 'admin', '2025-01-10 15:43:35', 'admin', '2025-01-14 15:40:30', NULL);
-INSERT INTO `sys_dict_data` VALUES (113, 4, '填空题', '4', 'question_type', NULL, 'default', 'N', '0', 'admin', '2025-01-10 15:43:44', '', NULL, NULL);
-INSERT INTO `sys_dict_data` VALUES (114, 5, '简答题', '5', 'question_type', NULL, 'default', 'N', '0', 'admin', '2025-01-10 15:43:53', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (110, 1, '单选题', '1', 'question_type', NULL, 'primary', 'N', '0', 'admin', '2025-01-10 15:42:59', 'admin', '2025-02-11 00:05:55', NULL);
+INSERT INTO `sys_dict_data` VALUES (111, 2, '多选题', '2', 'question_type', NULL, 'primary', 'N', '0', 'admin', '2025-01-10 15:43:14', 'admin', '2025-02-11 00:05:59', NULL);
+INSERT INTO `sys_dict_data` VALUES (112, 3, '判断题', '3', 'question_type', NULL, 'primary', 'N', '0', 'admin', '2025-01-10 15:43:35', 'admin', '2025-02-11 00:06:02', NULL);
+INSERT INTO `sys_dict_data` VALUES (113, 4, '填空题', '4', 'question_type', NULL, 'primary', 'N', '0', 'admin', '2025-01-10 15:43:44', 'admin', '2025-02-11 00:06:04', NULL);
+INSERT INTO `sys_dict_data` VALUES (114, 5, '简答题', '5', 'question_type', NULL, 'primary', 'N', '0', 'admin', '2025-01-10 15:43:53', 'admin', '2025-02-11 00:06:07', NULL);
 INSERT INTO `sys_dict_data` VALUES (115, 1, '简单', '1', 'question_difficulty', NULL, 'primary', 'N', '0', 'admin', '2025-01-15 09:31:07', 'admin', '2025-01-15 09:31:15', NULL);
 INSERT INTO `sys_dict_data` VALUES (116, 2, '中等', '2', 'question_difficulty', NULL, 'warning', 'N', '0', 'admin', '2025-01-15 09:31:38', 'admin', '2025-01-15 09:34:10', NULL);
 INSERT INTO `sys_dict_data` VALUES (117, 3, '困难', '3', 'question_difficulty', NULL, 'danger', 'N', '0', 'admin', '2025-01-15 09:31:46', 'admin', '2025-01-15 09:34:04', NULL);
@@ -787,7 +787,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 237 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 238 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -929,6 +929,7 @@ INSERT INTO `sys_logininfor` VALUES (233, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (234, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-07 16:50:14');
 INSERT INTO `sys_logininfor` VALUES (235, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-10 14:04:49');
 INSERT INTO `sys_logininfor` VALUES (236, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-10 16:13:32');
+INSERT INTO `sys_logininfor` VALUES (237, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-10 20:32:03');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1090,7 +1091,7 @@ INSERT INTO `sys_menu` VALUES (2064, '课程分类新增', 2062, 2, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2065, '课程分类修改', 2062, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:category:edit', '#', 'admin', '2024-12-08 21:40:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2066, '课程分类删除', 2062, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:category:remove', '#', 'admin', '2024-12-08 21:40:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2067, '课程分类导出', 2062, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:category:export', '#', 'admin', '2024-12-08 21:40:07', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2068, '题库管理', 0, 3, 'question_bank', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '题库管理', 'admin', '2025-01-10 15:38:50', 'admin', '2025-01-23 13:39:07', '');
+INSERT INTO `sys_menu` VALUES (2068, '题库管理', 0, 3, 'exam', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '题库管理', 'admin', '2025-01-10 15:38:50', 'admin', '2025-01-23 13:39:07', '');
 INSERT INTO `sys_menu` VALUES (2075, '试卷管理', 2068, 1, 'paper', 'manage/paper/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:paper:list', '试卷管理', 'admin', '2025-01-10 16:32:58', 'admin', '2025-01-23 13:41:46', '试卷管理菜单');
 INSERT INTO `sys_menu` VALUES (2076, '试卷管理查询', 2075, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:paper:query', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2077, '试卷管理新增', 2075, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:paper:add', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
@@ -1197,7 +1198,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 837 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 861 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1939,6 +1940,30 @@ INSERT INTO `sys_oper_log` VALUES (833, '题目管理', 1, 'com.eduflex.manage.c
 INSERT INTO `sys_oper_log` VALUES (834, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"String是引用数据类型，不是基本数据类型。\",\"answer\":\"[\\\"A\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:22:03\",\"difficulty\":1,\"id\":1888866002205245442,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"是\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"否\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中的String是基本数据类型吗？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:22:03', 4);
 INSERT INTO `sys_oper_log` VALUES (835, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"==用于比较内存地址，equals()用于比较字符串的内容是否相等。\",\"answer\":\"[\\\"==比较地址，equals()比较内容\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:22:45\",\"difficulty\":2,\"id\":1888866180559634433,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中==和equals()方法的区别是什么？\",\"type\":5}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:22:45', 4);
 INSERT INTO `sys_oper_log` VALUES (836, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Java中的垃圾回收机制是自动的，不需要手动释放内存。\",\"answer\":\"[false]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:23:08\",\"difficulty\":1,\"id\":1888866274851782658,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中的垃圾回收机制是手动释放内存的吗？\",\"type\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:23:08', 3);
+INSERT INTO `sys_oper_log` VALUES (837, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"extends用于继承类，implements用于实现接口\\t\",\"answer\":\"[\\\"A\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:38:33\",\"difficulty\":1,\"id\":1888975852141744130,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"extends\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"implements\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"super\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"interface\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中实现继承的关键字是？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:38:33', 23);
+INSERT INTO `sys_oper_log` VALUES (838, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"String是引用类型\",\"answer\":\"[\\\"B\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:38:59\",\"difficulty\":1,\"id\":1888975963009781762,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"int\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"String\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"boolean\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"double\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"下列哪个不是基本数据类型？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:38:59', 6);
+INSERT INTO `sys_oper_log` VALUES (839, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Object是Java所有类的根父类\",\"answer\":\"[\\\"A\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:39:32\",\"difficulty\":1,\"id\":1888976099630845953,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Object\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"Class\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"Root\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"Parent\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中所有类的父类是？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:39:32', 6);
+INSERT INTO `sys_oper_log` VALUES (840, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"运算符从左到右执行，先计算5+5=10，再与\\\"5\\\"拼接\",\"answer\":\"[\\\"105\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:41:03\",\"difficulty\":2,\"id\":1888976483577434114,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"以下代码输出结果：System.out.println(5 + 5 + \\\"5\\\");\",\"type\":4}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:41:03', 9);
+INSERT INTO `sys_oper_log` VALUES (841, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"接口方法默认public abstract\",\"answer\":\"[\\\"A\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:41:31\",\"difficulty\":2,\"id\":1888976597863829506,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"public\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"private\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"protected\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"default\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"接口中方法的默认修饰符是？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:41:31', 5);
+INSERT INTO `sys_oper_log` VALUES (842, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"ArrayList基于数组，LinkedList基于链表\",\"answer\":\"[\\\"A\\\",\\\"C\\\",\\\"D\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:42:09\",\"difficulty\":2,\"id\":1888976760510550018,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"内存结构\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"线程安全\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"随机访问效率\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"插入删除效率\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"ArrayList和LinkedList的区别包括？\",\"type\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:42:09', 8);
+INSERT INTO `sys_oper_log` VALUES (843, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Java不支持多类继承，但可以实现多个接口\",\"answer\":\"[true]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:42:28\",\"difficulty\":1,\"id\":1888976836628779009,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java的单继承特性是指一个类只能继承一个类\",\"type\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:42:28', 5);
+INSERT INTO `sys_oper_log` VALUES (844, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"String被final修饰，修改时会创建新对象\",\"answer\":\"[true]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:42:40\",\"difficulty\":1,\"id\":1888976888004808706,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"String是不可变对象\",\"type\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:42:40', 7);
+INSERT INTO `sys_oper_log` VALUES (845, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"除System.exit()和JVM崩溃外都会执行\",\"answer\":\"[true]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:42:54\",\"difficulty\":2,\"id\":1888976948063047681,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"finally块是否一定会执行？\",\"type\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:42:54', 6);
+INSERT INTO `sys_oper_log` VALUES (846, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"三种标准创建方式\",\"answer\":\"[\\\"A\\\",\\\"C\\\",\\\"B\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:43:30\",\"difficulty\":3,\"id\":1888977097418018817,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"继承Thread类\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"实现Runnable接口\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"使用ExecutorService\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"使用Timer\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"实现多线程的方式包括？\",\"type\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:43:30', 4);
+INSERT INTO `sys_oper_log` VALUES (847, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"运行时异常继承RuntimeException\",\"answer\":\"[\\\"A\\\",\\\"D\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:43:57\",\"difficulty\":3,\"id\":1888977213944172546,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"NullPointerException\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"IOException\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"SQLException\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"ClassCastException\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"下列哪个是运行时异常？\",\"type\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:43:57', 6);
+INSERT INTO `sys_oper_log` VALUES (848, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"JDK8后当链表长度>8时转为红黑树\",\"answer\":\"[\\\"数组+链表/红黑树\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:44:22\",\"difficulty\":3,\"id\":1888977315177893890,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"HashMap的底层数据结构是？\",\"type\":4}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:44:22', 6);
+INSERT INTO `sys_oper_log` VALUES (849, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"防止重复加载，确保核心类不被篡改\",\"answer\":\"[\\\"保证类加载安全性和唯一性\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:44:37\",\"difficulty\":3,\"id\":1888977379061338113,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"双亲委派机制的作用是？\",\"type\":5}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:44:37', 6);
+INSERT INTO `sys_oper_log` VALUES (850, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"保证可见性和禁止指令重排序，但不保证原子性\\t\",\"answer\":\"[\\\"B\\\",\\\"C\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:45:15\",\"difficulty\":3,\"id\":1888977540223275009,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"原子性\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"可见性\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"有序性\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"线程安全\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"volatile关键字的作用是？\",\"type\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:45:15', 6);
+INSERT INTO `sys_oper_log` VALUES (851, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"StringBuffer线程安全但速度慢\",\"answer\":\"[\\\"A\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:45:59\",\"difficulty\":2,\"id\":1888977725078835201,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"线程安全\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"执行速度\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"存储结构\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"继承关系\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"StringBuffer与StringBuilder的主要区别？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:45:59', 5);
+INSERT INTO `sys_oper_log` VALUES (852, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"自动资源管理语法要求\",\"answer\":\"[\\\"实现AutoCloseable接口\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:46:15\",\"difficulty\":2,\"id\":1888977792670044161,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"try-with-resources语句适用的资源类型要求？\",\"type\":4}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:46:15', 8);
+INSERT INTO `sys_oper_log` VALUES (853, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"引用计数、可达性分析、分代回收等机制\",\"answer\":\"[\\\"通过GC自动管理堆内存\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:46:33\",\"difficulty\":3,\"id\":1888977867068608513,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"描述Java垃圾回收机制的原理\",\"type\":5}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:46:33', 5);
+INSERT INTO `sys_oper_log` VALUES (854, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"三种都是经典单例实现方式\",\"answer\":\"[\\\"A\\\",\\\"B\\\",\\\"C\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:47:11\",\"difficulty\":3,\"id\":1888978025948844033,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"枚举\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"双重检查锁\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"静态内部类\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"工厂模式\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"下列哪个是单例模式的实现方式？\",\"type\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:47:11', 8);
+INSERT INTO `sys_oper_log` VALUES (855, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"堆线程共享，栈线程私有；堆GC管理，栈自动分配\",\"answer\":\"[\\\"堆存对象，栈存局部变量\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 23:47:24\",\"difficulty\":3,\"id\":1888978080407687169,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java内存模型中堆和栈的区别\",\"type\":5}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 23:47:24', 6);
+INSERT INTO `sys_oper_log` VALUES (856, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-10 15:42:59\",\"default\":false,\"dictCode\":110,\"dictLabel\":\"单选题\",\"dictSort\":1,\"dictType\":\"question_type\",\"dictValue\":\"1\",\"isDefault\":\"N\",\"listClass\":\"primary\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-11 00:05:56', 20);
+INSERT INTO `sys_oper_log` VALUES (857, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-10 15:43:14\",\"default\":false,\"dictCode\":111,\"dictLabel\":\"多选题\",\"dictSort\":2,\"dictType\":\"question_type\",\"dictValue\":\"2\",\"isDefault\":\"N\",\"listClass\":\"primary\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-11 00:05:59', 13);
+INSERT INTO `sys_oper_log` VALUES (858, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-10 15:43:35\",\"default\":false,\"dictCode\":112,\"dictLabel\":\"判断题\",\"dictSort\":3,\"dictType\":\"question_type\",\"dictValue\":\"3\",\"isDefault\":\"N\",\"listClass\":\"primary\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-11 00:06:02', 16);
+INSERT INTO `sys_oper_log` VALUES (859, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-10 15:43:44\",\"default\":false,\"dictCode\":113,\"dictLabel\":\"填空题\",\"dictSort\":4,\"dictType\":\"question_type\",\"dictValue\":\"4\",\"isDefault\":\"N\",\"listClass\":\"primary\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-11 00:06:04', 14);
+INSERT INTO `sys_oper_log` VALUES (860, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-10 15:43:53\",\"default\":false,\"dictCode\":114,\"dictLabel\":\"简答题\",\"dictSort\":5,\"dictType\":\"question_type\",\"dictValue\":\"5\",\"isDefault\":\"N\",\"listClass\":\"primary\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-11 00:06:07', 13);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -2161,7 +2186,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/avatar/2024/12/31/logo_20241231152013A001.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', 0, '127.0.0.1', '2025-02-10 16:13:32', 'admin', '2024-10-05 13:28:48', '', '2025-02-10 16:13:32', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/avatar/2024/12/31/logo_20241231152013A001.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', 0, '127.0.0.1', '2025-02-10 20:32:03', 'admin', '2024-10-05 13:28:48', '', '2025-02-10 20:32:03', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', 1, '127.0.0.1', '2024-10-05 13:28:48', 'admin', '2024-10-05 13:28:48', 'admin', '2024-10-06 16:03:47', '测试员');
 INSERT INTO `sys_user` VALUES (100, NULL, 'zhangsan', '张三', '00', '1972212424@qq.com', '15815161602', '0', '', '$2a$10$gnDVpc1oEeeHL9oMuVrRaulVsqNuT1SPeSdpqkIh7ERDD65pPmkJa', '0', 0, '127.0.0.1', '2024-10-16 23:49:02', 'admin', '2024-10-06 00:52:44', 'admin', '2025-02-07 13:12:56', NULL);
 INSERT INTO `sys_user` VALUES (102, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$nZvTWdZ1BlIHdGlwHMkGMOTKKagqC8yN9piQ.6gHtaSzCHF1Bl0A2', '0', 1, '', NULL, 'admin', '2024-10-06 16:56:27', '', NULL, NULL);
@@ -2376,77 +2401,6 @@ INSERT INTO `tb_course_material` VALUES (1882637554685489153, 188260304389772902
 INSERT INTO `tb_course_material` VALUES (1882637591008161794, 1882603043897729026, 'index.html', 1882637587229093890, '1', NULL, '2025-01-24 11:52:34', NULL, '2025-01-24 11:52:34', NULL, 0);
 
 -- ----------------------------
--- Table structure for tb_exam_paper
--- ----------------------------
-DROP TABLE IF EXISTS `tb_exam_paper`;
-CREATE TABLE `tb_exam_paper`  (
-  `id` bigint NOT NULL COMMENT '试卷ID',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '试卷名称',
-  `total_score` int NOT NULL COMMENT '总分',
-  `course_id` bigint NOT NULL COMMENT '关联课程',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of tb_exam_paper
--- ----------------------------
-INSERT INTO `tb_exam_paper` VALUES (1879418666678198274, '模拟卷1', 100, 1, NULL, '2025-01-15 14:41:42', NULL, '2025-01-15 14:41:42', 0);
-
--- ----------------------------
--- Table structure for tb_exam_paper_question
--- ----------------------------
-DROP TABLE IF EXISTS `tb_exam_paper_question`;
-CREATE TABLE `tb_exam_paper_question`  (
-  `id` bigint NOT NULL COMMENT 'ID',
-  `paper_id` bigint NOT NULL COMMENT '试卷ID',
-  `question_id` bigint NOT NULL COMMENT '题目ID',
-  `score` int NOT NULL COMMENT '分值',
-  `order_num` int NULL DEFAULT 0 COMMENT '题目顺序',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷题目关联表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of tb_exam_paper_question
--- ----------------------------
-INSERT INTO `tb_exam_paper_question` VALUES (1879082351088553986, 1879418666678198274, 1879082351088553986, 5, 6);
-INSERT INTO `tb_exam_paper_question` VALUES (1879096369215885314, 1879418666678198274, 1879096369215885314, 5, 2);
-INSERT INTO `tb_exam_paper_question` VALUES (1879096505274912770, 1879418666678198274, 1879096505274912770, 5, 3);
-INSERT INTO `tb_exam_paper_question` VALUES (1879096608295407618, 1879418666678198274, 1879096608295407618, 5, 4);
-INSERT INTO `tb_exam_paper_question` VALUES (1879096862541533186, 1879418666678198274, 1879096862541533186, 5, 1);
-
--- ----------------------------
--- Table structure for tb_exam_paper_repo
--- ----------------------------
-DROP TABLE IF EXISTS `tb_exam_paper_repo`;
-CREATE TABLE `tb_exam_paper_repo`  (
-  `id` bigint NOT NULL COMMENT 'ID',
-  `paper_id` bigint NOT NULL COMMENT '关联试卷ID',
-  `repo_id` bigint NOT NULL COMMENT '关联题库ID',
-  `single_choice_count` int NULL DEFAULT 0 COMMENT '单选题数量',
-  `single_choice_score` int NULL DEFAULT 0 COMMENT '单选题分数',
-  `multiple_choice_count` int NULL DEFAULT 0 COMMENT '多选题数量',
-  `multiple_choice_score` int NULL DEFAULT 0 COMMENT '多选题分数',
-  `judge_count` int NULL DEFAULT 0 COMMENT '判断题数量',
-  `judge_score` int NULL DEFAULT 0 COMMENT '判断题分数',
-  `blank_count` int NULL DEFAULT 0 COMMENT '填空题数量',
-  `blank_score` int NULL DEFAULT 0 COMMENT '填空题分数',
-  `short_answer_count` int NULL DEFAULT 0 COMMENT '简单题数量',
-  `short_answer_score` int NULL DEFAULT 0 COMMENT '简答题分数',
-  `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除字段',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷题库关联表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of tb_exam_paper_repo
--- ----------------------------
-INSERT INTO `tb_exam_paper_repo` VALUES (1888889327031693313, 1879418666678198274, 1888576625653796865, 5, 5, 2, 5, 0, 0, 0, 0, 0, 0, 0);
-
--- ----------------------------
 -- Table structure for tb_file_images
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_file_images`;
@@ -2609,6 +2563,86 @@ INSERT INTO `tb_oss_file` VALUES (1883361190467784705, '6795b069338968d7962673a0
 INSERT INTO `tb_oss_file` VALUES (1883361212890533890, '6795b06e338968d7962673a1.jpeg', 'jpeg', 'local-plus/6795b06e338968d7962673a1.jpeg', 'image/jpeg', 34131, '哈哈哈哈.jpeg', 2, 0, 'admin', '2025-01-26 11:47:58', NULL, '2025-01-26 11:47:58');
 
 -- ----------------------------
+-- Table structure for tb_paper
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_paper`;
+CREATE TABLE `tb_paper`  (
+  `id` bigint NOT NULL COMMENT '试卷ID',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '试卷名称',
+  `total_score` int NOT NULL COMMENT '总分',
+  `course_id` bigint NOT NULL COMMENT '关联课程',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of tb_paper
+-- ----------------------------
+INSERT INTO `tb_paper` VALUES (1879418666678198274, '模拟卷1', 165, 1, NULL, '2025-01-15 14:41:42', NULL, '2025-01-15 14:41:42', 0);
+
+-- ----------------------------
+-- Table structure for tb_paper_question
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_paper_question`;
+CREATE TABLE `tb_paper_question`  (
+  `id` bigint NOT NULL COMMENT 'ID',
+  `paper_id` bigint NOT NULL COMMENT '试卷ID',
+  `question_id` bigint NOT NULL COMMENT '题目ID',
+  `type` int NOT NULL COMMENT '题目类型',
+  `order_num` int NULL DEFAULT 0 COMMENT '题目顺序',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷题目关联表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of tb_paper_question
+-- ----------------------------
+INSERT INTO `tb_paper_question` VALUES (1888988990882885634, 1879418666678198274, 1888975852141744130, 1, 1);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885635, 1879418666678198274, 1888865517591166978, 1, 2);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885636, 1879418666678198274, 1888975963009781762, 1, 3);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885637, 1879418666678198274, 1888976099630845953, 1, 4);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885638, 1879418666678198274, 1879096369215885314, 1, 5);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885639, 1879418666678198274, 1888865386175234049, 1, 6);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885640, 1879418666678198274, 1888977725078835201, 1, 7);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885641, 1879418666678198274, 1888976597863829506, 1, 8);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885642, 1879418666678198274, 1888865715377766401, 1, 9);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885643, 1879418666678198274, 1888865901479034882, 1, 10);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885644, 1879418666678198274, 1888590586725933058, 2, 11);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885645, 1879418666678198274, 1879096608295407618, 2, 12);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885646, 1879418666678198274, 1888866274851782658, 3, 13);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885647, 1879418666678198274, 1888977792670044161, 4, 14);
+INSERT INTO `tb_paper_question` VALUES (1888988990882885648, 1879418666678198274, 1888866180559634433, 5, 15);
+
+-- ----------------------------
+-- Table structure for tb_paper_repo
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_paper_repo`;
+CREATE TABLE `tb_paper_repo`  (
+  `id` bigint NOT NULL COMMENT 'ID',
+  `paper_id` bigint NOT NULL COMMENT '关联试卷ID',
+  `repo_id` bigint NOT NULL COMMENT '关联题库ID',
+  `single_choice_count` int NULL DEFAULT 0 COMMENT '单选题数量',
+  `single_choice_score` int NULL DEFAULT 0 COMMENT '单选题分数',
+  `multiple_choice_count` int NULL DEFAULT 0 COMMENT '多选题数量',
+  `multiple_choice_score` int NULL DEFAULT 0 COMMENT '多选题分数',
+  `judge_count` int NULL DEFAULT 0 COMMENT '判断题数量',
+  `judge_score` int NULL DEFAULT 0 COMMENT '判断题分数',
+  `blank_count` int NULL DEFAULT 0 COMMENT '填空题数量',
+  `blank_score` int NULL DEFAULT 0 COMMENT '填空题分数',
+  `short_answer_count` int NULL DEFAULT 0 COMMENT '简单题数量',
+  `short_answer_score` int NULL DEFAULT 0 COMMENT '简答题分数',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷题库关联表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of tb_paper_repo
+-- ----------------------------
+INSERT INTO `tb_paper_repo` VALUES (1888988984092307458, 1879418666678198274, 1888576625653796865, 10, 5, 2, 10, 1, 5, 4, 10, 5, 10);
+
+-- ----------------------------
 -- Table structure for tb_question
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_question`;
@@ -2648,6 +2682,25 @@ INSERT INTO `tb_question` VALUES (1888865901479034882, 'Java中，如何定义�
 INSERT INTO `tb_question` VALUES (1888866002205245442, 'Java中的String是基本数据类型吗？', 1, '[{\"key\":\"A\",\"value\":\"是\"},{\"key\":\"B\",\"value\":\"否\"}]', '[\"A\"]', 'String是引用数据类型，不是基本数据类型。', 3, 1888576625653796865, 'admin', '2025-02-10 16:22:03', NULL, '2025-02-10 16:22:03', 0);
 INSERT INTO `tb_question` VALUES (1888866180559634433, 'Java中==和equals()方法的区别是什么？', 5, '[]', '[\"==比较地址，equals()比较内容\"]', '==用于比较内存地址，equals()用于比较字符串的内容是否相等。', 2, 1888576625653796865, 'admin', '2025-02-10 16:22:46', NULL, '2025-02-10 16:22:45', 0);
 INSERT INTO `tb_question` VALUES (1888866274851782658, 'Java中的垃圾回收机制是手动释放内存的吗？', 3, '[]', '[false]', 'Java中的垃圾回收机制是自动的，不需要手动释放内存。', 1, 1888576625653796865, 'admin', '2025-02-10 16:23:08', NULL, '2025-02-10 16:23:08', 0);
+INSERT INTO `tb_question` VALUES (1888975852141744130, 'Java中实现继承的关键字是？', 1, '[{\"key\":\"A\",\"value\":\"extends\"},{\"key\":\"B\",\"value\":\"implements\"},{\"key\":\"C\",\"value\":\"super\"},{\"key\":\"D\",\"value\":\"interface\"}]', '[\"A\"]', 'extends用于继承类，implements用于实现接口	', 1, 1888576625653796865, 'admin', '2025-02-10 23:38:33', NULL, '2025-02-10 23:38:33', 0);
+INSERT INTO `tb_question` VALUES (1888975963009781762, '下列哪个不是基本数据类型？', 1, '[{\"key\":\"A\",\"value\":\"int\"},{\"key\":\"B\",\"value\":\"String\"},{\"key\":\"C\",\"value\":\"boolean\"},{\"key\":\"D\",\"value\":\"double\"}]', '[\"B\"]', 'String是引用类型', 1, 1888576625653796865, 'admin', '2025-02-10 23:39:00', NULL, '2025-02-10 23:38:59', 0);
+INSERT INTO `tb_question` VALUES (1888976099630845953, 'Java中所有类的父类是？', 1, '[{\"key\":\"A\",\"value\":\"Object\"},{\"key\":\"B\",\"value\":\"Class\"},{\"key\":\"C\",\"value\":\"Root\"},{\"key\":\"D\",\"value\":\"Parent\"}]', '[\"A\"]', 'Object是Java所有类的根父类', 1, 1888576625653796865, 'admin', '2025-02-10 23:39:32', NULL, '2025-02-10 23:39:32', 0);
+INSERT INTO `tb_question` VALUES (1888976483577434114, '以下代码输出结果：System.out.println(5 + 5 + \"5\");', 4, '[]', '[\"105\"]', '运算符从左到右执行，先计算5+5=10，再与\"5\"拼接', 2, 1888576625653796865, 'admin', '2025-02-10 23:41:04', NULL, '2025-02-10 23:41:03', 0);
+INSERT INTO `tb_question` VALUES (1888976597863829506, '接口中方法的默认修饰符是？', 1, '[{\"key\":\"A\",\"value\":\"public\"},{\"key\":\"B\",\"value\":\"private\"},{\"key\":\"C\",\"value\":\"protected\"},{\"key\":\"D\",\"value\":\"default\"}]', '[\"A\"]', '接口方法默认public abstract', 2, 1888576625653796865, 'admin', '2025-02-10 23:41:31', NULL, '2025-02-10 23:41:31', 0);
+INSERT INTO `tb_question` VALUES (1888976760510550018, 'ArrayList和LinkedList的区别包括？', 2, '[{\"key\":\"A\",\"value\":\"内存结构\"},{\"key\":\"B\",\"value\":\"线程安全\"},{\"key\":\"C\",\"value\":\"随机访问效率\"},{\"key\":\"D\",\"value\":\"插入删除效率\"}]', '[\"A\",\"C\",\"D\"]', 'ArrayList基于数组，LinkedList基于链表', 2, 1888576625653796865, 'admin', '2025-02-10 23:42:10', NULL, '2025-02-10 23:42:09', 0);
+INSERT INTO `tb_question` VALUES (1888976836628779009, 'Java的单继承特性是指一个类只能继承一个类', 3, '[]', '[true]', 'Java不支持多类继承，但可以实现多个接口', 1, 1888576625653796865, 'admin', '2025-02-10 23:42:28', NULL, '2025-02-10 23:42:28', 0);
+INSERT INTO `tb_question` VALUES (1888976888004808706, 'String是不可变对象', 3, '[]', '[true]', 'String被final修饰，修改时会创建新对象', 1, 1888576625653796865, 'admin', '2025-02-10 23:42:40', NULL, '2025-02-10 23:42:40', 0);
+INSERT INTO `tb_question` VALUES (1888976948063047681, 'finally块是否一定会执行？', 3, '[]', '[true]', '除System.exit()和JVM崩溃外都会执行', 2, 1888576625653796865, 'admin', '2025-02-10 23:42:55', NULL, '2025-02-10 23:42:54', 0);
+INSERT INTO `tb_question` VALUES (1888977097418018817, '实现多线程的方式包括？', 2, '[{\"key\":\"A\",\"value\":\"继承Thread类\"},{\"key\":\"B\",\"value\":\"实现Runnable接口\"},{\"key\":\"C\",\"value\":\"使用ExecutorService\"},{\"key\":\"D\",\"value\":\"使用Timer\"}]', '[\"A\",\"C\",\"B\"]', '三种标准创建方式', 3, 1888576625653796865, 'admin', '2025-02-10 23:43:30', NULL, '2025-02-10 23:43:30', 0);
+INSERT INTO `tb_question` VALUES (1888977213944172546, '下列哪个是运行时异常？', 2, '[{\"key\":\"A\",\"value\":\"NullPointerException\"},{\"key\":\"B\",\"value\":\"IOException\"},{\"key\":\"C\",\"value\":\"SQLException\"},{\"key\":\"D\",\"value\":\"ClassCastException\"}]', '[\"A\",\"D\"]', '运行时异常继承RuntimeException', 3, 1888576625653796865, 'admin', '2025-02-10 23:43:58', NULL, '2025-02-10 23:43:57', 0);
+INSERT INTO `tb_question` VALUES (1888977315177893890, 'HashMap的底层数据结构是？', 4, '[]', '[\"数组+链表/红黑树\"]', 'JDK8后当链表长度>8时转为红黑树', 3, 1888576625653796865, 'admin', '2025-02-10 23:44:22', NULL, '2025-02-10 23:44:22', 0);
+INSERT INTO `tb_question` VALUES (1888977379061338113, '双亲委派机制的作用是？', 5, '[]', '[\"保证类加载安全性和唯一性\"]', '防止重复加载，确保核心类不被篡改', 3, 1888576625653796865, 'admin', '2025-02-10 23:44:37', NULL, '2025-02-10 23:44:37', 0);
+INSERT INTO `tb_question` VALUES (1888977540223275009, 'volatile关键字的作用是？', 2, '[{\"key\":\"A\",\"value\":\"原子性\"},{\"key\":\"B\",\"value\":\"可见性\"},{\"key\":\"C\",\"value\":\"有序性\"},{\"key\":\"D\",\"value\":\"线程安全\"}]', '[\"B\",\"C\"]', '保证可见性和禁止指令重排序，但不保证原子性	', 3, 1888576625653796865, 'admin', '2025-02-10 23:45:16', NULL, '2025-02-10 23:45:15', 0);
+INSERT INTO `tb_question` VALUES (1888977725078835201, 'StringBuffer与StringBuilder的主要区别？', 1, '[{\"key\":\"A\",\"value\":\"线程安全\"},{\"key\":\"B\",\"value\":\"执行速度\"},{\"key\":\"C\",\"value\":\"存储结构\"},{\"key\":\"D\",\"value\":\"继承关系\"}]', '[\"A\"]', 'StringBuffer线程安全但速度慢', 2, 1888576625653796865, 'admin', '2025-02-10 23:46:00', NULL, '2025-02-10 23:45:59', 0);
+INSERT INTO `tb_question` VALUES (1888977792670044161, 'try-with-resources语句适用的资源类型要求？', 4, '[]', '[\"实现AutoCloseable接口\"]', '自动资源管理语法要求', 2, 1888576625653796865, 'admin', '2025-02-10 23:46:16', NULL, '2025-02-10 23:46:15', 0);
+INSERT INTO `tb_question` VALUES (1888977867068608513, '描述Java垃圾回收机制的原理', 5, '[]', '[\"通过GC自动管理堆内存\"]', '引用计数、可达性分析、分代回收等机制', 3, 1888576625653796865, 'admin', '2025-02-10 23:46:34', NULL, '2025-02-10 23:46:33', 0);
+INSERT INTO `tb_question` VALUES (1888978025948844033, '下列哪个是单例模式的实现方式？', 2, '[{\"key\":\"A\",\"value\":\"枚举\"},{\"key\":\"B\",\"value\":\"双重检查锁\"},{\"key\":\"C\",\"value\":\"静态内部类\"},{\"key\":\"D\",\"value\":\"工厂模式\"}]', '[\"A\",\"B\",\"C\"]', '三种都是经典单例实现方式', 3, 1888576625653796865, 'admin', '2025-02-10 23:47:12', NULL, '2025-02-10 23:47:11', 0);
+INSERT INTO `tb_question` VALUES (1888978080407687169, 'Java内存模型中堆和栈的区别', 5, '[]', '[\"堆存对象，栈存局部变量\"]', '堆线程共享，栈线程私有；堆GC管理，栈自动分配', 3, 1888576625653796865, 'admin', '2025-02-10 23:47:25', NULL, '2025-02-10 23:47:24', 0);
 
 -- ----------------------------
 -- Table structure for tb_repo

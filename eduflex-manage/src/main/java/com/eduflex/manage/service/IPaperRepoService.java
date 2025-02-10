@@ -2,6 +2,7 @@ package com.eduflex.manage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.PaperRepo;
+import com.eduflex.manage.domain.vo.PaperRepoVo;
 
 import java.util.List;
 
@@ -14,8 +15,9 @@ import java.util.List;
 public interface IPaperRepoService extends IService<PaperRepo> {
     /**
      * 获取试卷关联的题库
+     *
      * @param id 试卷ID
      * @return 关联题库
      */
-    List<PaperRepo> selectRepoByPaperId(Long id);
+    List<PaperRepoVo> selectRepoByPaperId(Long id);
 }

@@ -8,13 +8,13 @@ public class RepoVo extends Repo {
     private String courseName;
 
     // 单选题数量
-    private Long singleChoiceCount;
+    private Integer singleChoiceCount;
     // 多选题数量
-    private Long multipleChoiceCount;
+    private Integer multipleChoiceCount;
     // 判断题数量
-    private Long judgeCount;
+    private Integer judgeCount;
     // 填空题数量
-    private Long blankCount;
+    private Integer blankCount;
     // 简答题数量
-    private Long shortAnswerCount;
+    private Integer shortAnswerCount;
 }

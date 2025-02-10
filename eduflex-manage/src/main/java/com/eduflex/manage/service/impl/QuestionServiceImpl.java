@@ -40,11 +40,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     }
 
     @Override
-    public Long getQuestionCount(Long repoId, Integer type) {
+    public Integer getQuestionCount(Long repoId, Integer type) {
         LambdaQueryWrapper<Question> wrapper = new LambdaQueryWrapper<Question>()
                 .eq(Question::getRepoId, repoId)
                 .eq(Question::getType, type);
-        return baseMapper.selectCount(wrapper);
+        return Math.toIntExact(baseMapper.selectCount(wrapper));
     }
 
     private List<QuestionVo> buildVo(List<Question> questionList) {

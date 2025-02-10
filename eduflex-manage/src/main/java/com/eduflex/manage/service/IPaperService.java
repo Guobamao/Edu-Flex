@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.eduflex.manage.domain.Paper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.eduflex.manage.domain.Question;
 import com.eduflex.manage.domain.dto.PaperDto;
 import com.eduflex.manage.domain.dto.PaperQuestionDto;
+import com.eduflex.manage.domain.vo.PaperQuestionVo;
 import com.eduflex.manage.domain.vo.PaperVo;
 
 /**
@@ -31,7 +31,7 @@ public interface IPaperService extends IService<Paper> {
      * @param paperDto 试卷ID + 题库信息
      * @return 组卷题目列表
      */
-    Map<Integer, List<Question>> generateQuestions(PaperDto paperDto);
+    Map<Integer, List<PaperQuestionVo>> generateQuestions(PaperDto paperDto);
 
     /**
      * 组卷
