@@ -3,12 +3,12 @@ package com.eduflex.manage.service;
 import java.util.List;
 import java.util.Map;
 
-import com.eduflex.manage.domain.ExamPaper;
+import com.eduflex.manage.domain.Paper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.Question;
 import com.eduflex.manage.domain.dto.PaperDto;
 import com.eduflex.manage.domain.dto.PaperQuestionDto;
-import com.eduflex.manage.domain.vo.ExamPaperVo;
+import com.eduflex.manage.domain.vo.PaperVo;
 
 /**
  * 试卷管理Service接口
@@ -16,14 +16,14 @@ import com.eduflex.manage.domain.vo.ExamPaperVo;
  * @author 林煜鋒
  * @date 2025-01-10
  */
-public interface IExamPaperService extends IService<ExamPaper> {
+public interface IPaperService extends IService<Paper> {
     /**
      * 查询试卷管理列表
      *
-     * @param examPaper 试卷管理
+     * @param paper 试卷管理
      * @return 试卷管理集合
      */
-    List<ExamPaperVo> selectExamPaperList(ExamPaper examPaper);
+    List<PaperVo> selectExamPaperList(Paper paper);
 
     /**
      * 组卷

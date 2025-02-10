@@ -1,7 +1,7 @@
 package com.eduflex.manage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.eduflex.manage.domain.ExamPaperQuestion;
+import com.eduflex.manage.domain.PaperQuestion;
 import com.eduflex.manage.domain.Question;
 
 import java.util.List;
@@ -13,6 +13,6 @@ import java.util.Map;
  * @author 林煜鋒
  * @date 2025-01-20
  */
-public interface IExamPaperQuestionService extends IService<ExamPaperQuestion> {
+public interface IPaperQuestionService extends IService<PaperQuestion> {
     Map<Integer, List<Question>> selectQuestionByPaperId(Long id);
 }

@@ -2,10 +2,10 @@ package com.eduflex.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.eduflex.manage.domain.ExamPaperQuestion;
+import com.eduflex.manage.domain.PaperQuestion;
 import com.eduflex.manage.domain.Question;
-import com.eduflex.manage.mapper.ExamPaperQuestionMapper;
-import com.eduflex.manage.service.IExamPaperQuestionService;
+import com.eduflex.manage.mapper.PaperQuestionMapper;
+import com.eduflex.manage.service.IPaperQuestionService;
 import com.eduflex.manage.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,20 +22,20 @@ import java.util.stream.Collectors;
  * @date 2025-01-20
  */
 @Service
-public class ExamPaperQuestionServiceImpl extends ServiceImpl<ExamPaperQuestionMapper, ExamPaperQuestion> implements IExamPaperQuestionService {
+public class PaperQuestionServiceImpl extends ServiceImpl<PaperQuestionMapper, PaperQuestion> implements IPaperQuestionService {
 
     @Autowired
     private IQuestionService examQuestionService;
 
     @Override
     public Map<Integer, List<Question>> selectQuestionByPaperId(Long id) {
-        LambdaQueryWrapper<ExamPaperQuestion> wrapper = new LambdaQueryWrapper<ExamPaperQuestion>()
-                .eq(ExamPaperQuestion::getPaperId, id);
+        LambdaQueryWrapper<PaperQuestion> wrapper = new LambdaQueryWrapper<PaperQuestion>()
+                .eq(PaperQuestion::getPaperId, id);
 
-        List<ExamPaperQuestion> examPaperQuestions = baseMapper.selectList(wrapper);
+        List<PaperQuestion> paperQuestions = baseMapper.selectList(wrapper);
 
         List<Question> questionList = new ArrayList<>();
-        examPaperQuestions.forEach(v -> {
+        paperQuestions.forEach(v -> {
             Question question = examQuestionService.getById(v.getQuestionId());
             questionList.add(question);
         });

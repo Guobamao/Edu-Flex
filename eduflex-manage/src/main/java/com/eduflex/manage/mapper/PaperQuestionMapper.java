@@ -1,7 +1,7 @@
 package com.eduflex.manage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.eduflex.manage.domain.ExamPaperQuestion;
+import com.eduflex.manage.domain.PaperQuestion;
 
 /**
  * 试卷题目 Mapper接口
@@ -9,5 +9,5 @@ import com.eduflex.manage.domain.ExamPaperQuestion;
  * @author 林煜鋒
  * @date 2025-01-20
  */
-public interface ExamPaperQuestionMapper extends BaseMapper<ExamPaperQuestion> {
+public interface PaperQuestionMapper extends BaseMapper<PaperQuestion> {
 }

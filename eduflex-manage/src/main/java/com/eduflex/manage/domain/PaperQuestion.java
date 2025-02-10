@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_exam_paper_question")
-public class ExamPaperQuestion {
+@TableName("tb_paper_question")
+public class PaperQuestion {
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 

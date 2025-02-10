@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_exam_paper_repo")
-public class ExamPaperRepo {
+@TableName("tb_paper_repo")
+public class PaperRepo {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
@@ -29,5 +29,4 @@ public class ExamPaperRepo {
     private Integer blankScore;
     private Integer shortAnswerCount;
     private Integer shortAnswerScore;
-    private Integer deleted;
 }

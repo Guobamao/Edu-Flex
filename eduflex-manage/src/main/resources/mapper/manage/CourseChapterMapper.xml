@@ -3,25 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eduflex.manage.mapper.CourseChapterMapper">
-
-    <resultMap type="CourseChapter" id="CourseChapterResult">
-        <result property="id"    column="id"    />
-        <result property="courseId"    column="course_id"    />
-        <result property="name"    column="name"    />
-        <result property="parentId"    column="parentId"    />
-        <result property="hasChildren"    column="hasChildren"    />
-        <result property="ancestors"    column="ancestors"    />
-        <result property="orderNum"    column="order_num"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
-    </resultMap>
-
-    <sql id="selectCourseChapterVo">
-        select id, course_id, name, parent_id, ancestors, order_num, create_by, create_time, update_by, update_time from tb_course_chapter
-    </sql>
-
     <select id="selectMaxOrderNum" resultType="java.lang.Integer">
         select ifnull(max(order_num), 0) from tb_course_chapter where parent_id = #{parentId}
     </select>

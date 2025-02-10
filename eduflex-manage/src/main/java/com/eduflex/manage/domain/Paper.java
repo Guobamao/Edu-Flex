@@ -11,7 +11,7 @@ import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.core.domain.BaseEntity;
 
 /**
- * 试卷管理对象 tb_exam_paper
+ * 试卷管理对象 tb_paper
  *
  * @author 林煜鋒
  * @date 2025-01-10
@@ -21,8 +21,8 @@ import com.eduflex.common.core.domain.BaseEntity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_exam_paper")
-public class ExamPaper extends BaseEntity {
+@TableName("tb_paper")
+public class Paper extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

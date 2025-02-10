@@ -4,12 +4,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollUtil;
-import com.eduflex.manage.domain.ExamPaperQuestion;
+import com.eduflex.manage.domain.PaperQuestion;
 import com.eduflex.manage.domain.dto.PaperDto;
 import com.eduflex.manage.domain.dto.PaperQuestionDto;
-import com.eduflex.manage.domain.vo.ExamPaperVo;
-import com.eduflex.manage.service.IExamPaperQuestionService;
-import com.eduflex.manage.service.IExamPaperRepoService;
+import com.eduflex.manage.domain.vo.PaperVo;
+import com.eduflex.manage.service.IPaperQuestionService;
+import com.eduflex.manage.service.IPaperRepoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +24,8 @@ import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.domain.ExamPaper;
-import com.eduflex.manage.service.IExamPaperService;
+import com.eduflex.manage.domain.Paper;
+import com.eduflex.manage.service.IPaperService;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
 
@@ -37,26 +37,26 @@ import com.eduflex.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/manage/paper")
-public class ExamPaperController extends BaseController
+public class PaperController extends BaseController
 {
     @Autowired
-    private IExamPaperService examPaperService;
+    private IPaperService examPaperService;
 
     @Autowired
-    private IExamPaperQuestionService examPaperQuestionService;
+    private IPaperQuestionService examPaperQuestionService;
 
     @Autowired
-    private IExamPaperRepoService examPaperRepoService;
+    private IPaperRepoService examPaperRepoService;
 
     /**
      * 查询试卷管理列表
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(ExamPaper examPaper)
+    public TableDataInfo list(Paper paper)
     {
         startPage();
-        List<ExamPaperVo> list = examPaperService.selectExamPaperList(examPaper);
+        List<PaperVo> list = examPaperService.selectExamPaperList(paper);
         return getDataTable(list);
     }
 
@@ -66,10 +66,10 @@ public class ExamPaperController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, ExamPaper examPaper)
+    public void export(HttpServletResponse response, Paper paper)
     {
-        List<ExamPaperVo> list = examPaperService.selectExamPaperList(examPaper);
-        ExcelUtil<ExamPaperVo> util = new ExcelUtil<>(ExamPaperVo.class);
+        List<PaperVo> list = examPaperService.selectExamPaperList(paper);
+        ExcelUtil<PaperVo> util = new ExcelUtil<>(PaperVo.class);
         util.exportExcel(response, list, "试卷管理数据");
     }
 
@@ -89,9 +89,9 @@ public class ExamPaperController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody ExamPaper examPaper)
+    public AjaxResult add(@RequestBody Paper paper)
     {
-        return toAjax(examPaperService.save(examPaper));
+        return toAjax(examPaperService.save(paper));
     }
 
     /**
@@ -100,9 +100,9 @@ public class ExamPaperController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody ExamPaper examPaper)
+    public AjaxResult edit(@RequestBody Paper paper)
     {
-        return toAjax(examPaperService.updateById(examPaper));
+        return toAjax(examPaperService.updateById(paper));
     }
 
     /**
@@ -120,7 +120,7 @@ public class ExamPaperController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷题目管理", businessType = BusinessType.INSERT)
     @PostMapping("/question")
-    public AjaxResult addQuestion(@RequestBody List<ExamPaperQuestion> questionList)
+    public AjaxResult addQuestion(@RequestBody List<PaperQuestion> questionList)
     {
         return toAjax(examPaperQuestionService.saveOrUpdateBatch(questionList));
     }
