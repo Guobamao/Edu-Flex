@@ -19,7 +19,7 @@ public class ExamPaperQuestion {
 
     private Long questionId;
 
-    private Integer score;
+    private Integer type;
 
     private Integer orderNum;
 }

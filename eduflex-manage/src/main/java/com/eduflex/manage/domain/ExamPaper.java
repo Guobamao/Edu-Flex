@@ -41,7 +41,7 @@ public class ExamPaper extends BaseEntity {
      * 总分
      */
     @Excel(name = "总分")
-    private Long totalScore;
+    private Integer totalScore;
 
     @Excel(name = "关联课程")
     private Long courseId;
