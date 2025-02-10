@@ -92,7 +92,6 @@ public class ExamPaperServiceImpl extends ServiceImpl<ExamPaperMapper, ExamPaper
 
     @Override
     public boolean composePaper(PaperQuestionDto paperQuestionDto) {
-
         LambdaQueryWrapper<ExamPaperQuestion> wrapper = new LambdaQueryWrapper<ExamPaperQuestion>()
                 .eq(ExamPaperQuestion::getPaperId, paperQuestionDto.getId());
         examPaperQuestionService.remove(wrapper);
