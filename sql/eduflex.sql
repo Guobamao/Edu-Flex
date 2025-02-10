@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 26/01/2025 17:18:58
+ Date: 10/02/2025 17:58:51
 */
 
 SET NAMES utf8mb4;
@@ -44,7 +44,7 @@ CREATE TABLE `gen_table`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gen_table
@@ -66,13 +66,14 @@ INSERT INTO `gen_table` VALUES (17, 'tb_knowledge', '知识点分类表', '', ''
 INSERT INTO `gen_table` VALUES (18, 'tb_comments', '评论表', '', '', 'Comments', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'comments', '评论管理', '林煜鋒', '0', '/', '{\"treeCode\":\"id\",\"treeName\":\"content\",\"treeParentCode\":\"parent_id\",\"parentMenuId\":\"2087\"}', 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:04:50', NULL);
 INSERT INTO `gen_table` VALUES (19, 'tb_oss_file', '文件管理表', NULL, NULL, 'OssFile', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'file', '资源管理', '林煜鋒', '0', '/', '{}', 'admin', '2025-01-21 12:00:48', '', '2025-01-21 13:06:15', NULL);
 INSERT INTO `gen_table` VALUES (24, 'tb_learning_goal', '学习目标表', NULL, NULL, 'LearningGoal', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'goal', '学习目标管理', '林煜鋒', '0', '/', '{\"parentMenuId\":\"2100\"}', 'admin', '2025-01-24 16:52:48', '', '2025-01-24 16:59:03', NULL);
-INSERT INTO `gen_table` VALUES (25, 'tb_learning_route', '学习路线表', NULL, NULL, 'LearningRoute', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'route', '学习路线管理', '林煜鋒', '0', '/', '{\"parentMenuId\":\"2100\"}', 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14', NULL);
+INSERT INTO `gen_table` VALUES (25, 'tb_learning_route', '学习路线表', NULL, NULL, 'LearningRoute', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'route', '学习路线管理', '林煜鋒', '0', '/', '{\"parentMenuId\":\"2100\"}', 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10', NULL);
 INSERT INTO `gen_table` VALUES (26, 'tb_learning_route_record', '学习路线记录表', NULL, NULL, 'LearningRouteRecord', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'routeRecord', '学习路线记录管理', '林煜鋒', '0', '/', '{\"parentMenuId\":\"2100\"}', 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:05:30', NULL);
 INSERT INTO `gen_table` VALUES (27, 'tb_study_record', '学习记录表', NULL, NULL, 'StudyRecord', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'record', '学习记录管理', '林煜鋒', '0', '/', '{\"parentMenuId\":\"2100\"}', 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:07:06', NULL);
 INSERT INTO `gen_table` VALUES (28, 'tb_student_course', '学生选课表', '', '', 'StudentCourse', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'student_course', '学生选课', '林煜鋒', '0', '/', '{\"parentMenuId\":\"2025\"}', 'admin', '2025-01-26 09:27:54', '', '2025-01-26 09:31:00', NULL);
 INSERT INTO `gen_table` VALUES (29, 'tb_exam_paper_question', '试卷题目关联表', NULL, NULL, 'TbExamPaperQuestion', 'crud', '', 'com.eduflex.system', 'system', 'question', '试卷题目关联', 'ruoyi', '0', '/', NULL, 'admin', '2025-01-26 14:04:38', '', NULL, NULL);
 INSERT INTO `gen_table` VALUES (30, 'tb_file_images', '文件转换存储表', NULL, NULL, 'TbFileImages', 'crud', '', 'com.eduflex.system', 'system', 'images', '文件转换存储', 'ruoyi', '0', '/', NULL, 'admin', '2025-01-26 14:04:38', '', NULL, NULL);
 INSERT INTO `gen_table` VALUES (31, 'tb_goal_student', '学习目标-学生关联表', '', '', 'GoalStudent', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'goalStudent', '学习目标-学生关联', '林煜鋒', '0', '/', '{}', 'admin', '2025-01-26 14:04:38', '', '2025-01-26 14:06:35', NULL);
+INSERT INTO `gen_table` VALUES (32, 'tb_repo', '题库表', NULL, NULL, 'Repo', 'crud', 'element-plus', 'com.eduflex.manage', 'manage', 'repo', '题库管理', '林煜鋒', '0', '/', '{\"parentMenuId\":\"2068\"}', 'admin', '2025-02-09 20:49:50', '', '2025-02-09 20:50:50', NULL);
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -102,7 +103,7 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 285 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 293 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -252,15 +253,15 @@ INSERT INTO `gen_table_column` VALUES (220, 24, 'create_time', '创建时间', '
 INSERT INTO `gen_table_column` VALUES (221, 24, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'input', '', 10, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 16:59:03');
 INSERT INTO `gen_table_column` VALUES (222, 24, 'update_time', '更新时间', 'timestamp', 'Date', 'updateTime', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'datetime', '', 11, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 16:59:03');
 INSERT INTO `gen_table_column` VALUES (223, 24, 'deleted', '逻辑删除字段', 'tinyint', 'Long', 'deleted', '0', '0', '0', '0', '0', '0', '0', 'EQ', 'input', '', 12, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 16:59:03');
-INSERT INTO `gen_table_column` VALUES (224, 25, 'id', '学习路线ID', 'bigint', 'Long', 'id', '1', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14');
-INSERT INTO `gen_table_column` VALUES (225, 25, 'goal_id', '学习目标', 'bigint', 'Long', 'goalId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14');
-INSERT INTO `gen_table_column` VALUES (226, 25, 'course_id', '课程ID', 'bigint', 'Long', 'courseId', '0', '0', '1', '1', '1', '1', '0', 'EQ', 'select', '', 3, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14');
-INSERT INTO `gen_table_column` VALUES (227, 25, 'order_num', '课程排序', 'int', 'Long', 'orderNum', '0', '0', '1', '1', '1', '1', '0', 'EQ', 'input', '', 4, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14');
-INSERT INTO `gen_table_column` VALUES (228, 25, 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 5, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14');
-INSERT INTO `gen_table_column` VALUES (229, 25, 'create_time', '更新时间', 'timestamp', 'Date', 'createTime', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'datetime', '', 6, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14');
-INSERT INTO `gen_table_column` VALUES (230, 25, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'input', '', 7, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14');
-INSERT INTO `gen_table_column` VALUES (231, 25, 'update_time', '更新时间', 'timestamp', 'Date', 'updateTime', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'datetime', '', 8, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14');
-INSERT INTO `gen_table_column` VALUES (232, 25, 'deleted', '逻辑删除字段', 'tinyint', 'Long', 'deleted', '0', '0', '0', '0', '0', '0', '0', 'EQ', 'input', '', 9, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:02:14');
+INSERT INTO `gen_table_column` VALUES (224, 25, 'id', '学习路线ID', 'bigint', 'Long', 'id', '1', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10');
+INSERT INTO `gen_table_column` VALUES (225, 25, 'goal_id', '学习目标', 'bigint', 'Long', 'goalId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10');
+INSERT INTO `gen_table_column` VALUES (226, 25, 'course_id', '课程ID', 'bigint', 'Long', 'courseId', '0', '0', '1', '1', '1', '1', '0', 'EQ', 'select', '', 3, 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10');
+INSERT INTO `gen_table_column` VALUES (227, 25, 'order_num', '课程排序', 'int', 'Long', 'orderNum', '0', '0', '1', '1', '1', '1', '0', 'EQ', 'input', '', 4, 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10');
+INSERT INTO `gen_table_column` VALUES (228, 25, 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 5, 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10');
+INSERT INTO `gen_table_column` VALUES (229, 25, 'create_time', '更新时间', 'timestamp', 'Date', 'createTime', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'datetime', '', 6, 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10');
+INSERT INTO `gen_table_column` VALUES (230, 25, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'input', '', 7, 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10');
+INSERT INTO `gen_table_column` VALUES (231, 25, 'update_time', '更新时间', 'timestamp', 'Date', 'updateTime', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'datetime', '', 8, 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10');
+INSERT INTO `gen_table_column` VALUES (232, 25, 'deleted', '逻辑删除字段', 'tinyint', 'Long', 'deleted', '0', '0', '0', '0', '0', '0', '0', 'EQ', 'input', '', 9, 'admin', '2025-01-24 16:52:48', '', '2025-02-05 13:09:10');
 INSERT INTO `gen_table_column` VALUES (233, 26, 'id', '记录ID', 'bigint', 'Long', 'id', '1', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:05:30');
 INSERT INTO `gen_table_column` VALUES (234, 26, 'stu_id', '学习者ID', 'bigint', 'Long', 'stuId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:05:30');
 INSERT INTO `gen_table_column` VALUES (235, 26, 'goal_id', '学习目标ID', 'bigint', 'Long', 'goalId', '0', '0', '1', '1', '1', '1', '0', 'EQ', 'input', '', 3, 'admin', '2025-01-24 16:52:48', '', '2025-01-24 17:05:30');
@@ -313,6 +314,14 @@ INSERT INTO `gen_table_column` VALUES (281, 31, 'create_time', '创建时间', '
 INSERT INTO `gen_table_column` VALUES (282, 31, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'input', '', 8, 'admin', '2025-01-26 14:04:38', '', '2025-01-26 14:06:35');
 INSERT INTO `gen_table_column` VALUES (283, 31, 'update_time', '更新时间', 'timestamp', 'Date', 'updateTime', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'datetime', '', 9, 'admin', '2025-01-26 14:04:38', '', '2025-01-26 14:06:35');
 INSERT INTO `gen_table_column` VALUES (284, 31, 'deleted', '逻辑删除字段', 'tinyint', 'Long', 'deleted', '0', '0', '0', '0', '0', '0', '0', 'EQ', 'input', '', 10, 'admin', '2025-01-26 14:04:38', '', '2025-01-26 14:06:35');
+INSERT INTO `gen_table_column` VALUES (285, 32, 'id', '题库ID', 'bigint', 'Long', 'id', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-02-09 20:49:50', '', '2025-02-09 20:50:50');
+INSERT INTO `gen_table_column` VALUES (286, 32, 'name', '题库名称', 'varchar(50)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2025-02-09 20:49:50', '', '2025-02-09 20:50:50');
+INSERT INTO `gen_table_column` VALUES (287, 32, 'course_id', '关联课程', 'bigint', 'Long', 'courseId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2025-02-09 20:49:50', '', '2025-02-09 20:50:50');
+INSERT INTO `gen_table_column` VALUES (288, 32, 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 4, 'admin', '2025-02-09 20:49:50', '', '2025-02-09 20:50:50');
+INSERT INTO `gen_table_column` VALUES (289, 32, 'create_time', '创建时间', 'timestamp', 'Date', 'createTime', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'datetime', '', 5, 'admin', '2025-02-09 20:49:50', '', '2025-02-09 20:50:50');
+INSERT INTO `gen_table_column` VALUES (290, 32, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'input', '', 6, 'admin', '2025-02-09 20:49:50', '', '2025-02-09 20:50:50');
+INSERT INTO `gen_table_column` VALUES (291, 32, 'update_time', '更新时间', 'timestamp', 'Date', 'updateTime', '0', '0', '0', '0', '0', NULL, NULL, 'EQ', 'datetime', '', 7, 'admin', '2025-02-09 20:49:50', '', '2025-02-09 20:50:50');
+INSERT INTO `gen_table_column` VALUES (292, 32, 'deleted', '逻辑删除字段', 'tinyint', 'Long', 'deleted', '0', '0', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 8, 'admin', '2025-02-09 20:49:50', '', '2025-02-09 20:50:50');
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -573,7 +582,7 @@ CREATE TABLE `sys_dept`  (
   `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '联系电话',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
-  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
@@ -584,16 +593,16 @@ CREATE TABLE `sys_dept`  (
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES (100, 0, '0', '若依科技', 0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
-INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
-INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
-INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
-INSERT INTO `sys_dept` VALUES (104, 101, '0,100,101', '市场部门', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
-INSERT INTO `sys_dept` VALUES (105, 101, '0,100,101', '测试部门', 3, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
-INSERT INTO `sys_dept` VALUES (106, 101, '0,100,101', '财务部门', 4, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
-INSERT INTO `sys_dept` VALUES (107, 101, '0,100,101', '运维部门', 5, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
-INSERT INTO `sys_dept` VALUES (108, 102, '0,100,102', '市场部门', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
-INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (100, 0, '0', '若依科技', 0, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (104, 101, '0,100,101', '市场部门', 2, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (105, 101, '0,100,101', '测试部门', 3, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (106, 101, '0,100,101', '财务部门', 4, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (107, 101, '0,100,101', '运维部门', 5, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (108, 102, '0,100,102', '市场部门', 1, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
+INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, '若依', '15888888888', 'ry@qq.com', '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL);
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -778,7 +787,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 218 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 237 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -901,6 +910,25 @@ INSERT INTO `sys_logininfor` VALUES (214, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (215, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-01-26 15:52:18');
 INSERT INTO `sys_logininfor` VALUES (216, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-01-26 16:41:23');
 INSERT INTO `sys_logininfor` VALUES (217, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-01-26 16:41:25');
+INSERT INTO `sys_logininfor` VALUES (218, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-05 09:15:49');
+INSERT INTO `sys_logininfor` VALUES (219, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-05 13:02:45');
+INSERT INTO `sys_logininfor` VALUES (220, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-05 16:09:51');
+INSERT INTO `sys_logininfor` VALUES (221, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-05 17:14:51');
+INSERT INTO `sys_logininfor` VALUES (222, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-05 17:45:52');
+INSERT INTO `sys_logininfor` VALUES (223, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-06 09:11:49');
+INSERT INTO `sys_logininfor` VALUES (224, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-06 09:55:36');
+INSERT INTO `sys_logininfor` VALUES (225, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-06 11:18:57');
+INSERT INTO `sys_logininfor` VALUES (226, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-02-06 13:19:07');
+INSERT INTO `sys_logininfor` VALUES (227, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-02-06 13:19:49');
+INSERT INTO `sys_logininfor` VALUES (228, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-06 13:21:48');
+INSERT INTO `sys_logininfor` VALUES (229, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-06 16:08:07');
+INSERT INTO `sys_logininfor` VALUES (230, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-07 09:27:16');
+INSERT INTO `sys_logininfor` VALUES (231, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-07 10:58:13');
+INSERT INTO `sys_logininfor` VALUES (232, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-07 13:07:48');
+INSERT INTO `sys_logininfor` VALUES (233, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-07 15:04:46');
+INSERT INTO `sys_logininfor` VALUES (234, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-07 16:50:14');
+INSERT INTO `sys_logininfor` VALUES (235, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-10 14:04:49');
+INSERT INTO `sys_logininfor` VALUES (236, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-10 16:13:32');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -928,7 +956,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2131 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2137 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -1100,12 +1128,6 @@ INSERT INTO `sys_menu` VALUES (2109, '学习记录管理新增', 2107, 2, '#', '
 INSERT INTO `sys_menu` VALUES (2110, '学习记录管理修改', 2107, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:record:edit', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2111, '学习记录管理删除', 2107, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:record:remove', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2112, '学习记录管理导出', 2107, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:record:export', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2113, '学习路线记录管理', 2100, 1, 'routeRecord', 'manage/routeRecord/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:routeRecord:list', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '学习路线记录管理菜单');
-INSERT INTO `sys_menu` VALUES (2114, '学习路线记录管理查询', 2113, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:routeRecord:query', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2115, '学习路线记录管理新增', 2113, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:routeRecord:add', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2116, '学习路线记录管理修改', 2113, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:routeRecord:edit', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2117, '学习路线记录管理删除', 2113, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:routeRecord:remove', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2118, '学习路线记录管理导出', 2113, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:routeRecord:export', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2119, '学习路线管理', 2100, 1, 'route', 'manage/route/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:route:list', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '学习路线管理菜单');
 INSERT INTO `sys_menu` VALUES (2120, '学习路线管理查询', 2119, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:route:query', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2121, '学习路线管理新增', 2119, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:route:add', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
@@ -1118,6 +1140,12 @@ INSERT INTO `sys_menu` VALUES (2127, '学生选课新增', 2125, 2, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2128, '学生选课修改', 2125, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:student_course:edit', '#', 'admin', '2025-01-26 09:44:22', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2129, '学生选课删除', 2125, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:student_course:remove', '#', 'admin', '2025-01-26 09:44:22', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2130, '学生选课导出', 2125, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:student_course:export', '#', 'admin', '2025-01-26 09:44:22', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2131, '题库管理', 2068, 1, 'repo', 'manage/repo/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:repo:list', '#', 'admin', '2025-02-09 20:51:22', '', NULL, '题库管理菜单');
+INSERT INTO `sys_menu` VALUES (2132, '题库管理查询', 2131, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:repo:query', '#', 'admin', '2025-02-09 20:51:22', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2133, '题库管理新增', 2131, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:repo:add', '#', 'admin', '2025-02-09 20:51:22', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2134, '题库管理修改', 2131, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:repo:edit', '#', 'admin', '2025-02-09 20:51:22', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2135, '题库管理删除', 2131, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:repo:remove', '#', 'admin', '2025-02-09 20:51:22', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2136, '题库管理导出', 2131, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:repo:export', '#', 'admin', '2025-02-09 20:51:22', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -1169,7 +1197,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 790 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 837 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1673,45 +1701,45 @@ INSERT INTO `sys_oper_log` VALUES (595, '知识点分类', 1, 'com.eduflex.manag
 INSERT INTO `sys_oper_log` VALUES (596, '知识点分类', 1, 'com.eduflex.manage.controller.KnowledgeController.add()', 'POST', 1, 'admin', '研发部门', '/manage/knowledge', '127.0.0.1', '内网IP', '{\"children\":[],\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-10 17:48:10\",\"id\":1877653652954918913,\"name\":\"高等数学\",\"params\":{},\"parentId\":0}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-10 17:48:10', 73);
 INSERT INTO `sys_oper_log` VALUES (597, '知识点分类', 1, 'com.eduflex.manage.controller.KnowledgeController.add()', 'POST', 1, 'admin', '研发部门', '/manage/knowledge', '127.0.0.1', '内网IP', '{\"children\":[],\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-10 17:50:30\",\"id\":1877654239176011777,\"name\":\"函数\",\"params\":{},\"parentId\":1877653652954918913}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-10 17:50:30', 9);
 INSERT INTO `sys_oper_log` VALUES (598, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-10 15:43:35\",\"default\":false,\"dictCode\":112,\"dictLabel\":\"判断题\",\"dictSort\":3,\"dictType\":\"question_type\",\"dictValue\":\"3\",\"isDefault\":\"N\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 15:40:30', 12);
-INSERT INTO `sys_oper_log` VALUES (599, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"A\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:25:18', 260559);
-INSERT INTO `sys_oper_log` VALUES (600, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:43:19\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:43:19', 9);
-INSERT INTO `sys_oper_log` VALUES (601, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:43:29\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:43:29', 6);
-INSERT INTO `sys_oper_log` VALUES (602, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:43:42\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:43:42', 7);
-INSERT INTO `sys_oper_log` VALUES (603, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:45:56\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:45:56', 6);
-INSERT INTO `sys_oper_log` VALUES (604, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:47:09\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:47:09', 6);
-INSERT INTO `sys_oper_log` VALUES (605, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:49:28\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:49:28', 5);
-INSERT INTO `sys_oper_log` VALUES (606, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"\\\"A\\\"\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:51:44\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:51:44', 8);
-INSERT INTO `sys_oper_log` VALUES (607, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:54:14\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:54:14', 5);
-INSERT INTO `sys_oper_log` VALUES (608, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\",\\\"B\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:58:47\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:58:48', 8);
-INSERT INTO `sys_oper_log` VALUES (609, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:14:21\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:14:21', 4);
-INSERT INTO `sys_oper_log` VALUES (610, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\",\\\"B\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:16:00\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:16:00', 5);
-INSERT INTO `sys_oper_log` VALUES (611, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:17:44\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:17:44', 6);
-INSERT INTO `sys_oper_log` VALUES (612, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\",\\\"B\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:18:18\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:18:18', 5);
-INSERT INTO `sys_oper_log` VALUES (613, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"true\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":3,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:18:25\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:18:25', 6);
-INSERT INTO `sys_oper_log` VALUES (614, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[true]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":3,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:18:59\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:18:59', 6);
-INSERT INTO `sys_oper_log` VALUES (615, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"嘻嘻嘻\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":4,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:19:13\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:19:13', 5);
-INSERT INTO `sys_oper_log` VALUES (616, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"嘻嘻嘻\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":5,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:19:19\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:19:19', 5);
-INSERT INTO `sys_oper_log` VALUES (617, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:19:25\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:19:25', 10);
-INSERT INTO `sys_oper_log` VALUES (618, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"404 状态码表示客户端请求的资源在服务器上不存在。\",\"answer\":\"[\\\"B\\\"]\",\"courseId\":3,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:00\",\"id\":1879096369215885314,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"请求成功\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"未找到资源\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"服务器错误\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"无权限访问\\\"}]\",\"params\":{},\"title\":\"HTTP 状态码 404 的含义是什么？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:21:01', 3042);
-INSERT INTO `sys_oper_log` VALUES (619, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 和 C++ 是编程语言，而 HTML 是标记语言，JSON 是数据格式。\",\"answer\":\"[\\\"A\\\",\\\"C\\\"]\",\"courseId\":3,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:33\",\"id\":1879096505274912770,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"HTML\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"JSON\\\"}]\",\"params\":{},\"title\":\"以下哪些是编程语言？\",\"type\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:21:33', 3);
-INSERT INTO `sys_oper_log` VALUES (620, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。\",\"answer\":\"[\\\"A\\\",\\\"D\\\",\\\"B\\\",\\\"C\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:58\",\"id\":1879096608295407618,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"GET\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"POST\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"DELETE\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"CONNECT\\\"}]\",\"params\":{},\"title\":\"以下哪些是 HTTP 的请求方法？\",\"type\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:21:58', 4);
-INSERT INTO `sys_oper_log` VALUES (621, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"JavaScript 是一种动态类型语言，不需要显式声明变量的类型。\",\"answer\":\"[false]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:17\",\"id\":1879096689383886850,\"options\":\"[]\",\"params\":{},\"title\":\"JavaScript 是一种静态类型语言。\",\"type\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:22:17', 3);
-INSERT INTO `sys_oper_log` VALUES (622, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"TCP 是面向连接的协议，提供可靠的数据传输服务。\",\"answer\":\"[false]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:30\",\"id\":1879096745101021186,\"options\":\"[]\",\"params\":{},\"title\":\"TCP 协议是无连接的。\",\"type\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:22:30', 4);
-INSERT INTO `sys_oper_log` VALUES (623, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"根据运算优先级，乘法优先于加法，计算顺序为 2 * 2 = 4，然后 3 + 4 = 7。\",\"answer\":\"[\\\"7\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:58\",\"id\":1879096862541533186,\"options\":\"[]\",\"params\":{},\"title\":\"请填写以下代码的输出：\\nSystem.out.println(3 + 2 * 2);\",\"type\":4}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:22:58', 3);
-INSERT INTO `sys_oper_log` VALUES (624, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"通过 for 循环遍历范围内的数值，用 if 判断是否为偶数，输出结果即可。\",\"answer\":\"[\\\"for i in range(1, 11):     if i % 2 == 0:         print(i)\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:23:19\",\"id\":1879096950579974145,\"options\":\"[]\",\"params\":{},\"title\":\"编写一段 Python 代码，输出从 1 到 10 的所有偶数。\",\"type\":5}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:23:19', 3);
-INSERT INTO `sys_oper_log` VALUES (625, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"通过 for 循环遍历范围内的数值，用 if 判断是否为偶数，输出结果即可。\",\"answer\":\"[\\\"for i in range(1, 11):\\\\n    if i % 2 == 0:\\\\n        print(i)\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:23:20\",\"deleted\":0,\"id\":1879096950579974145,\"options\":\"[]\",\"params\":{},\"title\":\"编写一段 Python 代码，输出从 1 到 10 的所有偶数。\",\"type\":5,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:24:30\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:24:30', 7);
-INSERT INTO `sys_oper_log` VALUES (626, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。\",\"answer\":\"[\\\"A\\\",\\\"D\\\",\\\"B\\\",\\\"C\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:58\",\"deleted\":0,\"id\":1879096608295407618,\"knowledgeId\":1877654239176011777,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"GET\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"POST\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"DELETE\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"CONNECT\\\"}]\",\"params\":{},\"title\":\"以下哪些是 HTTP 的请求方法？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:45:42\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:45:42', 20);
-INSERT INTO `sys_oper_log` VALUES (627, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"JavaScript 是一种动态类型语言，不需要显式声明变量的类型。\",\"answer\":\"[false]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:17\",\"deleted\":0,\"id\":1879096689383886850,\"knowledgeId\":1877654239176011777,\"options\":\"[]\",\"params\":{},\"title\":\"JavaScript 是一种静态类型语言。\",\"type\":3,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:45:47\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:45:47', 9);
+INSERT INTO `sys_oper_log` VALUES (599, '题目管理', 1, 'com.eduflex.manage.controller.ExamQuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"A\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:25:18', 260559);
+INSERT INTO `sys_oper_log` VALUES (600, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:43:19\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:43:19', 9);
+INSERT INTO `sys_oper_log` VALUES (601, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:43:29\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:43:29', 6);
+INSERT INTO `sys_oper_log` VALUES (602, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:43:42\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:43:42', 7);
+INSERT INTO `sys_oper_log` VALUES (603, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:45:56\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:45:56', 6);
+INSERT INTO `sys_oper_log` VALUES (604, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:47:09\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:47:09', 6);
+INSERT INTO `sys_oper_log` VALUES (605, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:49:28\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:49:28', 5);
+INSERT INTO `sys_oper_log` VALUES (606, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"\\\"A\\\"\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:51:44\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:51:44', 8);
+INSERT INTO `sys_oper_log` VALUES (607, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"A\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:54:14\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:54:14', 5);
+INSERT INTO `sys_oper_log` VALUES (608, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\",\\\"B\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 16:58:47\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 16:58:48', 8);
+INSERT INTO `sys_oper_log` VALUES (609, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:14:21\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:14:21', 4);
+INSERT INTO `sys_oper_log` VALUES (610, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\",\\\"B\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:16:00\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:16:00', 5);
+INSERT INTO `sys_oper_log` VALUES (611, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:17:44\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:17:44', 6);
+INSERT INTO `sys_oper_log` VALUES (612, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\",\\\"B\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:18:18\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:18:18', 5);
+INSERT INTO `sys_oper_log` VALUES (613, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"true\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":3,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:18:25\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:18:25', 6);
+INSERT INTO `sys_oper_log` VALUES (614, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[true]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":3,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:18:59\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:18:59', 6);
+INSERT INTO `sys_oper_log` VALUES (615, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"嘻嘻嘻\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":4,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:19:13\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:19:13', 5);
+INSERT INTO `sys_oper_log` VALUES (616, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"嘻嘻嘻\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":5,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:19:19\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:19:19', 5);
+INSERT INTO `sys_oper_log` VALUES (617, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"id\":1879082351088553986,\"knowledgeId\":1877653652954918913,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:19:25\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:19:25', 10);
+INSERT INTO `sys_oper_log` VALUES (618, '题目管理', 1, 'com.eduflex.manage.controller.ExamQuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"404 状态码表示客户端请求的资源在服务器上不存在。\",\"answer\":\"[\\\"B\\\"]\",\"courseId\":3,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:00\",\"id\":1879096369215885314,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"请求成功\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"未找到资源\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"服务器错误\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"无权限访问\\\"}]\",\"params\":{},\"title\":\"HTTP 状态码 404 的含义是什么？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:21:01', 3042);
+INSERT INTO `sys_oper_log` VALUES (619, '题目管理', 1, 'com.eduflex.manage.controller.ExamQuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 和 C++ 是编程语言，而 HTML 是标记语言，JSON 是数据格式。\",\"answer\":\"[\\\"A\\\",\\\"C\\\"]\",\"courseId\":3,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:33\",\"id\":1879096505274912770,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"HTML\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"JSON\\\"}]\",\"params\":{},\"title\":\"以下哪些是编程语言？\",\"type\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:21:33', 3);
+INSERT INTO `sys_oper_log` VALUES (620, '题目管理', 1, 'com.eduflex.manage.controller.ExamQuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。\",\"answer\":\"[\\\"A\\\",\\\"D\\\",\\\"B\\\",\\\"C\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:58\",\"id\":1879096608295407618,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"GET\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"POST\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"DELETE\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"CONNECT\\\"}]\",\"params\":{},\"title\":\"以下哪些是 HTTP 的请求方法？\",\"type\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:21:58', 4);
+INSERT INTO `sys_oper_log` VALUES (621, '题目管理', 1, 'com.eduflex.manage.controller.ExamQuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"JavaScript 是一种动态类型语言，不需要显式声明变量的类型。\",\"answer\":\"[false]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:17\",\"id\":1879096689383886850,\"options\":\"[]\",\"params\":{},\"title\":\"JavaScript 是一种静态类型语言。\",\"type\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:22:17', 3);
+INSERT INTO `sys_oper_log` VALUES (622, '题目管理', 1, 'com.eduflex.manage.controller.ExamQuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"TCP 是面向连接的协议，提供可靠的数据传输服务。\",\"answer\":\"[false]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:30\",\"id\":1879096745101021186,\"options\":\"[]\",\"params\":{},\"title\":\"TCP 协议是无连接的。\",\"type\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:22:30', 4);
+INSERT INTO `sys_oper_log` VALUES (623, '题目管理', 1, 'com.eduflex.manage.controller.ExamQuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"根据运算优先级，乘法优先于加法，计算顺序为 2 * 2 = 4，然后 3 + 4 = 7。\",\"answer\":\"[\\\"7\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:58\",\"id\":1879096862541533186,\"options\":\"[]\",\"params\":{},\"title\":\"请填写以下代码的输出：\\nSystem.out.println(3 + 2 * 2);\",\"type\":4}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:22:58', 3);
+INSERT INTO `sys_oper_log` VALUES (624, '题目管理', 1, 'com.eduflex.manage.controller.ExamQuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"通过 for 循环遍历范围内的数值，用 if 判断是否为偶数，输出结果即可。\",\"answer\":\"[\\\"for i in range(1, 11):     if i % 2 == 0:         print(i)\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:23:19\",\"id\":1879096950579974145,\"options\":\"[]\",\"params\":{},\"title\":\"编写一段 Python 代码，输出从 1 到 10 的所有偶数。\",\"type\":5}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:23:19', 3);
+INSERT INTO `sys_oper_log` VALUES (625, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"通过 for 循环遍历范围内的数值，用 if 判断是否为偶数，输出结果即可。\",\"answer\":\"[\\\"for i in range(1, 11):\\\\n    if i % 2 == 0:\\\\n        print(i)\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:23:20\",\"deleted\":0,\"id\":1879096950579974145,\"options\":\"[]\",\"params\":{},\"title\":\"编写一段 Python 代码，输出从 1 到 10 的所有偶数。\",\"type\":5,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:24:30\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:24:30', 7);
+INSERT INTO `sys_oper_log` VALUES (626, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。\",\"answer\":\"[\\\"A\\\",\\\"D\\\",\\\"B\\\",\\\"C\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:58\",\"deleted\":0,\"id\":1879096608295407618,\"knowledgeId\":1877654239176011777,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"GET\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"POST\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"DELETE\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"CONNECT\\\"}]\",\"params\":{},\"title\":\"以下哪些是 HTTP 的请求方法？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:45:42\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:45:42', 20);
+INSERT INTO `sys_oper_log` VALUES (627, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"JavaScript 是一种动态类型语言，不需要显式声明变量的类型。\",\"answer\":\"[false]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:17\",\"deleted\":0,\"id\":1879096689383886850,\"knowledgeId\":1877654239176011777,\"options\":\"[]\",\"params\":{},\"title\":\"JavaScript 是一种静态类型语言。\",\"type\":3,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:45:47\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:45:47', 9);
 INSERT INTO `sys_oper_log` VALUES (628, '课程管理', 1, 'com.eduflex.manage.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865774804440600577,\"createBy\":\"admin\",\"endTime\":\"2025-01-16\",\"id\":1879105493781590018,\"name\":\"计算机网络\",\"params\":{},\"startTime\":\"2025-01-14\",\"status\":\"1\",\"teacherId\":106}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:57:16', 10);
 INSERT INTO `sys_oper_log` VALUES (629, '课程管理', 1, 'com.eduflex.manage.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865774917003137026,\"createBy\":\"admin\",\"endTime\":\"2025-01-15\",\"id\":1879105733238599681,\"name\":\"高等数学\",\"params\":{},\"startTime\":\"2025-01-13\",\"status\":\"1\",\"teacherId\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:58:13', 16);
 INSERT INTO `sys_oper_log` VALUES (630, '知识点分类', 2, 'com.eduflex.manage.controller.KnowledgeController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/knowledge', '127.0.0.1', '内网IP', '{\"ancestors\":\"0\",\"children\":[],\"courseId\":1879105733238599681,\"createBy\":\"admin\",\"createTime\":\"2025-01-10 17:48:11\",\"deleted\":0,\"id\":1877653652954918913,\"name\":\"高等数学\",\"params\":{},\"parentId\":0,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:58:45\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:58:45', 10);
 INSERT INTO `sys_oper_log` VALUES (631, '知识点分类', 2, 'com.eduflex.manage.controller.KnowledgeController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/knowledge', '127.0.0.1', '内网IP', '{\"ancestors\":\"0,1877653652954918913\",\"children\":[],\"courseId\":1879105733238599681,\"createBy\":\"admin\",\"createTime\":\"2025-01-10 17:50:30\",\"deleted\":0,\"id\":1877654239176011777,\"name\":\"函数\",\"params\":{},\"parentId\":1877653652954918913,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:58:51\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:58:51', 9);
-INSERT INTO `sys_oper_log` VALUES (632, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"404 状态码表示客户端请求的资源在服务器上不存在。\",\"answer\":\"[\\\"B\\\"]\",\"courseId\":1879105493781590018,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:01\",\"deleted\":0,\"id\":1879096369215885314,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"请求成功\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"未找到资源\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"服务器错误\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"无权限访问\\\"}]\",\"params\":{},\"title\":\"HTTP 状态码 404 的含义是什么？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:59:36\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:59:36', 12);
-INSERT INTO `sys_oper_log` VALUES (633, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。\",\"answer\":\"[\\\"A\\\",\\\"D\\\",\\\"B\\\",\\\"C\\\"]\",\"courseId\":1879105493781590018,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:58\",\"deleted\":0,\"id\":1879096608295407618,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"GET\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"POST\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"DELETE\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"CONNECT\\\"}]\",\"params\":{},\"title\":\"以下哪些是 HTTP 的请求方法？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:59:48\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:59:48', 10);
-INSERT INTO `sys_oper_log` VALUES (634, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。\",\"answer\":\"[\\\"A\\\",\\\"D\\\",\\\"B\\\",\\\"C\\\"]\",\"courseId\":1879105493781590018,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:58\",\"deleted\":0,\"id\":1879096608295407618,\"knowledgeId\":1877654239176011777,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"GET\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"POST\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"DELETE\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"CONNECT\\\"}]\",\"params\":{},\"title\":\"以下哪些是 HTTP 的请求方法？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 18:00:01\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 18:00:01', 9);
-INSERT INTO `sys_oper_log` VALUES (635, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"根据运算优先级，乘法优先于加法，计算顺序为 2 * 2 = 4，然后 3 + 4 = 7。\",\"answer\":\"[\\\"7\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:59\",\"deleted\":0,\"id\":1879096862541533186,\"options\":\"[]\",\"params\":{},\"title\":\"请填写以下代码的输出：\\nSystem.out.println(3 + 2 * 2);\",\"type\":4,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 18:00:54\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 18:00:54', 20);
-INSERT INTO `sys_oper_log` VALUES (636, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"TCP 是面向连接的协议，提供可靠的数据传输服务。\",\"answer\":\"[false]\",\"courseId\":1879105493781590018,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:31\",\"deleted\":0,\"id\":1879096745101021186,\"options\":\"[]\",\"params\":{},\"title\":\"TCP 协议是无连接的。\",\"type\":3,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 18:00:57\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 18:00:57', 10);
-INSERT INTO `sys_oper_log` VALUES (637, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"通过 for 循环遍历范围内的数值，用 if 判断是否为偶数，输出结果即可。\",\"answer\":\"[\\\"for i in range(1, 11):\\\\n    if i % 2 == 0:\\\\n        print(i)\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:23:20\",\"deleted\":0,\"id\":1879096950579974145,\"options\":\"[]\",\"params\":{},\"title\":\"编写一段 Python 代码，输出从 1 到 10 的所有偶数。\",\"type\":5,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 18:01:01\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 18:01:01', 8);
+INSERT INTO `sys_oper_log` VALUES (632, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"404 状态码表示客户端请求的资源在服务器上不存在。\",\"answer\":\"[\\\"B\\\"]\",\"courseId\":1879105493781590018,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:01\",\"deleted\":0,\"id\":1879096369215885314,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"请求成功\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"未找到资源\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"服务器错误\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"无权限访问\\\"}]\",\"params\":{},\"title\":\"HTTP 状态码 404 的含义是什么？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:59:36\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:59:36', 12);
+INSERT INTO `sys_oper_log` VALUES (633, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。\",\"answer\":\"[\\\"A\\\",\\\"D\\\",\\\"B\\\",\\\"C\\\"]\",\"courseId\":1879105493781590018,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:58\",\"deleted\":0,\"id\":1879096608295407618,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"GET\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"POST\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"DELETE\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"CONNECT\\\"}]\",\"params\":{},\"title\":\"以下哪些是 HTTP 的请求方法？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:59:48\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 17:59:48', 10);
+INSERT INTO `sys_oper_log` VALUES (634, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。\",\"answer\":\"[\\\"A\\\",\\\"D\\\",\\\"B\\\",\\\"C\\\"]\",\"courseId\":1879105493781590018,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:21:58\",\"deleted\":0,\"id\":1879096608295407618,\"knowledgeId\":1877654239176011777,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"GET\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"POST\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"DELETE\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"CONNECT\\\"}]\",\"params\":{},\"title\":\"以下哪些是 HTTP 的请求方法？\",\"type\":2,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 18:00:01\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 18:00:01', 9);
+INSERT INTO `sys_oper_log` VALUES (635, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"根据运算优先级，乘法优先于加法，计算顺序为 2 * 2 = 4，然后 3 + 4 = 7。\",\"answer\":\"[\\\"7\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:59\",\"deleted\":0,\"id\":1879096862541533186,\"options\":\"[]\",\"params\":{},\"title\":\"请填写以下代码的输出：\\nSystem.out.println(3 + 2 * 2);\",\"type\":4,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 18:00:54\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 18:00:54', 20);
+INSERT INTO `sys_oper_log` VALUES (636, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"TCP 是面向连接的协议，提供可靠的数据传输服务。\",\"answer\":\"[false]\",\"courseId\":1879105493781590018,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:22:31\",\"deleted\":0,\"id\":1879096745101021186,\"options\":\"[]\",\"params\":{},\"title\":\"TCP 协议是无连接的。\",\"type\":3,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 18:00:57\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 18:00:57', 10);
+INSERT INTO `sys_oper_log` VALUES (637, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"通过 for 循环遍历范围内的数值，用 if 判断是否为偶数，输出结果即可。\",\"answer\":\"[\\\"for i in range(1, 11):\\\\n    if i % 2 == 0:\\\\n        print(i)\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:23:20\",\"deleted\":0,\"id\":1879096950579974145,\"options\":\"[]\",\"params\":{},\"title\":\"编写一段 Python 代码，输出从 1 到 10 的所有偶数。\",\"type\":5,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 18:01:01\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-14 18:01:01', 8);
 INSERT INTO `sys_oper_log` VALUES (638, '字典类型', 1, 'com.eduflex.web.controller.system.SysDictTypeController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/type', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"dictName\":\"题目难易程度\",\"dictType\":\"question_difficulty\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:30:52', 147);
 INSERT INTO `sys_oper_log` VALUES (639, '字典类型', 2, 'com.eduflex.web.controller.system.SysDictTypeController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/type', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-15 09:30:52\",\"dictId\":104,\"dictName\":\"题目难易程度\",\"dictType\":\"question_difficulty\",\"params\":{},\"remark\":\"题目难易程度\",\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:30:56', 35);
 INSERT INTO `sys_oper_log` VALUES (640, '字典数据', 1, 'com.eduflex.web.controller.system.SysDictDataController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"default\":false,\"dictLabel\":\"简单\",\"dictSort\":1,\"dictType\":\"question_difficulty\",\"dictValue\":\"1\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:31:07', 10);
@@ -1721,9 +1749,9 @@ INSERT INTO `sys_oper_log` VALUES (643, '字典数据', 1, 'com.eduflex.web.cont
 INSERT INTO `sys_oper_log` VALUES (644, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-15 09:31:46\",\"default\":false,\"dictCode\":117,\"dictLabel\":\"困难\",\"dictSort\":2,\"dictType\":\"question_difficulty\",\"dictValue\":\"3\",\"isDefault\":\"N\",\"listClass\":\"danger\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:33:57', 26);
 INSERT INTO `sys_oper_log` VALUES (645, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-15 09:31:46\",\"default\":false,\"dictCode\":117,\"dictLabel\":\"困难\",\"dictSort\":3,\"dictType\":\"question_difficulty\",\"dictValue\":\"3\",\"isDefault\":\"N\",\"listClass\":\"danger\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:34:04', 12);
 INSERT INTO `sys_oper_log` VALUES (646, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-15 09:31:38\",\"default\":false,\"dictCode\":116,\"dictLabel\":\"中等\",\"dictSort\":2,\"dictType\":\"question_difficulty\",\"dictValue\":\"2\",\"isDefault\":\"N\",\"listClass\":\"warning\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:34:10', 11);
-INSERT INTO `sys_oper_log` VALUES (647, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"difficulty\":2,\"id\":1879082351088553986,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-15 09:40:46\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:40:46', 18);
-INSERT INTO `sys_oper_log` VALUES (648, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"difficulty\":3,\"id\":1879082351088553986,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-15 09:40:54\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:40:54', 8);
-INSERT INTO `sys_oper_log` VALUES (649, '题目管理', 2, 'com.eduflex.manage.controller.QuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"difficulty\":1,\"id\":1879082351088553986,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-15 09:40:57\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:40:57', 9);
+INSERT INTO `sys_oper_log` VALUES (647, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"difficulty\":2,\"id\":1879082351088553986,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-15 09:40:46\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:40:46', 18);
+INSERT INTO `sys_oper_log` VALUES (648, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"difficulty\":3,\"id\":1879082351088553986,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-15 09:40:54\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:40:54', 8);
+INSERT INTO `sys_oper_log` VALUES (649, '题目管理', 2, 'com.eduflex.manage.controller.ExamQuestionController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Python 是一种面向对象的编程语言，支持多种编程范式。\",\"answer\":\"[\\\"A\\\"]\",\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 16:25:17\",\"deleted\":0,\"difficulty\":1,\"id\":1879082351088553986,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"Python\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"C++\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"HTML\\\"}]\",\"params\":{},\"title\":\"以下哪种语言是面向对象的？\",\"type\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-15 09:40:57\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 09:40:57', 9);
 INSERT INTO `sys_oper_log` VALUES (650, '字典类型', 1, 'com.eduflex.web.controller.system.SysDictTypeController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/type', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"dictName\":\"试卷发布状态\",\"dictType\":\"paper_published\",\"params\":{},\"remark\":\"试卷发布状态\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 14:32:24', 10);
 INSERT INTO `sys_oper_log` VALUES (651, '字典数据', 1, 'com.eduflex.web.controller.system.SysDictDataController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"default\":false,\"dictLabel\":\"未发布\",\"dictSort\":1,\"dictType\":\"paper_published\",\"dictValue\":\"0\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 14:32:49', 8);
 INSERT INTO `sys_oper_log` VALUES (652, '字典数据', 2, 'com.eduflex.web.controller.system.SysDictDataController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-15 14:32:49\",\"default\":false,\"dictCode\":118,\"dictLabel\":\"未发布\",\"dictSort\":1,\"dictType\":\"paper_published\",\"dictValue\":\"0\",\"isDefault\":\"N\",\"listClass\":\"primary\",\"params\":{},\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-15 14:32:54', 11);
@@ -1853,9 +1881,9 @@ INSERT INTO `sys_oper_log` VALUES (775, '学生选课', 2, 'com.eduflex.manage.c
 INSERT INTO `sys_oper_log` VALUES (776, '学生选课', 2, 'com.eduflex.manage.controller.StudentCourseController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/student_course', '127.0.0.1', '内网IP', '{\"courseId\":1,\"createBy\":\"admin\",\"createTime\":\"2025-01-26 10:37:17\",\"deleted\":0,\"id\":1883343422766923777,\"params\":{},\"progress\":70.00,\"status\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-26 11:46:04\",\"userId\":105}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 11:46:04', 5);
 INSERT INTO `sys_oper_log` VALUES (777, '课程管理', 2, 'com.eduflex.manage.controller.CourseController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865774804440600577,\"cover\":1883361190467784705,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:57:16\",\"deleted\":0,\"endTime\":\"2025-01-16\",\"id\":1879105493781590018,\"name\":\"计算机网络\",\"params\":{},\"startTime\":\"2025-01-14\",\"status\":\"1\",\"teacherId\":106,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:57:16\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 11:47:54', 14);
 INSERT INTO `sys_oper_log` VALUES (778, '课程管理', 2, 'com.eduflex.manage.controller.CourseController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865774917003137026,\"cover\":1883361212890533890,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:58:13\",\"deleted\":0,\"endTime\":\"2025-01-15\",\"id\":1879105733238599681,\"name\":\"高等数学\",\"params\":{},\"startTime\":\"2025-01-13\",\"status\":\"1\",\"teacherId\":100,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:58:13\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 11:47:59', 8);
-INSERT INTO `sys_oper_log` VALUES (779, '学习目标管理', 1, 'com.eduflex.manage.controller.GoalController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goal', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 13:36:57\",\"deadline\":50,\"goalName\":\"50天学会Java\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\r\n### The error may exist in com/eduflex/manage/mapper/LearningGoalMapper.java (best guess)\r\n### The error may involve com.eduflex.manage.mapper.LearningGoalMapper.insert-Inline\r\n### The error occurred while setting parameters\r\n### SQL: INSERT INTO tb_learning_goal  ( goal_name,  deadline, create_by, create_time )  VALUES (  ?,  ?, ?, ?  )\r\n### Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\n; Field \'id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'id\' doesn\'t have a default value', '2025-01-26 13:36:57', 94);
-INSERT INTO `sys_oper_log` VALUES (780, '学习目标管理', 1, 'com.eduflex.manage.controller.GoalController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goal', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 13:39:22\",\"deadline\":50,\"goalName\":\"50天学会Java\",\"id\":1883389243721973762,\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 13:39:22', 75);
-INSERT INTO `sys_oper_log` VALUES (781, '学习目标管理', 2, 'com.eduflex.manage.controller.GoalController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/goal', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 13:39:22\",\"deadline\":50,\"deleted\":0,\"description\":\"哈哈哈\",\"goalName\":\"50天学会Java\",\"id\":1883389243721973762,\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-01-26 13:41:40\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 13:41:40', 20);
+INSERT INTO `sys_oper_log` VALUES (779, '学习目标管理', 1, 'com.eduflex.manage.controller.LearningGoalController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goal', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 13:36:57\",\"deadline\":50,\"goalName\":\"50天学会Java\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\r\n### The error may exist in com/eduflex/manage/mapper/LearningGoalMapper.java (best guess)\r\n### The error may involve com.eduflex.manage.mapper.LearningGoalMapper.insert-Inline\r\n### The error occurred while setting parameters\r\n### SQL: INSERT INTO tb_learning_goal  ( goal_name,  deadline, create_by, create_time )  VALUES (  ?,  ?, ?, ?  )\r\n### Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\n; Field \'id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'id\' doesn\'t have a default value', '2025-01-26 13:36:57', 94);
+INSERT INTO `sys_oper_log` VALUES (780, '学习目标管理', 1, 'com.eduflex.manage.controller.LearningGoalController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goal', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 13:39:22\",\"deadline\":50,\"goalName\":\"50天学会Java\",\"id\":1883389243721973762,\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 13:39:22', 75);
+INSERT INTO `sys_oper_log` VALUES (781, '学习目标管理', 2, 'com.eduflex.manage.controller.LearningGoalController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/goal', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 13:39:22\",\"deadline\":50,\"deleted\":0,\"description\":\"哈哈哈\",\"goalName\":\"50天学会Java\",\"id\":1883389243721973762,\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-01-26 13:41:40\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 13:41:40', 20);
 INSERT INTO `sys_oper_log` VALUES (782, '代码生成', 6, 'com.eduflex.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\"tables\":\"tb_goal_student,tb_exam_paper_question,tb_file_images\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 14:04:38', 74);
 INSERT INTO `sys_oper_log` VALUES (783, '代码生成', 2, 'com.eduflex.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"goalStudent\",\"className\":\"GoalStudent\",\"columns\":[{\"capJavaField\":\"Id\",\"columnComment\":\"ID\",\"columnId\":275,\"columnName\":\"id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-26 14:04:38\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":false,\"insert\":false,\"isIncrement\":\"0\",\"isInsert\":\"0\",\"isPk\":\"0\",\"isRequired\":\"1\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":false,\"query\":false,\"queryType\":\"EQ\",\"required\":true,\"sort\":1,\"superColumn\":false,\"tableId\":31,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"UserId\",\"columnComment\":\"关联学生\",\"columnId\":276,\"columnName\":\"user_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-26 14:04:38\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"userId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":31,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"GoalId\",\"columnComment\":\"关联学习目标\",\"columnId\":277,\"columnName\":\"goal_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-26 14:04:38\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"0\",\"isRequired\":\"1\",\"javaField\":\"goalId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":false,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":31,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Status\",\"columnComment\":\"学习目标状态\",\"columnId\":278,\"columnName\":\"status\",\"columnType\":\"tinyint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-26 14:04:38\",\"dictType\":\"study_status\",\"edit\":true,\"htmlType\":\"select\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 14:06:35', 46);
 INSERT INTO `sys_oper_log` VALUES (784, '学习目标-学生关联', 1, 'com.eduflex.manage.controller.GoalStudentController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"goalId\":1883389243721973762,\"id\":1883435111430914049,\"params\":{},\"status\":0,\"updateTime\":\"2025-01-26 16:41:37\",\"userId\":105}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 16:41:37', 13);
@@ -1864,6 +1892,53 @@ INSERT INTO `sys_oper_log` VALUES (786, '学习目标-学生关联', 1, 'com.edu
 INSERT INTO `sys_oper_log` VALUES (787, '学习目标-学生关联', 1, 'com.eduflex.manage.controller.GoalStudentController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"goalId\":1883389243721973762,\"id\":1883440181820141570,\"params\":{},\"status\":0,\"updateTime\":\"2025-01-26 17:01:46\",\"userId\":104}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 17:01:46', 6);
 INSERT INTO `sys_oper_log` VALUES (788, '学习目标-学生关联', 3, 'com.eduflex.manage.controller.GoalStudentController.remove()', 'DELETE', 1, 'admin', '研发部门', '/manage/goalStudent/1883440181820141570', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-01-26 17:01:48', 31);
 INSERT INTO `sys_oper_log` VALUES (789, '学习目标-学生关联', 1, 'com.eduflex.manage.controller.GoalStudentController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"goalId\":1883389243721973762,\"params\":{},\"status\":0,\"userId\":104}', '{\"msg\":\"关联失败，该学生已关联到该学习目标\",\"code\":500}', 0, NULL, '2025-01-26 17:06:18', 23);
+INSERT INTO `sys_oper_log` VALUES (790, '学习目标-学生关联', 3, 'com.eduflex.manage.controller.GoalStudentController.remove()', 'DELETE', 1, 'admin', '研发部门', '/manage/goalStudent/1883439243155877889', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 10:35:24', 24);
+INSERT INTO `sys_oper_log` VALUES (791, '学习目标-学生关联', 1, 'com.eduflex.manage.controller.GoalStudentController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"goalId\":1883389243721973762,\"id\":1886968374577569794,\"params\":{},\"updateTime\":\"2025-02-05 10:41:33\",\"userId\":110}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 10:41:33', 14);
+INSERT INTO `sys_oper_log` VALUES (792, '学习目标-学生关联', 1, 'com.eduflex.manage.controller.GoalStudentController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"goalId\":1883389243721973762,\"id\":1886968374577569795,\"params\":{},\"updateTime\":\"2025-02-05 10:41:33\",\"userId\":104}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 10:41:33', 14);
+INSERT INTO `sys_oper_log` VALUES (793, '学习目标-学生关联', 1, 'com.eduflex.manage.controller.GoalStudentController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"goalId\":1883389243721973762,\"id\":1886968738303418369,\"params\":{},\"updateTime\":\"2025-02-05 10:43:00\",\"userId\":104}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 10:43:00', 4);
+INSERT INTO `sys_oper_log` VALUES (794, '学习目标-学生关联', 1, 'com.eduflex.manage.controller.GoalStudentController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"goalId\":1883389243721973762,\"id\":1886968738370527233,\"params\":{},\"updateTime\":\"2025-02-05 10:43:00\",\"userId\":110}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 10:43:00', 5);
+INSERT INTO `sys_oper_log` VALUES (795, '学习目标-学生关联', 2, 'com.eduflex.manage.controller.GoalStudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 16:41:37\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":1883435111430914049,\"params\":{},\"progress\":0.01,\"status\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-02-05 13:02:58\",\"userId\":105}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 13:02:58', 17);
+INSERT INTO `sys_oper_log` VALUES (796, '学习目标-学生关联', 2, 'com.eduflex.manage.controller.GoalStudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 16:41:37\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":1883435111430914049,\"params\":{},\"progress\":50.0,\"status\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-02-05 13:03:09\",\"userId\":105}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 13:03:09', 8);
+INSERT INTO `sys_oper_log` VALUES (797, '学习目标-学生关联', 2, 'com.eduflex.manage.controller.GoalStudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 16:41:37\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":1883435111430914049,\"params\":{},\"progress\":50.01,\"status\":1,\"updateBy\":\"admin\",\"updateTime\":\"2025-02-05 13:03:30\",\"userId\":105}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 13:03:30', 10);
+INSERT INTO `sys_oper_log` VALUES (798, '学习目标-学生关联', 2, 'com.eduflex.manage.controller.GoalStudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 16:41:37\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":1883435111430914049,\"params\":{},\"progress\":50.01,\"status\":0,\"updateBy\":\"admin\",\"updateTime\":\"2025-02-05 13:03:40\",\"userId\":105}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 13:03:40', 5);
+INSERT INTO `sys_oper_log` VALUES (799, '学习目标-学生关联', 2, 'com.eduflex.manage.controller.GoalStudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/goalStudent', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-01-26 16:41:37\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":1883435111430914049,\"params\":{},\"progress\":50.01,\"status\":0,\"updateBy\":\"admin\",\"updateTime\":\"2025-02-05 13:07:13\",\"userId\":105}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 13:07:13', 7);
+INSERT INTO `sys_oper_log` VALUES (800, '代码生成', 2, 'com.eduflex.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"route\",\"className\":\"LearningRoute\",\"columns\":[{\"capJavaField\":\"Id\",\"columnComment\":\"学习路线ID\",\"columnId\":224,\"columnName\":\"id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-24 16:52:48\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":false,\"insert\":false,\"isIncrement\":\"0\",\"isInsert\":\"0\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":25,\"updateBy\":\"\",\"updateTime\":\"2025-01-24 17:02:14\",\"usableColumn\":false},{\"capJavaField\":\"GoalId\",\"columnComment\":\"学习目标\",\"columnId\":225,\"columnName\":\"goal_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-24 16:52:48\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"goalId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":25,\"updateBy\":\"\",\"updateTime\":\"2025-01-24 17:02:14\",\"usableColumn\":false},{\"capJavaField\":\"CourseId\",\"columnComment\":\"课程ID\",\"columnId\":226,\"columnName\":\"course_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-01-24 16:52:48\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"select\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"0\",\"isRequired\":\"1\",\"javaField\":\"courseId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":false,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":25,\"updateBy\":\"\",\"updateTime\":\"2025-01-24 17:02:14\",\"usableColumn\":false},{\"capJavaField\":\"OrderNum\",\"columnComment\":\"课程排序\",\"columnId\":227,\"columnName\":\"order_num\",\"columnType\":\"int\",\"createBy\":\"admin\",\"createTime\":\"2025-01-24 16:52:48\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isI', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 13:09:10', 47);
+INSERT INTO `sys_oper_log` VALUES (801, '代码生成', 8, 'com.eduflex.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"tb_learning_route\"}', NULL, 0, NULL, '2025-02-05 13:09:15', 124);
+INSERT INTO `sys_oper_log` VALUES (802, '学习目标管理', 1, 'com.eduflex.manage.controller.LearningGoalController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goal', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-02-05 13:27:53\",\"deadline\":30,\"goalName\":\"30天学会python基础\",\"id\":1887010232707997697,\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 13:27:53', 147);
+INSERT INTO `sys_oper_log` VALUES (803, '学习目标管理', 1, 'com.eduflex.manage.controller.LearningGoalController.add()', 'POST', 1, 'admin', '研发部门', '/manage/goal', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-02-05 13:28:09\",\"deadline\":1,\"goalName\":\"5分钟完成小程序开发\",\"id\":1887010302631239681,\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-05 13:28:09', 6);
+INSERT INTO `sys_oper_log` VALUES (804, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\",\\\"3\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 10:23:08\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 10:23:08', 31);
+INSERT INTO `sys_oper_log` VALUES (805, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 10:23:26\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 10:23:26', 11);
+INSERT INTO `sys_oper_log` VALUES (806, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 15:13:24\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 15:13:24', 31);
+INSERT INTO `sys_oper_log` VALUES (807, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"3\\\",\\\"1\\\",\\\"1879105493781590018\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 15:24:58\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 15:24:58', 7);
+INSERT INTO `sys_oper_log` VALUES (808, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 15:25:24\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 15:25:24', 9);
+INSERT INTO `sys_oper_log` VALUES (809, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\",\\\"1879105493781590018\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 15:37:41\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 15:37:41', 28);
+INSERT INTO `sys_oper_log` VALUES (810, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\",\\\"1879105493781590018\\\",\\\"3\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 15:38:48\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 15:38:48', 8);
+INSERT INTO `sys_oper_log` VALUES (811, '学习路线管理', 1, 'com.eduflex.manage.controller.LearningRouteController.add()', 'POST', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-06 16:14:20\",\"goalId\":1883389243721973762,\"id\":1887414508911542273,\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 16:14:20', 11);
+INSERT INTO `sys_oper_log` VALUES (812, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\",\\\"3\\\",\\\"1879105493781590018\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"name\":\"Java学习路线1\",\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 16:24:56\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 16:24:56', 20);
+INSERT INTO `sys_oper_log` VALUES (813, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\",\\\"3\\\",\\\"1879105493781590018\\\",\\\"1879105733238599681\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"name\":\"Java学习路线1\",\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 17:44:30\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 17:44:30', 18);
+INSERT INTO `sys_oper_log` VALUES (814, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\",\\\"3\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"name\":\"Java学习路线1\",\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 17:44:41\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 17:44:41', 7);
+INSERT INTO `sys_oper_log` VALUES (815, '学习路线管理', 2, 'com.eduflex.manage.controller.LearningRouteController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/route', '127.0.0.1', '内网IP', '{\"coursesId\":\"[\\\"1\\\",\\\"3\\\",\\\"1879105733238599681\\\"]\",\"createTime\":\"2025-02-05 13:51:07\",\"deleted\":0,\"goalId\":1883389243721973762,\"id\":123,\"name\":\"Java学习路线1\",\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-06 17:46:13\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-06 17:46:13', 9);
+INSERT INTO `sys_oper_log` VALUES (816, '学生管理', 2, 'com.eduflex.manage.controller.StudentController.resetPwd()', 'PUT', 1, 'admin', '研发部门', '/manage/student/resetPwd', '127.0.0.1', '内网IP', '{\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-07 11:17:36\",\"userId\":110,\"userName\":\"202325350132\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-07 11:17:36', 77);
+INSERT INTO `sys_oper_log` VALUES (817, '学生管理', 2, 'com.eduflex.manage.controller.StudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/student', '127.0.0.1', '内网IP', '{\"avatar\":\"\",\"createBy\":\"admin\",\"createTime\":\"2024-10-08 11:11:09\",\"deleted\":0,\"email\":\"admin@qq.com\",\"id\":2,\"nickName\":\"张三\",\"params\":{},\"phonenumber\":\"158151616061\",\"roleId\":4,\"sex\":\"0\",\"status\":\"0\",\"updateBy\":\"admin\",\"updateTime\":\"2025-02-07 11:39:59\",\"userId\":105,\"userName\":\"202325350124\"}', NULL, 1, '\r\n### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'phonenumber\' at row 1\r\n### The error may exist in file [D:\\download\\Project\\Backend\\EduFlex\\eduflex-system\\target\\classes\\mapper\\system\\SysUserMapper.xml]\r\n### The error may involve com.eduflex.system.mapper.SysUserMapper.updateUser-Inline\r\n### The error occurred while setting parameters\r\n### SQL: update sys_user     SET user_name = ?,     nick_name = ?,     email = ?,     phonenumber = ?,     sex = ?,               status = ?,               update_by = ?,          update_time = sysdate()     where user_id = ?\r\n### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'phonenumber\' at row 1\n; Data truncation: Data too long for column \'phonenumber\' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'phonenumber\' at row 1', '2025-02-07 11:39:59', 122);
+INSERT INTO `sys_oper_log` VALUES (818, '学生管理', 2, 'com.eduflex.manage.controller.StudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/student', '127.0.0.1', '内网IP', '{\"avatar\":\"\",\"createBy\":\"admin\",\"createTime\":\"2024-10-08 11:11:09\",\"deleted\":0,\"email\":\"admin@qq.com\",\"id\":2,\"nickName\":\"张三\",\"params\":{},\"phonenumber\":\"15815161605\",\"sex\":\"0\",\"status\":\"0\",\"userId\":105,\"userName\":\"202325350124\"}', '{\"msg\":\"修改学生‘202325350124\'失败，手机号码已存在\",\"code\":500}', 0, NULL, '2025-02-07 11:40:12', 13);
+INSERT INTO `sys_oper_log` VALUES (819, '学生管理', 2, 'com.eduflex.manage.controller.StudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/student', '127.0.0.1', '内网IP', '{\"avatar\":\"\",\"createBy\":\"admin\",\"createTime\":\"2024-10-08 11:11:09\",\"deleted\":0,\"email\":\"admin@qq.com\",\"id\":2,\"nickName\":\"张三\",\"params\":{},\"phonenumber\":\"15815161606\",\"roleId\":4,\"sex\":\"0\",\"status\":\"0\",\"updateBy\":\"admin\",\"updateTime\":\"2025-02-07 11:40:17\",\"userId\":105,\"userName\":\"202325350124\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-07 11:40:17', 33);
+INSERT INTO `sys_oper_log` VALUES (820, '学生管理', 2, 'com.eduflex.manage.controller.StudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/student', '127.0.0.1', '内网IP', '{\"avatar\":\"\",\"createBy\":\"admin\",\"createTime\":\"2024-10-08 11:11:09\",\"deleted\":0,\"email\":\"admin@qq.com\",\"id\":2,\"nickName\":\"张三\",\"params\":{},\"phonenumber\":\"158151616061\",\"roleId\":4,\"sex\":\"0\",\"status\":\"0\",\"updateBy\":\"admin\",\"updateTime\":\"2025-02-07 11:41:14\",\"userId\":105,\"userName\":\"202325350124\"}', NULL, 1, '\r\n### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'phonenumber\' at row 1\r\n### The error may exist in file [D:\\download\\Project\\Backend\\EduFlex\\eduflex-system\\target\\classes\\mapper\\system\\SysUserMapper.xml]\r\n### The error may involve com.eduflex.system.mapper.SysUserMapper.updateUser-Inline\r\n### The error occurred while setting parameters\r\n### SQL: update sys_user     SET user_name = ?,     nick_name = ?,     email = ?,     phonenumber = ?,     sex = ?,               status = ?,               update_by = ?,          update_time = sysdate()     where user_id = ?\r\n### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'phonenumber\' at row 1\n; Data truncation: Data too long for column \'phonenumber\' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'phonenumber\' at row 1', '2025-02-07 11:42:16', 62317);
+INSERT INTO `sys_oper_log` VALUES (821, '学生管理', 2, 'com.eduflex.manage.controller.StudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/student', '127.0.0.1', '内网IP', '{\"avatar\":\"\",\"createBy\":\"admin\",\"createTime\":\"2024-10-08 11:11:09\",\"deleted\":0,\"email\":\"admin@qq.com\",\"id\":2,\"nickName\":\"张三\",\"params\":{},\"phonenumber\":\"158151616061\",\"roleId\":4,\"sex\":\"0\",\"status\":\"0\",\"updateBy\":\"admin\",\"updateTime\":\"2025-02-07 11:42:17\",\"userId\":105,\"userName\":\"202325350124\"}', NULL, 1, '\r\n### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'phonenumber\' at row 1\r\n### The error may exist in file [D:\\download\\Project\\Backend\\EduFlex\\eduflex-system\\target\\classes\\mapper\\system\\SysUserMapper.xml]\r\n### The error may involve com.eduflex.system.mapper.SysUserMapper.updateUser-Inline\r\n### The error occurred while setting parameters\r\n### SQL: update sys_user     SET user_name = ?,     nick_name = ?,     email = ?,     phonenumber = ?,     sex = ?,               status = ?,               update_by = ?,          update_time = sysdate()     where user_id = ?\r\n### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'phonenumber\' at row 1\n; Data truncation: Data too long for column \'phonenumber\' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'phonenumber\' at row 1', '2025-02-07 11:42:17', 26);
+INSERT INTO `sys_oper_log` VALUES (822, '学生管理', 2, 'com.eduflex.manage.controller.StudentController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/student', '127.0.0.1', '内网IP', '{\"avatar\":\"\",\"createBy\":\"admin\",\"createTime\":\"2024-10-08 11:11:09\",\"deleted\":0,\"email\":\"admin@qq.com\",\"id\":2,\"nickName\":\"张三\",\"params\":{},\"phonenumber\":\"15815161606\",\"roleId\":4,\"sex\":\"0\",\"status\":\"0\",\"updateBy\":\"admin\",\"updateTime\":\"2025-02-07 11:42:34\",\"userId\":105,\"userName\":\"202325350124\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-07 11:42:34', 16);
+INSERT INTO `sys_oper_log` VALUES (823, '学生管理', 2, 'com.eduflex.manage.controller.StudentController.resetPwd()', 'PUT', 1, 'admin', '研发部门', '/manage/student/resetPwd', '127.0.0.1', '内网IP', '{\"params\":{},\"updateBy\":\"admin\",\"updateTime\":\"2025-02-07 11:42:39\",\"userId\":110,\"userName\":\"202325350132\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-07 11:42:39', 71);
+INSERT INTO `sys_oper_log` VALUES (824, '学生管理', 1, 'com.eduflex.manage.controller.StudentController.add()', 'POST', 1, 'admin', '研发部门', '/manage/student', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"nickName\":\"郭沫若\",\"params\":{},\"roleId\":4,\"status\":\"0\",\"userName\":\"202325350106\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-07 11:42:56', 80);
+INSERT INTO `sys_oper_log` VALUES (825, '教师管理', 2, 'com.eduflex.manage.controller.TeacherController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/teacher', '127.0.0.1', '内网IP', '{\"avatar\":\"\",\"createBy\":\"admin\",\"createTime\":\"2024-10-06 00:52:44\",\"deleted\":0,\"email\":\"1972212424@qq.com\",\"id\":1,\"nickName\":\"张三\",\"params\":{},\"phonenumber\":\"15815161602\",\"roleId\":3,\"sex\":\"0\",\"status\":\"0\",\"updateBy\":\"admin\",\"updateTime\":\"2025-02-07 13:12:56\",\"userId\":100,\"userName\":\"zhangsan\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-07 13:12:56', 100);
+INSERT INTO `sys_oper_log` VALUES (826, '教师管理', 1, 'com.eduflex.manage.controller.TeacherController.add()', 'POST', 1, 'admin', '研发部门', '/manage/teacher', '127.0.0.1', '内网IP', '{\"email\":\"1972212424@qq.com\",\"nickName\":\"王冰冰\",\"params\":{},\"phonenumber\":\"13800000000\",\"sex\":\"1\",\"userName\":\"wangbingbing\"}', '{\"msg\":\"新增教师‘wangbingbing\'失败，邮箱账号已存在\",\"code\":500}', 0, NULL, '2025-02-07 13:25:35', 10);
+INSERT INTO `sys_oper_log` VALUES (827, '教师管理', 1, 'com.eduflex.manage.controller.TeacherController.add()', 'POST', 1, 'admin', '研发部门', '/manage/teacher', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"email\":\"625587563@qq.com\",\"nickName\":\"王冰冰\",\"params\":{},\"phonenumber\":\"13800000000\",\"roleId\":3,\"sex\":\"1\",\"status\":\"0\",\"userName\":\"wangbingbing\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-07 13:25:42', 107);
+INSERT INTO `sys_oper_log` VALUES (828, '教师管理', 1, 'com.eduflex.manage.controller.TeacherController.add()', 'POST', 1, 'admin', '研发部门', '/manage/teacher', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"email\":\"yaya@163.com\",\"nickName\":\"丫丫\",\"params\":{},\"phonenumber\":\"13548481602\",\"roleId\":3,\"sex\":\"1\",\"status\":\"0\",\"userName\":\"yaya\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-07 13:26:15', 75);
+INSERT INTO `sys_oper_log` VALUES (829, '教师管理', 3, 'com.eduflex.manage.controller.TeacherController.remove()', 'DELETE', 1, 'admin', '研发部门', '/manage/teacher/1887734598366351362', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-07 13:26:19', 29);
+INSERT INTO `sys_oper_log` VALUES (830, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"“class”关键字用于定义类。\",\"answer\":\"[\\\"A\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:19:36\",\"difficulty\":1,\"id\":1888865386175234049,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"class\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"interface\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"extends\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"implements\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中，哪个关键字用于定义一个类？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:19:36', 12);
+INSERT INTO `sys_oper_log` VALUES (831, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Java中，int类型占用4个字节。\",\"answer\":\"[\\\"B\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:20:07\",\"difficulty\":1,\"id\":1888865517591166978,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"2字节\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"4字节\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"8字节\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"16字节\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"在Java中，int占用的字节数是多少？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:20:07', 3);
+INSERT INTO `sys_oper_log` VALUES (832, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Java中“for”、“while”和“do-while”都是循环结构。\",\"answer\":\"[\\\"D\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:20:54\",\"difficulty\":1,\"id\":1888865715377766401,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"for\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"while\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"do-while\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"以上都是\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"以下哪个是Java中的循环结构？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:20:54', 4);
+INSERT INTO `sys_oper_log` VALUES (833, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Java中变量声明需要指定类型，示例：int x = 10;\",\"answer\":\"[\\\"A\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:21:39\",\"difficulty\":1,\"id\":1888865901479034882,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"int x = 10;\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"int x = 10.0;\\\"},{\\\"key\\\":\\\"C\\\",\\\"value\\\":\\\"String x = 10;\\\"},{\\\"key\\\":\\\"D\\\",\\\"value\\\":\\\"char x = 10;\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中，如何定义一个变量？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:21:39', 4);
+INSERT INTO `sys_oper_log` VALUES (834, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"String是引用数据类型，不是基本数据类型。\",\"answer\":\"[\\\"A\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:22:03\",\"difficulty\":1,\"id\":1888866002205245442,\"options\":\"[{\\\"key\\\":\\\"A\\\",\\\"value\\\":\\\"是\\\"},{\\\"key\\\":\\\"B\\\",\\\"value\\\":\\\"否\\\"}]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中的String是基本数据类型吗？\",\"type\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:22:03', 4);
+INSERT INTO `sys_oper_log` VALUES (835, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"==用于比较内存地址，equals()用于比较字符串的内容是否相等。\",\"answer\":\"[\\\"==比较地址，equals()比较内容\\\"]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:22:45\",\"difficulty\":2,\"id\":1888866180559634433,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中==和equals()方法的区别是什么？\",\"type\":5}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:22:45', 4);
+INSERT INTO `sys_oper_log` VALUES (836, '题目管理', 1, 'com.eduflex.manage.controller.QuestionController.add()', 'POST', 1, 'admin', '研发部门', '/manage/question', '127.0.0.1', '内网IP', '{\"analysis\":\"Java中的垃圾回收机制是自动的，不需要手动释放内存。\",\"answer\":\"[false]\",\"createBy\":\"admin\",\"createTime\":\"2025-02-10 16:23:08\",\"difficulty\":1,\"id\":1888866274851782658,\"options\":\"[]\",\"params\":{},\"repoId\":1888576625653796865,\"title\":\"Java中的垃圾回收机制是手动释放内存的吗？\",\"type\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-10 16:23:08', 3);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1904,7 +1979,7 @@ CREATE TABLE `sys_role`  (
   `menu_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '菜单树选择项是否关联显示',
   `dept_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '部门树选择项是否关联显示',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '角色状态（0正常 1停用）',
-  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
@@ -1916,10 +1991,10 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, '超级管理员', 'admin', 1, '1', 1, 1, '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL, '超级管理员');
-INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', 1, 1, '0', '0', 'admin', '2024-10-05 13:28:48', '', NULL, '普通角色');
-INSERT INTO `sys_role` VALUES (3, '教师', 'teacher', 3, '1', 1, 1, '0', '0', 'admin', '2024-10-05 23:47:42', 'admin', '2024-10-16 23:08:21', '教师');
-INSERT INTO `sys_role` VALUES (4, '学生', 'student', 4, '1', 1, 1, '0', '0', 'admin', '2024-10-07 16:49:08', '', NULL, '学生');
+INSERT INTO `sys_role` VALUES (1, '超级管理员', 'admin', 1, '1', 1, 1, '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL, '超级管理员');
+INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', 1, 1, '0', 0, 'admin', '2024-10-05 13:28:48', '', NULL, '普通角色');
+INSERT INTO `sys_role` VALUES (3, '教师', 'teacher', 3, '1', 1, 1, '0', 0, 'admin', '2024-10-05 23:47:42', 'admin', '2024-10-16 23:08:21', '教师');
+INSERT INTO `sys_role` VALUES (4, '学生', 'student', 4, '1', 1, 1, '0', 0, 'admin', '2024-10-07 16:49:08', '', NULL, '学生');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -2072,7 +2147,7 @@ CREATE TABLE `sys_user`  (
   `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '头像地址',
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '密码',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
-  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   `login_ip` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '最后登录IP',
   `login_date` datetime NULL DEFAULT NULL COMMENT '最后登录时间',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
@@ -2081,21 +2156,24 @@ CREATE TABLE `sys_user`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/avatar/2024/12/31/logo_20241231152013A001.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-01-26 16:41:26', 'admin', '2024-10-05 13:28:48', '', '2025-01-26 16:41:25', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '2', '127.0.0.1', '2024-10-05 13:28:48', 'admin', '2024-10-05 13:28:48', 'admin', '2024-10-06 16:03:47', '测试员');
-INSERT INTO `sys_user` VALUES (100, NULL, 'zhangsan', '张三', '00', '1972212424@qq.com', '15815161605', '0', '', '$2a$10$gnDVpc1oEeeHL9oMuVrRaulVsqNuT1SPeSdpqkIh7ERDD65pPmkJa', '0', '0', '127.0.0.1', '2024-10-16 23:49:02', 'admin', '2024-10-06 00:52:44', 'admin', '2024-12-08 17:22:31', NULL);
-INSERT INTO `sys_user` VALUES (102, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$nZvTWdZ1BlIHdGlwHMkGMOTKKagqC8yN9piQ.6gHtaSzCHF1Bl0A2', '0', '2', '', NULL, 'admin', '2024-10-06 16:56:27', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (103, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$iUGV11YL2hDcxSe4w9d2PuFmmV85a732C50aNHemmTN2iLkMvqJxe', '0', '0', '', NULL, 'admin', '2024-10-06 17:46:05', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (104, NULL, '202325350123', '林煜鋒', '00', '', '', '0', '', '$2a$10$8.r0rhNkc3P1PxVYnJIiqO95d5jxreXGEoifrKjVNrrjIvZRJP2Ny', '0', '0', '', NULL, 'admin', '2024-10-08 10:47:31', 'admin', '2024-10-10 18:32:13', NULL);
-INSERT INTO `sys_user` VALUES (105, NULL, '202325350124', '张三', '00', 'admin@qq.com', '15815161606', '0', '', '$2a$10$axR.MY2O2nNR.LlDbTRvTe2tDCYMbai7AmnoQKQk.iFiSIkqBG0Su', '0', '0', '', NULL, 'admin', '2024-10-08 11:11:09', 'admin', '2024-10-10 11:50:15', NULL);
-INSERT INTO `sys_user` VALUES (106, NULL, 'wangwu', '王五', '00', '13900000000@qq.com', '13900000000', '0', '', '$2a$10$RnCSylS/jYWsZJpL7Sko3ObfRkPD2b0es7NoJwl0MELTWQ4Ps6NpC', '0', '0', '', NULL, 'admin', '2024-10-11 11:33:43', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (107, NULL, '202325350130', '张三三', '00', '', '', '0', '', '$2a$10$62ShaMC7ZrJVSzgL8Cu4bOCJjDhXaqXemRB.DX1rekKnhRTG82s6S', '0', '0', '', NULL, 'admin', '2024-12-08 13:49:32', 'admin', '2024-12-08 16:48:01', NULL);
-INSERT INTO `sys_user` VALUES (110, NULL, '202325350132', '李思思', '00', '', '', '1', '', '$2a$10$vuhTPrdBsHHwaWaBt4ccTOTDXwj5lZObR7suKyESVn2IU/f8rGB6e', '0', '0', '', NULL, 'admin', '2024-12-08 16:48:19', 'admin', '2024-12-08 17:22:41', NULL);
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/avatar/2024/12/31/logo_20241231152013A001.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', 0, '127.0.0.1', '2025-02-10 16:13:32', 'admin', '2024-10-05 13:28:48', '', '2025-02-10 16:13:32', '管理员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', 1, '127.0.0.1', '2024-10-05 13:28:48', 'admin', '2024-10-05 13:28:48', 'admin', '2024-10-06 16:03:47', '测试员');
+INSERT INTO `sys_user` VALUES (100, NULL, 'zhangsan', '张三', '00', '1972212424@qq.com', '15815161602', '0', '', '$2a$10$gnDVpc1oEeeHL9oMuVrRaulVsqNuT1SPeSdpqkIh7ERDD65pPmkJa', '0', 0, '127.0.0.1', '2024-10-16 23:49:02', 'admin', '2024-10-06 00:52:44', 'admin', '2025-02-07 13:12:56', NULL);
+INSERT INTO `sys_user` VALUES (102, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$nZvTWdZ1BlIHdGlwHMkGMOTKKagqC8yN9piQ.6gHtaSzCHF1Bl0A2', '0', 1, '', NULL, 'admin', '2024-10-06 16:56:27', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (103, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$iUGV11YL2hDcxSe4w9d2PuFmmV85a732C50aNHemmTN2iLkMvqJxe', '0', 0, '', NULL, 'admin', '2024-10-06 17:46:05', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (104, NULL, '202325350123', '林煜鋒', '00', '', '', '0', '', '$2a$10$8.r0rhNkc3P1PxVYnJIiqO95d5jxreXGEoifrKjVNrrjIvZRJP2Ny', '0', 0, '', NULL, 'admin', '2024-10-08 10:47:31', 'admin', '2024-10-10 18:32:13', NULL);
+INSERT INTO `sys_user` VALUES (105, NULL, '202325350124', '张三', '00', 'admin@qq.com', '15815161606', '0', '', '$2a$10$axR.MY2O2nNR.LlDbTRvTe2tDCYMbai7AmnoQKQk.iFiSIkqBG0Su', '0', 0, '', NULL, 'admin', '2024-10-08 11:11:09', 'admin', '2025-02-07 11:42:34', NULL);
+INSERT INTO `sys_user` VALUES (106, NULL, 'wangwu', '王五', '00', '13900000000@qq.com', '13900000000', '0', '', '$2a$10$RnCSylS/jYWsZJpL7Sko3ObfRkPD2b0es7NoJwl0MELTWQ4Ps6NpC', '0', 0, '', NULL, 'admin', '2024-10-11 11:33:43', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (107, NULL, '202325350130', '张三三', '00', '', '', '0', '', '$2a$10$62ShaMC7ZrJVSzgL8Cu4bOCJjDhXaqXemRB.DX1rekKnhRTG82s6S', '0', 0, '', NULL, 'admin', '2024-12-08 13:49:32', 'admin', '2024-12-08 16:48:01', NULL);
+INSERT INTO `sys_user` VALUES (110, NULL, '202325350132', '李思思', '00', '', '', '1', '', '$2a$10$OYaA6RqXeamfmxnx4c/3wOhXy1lcvyD1LRw0p0Hm7dYlDGCw9T60S', '0', 0, '', NULL, 'admin', '2024-12-08 16:48:19', 'admin', '2025-02-07 11:42:39', NULL);
+INSERT INTO `sys_user` VALUES (111, NULL, '202325350106', '郭沫若', '00', '', '', '0', '', '$2a$10$ti9OO2HodqYbgda8sS840uPYF23SPuYMO7UE5PuNQZB3BNlqkiKm6', '0', 0, '', NULL, 'admin', '2025-02-07 11:42:56', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (112, NULL, 'wangbingbing', '王冰冰', '00', '625587563@qq.com', '13800000000', '1', '', '$2a$10$tM1IBHuKzeUw7iive1wWduhN31b4vru2h2PR0MDmBtmSP5GtckK6S', '0', 0, '', NULL, 'admin', '2025-02-07 13:25:42', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (113, NULL, 'yaya', '丫丫', '00', 'yaya@163.com', '13548481602', '1', '', '$2a$10$A8DE98HFrMsw1kGQ55n6SuxWxrl7X4N57aDVS84ZmVdR7E8XfGxla', '0', 0, '', NULL, 'admin', '2025-02-07 13:26:15', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -2133,6 +2211,9 @@ INSERT INTO `sys_user_role` VALUES (105, 4);
 INSERT INTO `sys_user_role` VALUES (106, 3);
 INSERT INTO `sys_user_role` VALUES (107, 4);
 INSERT INTO `sys_user_role` VALUES (110, 4);
+INSERT INTO `sys_user_role` VALUES (111, 4);
+INSERT INTO `sys_user_role` VALUES (112, 3);
+INSERT INTO `sys_user_role` VALUES (113, 3);
 
 -- ----------------------------
 -- Table structure for tb_comments
@@ -2150,7 +2231,7 @@ CREATE TABLE `tb_comments`  (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_comments
@@ -2178,7 +2259,7 @@ CREATE TABLE `tb_course`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1879105733238599682 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1888589132753674242 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_course
@@ -2187,6 +2268,7 @@ INSERT INTO `tb_course` VALUES (1, 'Java EE', 'Java 基础教程', 1865777929406
 INSERT INTO `tb_course` VALUES (3, '计算机操作系统', '计算机操作系统', 1865777547125346306, 106, '2024-09-03 00:00:00', '2024-12-18 00:00:00', '1', 1876522292307529730, NULL, '2024-11-23 22:40:10', 'admin', '2024-11-23 22:40:09', NULL, 0);
 INSERT INTO `tb_course` VALUES (1879105493781590018, '计算机网络', NULL, 1865774804440600577, 106, '2025-01-14 00:00:00', '2025-01-16 00:00:00', '1', 1883361190467784705, 'admin', '2025-01-14 17:57:16', 'admin', '2025-01-14 17:57:16', NULL, 0);
 INSERT INTO `tb_course` VALUES (1879105733238599681, '高等数学', NULL, 1865774917003137026, 100, '2025-01-13 00:00:00', '2025-01-15 00:00:00', '1', 1883361212890533890, 'admin', '2025-01-14 17:58:13', 'admin', '2025-01-14 17:58:13', NULL, 0);
+INSERT INTO `tb_course` VALUES (1888589132753674241, 'Python入门', NULL, 1888589040311214082, 100, '2025-01-29 00:00:00', '2025-02-13 00:00:00', '1', NULL, 'admin', '2025-02-09 22:01:52', NULL, '2025-02-09 22:01:52', NULL, 0);
 
 -- ----------------------------
 -- Table structure for tb_course_category
@@ -2217,6 +2299,7 @@ INSERT INTO `tb_course_category` VALUES (1865774917003137026, '高等数学', 18
 INSERT INTO `tb_course_category` VALUES (1865774943993483266, '离散数学', 1865774893179490305, '0,1865774893179490305', NULL, 'admin', '2024-12-08 23:06:26', NULL, '2024-12-08 23:06:25', 0);
 INSERT INTO `tb_course_category` VALUES (1865777547125346306, '操作系统', 1865772427033673729, '0,1865772427033673729', NULL, 'admin', '2024-12-08 23:16:46', NULL, '2024-12-08 23:16:46', 0);
 INSERT INTO `tb_course_category` VALUES (1865777929406795777, 'Java', 1865773357393215489, '0,1865772427033673729,1865773357393215489', NULL, 'admin', '2024-12-08 23:18:18', 'admin', '2024-12-08 23:18:23', 0);
+INSERT INTO `tb_course_category` VALUES (1888589040311214082, 'Python', 1865773357393215489, '0,1865772427033673729,1865773357393215489', NULL, 'admin', '2025-02-09 22:01:30', NULL, '2025-02-09 22:01:30', 0);
 
 -- ----------------------------
 -- Table structure for tb_course_chapter
@@ -2300,20 +2383,19 @@ CREATE TABLE `tb_exam_paper`  (
   `id` bigint NOT NULL COMMENT '试卷ID',
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '试卷名称',
   `total_score` int NOT NULL COMMENT '总分',
-  `duration` int NOT NULL COMMENT '考试时长（分钟）',
-  `is_published` tinyint NOT NULL DEFAULT 0 COMMENT '是否发布（0-未发布 1-已发布）',
+  `course_id` bigint NOT NULL COMMENT '关联课程',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_exam_paper
 -- ----------------------------
-INSERT INTO `tb_exam_paper` VALUES (1879418666678198274, '模拟卷1', 100, 60, 1, NULL, '2025-01-15 14:41:42', NULL, '2025-01-15 14:41:42', 0);
+INSERT INTO `tb_exam_paper` VALUES (1879418666678198274, '模拟卷1', 100, 1, NULL, '2025-01-15 14:41:42', NULL, '2025-01-15 14:41:42', 0);
 
 -- ----------------------------
 -- Table structure for tb_exam_paper_question
@@ -2326,7 +2408,7 @@ CREATE TABLE `tb_exam_paper_question`  (
   `score` int NOT NULL COMMENT '分值',
   `order_num` int NULL DEFAULT 0 COMMENT '题目顺序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷题目关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷题目关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_exam_paper_question
@@ -2338,37 +2420,31 @@ INSERT INTO `tb_exam_paper_question` VALUES (1879096608295407618, 18794186666781
 INSERT INTO `tb_exam_paper_question` VALUES (1879096862541533186, 1879418666678198274, 1879096862541533186, 5, 1);
 
 -- ----------------------------
--- Table structure for tb_exam_question
+-- Table structure for tb_exam_paper_repo
 -- ----------------------------
-DROP TABLE IF EXISTS tb_question;
-CREATE TABLE `tb_exam_question`  (
-  `id` bigint NOT NULL COMMENT '题目ID',
-  `title` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '题目内容',
-  `type` tinyint NOT NULL COMMENT '题目类型（1-单选 2-多选 3-判断 4-填空 5-简答）',
-  `options` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '选项（JSON格式，仅适用于选择题）',
-  `answer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '正确答案',
-  `analysis` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '答案解析',
-  `difficulty` int NULL DEFAULT NULL COMMENT '难易程度（1-简单 2-中等 3-困难）',
-  `course_id` bigint NULL DEFAULT NULL COMMENT '关联课程ID',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除',
+DROP TABLE IF EXISTS `tb_exam_paper_repo`;
+CREATE TABLE `tb_exam_paper_repo`  (
+  `id` bigint NOT NULL COMMENT 'ID',
+  `paper_id` bigint NOT NULL COMMENT '关联试卷ID',
+  `repo_id` bigint NOT NULL COMMENT '关联题库ID',
+  `single_choice_count` int NULL DEFAULT 0 COMMENT '单选题数量',
+  `single_choice_score` int NULL DEFAULT 0 COMMENT '单选题分数',
+  `multiple_choice_count` int NULL DEFAULT 0 COMMENT '多选题数量',
+  `multiple_choice_score` int NULL DEFAULT 0 COMMENT '多选题分数',
+  `judge_count` int NULL DEFAULT 0 COMMENT '判断题数量',
+  `judge_score` int NULL DEFAULT 0 COMMENT '判断题分数',
+  `blank_count` int NULL DEFAULT 0 COMMENT '填空题数量',
+  `blank_score` int NULL DEFAULT 0 COMMENT '填空题分数',
+  `short_answer_count` int NULL DEFAULT 0 COMMENT '简单题数量',
+  `short_answer_score` int NULL DEFAULT 0 COMMENT '简答题分数',
+  `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '试卷题库关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of tb_exam_question
+-- Records of tb_exam_paper_repo
 -- ----------------------------
-INSERT INTO tb_question VALUES (1879082351088553986, '以下哪种语言是面向对象的？', 1, '[{\"key\":\"A\",\"value\":\"Python\"},{\"key\":\"B\",\"value\":\"C++\"},{\"key\":\"C\",\"value\":\"HTML\"}]', '[\"A\"]', 'Python 是一种面向对象的编程语言，支持多种编程范式。', 1, 1, 'admin', '2025-01-14 16:25:17', 'admin', '2025-01-15 09:40:58', 0);
-INSERT INTO tb_question VALUES (1879096369215885314, 'HTTP 状态码 404 的含义是什么？', 1, '[{\"key\":\"A\",\"value\":\"请求成功\"},{\"key\":\"B\",\"value\":\"未找到资源\"},{\"key\":\"C\",\"value\":\"服务器错误\"},{\"key\":\"D\",\"value\":\"无权限访问\"}]', '[\"B\"]', '404 状态码表示客户端请求的资源在服务器上不存在。', 1, 1879105493781590018, 'admin', '2025-01-14 17:21:01', 'admin', '2025-01-14 17:59:36', 0);
-INSERT INTO tb_question VALUES (1879096505274912770, '以下哪些是编程语言？', 2, '[{\"key\":\"A\",\"value\":\"Python\"},{\"key\":\"B\",\"value\":\"HTML\"},{\"key\":\"C\",\"value\":\"C++\"},{\"key\":\"D\",\"value\":\"JSON\"}]', '[\"A\",\"C\"]', 'Python 和 C++ 是编程语言，而 HTML 是标记语言，JSON 是数据格式。', 1, 3, 'admin', '2025-01-14 17:21:33', NULL, '2025-01-14 17:21:33', 0);
-INSERT INTO tb_question VALUES (1879096608295407618, '以下哪些是 HTTP 的请求方法？', 2, '[{\"key\":\"A\",\"value\":\"GET\"},{\"key\":\"B\",\"value\":\"POST\"},{\"key\":\"C\",\"value\":\"DELETE\"},{\"key\":\"D\",\"value\":\"CONNECT\"}]', '[\"A\",\"D\",\"B\",\"C\"]', 'GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。', 1, 1879105493781590018, 'admin', '2025-01-14 17:21:58', 'admin', '2025-01-14 18:00:02', 0);
-INSERT INTO tb_question VALUES (1879096689383886850, 'JavaScript 是一种静态类型语言。', 3, '[]', '[false]', 'JavaScript 是一种动态类型语言，不需要显式声明变量的类型。', 1, 1, 'admin', '2025-01-14 17:22:17', 'admin', '2025-01-14 17:45:47', 0);
-INSERT INTO tb_question VALUES (1879096745101021186, 'TCP 协议是无连接的。', 3, '[]', '[false]', 'TCP 是面向连接的协议，提供可靠的数据传输服务。', 1, 1879105493781590018, 'admin', '2025-01-14 17:22:31', 'admin', '2025-01-14 18:00:58', 0);
-INSERT INTO tb_question VALUES (1879096862541533186, '请填写以下代码的输出：\nSystem.out.println(3 + 2 * 2);', 4, '[]', '[\"7\"]', '根据运算优先级，乘法优先于加法，计算顺序为 2 * 2 = 4，然后 3 + 4 = 7。', 2, 1, 'admin', '2025-01-14 17:22:59', 'admin', '2025-01-14 18:00:55', 0);
-INSERT INTO tb_question VALUES (1879096950579974145, '编写一段 Python 代码，输出从 1 到 10 的所有偶数。', 5, '[]', '[\"for i in range(1, 11):\\n    if i % 2 == 0:\\n        print(i)\"]', '通过 for 循环遍历范围内的数值，用 if 判断是否为偶数，输出结果即可。', 2, 1, 'admin', '2025-01-14 17:23:20', 'admin', '2025-01-14 18:01:01', 0);
+INSERT INTO `tb_exam_paper_repo` VALUES (1888889327031693313, 1879418666678198274, 1888576625653796865, 5, 5, 2, 5, 0, 0, 0, 0, 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for tb_file_images
@@ -2380,7 +2456,7 @@ CREATE TABLE `tb_file_images`  (
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '图片存储路径',
   `page_number` int NULL DEFAULT NULL COMMENT '图片所处页面',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文件转换存储表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文件转换存储表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_file_images
@@ -2404,6 +2480,30 @@ INSERT INTO `tb_file_images` VALUES (1882667375321427970, 1882628562336796673, '
 INSERT INTO `tb_file_images` VALUES (1882667375321427971, 1882628562336796673, 'local-plus/1882628562336796673/67932a3f4e0e84a23d0aab8d', 2);
 
 -- ----------------------------
+-- Table structure for tb_goal
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_goal`;
+CREATE TABLE `tb_goal`  (
+  `id` bigint NOT NULL COMMENT '学习目标ID',
+  `goal_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '学习目标名称',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '目标描述',
+  `deadline` int NOT NULL COMMENT '目标完成期限',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除字段',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学习目标表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of tb_goal
+-- ----------------------------
+INSERT INTO `tb_goal` VALUES (1883389243721973762, '50天学会Java', '哈哈哈', 50, 'admin', '2025-01-26 13:39:22', 'admin', '2025-01-26 13:41:41', 0);
+INSERT INTO `tb_goal` VALUES (1887010232707997697, '30天学会python基础', NULL, 30, 'admin', '2025-02-05 13:27:53', NULL, '2025-02-05 13:27:53', 0);
+INSERT INTO `tb_goal` VALUES (1887010302631239681, '5分钟完成小程序开发', NULL, 1, 'admin', '2025-02-05 13:28:10', NULL, '2025-02-05 13:28:09', 0);
+
+-- ----------------------------
 -- Table structure for tb_goal_student
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_goal_student`;
@@ -2419,14 +2519,15 @@ CREATE TABLE `tb_goal_student`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除字段'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学习目标-学生关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学习目标-学生关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_goal_student
 -- ----------------------------
-INSERT INTO `tb_goal_student` VALUES (1883435111430914049, 105, 1883389243721973762, 0, 0.00, NULL, 'admin', '2025-01-26 16:41:37', NULL, '2025-01-26 16:41:38', 0);
+INSERT INTO `tb_goal_student` VALUES (1883435111430914049, 105, 1883389243721973762, 0, 50.01, NULL, 'admin', '2025-01-26 16:41:37', 'admin', '2025-02-05 13:07:13', 0);
 INSERT INTO `tb_goal_student` VALUES (1883439157030039554, 107, 1883389243721973762, 0, 0.00, NULL, 'admin', '2025-01-26 16:57:42', NULL, '2025-01-26 16:57:42', 0);
-INSERT INTO `tb_goal_student` VALUES (1883439243155877889, 104, 1883389243721973762, 0, 0.00, NULL, 'admin', '2025-01-26 16:58:02', NULL, '2025-01-26 16:58:03', 0);
+INSERT INTO `tb_goal_student` VALUES (1886968738303418369, 104, 1883389243721973762, 0, 0.00, NULL, 'admin', '2025-02-05 10:43:00', NULL, '2025-02-05 10:43:00', 0);
+INSERT INTO `tb_goal_student` VALUES (1886968738370527233, 110, 1883389243721973762, 0, 0.00, NULL, 'admin', '2025-02-05 10:43:00', NULL, '2025-02-05 10:43:00', 0);
 
 -- ----------------------------
 -- Table structure for tb_homework
@@ -2453,74 +2554,6 @@ INSERT INTO `tb_homework` VALUES (1, 1, '作业1', '<p>完成课程第13页</p>'
 INSERT INTO `tb_homework` VALUES (2, 3, '作业1', '<p>完成作业1</p>', '2024-11-30 00:00:00', NULL, '2024-11-23 22:40:32', NULL, '2024-11-23 22:49:48', 0);
 
 -- ----------------------------
--- Table structure for tb_learning_goal
--- ----------------------------
-DROP TABLE IF EXISTS `tb_learning_goal`;
-CREATE TABLE `tb_learning_goal`  (
-  `id` bigint NOT NULL COMMENT '学习目标ID',
-  `goal_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '学习目标名称',
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '目标描述',
-  `deadline` int NOT NULL COMMENT '目标完成期限',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除字段',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学习目标表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of tb_learning_goal
--- ----------------------------
-INSERT INTO `tb_learning_goal` VALUES (1883389243721973762, '50天学会Java', '哈哈哈', 50, 'admin', '2025-01-26 13:39:22', 'admin', '2025-01-26 13:41:41', 0);
-
--- ----------------------------
--- Table structure for tb_learning_route
--- ----------------------------
-DROP TABLE IF EXISTS tb_route;
-CREATE TABLE `tb_learning_route`  (
-  `id` bigint NOT NULL COMMENT '学习路线ID',
-  `goal_id` bigint NOT NULL COMMENT '学习目标ID',
-  `course_id` bigint NOT NULL COMMENT '课程ID',
-  `order_num` int NOT NULL COMMENT '课程排序',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除字段',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学习路线表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of tb_learning_route
--- ----------------------------
-
--- ----------------------------
--- Table structure for tb_learning_route_record
--- ----------------------------
-DROP TABLE IF EXISTS `tb_learning_route_record`;
-CREATE TABLE `tb_learning_route_record`  (
-  `id` bigint NOT NULL COMMENT '记录ID',
-  `stu_id` bigint NOT NULL COMMENT '学习者ID',
-  `goal_id` bigint NOT NULL COMMENT '学习目标ID',
-  `route_id` bigint NOT NULL COMMENT '学习路线ID',
-  `course_id` bigint NOT NULL COMMENT '课程ID',
-  `completion_time` timestamp NULL DEFAULT NULL COMMENT '完成时间',
-  `status` tinyint NOT NULL COMMENT '学习状态（0-未开始 1-进行中 2-已完成）',
-  `progress` decimal(5, 2) NOT NULL COMMENT '课程进度百分比（0-100）',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学习路线记录表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of tb_learning_route_record
--- ----------------------------
-
--- ----------------------------
 -- Table structure for tb_oss_file
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_oss_file`;
@@ -2539,7 +2572,7 @@ CREATE TABLE `tb_oss_file`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '修改人',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文件管理表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文件管理表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_oss_file
@@ -2576,6 +2609,92 @@ INSERT INTO `tb_oss_file` VALUES (1883361190467784705, '6795b069338968d7962673a0
 INSERT INTO `tb_oss_file` VALUES (1883361212890533890, '6795b06e338968d7962673a1.jpeg', 'jpeg', 'local-plus/6795b06e338968d7962673a1.jpeg', 'image/jpeg', 34131, '哈哈哈哈.jpeg', 2, 0, 'admin', '2025-01-26 11:47:58', NULL, '2025-01-26 11:47:58');
 
 -- ----------------------------
+-- Table structure for tb_question
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_question`;
+CREATE TABLE `tb_question`  (
+  `id` bigint NOT NULL COMMENT '题目ID',
+  `title` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '题目内容',
+  `type` tinyint NOT NULL COMMENT '题目类型（1-单选 2-多选 3-判断 4-填空 5-简答）',
+  `options` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '选项（JSON格式，仅适用于选择题）',
+  `answer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '正确答案',
+  `analysis` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '答案解析',
+  `difficulty` int NULL DEFAULT NULL COMMENT '难易程度（1-简单 2-中等 3-困难）',
+  `repo_id` bigint NOT NULL COMMENT '关联题库ID',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of tb_question
+-- ----------------------------
+INSERT INTO `tb_question` VALUES (1879082351088553986, '以下哪种语言是面向对象的？', 1, '[{\"key\":\"A\",\"value\":\"Python\"},{\"key\":\"B\",\"value\":\"C++\"},{\"key\":\"C\",\"value\":\"HTML\"}]', '[\"A\"]', 'Python 是一种面向对象的编程语言，支持多种编程范式。', 1, 1888589932884271105, 'admin', '2025-01-14 16:25:17', 'admin', '2025-02-09 22:05:14', 0);
+INSERT INTO `tb_question` VALUES (1879096369215885314, 'HTTP 状态码 404 的含义是什么？', 1, '[{\"key\":\"A\",\"value\":\"请求成功\"},{\"key\":\"B\",\"value\":\"未找到资源\"},{\"key\":\"C\",\"value\":\"服务器错误\"},{\"key\":\"D\",\"value\":\"无权限访问\"}]', '[\"B\"]', '404 状态码表示客户端请求的资源在服务器上不存在。', 1, 1888576625653796865, 'admin', '2025-01-14 17:21:01', 'admin', '2025-01-14 17:59:36', 0);
+INSERT INTO `tb_question` VALUES (1879096505274912770, '以下哪些是编程语言？', 2, '[{\"key\":\"A\",\"value\":\"Python\"},{\"key\":\"B\",\"value\":\"HTML\"},{\"key\":\"C\",\"value\":\"C++\"},{\"key\":\"D\",\"value\":\"JSON\"}]', '[\"A\",\"C\"]', 'Python 和 C++ 是编程语言，而 HTML 是标记语言，JSON 是数据格式。', 1, 1888576625653796865, 'admin', '2025-01-14 17:21:33', NULL, '2025-01-14 17:21:33', 0);
+INSERT INTO `tb_question` VALUES (1879096608295407618, '以下哪些是 HTTP 的请求方法？', 2, '[{\"key\":\"A\",\"value\":\"GET\"},{\"key\":\"B\",\"value\":\"POST\"},{\"key\":\"C\",\"value\":\"DELETE\"},{\"key\":\"D\",\"value\":\"CONNECT\"}]', '[\"A\",\"D\",\"B\",\"C\"]', 'GET、POST、DELETE 和 CONNECT 都是 HTTP 请求方法，用于客户端与服务器之间的通信。', 1, 1888576625653796865, 'admin', '2025-01-14 17:21:58', 'admin', '2025-01-14 18:00:02', 0);
+INSERT INTO `tb_question` VALUES (1879096689383886850, 'JavaScript 是一种静态类型语言。', 3, '[]', '[false]', 'JavaScript 是一种动态类型语言，不需要显式声明变量的类型。', 1, 1888576625653796865, 'admin', '2025-01-14 17:22:17', 'admin', '2025-01-14 17:45:47', 0);
+INSERT INTO `tb_question` VALUES (1879096745101021186, 'TCP 协议是无连接的。', 3, '[]', '[false]', 'TCP 是面向连接的协议，提供可靠的数据传输服务。', 1, 1888576625653796865, 'admin', '2025-01-14 17:22:31', 'admin', '2025-01-14 18:00:58', 0);
+INSERT INTO `tb_question` VALUES (1879096862541533186, '请填写以下代码的输出：\nSystem.out.println(3 + 2 * 2);', 4, '[]', '[\"7\"]', '根据运算优先级，乘法优先于加法，计算顺序为 2 * 2 = 4，然后 3 + 4 = 7。', 2, 1888576625653796865, 'admin', '2025-01-14 17:22:59', 'admin', '2025-01-14 18:00:55', 0);
+INSERT INTO `tb_question` VALUES (1879096950579974145, '编写一段 Python 代码，输出从 1 到 10 的所有偶数。', 5, '[]', '[\"for i in range(1, 11):\\n    if i % 2 == 0:\\n        print(i)\"]', '通过 for 循环遍历范围内的数值，用 if 判断是否为偶数，输出结果即可。', 2, 1888576625653796865, 'admin', '2025-01-14 17:23:20', 'admin', '2025-01-14 18:01:01', 0);
+INSERT INTO `tb_question` VALUES (1888590586725933058, '地球公转产生的现象有（）', 2, '[{\"key\":\"A\",\"value\":\"根据太阳高度的差异,划分出五带：北寒、北温、热带、南温、南寒；\"},{\"key\":\"B\",\"value\":\"根据获得热量多少的时间差异,划分出四季：春、夏、秋、冬；\"},{\"key\":\"C\",\"value\":\"昼夜长短的变化现象；\"},{\"key\":\"D\",\"value\":\"正午太阳高度的变化；夏至日太阳直射北回归线，全球正午太阳高度从北回归线向南北两侧逐渐递减；二分日太阳直射赤道，全球正午太阳高度从赤道向两极递减，全球昼夜平分；冬至日太阳直射南回归线，全球正午高度从南回归线向南北两侧逐渐递减，南回归线及其以南的地区正午太阳高度达到最大值，北半球各纬度正午太阳高度达到最小值。\"}]', '[\"A\",\"D\",\"B\"]', NULL, 1, 1888576625653796865, 'admin', '2025-02-09 22:07:39', NULL, '2025-02-09 22:07:38', 0);
+INSERT INTO `tb_question` VALUES (1888865386175234049, 'Java中，哪个关键字用于定义一个类？', 1, '[{\"key\":\"A\",\"value\":\"class\"},{\"key\":\"B\",\"value\":\"interface\"},{\"key\":\"C\",\"value\":\"extends\"},{\"key\":\"D\",\"value\":\"implements\"}]', '[\"A\"]', '“class”关键字用于定义类。', 1, 1888576625653796865, 'admin', '2025-02-10 16:19:36', NULL, '2025-02-10 16:19:36', 0);
+INSERT INTO `tb_question` VALUES (1888865517591166978, '在Java中，int占用的字节数是多少？', 1, '[{\"key\":\"A\",\"value\":\"2字节\"},{\"key\":\"B\",\"value\":\"4字节\"},{\"key\":\"C\",\"value\":\"8字节\"},{\"key\":\"D\",\"value\":\"16字节\"}]', '[\"B\"]', 'Java中，int类型占用4个字节。', 1, 1888576625653796865, 'admin', '2025-02-10 16:20:07', NULL, '2025-02-10 16:20:07', 0);
+INSERT INTO `tb_question` VALUES (1888865715377766401, '以下哪个是Java中的循环结构？', 1, '[{\"key\":\"A\",\"value\":\"for\"},{\"key\":\"B\",\"value\":\"while\"},{\"key\":\"C\",\"value\":\"do-while\"},{\"key\":\"D\",\"value\":\"以上都是\"}]', '[\"D\"]', 'Java中“for”、“while”和“do-while”都是循环结构。', 2, 1888576625653796865, 'admin', '2025-02-10 16:20:55', NULL, '2025-02-10 16:20:54', 0);
+INSERT INTO `tb_question` VALUES (1888865901479034882, 'Java中，如何定义一个变量？', 1, '[{\"key\":\"A\",\"value\":\"int x = 10;\"},{\"key\":\"B\",\"value\":\"int x = 10.0;\"},{\"key\":\"C\",\"value\":\"String x = 10;\"},{\"key\":\"D\",\"value\":\"char x = 10;\"}]', '[\"A\"]', 'Java中变量声明需要指定类型，示例：int x = 10;', 3, 1888576625653796865, 'admin', '2025-02-10 16:21:39', NULL, '2025-02-10 16:21:39', 0);
+INSERT INTO `tb_question` VALUES (1888866002205245442, 'Java中的String是基本数据类型吗？', 1, '[{\"key\":\"A\",\"value\":\"是\"},{\"key\":\"B\",\"value\":\"否\"}]', '[\"A\"]', 'String是引用数据类型，不是基本数据类型。', 3, 1888576625653796865, 'admin', '2025-02-10 16:22:03', NULL, '2025-02-10 16:22:03', 0);
+INSERT INTO `tb_question` VALUES (1888866180559634433, 'Java中==和equals()方法的区别是什么？', 5, '[]', '[\"==比较地址，equals()比较内容\"]', '==用于比较内存地址，equals()用于比较字符串的内容是否相等。', 2, 1888576625653796865, 'admin', '2025-02-10 16:22:46', NULL, '2025-02-10 16:22:45', 0);
+INSERT INTO `tb_question` VALUES (1888866274851782658, 'Java中的垃圾回收机制是手动释放内存的吗？', 3, '[]', '[false]', 'Java中的垃圾回收机制是自动的，不需要手动释放内存。', 1, 1888576625653796865, 'admin', '2025-02-10 16:23:08', NULL, '2025-02-10 16:23:08', 0);
+
+-- ----------------------------
+-- Table structure for tb_repo
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_repo`;
+CREATE TABLE `tb_repo`  (
+  `id` bigint NOT NULL COMMENT '题库ID',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '题库名称',
+  `course_id` bigint NOT NULL COMMENT '关联课程ID',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题库表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of tb_repo
+-- ----------------------------
+INSERT INTO `tb_repo` VALUES (1888576625653796865, 'Java题库1', 1, 'admin', '2025-02-09 21:12:10', 'admin', '2025-02-09 21:20:05', 0);
+INSERT INTO `tb_repo` VALUES (1888579022924959746, '高等数学题库1', 1879105733238599681, 'admin', '2025-02-09 21:21:42', NULL, '2025-02-09 21:21:41', 0);
+INSERT INTO `tb_repo` VALUES (1888589932884271105, 'Python题库', 1888589132753674241, 'admin', '2025-02-09 22:05:03', NULL, '2025-02-09 22:05:02', 0);
+
+-- ----------------------------
+-- Table structure for tb_route
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_route`;
+CREATE TABLE `tb_route`  (
+  `id` bigint NOT NULL COMMENT '学习路线ID',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '学习路线名称',
+  `goal_id` bigint NOT NULL COMMENT '学习目标ID',
+  `courses_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '课程ID列表',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除字段',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学习路线表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of tb_route
+-- ----------------------------
+INSERT INTO `tb_route` VALUES (123, 'Java学习路线1', 1883389243721973762, '[\"1\",\"3\",\"1879105733238599681\"]', NULL, '2025-02-05 13:51:07', 'admin', '2025-02-06 17:46:14', 0);
+INSERT INTO `tb_route` VALUES (1887414508911542273, 'Java学习路线2', 1883389243721973762, '[\"1\"]', 'admin', '2025-02-06 16:14:20', NULL, '2025-02-06 16:14:20', 0);
+
+-- ----------------------------
 -- Table structure for tb_student
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_student`;
@@ -2589,15 +2708,16 @@ CREATE TABLE `tb_student`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1865679792990621699 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学生表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1887708597569638402 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学生表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_student
 -- ----------------------------
 INSERT INTO `tb_student` VALUES (1, 104, NULL, '2024-12-08 01:35:51', NULL, '2024-12-08 01:35:51', NULL, 0);
-INSERT INTO `tb_student` VALUES (2, 105, NULL, '2024-12-08 01:35:51', NULL, '2024-12-08 01:35:51', NULL, 0);
+INSERT INTO `tb_student` VALUES (2, 105, NULL, '2024-12-08 01:35:51', 'admin', '2025-02-07 11:42:34', NULL, 0);
 INSERT INTO `tb_student` VALUES (3, 107, NULL, '2024-12-08 13:49:32', 'admin', '2024-12-08 16:47:58', NULL, 0);
 INSERT INTO `tb_student` VALUES (1865679792990621698, 110, NULL, '2024-12-08 16:48:19', 'admin', '2024-12-08 17:22:41', NULL, 0);
+INSERT INTO `tb_student` VALUES (1887708597569638401, 111, NULL, '2025-02-07 11:42:56', NULL, '2025-02-07 11:42:56', NULL, 0);
 
 -- ----------------------------
 -- Table structure for tb_student_course
@@ -2616,7 +2736,7 @@ CREATE TABLE `tb_student_course`  (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学生选课表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学生选课表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_student_course
@@ -2630,7 +2750,7 @@ INSERT INTO `tb_student_course` VALUES (1883353424533540865, 107, 3, 12.00, 0, N
 DROP TABLE IF EXISTS `tb_study_record`;
 CREATE TABLE `tb_study_record`  (
   `id` bigint NOT NULL COMMENT '学习记录ID',
-  `stu_id` bigint NOT NULL COMMENT '学习者ID',
+  `student_id` bigint NOT NULL COMMENT '学习者ID',
   `course_id` bigint NOT NULL COMMENT '课程ID',
   `completion_time` timestamp NULL DEFAULT NULL COMMENT '完成时间',
   `status` tinyint NOT NULL COMMENT '学习状态（0-未开始 1-进行中 2-已完成）',
@@ -2641,11 +2761,14 @@ CREATE TABLE `tb_study_record`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学习记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学习记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_study_record
 -- ----------------------------
+INSERT INTO `tb_study_record` VALUES (1, 1865679792990621698, 1, NULL, 1, 25.21, NULL, '2025-02-07 09:37:18', NULL, '2025-02-07 09:37:18', 0);
+INSERT INTO `tb_study_record` VALUES (2, 1865679792990621698, 3, '2025-02-07 09:37:51', 2, 100.00, NULL, '2025-02-07 09:37:55', NULL, '2025-02-07 09:37:55', 0);
+INSERT INTO `tb_study_record` VALUES (3, 1865679792990621698, 1879105493781590018, NULL, 0, 0.00, NULL, '2025-02-07 09:38:18', NULL, '2025-02-07 09:38:18', 0);
 
 -- ----------------------------
 -- Table structure for tb_teacher
@@ -2661,13 +2784,15 @@ CREATE TABLE `tb_teacher`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '教师表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1887734598366351363 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '教师表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_teacher
 -- ----------------------------
-INSERT INTO `tb_teacher` VALUES (1, 100, 'admin', '2024-12-08 17:22:31', NULL, '2024-12-08 01:36:53', NULL, 0);
+INSERT INTO `tb_teacher` VALUES (1, 100, 'admin', '2025-02-07 13:12:56', NULL, '2024-12-08 01:36:53', NULL, 0);
 INSERT INTO `tb_teacher` VALUES (4, 103, NULL, '2024-12-08 01:36:53', NULL, '2024-12-08 01:36:53', NULL, 0);
 INSERT INTO `tb_teacher` VALUES (5, 106, NULL, '2024-12-08 01:36:53', NULL, '2024-12-08 01:36:53', NULL, 0);
+INSERT INTO `tb_teacher` VALUES (1887734460310835202, 112, 'admin', '2025-02-07 13:25:42', NULL, '2025-02-07 13:25:42', NULL, 0);
+INSERT INTO `tb_teacher` VALUES (1887734598366351362, 113, 'admin', '2025-02-07 13:26:15', NULL, '2025-02-07 13:26:15', NULL, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

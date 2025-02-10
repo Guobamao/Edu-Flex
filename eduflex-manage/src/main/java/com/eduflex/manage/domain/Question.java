@@ -41,7 +41,7 @@ public class Question extends BaseEntity {
      * 题目类型（1-单选 2-多选 3-判断 4-填空 5-简答）
      */
     @Excel(name = "题目类型", readConverterExp = "1=-单选,2=-多选,3=-判断,4=-填空,5=-简答")
-    private Long type;
+    private Integer type;
 
     /**
      * 选项（JSON格式，仅适用于选择题）

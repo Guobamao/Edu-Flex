@@ -5,8 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.manage.domain.ExamPaperQuestion;
+import com.eduflex.manage.domain.dto.PaperDto;
 import com.eduflex.manage.domain.vo.ExamPaperVo;
 import com.eduflex.manage.service.IExamPaperQuestionService;
+import com.eduflex.manage.service.IExamPaperRepoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +43,9 @@ public class ExamPaperController extends BaseController
 
     @Autowired
     private IExamPaperQuestionService examPaperQuestionService;
+
+    @Autowired
+    private IExamPaperRepoService examPaperRepoService;
 
     /**
      * 查询试卷管理列表
@@ -123,5 +128,17 @@ public class ExamPaperController extends BaseController
     @GetMapping("/question/{id}")
     public AjaxResult getPaperQuestion(@PathVariable Long id) {
         return success(examPaperQuestionService.selectQuestionByPaperId(id));
+    }
+
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @PostMapping("/compose")
+    public AjaxResult composePaper(@RequestBody PaperDto paperDto) {
+        return success(examPaperService.composePaper(paperDto));
+    }
+
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @GetMapping("/repo/{id}")
+    public AjaxResult getPaperRepo(@PathVariable Long id) {
+        return success(examPaperRepoService.selectRepoByPaperId(id));
     }
 }

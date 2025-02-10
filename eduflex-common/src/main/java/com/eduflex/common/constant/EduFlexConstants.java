@@ -62,4 +62,10 @@ public class EduFlexConstants {
     // 简答题
     public static final Integer SHORT_ANSWER = 5;
 
+    // 难度 - 简单
+    public static final Integer DIFFICULTY_EASY = 1;
+    // 难度 - 中等
+    public static final Integer DIFFICULTY_MEDIUM = 2;
+    // 难度 - 困难
+    public static final Integer DIFFICULTY_HARD = 3;
 }

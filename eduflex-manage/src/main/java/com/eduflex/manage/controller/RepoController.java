@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.utils.DateUtils;
+import com.eduflex.manage.domain.dto.RepoDto;
 import com.eduflex.manage.domain.vo.RepoVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class RepoController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('manage:repo:list')")
     @GetMapping("/list")
-    public TableDataInfo list(Repo repo) {
+    public TableDataInfo list(RepoDto repo) {
         startPage();
         List<RepoVo> list = repoService.selectRepoList(repo);
         return getDataTable(list);
@@ -54,7 +55,7 @@ public class RepoController extends BaseController {
     @PreAuthorize("@ss.hasPermi('manage:repo:export')")
     @Log(title = "题库管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Repo repo) {
+    public void export(HttpServletResponse response, RepoDto repo) {
         List<RepoVo> list = repoService.selectRepoList(repo);
         ExcelUtil<RepoVo> util = new ExcelUtil<>(RepoVo.class);
         util.exportExcel(response, list, "题库管理数据");
