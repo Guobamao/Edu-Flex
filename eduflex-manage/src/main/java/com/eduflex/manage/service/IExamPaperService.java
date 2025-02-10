@@ -7,6 +7,7 @@ import com.eduflex.manage.domain.ExamPaper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.domain.Question;
 import com.eduflex.manage.domain.dto.PaperDto;
+import com.eduflex.manage.domain.dto.PaperQuestionDto;
 import com.eduflex.manage.domain.vo.ExamPaperVo;
 
 /**
@@ -30,5 +31,13 @@ public interface IExamPaperService extends IService<ExamPaper> {
      * @param paperDto 试卷ID + 题库信息
      * @return 组卷题目列表
      */
-    Map<Integer, List<Question>> composePaper(PaperDto paperDto);
+    Map<Integer, List<Question>> generateQuestions(PaperDto paperDto);
+
+    /**
+     * 组卷
+     *
+     * @param paperQuestionDto 试题列表
+     * @return 组卷结果
+     */
+    boolean composePaper(PaperQuestionDto paperQuestionDto);
 }

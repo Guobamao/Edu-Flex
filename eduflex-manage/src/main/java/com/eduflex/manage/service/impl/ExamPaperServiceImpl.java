@@ -8,20 +8,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.manage.domain.ExamPaperQuestion;
 import com.eduflex.manage.domain.ExamPaperRepo;
 import com.eduflex.manage.domain.Question;
 import com.eduflex.manage.domain.dto.PaperDto;
+import com.eduflex.manage.domain.dto.PaperQuestionDto;
 import com.eduflex.manage.domain.dto.RepoInfo;
 import com.eduflex.manage.domain.vo.ExamPaperVo;
-import com.eduflex.manage.service.ICourseService;
-import com.eduflex.manage.service.IExamPaperRepoService;
-import com.eduflex.manage.service.IQuestionService;
+import com.eduflex.manage.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eduflex.manage.mapper.ExamPaperMapper;
 import com.eduflex.manage.domain.ExamPaper;
-import com.eduflex.manage.service.IExamPaperService;
 
 /**
  * 试卷管理Service业务层处理
@@ -41,6 +40,12 @@ public class ExamPaperServiceImpl extends ServiceImpl<ExamPaperMapper, ExamPaper
     @Autowired
     private IQuestionService questionService;
 
+    @Autowired
+    private IExamPaperService examPaperService;
+
+    @Autowired
+    private IExamPaperQuestionService examPaperQuestionService;
+
     @Override
     public List<ExamPaperVo> selectExamPaperList(ExamPaper examPaper) {
         LambdaQueryWrapper<ExamPaper> wrapper = new LambdaQueryWrapper<ExamPaper>()
@@ -50,7 +55,7 @@ public class ExamPaperServiceImpl extends ServiceImpl<ExamPaperMapper, ExamPaper
     }
 
     @Override
-    public Map<Integer, List<Question>> composePaper(PaperDto paperDto) {
+    public Map<Integer, List<Question>> generateQuestions(PaperDto paperDto) {
         // 关联题库信息
         List<RepoInfo> repoInfos = paperDto.getRepoInfos();
         List<ExamPaperRepo> examPaperRepoList = new ArrayList<>();
@@ -59,18 +64,52 @@ public class ExamPaperServiceImpl extends ServiceImpl<ExamPaperMapper, ExamPaper
                 .eq(paperDto.getId() != null, ExamPaperRepo::getPaperId, paperDto.getId());
         examPaperRepoService.remove(wrapper);
 
+        // 计算总分，更新试卷总分
+        int totalScore = 0;
+
         for (RepoInfo repoInfo : repoInfos) {
 
             ExamPaperRepo examPaperRepo = new ExamPaperRepo();
             BeanUtils.copyProperties(repoInfo, examPaperRepo);
             examPaperRepo.setPaperId(paperDto.getId());
             examPaperRepoList.add(examPaperRepo);
+
+            totalScore += repoInfo.getSingleChoiceCount() * repoInfo.getSingleChoiceScore() +
+                    repoInfo.getMultipleChoiceCount() * repoInfo.getMultipleChoiceScore() +
+                    repoInfo.getJudgeCount() * repoInfo.getJudgeScore() +
+                    repoInfo.getBlankCount() * repoInfo.getBlankScore() +
+                    repoInfo.getShortAnswerCount() * repoInfo.getShortAnswerScore();
         }
-        examPaperRepoService.saveBatch(examPaperRepoList);
+
+        ExamPaper examPaper = new ExamPaper();
+        examPaper.setId(paperDto.getId());
+        examPaper.setTotalScore(totalScore);
+        examPaperService.updateById(examPaper);
+        examPaperRepoService.saveOrUpdateBatch(examPaperRepoList);
 
         return generateQuestions(repoInfos);
     }
 
+    @Override
+    public boolean composePaper(PaperQuestionDto paperQuestionDto) {
+        List<ExamPaperQuestion> examPaperQuestionList = new ArrayList<>();
+        for (Map.Entry<Integer, List<Long>> questionEntry : paperQuestionDto.getQuestionMap().entrySet()) {
+            Integer type = questionEntry.getKey();
+            List<Long> questionList = questionEntry.getValue();
+            int orderNum = 1;
+            for (Long questionId : questionList) {
+                ExamPaperQuestion examPaperQuestion = new ExamPaperQuestion();
+                examPaperQuestion.setPaperId(paperQuestionDto.getId());
+                examPaperQuestion.setQuestionId(questionId);
+                examPaperQuestion.setType(type);
+                examPaperQuestion.setOrderNum(orderNum++);
+                examPaperQuestionList.add(examPaperQuestion);
+            }
+        }
+        return examPaperQuestionService.saveBatch(examPaperQuestionList);
+    }
+
+    // 生成题目
     private Map<Integer, List<Question>> generateQuestions(List<RepoInfo> repoInfos) {
         // 返回的题目 <题目类型, 题目>
         Map<Integer, List<Question>> selectedQuestions = new HashMap<>();

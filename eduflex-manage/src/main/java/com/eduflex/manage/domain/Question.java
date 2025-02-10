@@ -22,7 +22,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_question")
-public class Question extends BaseEntity {
+public class  Question extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

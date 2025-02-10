@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.manage.domain.ExamPaperQuestion;
 import com.eduflex.manage.domain.dto.PaperDto;
+import com.eduflex.manage.domain.dto.PaperQuestionDto;
 import com.eduflex.manage.domain.vo.ExamPaperVo;
 import com.eduflex.manage.service.IExamPaperQuestionService;
 import com.eduflex.manage.service.IExamPaperRepoService;
@@ -131,14 +132,20 @@ public class ExamPaperController extends BaseController
     }
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
-    @PostMapping("/compose")
-    public AjaxResult composePaper(@RequestBody PaperDto paperDto) {
-        return success(examPaperService.composePaper(paperDto));
+    @PostMapping("/generate")
+    public AjaxResult generateQuestions(@RequestBody PaperDto paperDto) {
+        return success(examPaperService.generateQuestions(paperDto));
     }
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/repo/{id}")
     public AjaxResult getPaperRepo(@PathVariable Long id) {
         return success(examPaperRepoService.selectRepoByPaperId(id));
+    }
+
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @PostMapping("/compose")
+    public AjaxResult composePaper(@RequestBody PaperQuestionDto paperQuestionDto) {
+        return success(examPaperService.composePaper(paperQuestionDto));
     }
 }
