@@ -1,5 +1,6 @@
 package com.eduflex.manage.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.utils.DateUtils;
@@ -53,12 +54,11 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         course.setEndTime(DateUtils.parseDate(course.getParams().get("endTime")));
 
         LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
-                .like(course.getName() != null && !course.getName().isEmpty(), Course::getName, course.getName())
+                .like(StrUtil.isNotBlank(course.getName()), Course::getName, course.getName())
                 .ge(course.getStartTime() != null, Course::getStartTime, course.getStartTime())
                 .le(course.getEndTime() != null, Course::getEndTime, course.getEndTime())
                 .eq(course.getStatus() != null, Course::getStatus, course.getStatus())
                 .eq(course.getTeacherId() != null, Course::getTeacherId, course.getTeacherId());
-
         if (course.getCategoryId() != null) {
             // 获取该分类下所有的子类，包括自身
             List<Long> categoryIds = categoryService.list().stream()

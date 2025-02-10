@@ -11,38 +11,35 @@ import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.core.domain.BaseEntity;
 
 /**
- * 试卷管理对象 tb_exam_paper
+ * 题库管理对象 tb_repo
  *
  * @author 林煜鋒
- * @date 2025-01-10
+ * @date 2025-02-09
  */
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_exam_paper")
-public class ExamPaper extends BaseEntity {
+@TableName("tb_repo")
+public class Repo extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 试卷ID
+     * 题库ID
      */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
-     * 试卷名称
+     * 题库名称
      */
-    @Excel(name = "试卷名称")
-    private String title;
+    @Excel(name = "题库名称")
+    private String name;
 
     /**
-     * 总分
+     * 关联课程
      */
-    @Excel(name = "总分")
-    private Long totalScore;
-
     @Excel(name = "关联课程")
     private Long courseId;
 }

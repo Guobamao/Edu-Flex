@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.manage.domain.ExamPaperQuestion;
+import com.eduflex.manage.domain.vo.ExamPaperVo;
 import com.eduflex.manage.service.IExamPaperQuestionService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class ExamPaperController extends BaseController
     public TableDataInfo list(ExamPaper examPaper)
     {
         startPage();
-        List<ExamPaper> list = examPaperService.selectExamPaperList(examPaper);
+        List<ExamPaperVo> list = examPaperService.selectExamPaperList(examPaper);
         return getDataTable(list);
     }
 
@@ -61,8 +62,8 @@ public class ExamPaperController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, ExamPaper examPaper)
     {
-        List<ExamPaper> list = examPaperService.selectExamPaperList(examPaper);
-        ExcelUtil<ExamPaper> util = new ExcelUtil<>(ExamPaper.class);
+        List<ExamPaperVo> list = examPaperService.selectExamPaperList(examPaper);
+        ExcelUtil<ExamPaperVo> util = new ExcelUtil<>(ExamPaperVo.class);
         util.exportExcel(response, list, "试卷管理数据");
     }
 

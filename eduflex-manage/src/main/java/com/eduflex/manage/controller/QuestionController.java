@@ -1,11 +1,11 @@
 package com.eduflex.manage.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.utils.DateUtils;
+import com.eduflex.manage.domain.vo.QuestionVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +20,8 @@ import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.domain.ExamQuestion;
-import com.eduflex.manage.service.IExamQuestionService;
+import com.eduflex.manage.domain.Question;
+import com.eduflex.manage.service.IQuestionService;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
 
@@ -33,20 +33,20 @@ import com.eduflex.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/manage/question")
-public class ExamQuestionController extends BaseController
+public class QuestionController extends BaseController
 {
     @Autowired
-    private IExamQuestionService examQuestionService;
+    private IQuestionService examQuestionService;
 
     /**
      * 查询题目管理列表
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(ExamQuestion examQuestion)
+    public TableDataInfo list(Question question)
     {
         startPage();
-        List<ExamQuestion> list = examQuestionService.selectExamQuestionList(examQuestion);
+        List<QuestionVo> list = examQuestionService.selectExamQuestionList(question);
         return getDataTable(list);
     }
 
@@ -56,10 +56,10 @@ public class ExamQuestionController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "题目管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, ExamQuestion examQuestion)
+    public void export(HttpServletResponse response, Question question)
     {
-        List<ExamQuestion> list = examQuestionService.selectExamQuestionList(examQuestion);
-        ExcelUtil<ExamQuestion> util = new ExcelUtil<>(ExamQuestion.class);
+        List<QuestionVo> list = examQuestionService.selectExamQuestionList(question);
+        ExcelUtil<QuestionVo> util = new ExcelUtil<>(QuestionVo.class);
         util.exportExcel(response, list, "题目管理数据");
     }
 
@@ -79,11 +79,11 @@ public class ExamQuestionController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "题目管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody ExamQuestion examQuestion)
+    public AjaxResult add(@RequestBody Question question)
     {
-        examQuestion.setCreateBy(getUsername());
-        examQuestion.setCreateTime(DateUtils.getNowDate());
-        return toAjax(examQuestionService.save(examQuestion));
+        question.setCreateBy(getUsername());
+        question.setCreateTime(DateUtils.getNowDate());
+        return toAjax(examQuestionService.save(question));
     }
 
     /**
@@ -92,11 +92,11 @@ public class ExamQuestionController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "题目管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody ExamQuestion examQuestion)
+    public AjaxResult edit(@RequestBody Question question)
     {
-        examQuestion.setUpdateBy(getUsername());
-        examQuestion.setUpdateTime(DateUtils.getNowDate());
-        return toAjax(examQuestionService.updateById(examQuestion));
+        question.setUpdateBy(getUsername());
+        question.setUpdateTime(DateUtils.getNowDate());
+        return toAjax(examQuestionService.updateById(question));
     }
 
     /**
