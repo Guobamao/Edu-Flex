@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.eduflex.manage.mapper.StudyRecordMapper">
+<mapper namespace="com.eduflex.manage.study_record.mapper.StudyRecordMapper">
 
     <resultMap type="StudyRecord" id="StudyRecordResult">
         <result property="id"    column="id"    />
