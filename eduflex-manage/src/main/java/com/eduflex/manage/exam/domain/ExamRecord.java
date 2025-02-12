@@ -23,6 +23,7 @@ public class ExamRecord {
     private Integer score;
     private Integer status;
     private Integer passed;
+    private Integer duration;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

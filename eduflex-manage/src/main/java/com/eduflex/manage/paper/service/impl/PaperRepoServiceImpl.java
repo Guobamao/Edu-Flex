@@ -29,7 +29,7 @@ public class PaperRepoServiceImpl extends ServiceImpl<PaperRepoMapper, PaperRepo
     private IQuestionService questionService;
 
     @Override
-    public List<PaperRepoVo> selectRepoByPaperId(Long id) {
+    public List<PaperRepoVo> selectRepoListByPaperId(Long id) {
         LambdaQueryWrapper<PaperRepo> wrapper = new LambdaQueryWrapper<PaperRepo>()
                 .eq(PaperRepo::getPaperId, id);
 

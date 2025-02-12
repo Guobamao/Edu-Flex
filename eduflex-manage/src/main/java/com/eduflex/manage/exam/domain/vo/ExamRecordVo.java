@@ -7,4 +7,5 @@ import lombok.Data;
 public class ExamRecordVo extends ExamRecord {
     private String userName;
     private String nickName;
+    private String examName;
 }

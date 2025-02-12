@@ -21,4 +21,11 @@ public interface IExamRecordService extends IService<ExamRecord> {
      * @return 考试记录集合
      */
     List<ExamRecordVo> selectExamRecordList(ExamRecordDto examRecord);
+
+    /**
+     * 查询考生记录
+     * @param id 记录ID
+     * @return 考试记录
+     */
+    ExamRecordVo selectExamRecordById(Long id);
 }

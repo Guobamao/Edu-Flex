@@ -19,5 +19,5 @@ public interface IPaperRepoService extends IService<PaperRepo> {
      * @param id 试卷ID
      * @return 关联题库
      */
-    List<PaperRepoVo> selectRepoByPaperId(Long id);
+    List<PaperRepoVo> selectRepoListByPaperId(Long id);
 }

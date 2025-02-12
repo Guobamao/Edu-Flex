@@ -140,7 +140,7 @@ public class PaperController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/repo/{id}")
     public AjaxResult getPaperRepo(@PathVariable Long id) {
-        return success(examPaperRepoService.selectRepoByPaperId(id));
+        return success(examPaperRepoService.selectRepoListByPaperId(id));
     }
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")

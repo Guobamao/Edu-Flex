@@ -62,7 +62,7 @@ public class ExamRecordController extends BaseController {
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(examRecordService.getById(id));
+        return success(examRecordService.selectExamRecordById(id));
     }
 
     /**
