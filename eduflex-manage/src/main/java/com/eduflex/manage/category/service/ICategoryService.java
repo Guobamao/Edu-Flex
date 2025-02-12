@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eduflex.manage.category.domain.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.category.domain.vo.CategoryVo;
 
 /**
  * 课程分类Service接口
@@ -19,19 +20,5 @@ public interface ICategoryService extends IService<Category> {
      * @param category 课程分类
      * @return 课程分类集合
      */
-    public List<Category> selectCourseCategoryList(Category category);
-
-    /**
-     * 判断是否有子节点
-     * @param categoryId 分类ID
-     * @return 布尔值
-     */
-    boolean hasChildByCategoryId(Long categoryId);
-
-    /**
-     * 新增分类
-     * @param category 分类
-     * @return 影响条数
-     */
-    int insertCategory(Category category);
+    List<CategoryVo> selectCourseCategoryList(Category category);
 }

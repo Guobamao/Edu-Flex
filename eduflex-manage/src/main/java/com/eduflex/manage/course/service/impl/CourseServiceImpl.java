@@ -62,7 +62,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         if (course.getCategoryId() != null) {
             // 获取该分类下所有的子类，包括自身
             List<Long> categoryIds = categoryService.list().stream()
-                    .filter(category -> category.getId().equals(course.getCategoryId()) || category.getAncestors().contains(course.getCategoryId().toString()))
+                    .filter(category -> category.getId().equals(course.getCategoryId()))
                     .map(Category::getId).toList();
             wrapper.in(!categoryIds.isEmpty(), Course::getCategoryId, categoryIds);
         }

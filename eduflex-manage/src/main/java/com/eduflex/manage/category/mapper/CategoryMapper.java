@@ -10,10 +10,4 @@ import com.eduflex.manage.category.domain.Category;
  * @date 2024-12-08
  */
 public interface CategoryMapper extends BaseMapper<Category> {
-    /**
-     * 判断是否有子节点
-     * @param categoryId 分类ID
-     * @return 布尔值
-     */
-    int hasChildByCategoryId(Long categoryId);
 }
