@@ -68,4 +68,9 @@ public class EduFlexConstants {
     public static final Integer DIFFICULTY_MEDIUM = 2;
     // 难度 - 困难
     public static final Integer DIFFICULTY_HARD = 3;
+
+    // 状态 - 启用
+    public static final Integer STATUS_ENABLED = 1;
+    // 状态 - 禁用
+    public static final Integer STATUS_DISABLED = 0;
 }

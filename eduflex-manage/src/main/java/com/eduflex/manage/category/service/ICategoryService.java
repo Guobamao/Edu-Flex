@@ -21,4 +21,11 @@ public interface ICategoryService extends IService<Category> {
      * @return 课程分类集合
      */
     List<CategoryVo> selectCategoryList(Category category);
+
+    /**
+     * 根据方向ID查询课程分类列表
+     * @param directionId 课程方向ID
+     * @return 结果
+     */
+    List<Category> selectCourseListByDirectionId(Long directionId);
 }

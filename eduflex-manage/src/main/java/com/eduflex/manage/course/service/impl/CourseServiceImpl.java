@@ -129,6 +129,25 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         return buildVoForStudent(baseMapper.selectList(wrapper));
     }
 
+    @Override
+    public List<CourseVo> selectCourseListByDirectionIdAndCategoryId(Long directionId, Long categoryId) {
+        if (directionId != null) {
+            List<CourseVo> courseVoList = selectCourseListByDirectionId(directionId, "new");
+
+            if (categoryId != null) {
+                courseVoList = courseVoList.stream()
+                        .filter(courseVo -> courseVo.getCategoryId()
+                                .equals(categoryId))
+                        .toList();
+            }
+
+            return courseVoList;
+        } else {
+            LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<>();
+            return buildVoForStudent(baseMapper.selectList(wrapper));
+        }
+    }
+
     public List<CourseVo> buildVo(List<Course> courseList) {
         List<CourseVo> courseVoList = new ArrayList<>();
         for (Course course : courseList) {

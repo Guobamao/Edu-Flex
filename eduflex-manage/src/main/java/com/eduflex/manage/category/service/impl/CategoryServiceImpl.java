@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.category.domain.Category;
 import com.eduflex.manage.category.domain.vo.CategoryVo;
@@ -40,6 +41,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
                 .eq(category.getDirectionId() != null, Category::getDirectionId, category.getDirectionId())
                 .eq(category.getStatus() != null, Category::getStatus, category.getStatus());
         return buildVo(baseMapper.selectList(wrapper));
+    }
+
+    @Override
+    public List<Category> selectCourseListByDirectionId(Long directionId) {
+        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<Category>()
+                .eq(Category::getDirectionId, directionId)
+                .eq(Category::getStatus, EduFlexConstants.STATUS_ENABLED);
+        return baseMapper.selectList(wrapper);
     }
 
     private List<CategoryVo> buildVo(List<Category> categoryList) {
