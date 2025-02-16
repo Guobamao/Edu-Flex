@@ -54,6 +54,11 @@ public class StudentController extends BaseController
         return getDataTable(list);
     }
 
+    /**
+     * 查询学生管理列表（目标关联学生）
+     * @param studentDto 查询条件
+     * @return 结果
+     */
     @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping("/goal/list")
     public TableDataInfo listForGoal(StudentDto studentDto) {
@@ -102,7 +107,8 @@ public class StudentController extends BaseController
             return error("新增学生‘" + studentDto.getUserName() + "'失败，邮箱账号已存在");
         }
 
-        studentDto.setRoleId(EduFlexConstants.ROLE_STUDENT); // 设置角色为学生
+        // 设置角色为学生
+        studentDto.setRoleId(EduFlexConstants.ROLE_STUDENT);
         studentDto.setCreateBy(getUsername());
         studentDto.setStatus(EduFlexConstants.STUDENT_STATUS_ENABLED);
         if (StrUtil.isNotBlank(studentDto.getPassword())) {

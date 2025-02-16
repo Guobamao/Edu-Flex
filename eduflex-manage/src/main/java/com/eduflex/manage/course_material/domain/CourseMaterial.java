@@ -41,5 +41,8 @@ public class CourseMaterial extends BaseEntity
     private Long fileId;
 
     /** 资料类型 0视频 1图片 2纯文本 3PPT 4PDF */
-    private String materialType;
+    private Integer materialType;
+
+    /** 音视频时长 */
+    private Integer duration;
 }

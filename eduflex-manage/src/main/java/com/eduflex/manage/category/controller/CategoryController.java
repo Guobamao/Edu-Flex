@@ -42,7 +42,7 @@ public class CategoryController extends BaseController
     public TableDataInfo list(Category category)
     {
         startPage();
-        List<CategoryVo> list = courseCategoryService.selectCourseCategoryList(category);
+        List<CategoryVo> list = courseCategoryService.selectCategoryList(category);
         return getDataTable(list);
     }
 

@@ -35,4 +35,12 @@ public interface ICourseService extends IService<Course>
      * @return 结果
      */
     List<CourseVo> selectCourseListForRoute(CourseDto course);
+
+    /**
+     * 根据方向id查询课程管理列表
+     * @param directionId 方向id
+     * @param type 类型
+     * @return 结果
+     */
+    List<CourseVo> selectCourseListByDirectionId(Long directionId, String type);
 }

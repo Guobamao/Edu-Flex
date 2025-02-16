@@ -9,6 +9,7 @@ import com.eduflex.common.utils.StringUtils;
 import com.eduflex.common.utils.file.FileUtils;
 import com.eduflex.web.domain.OssFile;
 import com.eduflex.web.service.OssFileService;
+import com.eduflex.web.utils.MediaUtil;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.FileStorageService;
 import org.slf4j.Logger;
@@ -139,9 +140,11 @@ public class CommonController extends BaseController {
             } else if (EduFlexConstants.FILE_TYPE_VIDEO_LIST.contains(info.getContentType())) {
                 // 音视频类型
                 ossFile.setFileType(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO);
+                ossFile.setDuration(MediaUtil.getMediaDuration("D:\\Temp\\" + ossFile.getPath()));
             } else if (EduFlexConstants.FILE_TYPE_AUDIO_LIST.contains(info.getContentType())) {
                 // 音视频类型
                 ossFile.setFileType(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO);
+                ossFile.setDuration(MediaUtil.getMediaDuration("D:\\Temp\\" + ossFile.getPath()));
             } else if (EduFlexConstants.FILE_TYPE_PPT_LIST.contains(info.getContentType())) {
                 // PPT 类型
                 ossFile.setFileType(EduFlexConstants.FILE_TYPE_PPT);
@@ -158,6 +161,10 @@ public class CommonController extends BaseController {
             ajax.put("fileId", ossFile.getId());
             ajax.put("fileName", ossFile.getOriginName());
             ajax.put("type", ossFile.getFileType());
+
+            if (ossFile.getFileType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
+                ajax.put("duration", ossFile.getDuration());
+            }
             return ajax;
         } catch (Exception e) {
             return AjaxResult.error(e.getMessage());

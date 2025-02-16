@@ -3,9 +3,14 @@ package com.eduflex.manage.course.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.category.domain.Category;
 import com.eduflex.manage.course.domain.Course;
+import com.eduflex.manage.course_chapter.domain.CourseChapter;
+import com.eduflex.manage.course_chapter.service.ICourseChapterService;
+import com.eduflex.manage.course_material.domain.CourseMaterial;
+import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.route.domain.Route;
 import com.eduflex.manage.course.domain.dto.CourseDto;
 import com.eduflex.manage.course.domain.vo.CourseVo;
@@ -13,6 +18,8 @@ import com.eduflex.manage.course_chapter.mapper.CourseMapper;
 import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.route.service.IRouteService;
+import com.eduflex.manage.student.domain.StudentCourse;
+import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +46,16 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private IRouteService learningRouteService;
+
+    @Autowired
+    private IStudentCourseService studentCourseService;
+
+    @Autowired
+    private ICourseMaterialService courseMaterialService;
+
+    @Autowired
+    private ICourseChapterService courseChapterService;
+
 
     /**
      * 查询课程管理列表
@@ -94,6 +111,24 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         return courseVos;
     }
 
+    @Override
+    public List<CourseVo> selectCourseListByDirectionId(Long directionId, String type) {
+        Category category = new Category();
+        category.setDirectionId(directionId);
+        List<Long> categoryIds = categoryService.selectCategoryList(category).stream().map(Category::getId).toList();
+
+        if (categoryIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+        LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
+                .in(Course::getCategoryId, categoryIds);
+
+        if ("new".equals(type)) {
+            wrapper.orderByDesc(StrUtil.isNotBlank(type), Course::getCreateTime);
+        }
+        return buildVoForStudent(baseMapper.selectList(wrapper));
+    }
+
     public List<CourseVo> buildVo(List<Course> courseList) {
         List<CourseVo> courseVoList = new ArrayList<>();
         for (Course course : courseList) {
@@ -101,6 +136,50 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             BeanUtils.copyProperties(course, courseVo);
             courseVo.setTeacherName(userService.selectUserById(course.getTeacherId()).getNickName());
             courseVo.setCategoryName(categoryService.getById(course.getCategoryId()).getName());
+
+            courseVoList.add(courseVo);
+        }
+        return courseVoList;
+    }
+
+    public List<CourseVo> buildVoForStudent(List<Course> courseList) {
+        List<CourseVo> courseVoList = new ArrayList<>();
+        for (Course course : courseList) {
+            CourseVo courseVo = new CourseVo();
+            BeanUtils.copyProperties(course, courseVo);
+            courseVo.setTeacherName(userService.selectUserById(course.getTeacherId()).getNickName());
+            courseVo.setCategoryName(categoryService.getById(course.getCategoryId()).getName());
+
+            // 选课人数
+            LambdaQueryWrapper<StudentCourse> wrapper = new LambdaQueryWrapper<StudentCourse>()
+                    .eq(StudentCourse::getCourseId, course.getId());
+            courseVo.setSelectedNum((int) studentCourseService.count(wrapper));
+
+            // 课程节数
+            LambdaQueryWrapper<CourseChapter> courseChapterWrapper = new LambdaQueryWrapper<CourseChapter>()
+                    .eq(CourseChapter::getCourseId, course.getId());
+            List<Long> chapterIds = courseChapterService.list(courseChapterWrapper).stream().map(CourseChapter::getId).toList();
+
+            if (!chapterIds.isEmpty()) {
+                LambdaQueryWrapper<CourseMaterial> courseMaterialWrapper = new LambdaQueryWrapper<CourseMaterial>()
+                        .in(CourseMaterial::getChapterId, chapterIds)
+                        // 音视频类型
+                        .eq(CourseMaterial::getMaterialType, EduFlexConstants.FILE_TYPE_VIDEO_AUDIO);
+
+                List<CourseMaterial> courseMaterialList = courseMaterialService.list(courseMaterialWrapper);
+                courseVo.setVideoNum(courseMaterialList.size());
+
+                // 课程总时长
+                int videoTime = 0;
+                for (CourseMaterial courseMaterial : courseMaterialList) {
+                    videoTime += courseMaterial.getDuration();
+                }
+                courseVo.setVideoTime(videoTime);
+            } else {
+                courseVo.setVideoNum(0);
+                courseVo.setVideoTime(0);
+            }
+
             courseVoList.add(courseVo);
         }
         return courseVoList;

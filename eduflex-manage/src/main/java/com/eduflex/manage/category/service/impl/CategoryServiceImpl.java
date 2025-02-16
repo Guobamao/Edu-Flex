@@ -34,7 +34,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
      * @return 课程分类
      */
     @Override
-    public List<CategoryVo> selectCourseCategoryList(Category category) {
+    public List<CategoryVo> selectCategoryList(Category category) {
         LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<Category>()
                 .like(StrUtil.isNotBlank(category.getName()), Category::getName, category.getName())
                 .eq(category.getDirectionId() != null, Category::getDirectionId, category.getDirectionId())

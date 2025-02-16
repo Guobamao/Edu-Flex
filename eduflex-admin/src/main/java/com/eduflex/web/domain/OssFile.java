@@ -49,7 +49,11 @@ public class OssFile extends BaseEntity {
     @ApiModelProperty(value = "源文件名称")
     private String originName;
 
-    @Autowired
+    @ApiModelProperty(value = "文件类型")
     private Integer fileType;
+
+    /** 音视频时长 */
+    private Integer duration;
+
 
 }

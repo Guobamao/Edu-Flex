@@ -116,6 +116,8 @@ public class SecurityConfig
                     .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/common/preview/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/manage/files/previewFile/**").permitAll()
+                        // 用户 GET 请求
+                        .antMatchers(HttpMethod.GET, "/user/**").permitAll()
                     .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
                     // 除上面外的所有请求全部需要鉴权认证
                     .anyRequest().authenticated();

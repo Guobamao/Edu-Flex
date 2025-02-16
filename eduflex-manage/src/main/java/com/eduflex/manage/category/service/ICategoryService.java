@@ -20,5 +20,5 @@ public interface ICategoryService extends IService<Category> {
      * @param category 课程分类
      * @return 课程分类集合
      */
-    List<CategoryVo> selectCourseCategoryList(Category category);
+    List<CategoryVo> selectCategoryList(Category category);
 }
