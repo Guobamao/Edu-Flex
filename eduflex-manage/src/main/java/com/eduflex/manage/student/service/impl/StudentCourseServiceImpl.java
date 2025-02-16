@@ -71,4 +71,12 @@ public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, S
         studentCourseVo.setNickName(sysUser.getNickName());
         return studentCourseVo;
     }
+
+    @Override
+    public int removeByUserIdAndCourseId(Long userId, Long courseId) {
+        LambdaQueryWrapper<StudentCourse> wrapper = new LambdaQueryWrapper<StudentCourse>()
+                .eq(StudentCourse::getUserId, userId)
+                .eq(StudentCourse::getCourseId, courseId);
+        return baseMapper.delete(wrapper);
+    }
 }

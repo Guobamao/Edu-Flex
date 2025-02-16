@@ -28,4 +28,12 @@ public interface IStudentCourseService extends IService<StudentCourse> {
      * @return 学生选课VO对象
      */
     StudentCourseVo getInfoById(Long id);
+
+    /**
+     * 根据用户ID和课程ID删除学生选课信息
+     * @param userId 用户ID
+     * @param courseId 学生ID
+     * @return
+     */
+    int removeByUserIdAndCourseId(Long userId, Long courseId);
 }

@@ -11,7 +11,7 @@
  Target Server Version : 80034 (8.0.34)
  File Encoding         : 65001
 
- Date: 13/02/2025 00:41:10
+ Date: 17/02/2025 00:44:45
 */
 
 SET NAMES utf8mb4;
@@ -603,7 +603,7 @@ INSERT INTO `sys_config` VALUES (1, '主框架页-默认皮肤样式名称', 'sy
 INSERT INTO `sys_config` VALUES (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', '2024-10-05 13:28:49', '', NULL, '初始化密码 123456');
 INSERT INTO `sys_config` VALUES (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', '2024-10-05 13:28:49', '', NULL, '深色主题theme-dark，浅色主题theme-light');
 INSERT INTO `sys_config` VALUES (4, '账号自助-验证码开关', 'sys.account.captchaEnabled', 'true', 'Y', 'admin', '2024-10-05 13:28:49', '', NULL, '是否开启验证码功能（true开启，false关闭）');
-INSERT INTO `sys_config` VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 'Y', 'admin', '2024-10-05 13:28:49', '', NULL, '是否开启注册用户功能（true开启，false关闭）');
+INSERT INTO `sys_config` VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'true', 'Y', 'admin', '2024-10-05 13:28:49', 'admin', '2025-02-15 15:12:20', '是否开启注册用户功能（true开启，false关闭）');
 INSERT INTO `sys_config` VALUES (6, '用户登录-黑名单列表', 'sys.login.blackIPList', '', 'Y', 'admin', '2024-10-05 13:28:49', '', NULL, '设置登录IP黑名单限制，多个匹配项以;分隔，支持匹配（*通配、网段）');
 
 -- ----------------------------
@@ -804,7 +804,7 @@ CREATE TABLE `sys_job_log`  (
   `exception_info` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '异常信息',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`job_log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_job_log
@@ -827,7 +827,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 289 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 320 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -1021,6 +1021,37 @@ INSERT INTO `sys_logininfor` VALUES (285, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (286, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-02-12 23:46:07');
 INSERT INTO `sys_logininfor` VALUES (287, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-02-12 23:46:09');
 INSERT INTO `sys_logininfor` VALUES (288, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-12 23:46:12');
+INSERT INTO `sys_logininfor` VALUES (289, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-13 21:03:03');
+INSERT INTO `sys_logininfor` VALUES (290, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-02-13 21:09:48');
+INSERT INTO `sys_logininfor` VALUES (291, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-02-13 21:09:48');
+INSERT INTO `sys_logininfor` VALUES (292, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-02-13 21:09:48');
+INSERT INTO `sys_logininfor` VALUES (293, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-13 21:09:59');
+INSERT INTO `sys_logininfor` VALUES (294, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-02-13 21:14:02');
+INSERT INTO `sys_logininfor` VALUES (295, '202325350123', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-02-13 21:56:06');
+INSERT INTO `sys_logininfor` VALUES (296, '202325350123', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-13 21:56:08');
+INSERT INTO `sys_logininfor` VALUES (297, '202325350123', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-13 22:42:41');
+INSERT INTO `sys_logininfor` VALUES (298, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-14 00:11:42');
+INSERT INTO `sys_logininfor` VALUES (299, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-14 21:28:29');
+INSERT INTO `sys_logininfor` VALUES (300, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-15 15:12:04');
+INSERT INTO `sys_logininfor` VALUES (301, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-02-15 15:12:24');
+INSERT INTO `sys_logininfor` VALUES (302, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 13:42:41');
+INSERT INTO `sys_logininfor` VALUES (303, '202325350123', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 15:43:10');
+INSERT INTO `sys_logininfor` VALUES (304, '202325350123', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 17:27:16');
+INSERT INTO `sys_logininfor` VALUES (305, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-02-16 18:22:54');
+INSERT INTO `sys_logininfor` VALUES (306, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 18:22:58');
+INSERT INTO `sys_logininfor` VALUES (307, '202325350123', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-02-16 18:24:57');
+INSERT INTO `sys_logininfor` VALUES (308, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 18:25:02');
+INSERT INTO `sys_logininfor` VALUES (309, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 19:27:22');
+INSERT INTO `sys_logininfor` VALUES (310, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-02-16 19:27:49');
+INSERT INTO `sys_logininfor` VALUES (311, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 19:33:52');
+INSERT INTO `sys_logininfor` VALUES (312, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-02-16 19:33:56');
+INSERT INTO `sys_logininfor` VALUES (313, '202325350123', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 19:35:35');
+INSERT INTO `sys_logininfor` VALUES (314, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 19:36:39');
+INSERT INTO `sys_logininfor` VALUES (315, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 22:32:44');
+INSERT INTO `sys_logininfor` VALUES (316, '202325350123', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-16 23:54:48');
+INSERT INTO `sys_logininfor` VALUES (317, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-02-17 00:28:25');
+INSERT INTO `sys_logininfor` VALUES (318, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-02-17 00:28:28');
+INSERT INTO `sys_logininfor` VALUES (319, '202325350123', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-02-17 00:36:41');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1053,9 +1084,9 @@ CREATE TABLE `sys_menu`  (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 7, 'system', NULL, '', '', 1, 0, 'M', '0', '0', '', 'system', 'admin', '2024-10-05 13:28:48', 'admin', '2025-01-24 16:58:14', '系统管理目录');
-INSERT INTO `sys_menu` VALUES (2, '系统监控', 0, 8, 'monitor', NULL, '', '', 1, 0, 'M', '0', '0', '', 'monitor', 'admin', '2024-10-05 13:28:48', 'admin', '2025-01-24 16:58:10', '系统监控目录');
-INSERT INTO `sys_menu` VALUES (3, '系统工具', 0, 9, 'tool', NULL, '', '', 1, 0, 'M', '0', '0', '', 'tool', 'admin', '2024-10-05 13:28:48', 'admin', '2025-01-24 16:58:08', '系统工具目录');
+INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 7, 'admin/system', NULL, '', '', 1, 0, 'M', '0', '0', '', 'system', 'admin', '2024-10-05 13:28:48', 'admin', '2025-02-16 14:32:07', '系统管理目录');
+INSERT INTO `sys_menu` VALUES (2, '系统监控', 0, 8, 'admin/monitor', NULL, '', '', 1, 0, 'M', '0', '0', '', 'monitor', 'admin', '2024-10-05 13:28:48', 'admin', '2025-02-13 21:13:16', '系统监控目录');
+INSERT INTO `sys_menu` VALUES (3, '系统工具', 0, 9, 'admin/tool', NULL, '', '', 1, 0, 'M', '0', '0', '', 'tool', 'admin', '2024-10-05 13:28:48', 'admin', '2025-02-13 21:13:21', '系统工具目录');
 INSERT INTO `sys_menu` VALUES (4, '若依官网', 0, 10, 'http://ruoyi.vip', NULL, '', '', 0, 0, 'M', '1', '0', '', 'guide', 'admin', '2024-10-05 13:28:48', 'admin', '2025-01-24 16:58:03', '若依官网地址');
 INSERT INTO `sys_menu` VALUES (100, '用户管理', 1, 1, 'user', 'system/user/index', '', '', 1, 0, 'C', '0', '0', 'system:user:list', 'user', 'admin', '2024-10-05 13:28:48', '', NULL, '用户管理菜单');
 INSERT INTO `sys_menu` VALUES (101, '角色管理', 1, 2, 'role', 'system/role/index', '', '', 1, 0, 'C', '0', '0', 'system:role:list', 'peoples', 'admin', '2024-10-05 13:28:48', '', NULL, '角色管理菜单');
@@ -1138,7 +1169,7 @@ INSERT INTO `sys_menu` VALUES (1057, '生成删除', 116, 3, '#', '', '', '', 1,
 INSERT INTO `sys_menu` VALUES (1058, '导入代码', 116, 4, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import', '#', 'admin', '2024-10-05 13:28:48', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1059, '预览代码', 116, 5, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', '2024-10-05 13:28:48', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1060, '生成代码', 116, 6, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2024-10-05 13:28:48', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2000, '基础管理', 0, 2, 'admin/base', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '基础管理', 'admin', '2024-10-05 14:55:21', 'admin', '2025-02-12 23:29:50', '');
+INSERT INTO `sys_menu` VALUES (2000, '用户管理', 0, 2, 'admin/base', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '基础管理', 'admin', '2024-10-05 14:55:21', 'admin', '2025-02-14 00:12:23', '');
 INSERT INTO `sys_menu` VALUES (2019, '教师管理', 2000, 1, 'teacher', 'manage/teacher/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:teacher:list', '教师管理', 'admin', '2024-10-05 23:35:45', 'admin', '2025-02-12 23:29:42', '教师管理菜单');
 INSERT INTO `sys_menu` VALUES (2020, '教师管理查询', 2019, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:teacher:query', '#', 'admin', '2024-10-05 23:35:45', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2021, '教师管理新增', 2019, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:teacher:add', '#', 'admin', '2024-10-05 23:35:45', '', NULL, '');
@@ -1151,7 +1182,7 @@ INSERT INTO `sys_menu` VALUES (2027, '学生管理新增', 2025, 2, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2028, '学生管理修改', 2025, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:student:edit', '#', 'admin', '2024-10-06 23:28:13', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2029, '学生管理删除', 2025, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:student:remove', '#', 'admin', '2024-10-06 23:28:13', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2030, '学生管理导出', 2025, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:student:export', '#', 'admin', '2024-10-06 23:28:13', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2031, '课程管理', 0, 2, 'course', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '课程管理', 'admin', '2024-10-10 18:47:36', 'admin', '2024-10-10 18:48:32', '');
+INSERT INTO `sys_menu` VALUES (2031, '课程管理', 0, 2, 'admin/course', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '课程管理', 'admin', '2024-10-10 18:47:36', 'admin', '2025-02-13 21:12:44', '');
 INSERT INTO `sys_menu` VALUES (2032, '课程管理', 2031, 1, 'course', 'manage/course/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:course:list', '课程管理', 'admin', '2024-10-10 20:58:03', 'admin', '2024-10-10 21:02:06', '课程管理菜单');
 INSERT INTO `sys_menu` VALUES (2033, '课程管理查询', 2032, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:course:query', '#', 'admin', '2024-10-10 20:58:03', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2034, '课程管理新增', 2032, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:course:add', '#', 'admin', '2024-10-10 20:58:03', '', NULL, '');
@@ -1182,7 +1213,7 @@ INSERT INTO `sys_menu` VALUES (2064, '课程分类新增', 2062, 2, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2065, '课程分类修改', 2062, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:category:edit', '#', 'admin', '2024-12-08 21:40:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2066, '课程分类删除', 2062, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:category:remove', '#', 'admin', '2024-12-08 21:40:07', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2067, '课程分类导出', 2062, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:category:export', '#', 'admin', '2024-12-08 21:40:07', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2068, '考试管理', 0, 3, 'exams', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '题库管理', 'admin', '2025-01-10 15:38:50', 'admin', '2025-02-11 12:54:58', '');
+INSERT INTO `sys_menu` VALUES (2068, '考试管理', 0, 3, 'admin/exams', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '题库管理', 'admin', '2025-01-10 15:38:50', 'admin', '2025-02-13 21:12:52', '');
 INSERT INTO `sys_menu` VALUES (2075, '试卷管理', 2068, 2, 'paper', 'manage/paper/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:paper:list', '试卷管理', 'admin', '2025-01-10 16:32:58', 'admin', '2025-02-11 15:36:43', '试卷管理菜单');
 INSERT INTO `sys_menu` VALUES (2076, '试卷管理查询', 2075, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:paper:query', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2077, '试卷管理新增', 2075, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:paper:add', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
@@ -1195,19 +1226,19 @@ INSERT INTO `sys_menu` VALUES (2083, '题目管理新增', 2081, 2, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2084, '题目管理修改', 2081, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:question:edit', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2085, '题目管理删除', 2081, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:question:remove', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2086, '题目管理导出', 2081, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:question:export', '#', 'admin', '2025-01-10 16:32:58', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2088, '评论管理', 0, 4, 'comments', 'manage/comments/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:comments:list', '评论管理', 'admin', '2025-01-21 13:07:21', 'admin', '2025-01-23 13:42:56', '评论管理菜单');
+INSERT INTO `sys_menu` VALUES (2088, '评论管理', 0, 4, 'admin/comments', 'manage/comments/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:comments:list', '评论管理', 'admin', '2025-01-21 13:07:21', 'admin', '2025-02-13 21:13:05', '评论管理菜单');
 INSERT INTO `sys_menu` VALUES (2089, '评论管理查询', 2088, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:query', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2090, '评论管理新增', 2088, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:add', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2091, '评论管理修改', 2088, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:edit', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2092, '评论管理删除', 2088, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:remove', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2093, '评论管理导出', 2088, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:comments:export', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2094, '资源管理', 0, 6, 'file', 'manage/file/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:file:list', '资源管理', 'admin', '2025-01-21 13:07:21', 'admin', '2025-01-24 16:57:55', '资源管理菜单');
+INSERT INTO `sys_menu` VALUES (2094, '资源管理', 0, 6, 'admin/file', 'manage/file/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:file:list', '资源管理', 'admin', '2025-01-21 13:07:21', 'admin', '2025-02-13 21:13:11', '资源管理菜单');
 INSERT INTO `sys_menu` VALUES (2095, '资源管理查询', 2094, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:query', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2096, '资源管理新增', 2094, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:add', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2097, '资源管理修改', 2094, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:edit', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2098, '资源管理删除', 2094, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:remove', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2099, '资源管理导出', 2094, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:file:export', '#', 'admin', '2025-01-21 13:07:21', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2100, '学习管理', 0, 5, 'study', NULL, NULL, '', 1, 0, 'M', '0', '0', NULL, '#', 'admin', '2025-01-24 16:58:37', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2100, '学习管理', 0, 5, 'admin/study', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '#', 'admin', '2025-01-24 16:58:37', 'admin', '2025-02-13 21:12:58', '');
 INSERT INTO `sys_menu` VALUES (2101, '学习目标管理', 2100, 1, 'goal', 'manage/goal/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:goal:list', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '学习目标管理菜单');
 INSERT INTO `sys_menu` VALUES (2102, '学习目标管理查询', 2101, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:goal:query', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2103, '学习目标管理新增', 2101, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:goal:add', '#', 'admin', '2025-01-24 17:07:42', '', NULL, '');
@@ -1244,7 +1275,7 @@ INSERT INTO `sys_menu` VALUES (2145, '考试管理新增', 2143, 2, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2146, '考试管理修改', 2143, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:exam:edit', '#', 'admin', '2025-02-11 12:51:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2147, '考试管理删除', 2143, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:exam:remove', '#', 'admin', '2025-02-11 12:51:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2148, '考试管理导出', 2143, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:exam:export', '#', 'admin', '2025-02-11 12:51:33', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2149, '首页', 0, 1, 'admin/index', 'index', NULL, '', 1, 0, 'C', '0', '0', '', 'dashboard', 'admin', '2025-02-12 22:26:40', 'admin', '2025-02-12 23:30:19', '');
+INSERT INTO `sys_menu` VALUES (2149, '首页', 0, 1, 'admin/index', 'index', NULL, '', 1, 0, 'C', '0', '0', '', 'dashboard', 'admin', '2025-02-12 22:26:40', 'admin', '2025-02-16 18:25:20', '');
 INSERT INTO `sys_menu` VALUES (2150, '课程方向', 2031, 1, 'direction', 'manage/direction/index', NULL, '', 1, 0, 'C', '0', '0', 'manage:direction:list', '#', 'admin', '2025-02-12 23:51:04', '', NULL, '课程方向菜单');
 INSERT INTO `sys_menu` VALUES (2151, '课程方向查询', 2150, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:direction:query', '#', 'admin', '2025-02-12 23:51:05', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2152, '课程方向新增', 2150, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'manage:direction:add', '#', 'admin', '2025-02-12 23:51:05', '', NULL, '');
@@ -1302,7 +1333,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 966 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 994 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -2173,6 +2204,34 @@ INSERT INTO `sys_oper_log` VALUES (962, '课程分类', 2, 'com.eduflex.manage.c
 INSERT INTO `sys_oper_log` VALUES (963, '课程分类', 2, 'com.eduflex.manage.category.controller.CategoryController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/category', '127.0.0.1', '内网IP', '{\"id\":1865772427033673729,\"params\":{},\"status\":1,\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 00:23:40', 18);
 INSERT INTO `sys_oper_log` VALUES (964, '课程分类', 1, 'com.eduflex.manage.category.controller.CategoryController.add()', 'POST', 1, 'admin', '研发部门', '/manage/category', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"directionId\":1889707213995606018,\"id\":1889714096638754817,\"name\":\"PHP\",\"params\":{},\"status\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 00:32:04', 145);
 INSERT INTO `sys_oper_log` VALUES (965, '课程分类', 1, 'com.eduflex.manage.category.controller.CategoryController.add()', 'POST', 1, 'admin', '研发部门', '/manage/category', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"directionId\":1889705530327379970,\"id\":1889714142264393729,\"name\":\"C\",\"params\":{},\"status\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 00:32:15', 7);
+INSERT INTO `sys_oper_log` VALUES (966, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2024-10-10 18:47:36\",\"icon\":\"课程管理\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2031,\"menuName\":\"课程管理\",\"menuType\":\"M\",\"orderNum\":2,\"params\":{},\"parentId\":0,\"path\":\"admin/course\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 21:12:44', 32);
+INSERT INTO `sys_oper_log` VALUES (967, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2025-01-10 15:38:50\",\"icon\":\"题库管理\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2068,\"menuName\":\"考试管理\",\"menuType\":\"M\",\"orderNum\":3,\"params\":{},\"parentId\":0,\"path\":\"admin/exams\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 21:12:52', 13);
+INSERT INTO `sys_oper_log` VALUES (968, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2025-01-24 16:58:37\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2100,\"menuName\":\"学习管理\",\"menuType\":\"M\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"admin/study\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 21:12:58', 16);
+INSERT INTO `sys_oper_log` VALUES (969, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"manage/comments/index\",\"createTime\":\"2025-01-21 13:07:21\",\"icon\":\"评论管理\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2088,\"menuName\":\"评论管理\",\"menuType\":\"C\",\"orderNum\":4,\"params\":{},\"parentId\":0,\"path\":\"admin/comments\",\"perms\":\"manage:comments:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 21:13:05', 13);
+INSERT INTO `sys_oper_log` VALUES (970, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"manage/file/index\",\"createTime\":\"2025-01-21 13:07:21\",\"icon\":\"资源管理\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2094,\"menuName\":\"资源管理\",\"menuType\":\"C\",\"orderNum\":6,\"params\":{},\"parentId\":0,\"path\":\"admin/file\",\"perms\":\"manage:file:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 21:13:11', 16);
+INSERT INTO `sys_oper_log` VALUES (971, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2024-10-05 13:28:48\",\"icon\":\"monitor\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2,\"menuName\":\"系统监控\",\"menuType\":\"M\",\"orderNum\":8,\"params\":{},\"parentId\":0,\"path\":\"admin/monitor\",\"perms\":\"\",\"query\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 21:13:16', 12);
+INSERT INTO `sys_oper_log` VALUES (972, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2024-10-05 13:28:48\",\"icon\":\"tool\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":3,\"menuName\":\"系统工具\",\"menuType\":\"M\",\"orderNum\":9,\"params\":{},\"parentId\":0,\"path\":\"admin/tool\",\"perms\":\"\",\"query\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-13 21:13:22', 15);
+INSERT INTO `sys_oper_log` VALUES (973, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2024-10-05 14:55:21\",\"icon\":\"基础管理\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"用户管理\",\"menuType\":\"M\",\"orderNum\":2,\"params\":{},\"parentId\":0,\"path\":\"admin/base\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-14 00:12:23', 51);
+INSERT INTO `sys_oper_log` VALUES (974, '参数管理', 2, 'com.eduflex.web.controller.system.SysConfigController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/config', '127.0.0.1', '内网IP', '{\"configId\":5,\"configKey\":\"sys.account.registerUser\",\"configName\":\"账号自助-是否开启用户注册功能\",\"configType\":\"Y\",\"configValue\":\"true\",\"createBy\":\"admin\",\"createTime\":\"2024-10-05 13:28:49\",\"params\":{},\"remark\":\"是否开启注册用户功能（true开启，false关闭）\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-15 15:12:20', 34);
+INSERT INTO `sys_oper_log` VALUES (975, '课程管理', 2, 'com.eduflex.manage.course.controller.CourseController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777929406795777,\"cover\":1891000268121681922,\"createTime\":\"2024-10-11 13:42:40\",\"deleted\":0,\"description\":\"Java 基础教程\",\"endTime\":\"2024-12-31\",\"id\":1,\"name\":\"Java EE\",\"params\":{},\"startTime\":\"2024-09-03\",\"status\":\"1\",\"teacherId\":100,\"updateBy\":\"admin\",\"updateTime\":\"2024-12-07 14:17:35\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 13:42:52', 25);
+INSERT INTO `sys_oper_log` VALUES (976, '课程管理', 2, 'com.eduflex.manage.course.controller.CourseController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777547125346306,\"cover\":1891000294214447106,\"createTime\":\"2024-11-23 22:40:10\",\"deleted\":0,\"description\":\"计算机操作系统\",\"endTime\":\"2024-12-18\",\"id\":3,\"name\":\"计算机操作系统\",\"params\":{},\"startTime\":\"2024-09-03\",\"status\":\"1\",\"teacherId\":106,\"updateBy\":\"admin\",\"updateTime\":\"2024-11-23 22:40:09\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 13:42:58', 12);
+INSERT INTO `sys_oper_log` VALUES (977, '课程管理', 2, 'com.eduflex.manage.course.controller.CourseController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865774804440600577,\"cover\":1891000318868566018,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:57:16\",\"deleted\":0,\"endTime\":\"2025-01-16\",\"id\":1879105493781590018,\"name\":\"计算机网络\",\"params\":{},\"startTime\":\"2025-01-14\",\"status\":\"1\",\"teacherId\":106,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:57:16\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 13:43:04', 13);
+INSERT INTO `sys_oper_log` VALUES (978, '课程管理', 2, 'com.eduflex.manage.course.controller.CourseController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865774917003137026,\"cover\":1891000365639249921,\"createBy\":\"admin\",\"createTime\":\"2025-01-14 17:58:13\",\"deleted\":0,\"endTime\":\"2025-01-15\",\"id\":1879105733238599681,\"name\":\"高等数学\",\"params\":{},\"startTime\":\"2025-01-13\",\"status\":\"1\",\"teacherId\":100,\"updateBy\":\"admin\",\"updateTime\":\"2025-01-14 17:58:13\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 13:43:15', 16);
+INSERT INTO `sys_oper_log` VALUES (979, '课程管理', 2, 'com.eduflex.manage.course.controller.CourseController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1888589040311214082,\"cover\":1891000384131936257,\"createBy\":\"admin\",\"createTime\":\"2025-02-09 22:01:52\",\"deleted\":0,\"endTime\":\"2025-02-13\",\"id\":1888589132753674241,\"name\":\"Python入门\",\"params\":{},\"startTime\":\"2025-01-29\",\"status\":\"1\",\"teacherId\":100,\"updateBy\":\"admin\",\"updateTime\":\"2025-02-09 22:01:52\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 13:43:20', 8);
+INSERT INTO `sys_oper_log` VALUES (980, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2024-10-05 13:28:48\",\"icon\":\"system\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":1,\"menuName\":\"系统管理\",\"menuType\":\"M\",\"orderNum\":7,\"params\":{},\"parentId\":0,\"path\":\"admin/system\",\"perms\":\"\",\"query\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 14:32:07', 45);
+INSERT INTO `sys_oper_log` VALUES (981, '课程资料', 1, 'com.eduflex.manage.course_material.controller.CourseMaterialController.add()', 'POST', 1, 'admin', '研发部门', '/manage/material', '127.0.0.1', '内网IP', '{\"chapterId\":1876896403235938306,\"fileId\":1891015347255906306,\"id\":1891015365740204033,\"materialType\":\"3\",\"name\":\"5-2.mp3\",\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 14:42:51', 11);
+INSERT INTO `sys_oper_log` VALUES (982, '课程资料', 1, 'com.eduflex.manage.course_material.controller.CourseMaterialController.add()', 'POST', 1, 'admin', '研发部门', '/manage/material', '127.0.0.1', '内网IP', '{\"chapterId\":1876896403235938306,\"fileId\":1891017875910516737,\"id\":1891017977513336833,\"materialType\":\"3\",\"name\":\"5-3.mp3\",\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 14:53:13', 20);
+INSERT INTO `sys_oper_log` VALUES (983, '课程资料', 1, 'com.eduflex.manage.course_material.controller.CourseMaterialController.add()', 'POST', 1, 'admin', '研发部门', '/manage/material', '127.0.0.1', '内网IP', '{\"chapterId\":1876896403235938306,\"duration\":76,\"fileId\":1891022531218849793,\"id\":1891022550395207681,\"materialType\":3,\"name\":\"5-3.mp3\",\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 15:11:24', 16);
+INSERT INTO `sys_oper_log` VALUES (984, '菜单管理', 2, 'com.eduflex.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"index\",\"createTime\":\"2025-02-12 22:26:40\",\"icon\":\"dashboard\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2149,\"menuName\":\"首页\",\"menuType\":\"M\",\"orderNum\":1,\"params\":{},\"parentId\":0,\"path\":\"admin/index\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 18:25:20', 25);
+INSERT INTO `sys_oper_log` VALUES (985, '课程管理', 1, 'com.eduflex.manage.course.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777929406795777,\"cover\":1891072027041767426,\"createBy\":\"admin\",\"description\":\"深入浅出Java多线程\",\"endTime\":\"2025-02-20\",\"id\":1891072036286013442,\"name\":\"深入浅出Java多线程\",\"params\":{},\"startTime\":\"2025-02-09\",\"status\":\"1\",\"teacherId\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 18:28:02', 13);
+INSERT INTO `sys_oper_log` VALUES (986, '课程管理', 2, 'com.eduflex.manage.course.controller.CourseController.edit()', 'PUT', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777929406795777,\"cover\":1891072068464713729,\"createBy\":\"admin\",\"createTime\":\"2025-02-16 18:28:02\",\"deleted\":0,\"description\":\"深入浅出Java多线程\",\"endTime\":\"2025-02-20\",\"id\":1891072036286013442,\"name\":\"深入浅出Java多线程\",\"params\":{},\"startTime\":\"2025-02-09\",\"status\":\"1\",\"teacherId\":100,\"updateBy\":\"admin\",\"updateTime\":\"2025-02-16 18:28:02\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 18:28:11', 16);
+INSERT INTO `sys_oper_log` VALUES (987, '课程管理', 1, 'com.eduflex.manage.course.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865774893179490305,\"cover\":1891072354658852865,\"createBy\":\"admin\",\"description\":\"算法与数据结构\",\"endTime\":\"2025-02-19\",\"id\":1891072368944652289,\"name\":\"算法与数据结构\",\"params\":{},\"startTime\":\"2025-02-10\",\"status\":\"1\",\"teacherId\":112}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 18:29:21', 5);
+INSERT INTO `sys_oper_log` VALUES (988, '课程管理', 1, 'com.eduflex.manage.course.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777929406795777,\"cover\":1891072518488367105,\"createBy\":\"admin\",\"description\":\"从0开始 独立完成企业级Java电商网站服务端开发\",\"endTime\":\"2025-02-25\",\"id\":1891072528177209345,\"name\":\"从0开始 独立完成企业级Java电商网站服务端开发\",\"params\":{},\"startTime\":\"2025-02-09\",\"status\":\"1\",\"teacherId\":106}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 18:29:59', 10);
+INSERT INTO `sys_oper_log` VALUES (989, '课程管理', 1, 'com.eduflex.manage.course.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777929406795777,\"cover\":1891072584389271554,\"createBy\":\"admin\",\"endTime\":\"2025-02-19\",\"id\":1891072587992178689,\"name\":\"从0开始 独立完成企业级Java电商网站服务端开发\",\"params\":{},\"startTime\":\"2025-01-29\",\"status\":\"0\",\"teacherId\":112}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 18:30:14', 5);
+INSERT INTO `sys_oper_log` VALUES (990, '课程管理', 1, 'com.eduflex.manage.course.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777929406795777,\"cover\":1891072649119965186,\"createBy\":\"admin\",\"description\":\"从0开始 独立完成企业级Java电商网站服务端开发\",\"endTime\":\"2025-02-18\",\"id\":1891072653180051457,\"name\":\"从0开始 独立完成企业级Java电商网站服务端开发\",\"params\":{},\"startTime\":\"2025-02-03\",\"status\":\"2\",\"teacherId\":112}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 18:30:29', 6);
+INSERT INTO `sys_oper_log` VALUES (991, '课程管理', 1, 'com.eduflex.manage.course.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777929406795777,\"cover\":1891072718145626113,\"createBy\":\"admin\",\"endTime\":\"2025-02-12\",\"id\":1891072721425571841,\"name\":\"从0开始 独立完成企业级Java电商网站服务端开发\",\"params\":{},\"startTime\":\"2025-02-04\",\"status\":\"1\",\"teacherId\":103}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 18:30:45', 12);
+INSERT INTO `sys_oper_log` VALUES (992, '课程管理', 1, 'com.eduflex.manage.course.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777929406795777,\"cover\":1891072789939527682,\"createBy\":\"admin\",\"endTime\":\"2025-02-20\",\"id\":1891072793651486721,\"name\":\"从0开始 独立完成企业级Java电商网站服务端开发\",\"params\":{},\"startTime\":\"2025-02-12\",\"status\":\"1\",\"teacherId\":106}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 18:31:03', 5);
+INSERT INTO `sys_oper_log` VALUES (993, '课程管理', 1, 'com.eduflex.manage.course.controller.CourseController.add()', 'POST', 1, 'admin', '研发部门', '/manage/course', '127.0.0.1', '内网IP', '{\"categoryId\":1865777929406795777,\"cover\":1891087041463099393,\"createBy\":\"admin\",\"endTime\":\"2025-02-19\",\"id\":1891087044944371713,\"name\":\"从0开始 独立完成企业级Java电商网站服务端开发\",\"params\":{},\"startTime\":\"2025-02-02\",\"status\":\"1\",\"teacherId\":112}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-02-16 19:27:40', 4);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -2441,12 +2500,12 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/avatar/2024/12/31/logo_20241231152013A001.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', 0, '127.0.0.1', '2025-02-12 23:46:13', 'admin', '2024-10-05 13:28:48', '', '2025-02-12 23:46:12', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/avatar/2024/12/31/logo_20241231152013A001.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', 0, '127.0.0.1', '2025-02-17 00:28:28', 'admin', '2024-10-05 13:28:48', '', '2025-02-17 00:28:28', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', 1, '127.0.0.1', '2024-10-05 13:28:48', 'admin', '2024-10-05 13:28:48', 'admin', '2024-10-06 16:03:47', '测试员');
 INSERT INTO `sys_user` VALUES (100, NULL, 'zhangsan', '张三', '00', '1972212424@qq.com', '15815161602', '0', '', '$2a$10$gnDVpc1oEeeHL9oMuVrRaulVsqNuT1SPeSdpqkIh7ERDD65pPmkJa', '0', 0, '127.0.0.1', '2025-02-12 23:23:15', 'admin', '2024-10-06 00:52:44', 'admin', '2025-02-12 23:23:15', NULL);
 INSERT INTO `sys_user` VALUES (102, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$nZvTWdZ1BlIHdGlwHMkGMOTKKagqC8yN9piQ.6gHtaSzCHF1Bl0A2', '0', 1, '', NULL, 'admin', '2024-10-06 16:56:27', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (103, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$iUGV11YL2hDcxSe4w9d2PuFmmV85a732C50aNHemmTN2iLkMvqJxe', '0', 0, '', NULL, 'admin', '2024-10-06 17:46:05', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (104, NULL, '202325350123', '林煜鋒', '00', '', '', '0', '', '$2a$10$8.r0rhNkc3P1PxVYnJIiqO95d5jxreXGEoifrKjVNrrjIvZRJP2Ny', '0', 0, '127.0.0.1', '2025-02-12 23:25:22', 'admin', '2024-10-08 10:47:31', 'admin', '2025-02-12 23:25:21', NULL);
+INSERT INTO `sys_user` VALUES (104, NULL, '202325350123', '林煜鋒', '00', '', '', '0', '', '$2a$10$8.r0rhNkc3P1PxVYnJIiqO95d5jxreXGEoifrKjVNrrjIvZRJP2Ny', '0', 0, '127.0.0.1', '2025-02-16 23:54:49', 'admin', '2024-10-08 10:47:31', 'admin', '2025-02-16 23:54:48', NULL);
 INSERT INTO `sys_user` VALUES (105, NULL, '202325350124', '张三', '00', 'admin@qq.com', '15815161606', '0', '', '$2a$10$axR.MY2O2nNR.LlDbTRvTe2tDCYMbai7AmnoQKQk.iFiSIkqBG0Su', '0', 0, '', NULL, 'admin', '2024-10-08 11:11:09', 'admin', '2025-02-07 11:42:34', NULL);
 INSERT INTO `sys_user` VALUES (106, NULL, 'wangwu', '王五', '00', '13900000000@qq.com', '13900000000', '0', '', '$2a$10$RnCSylS/jYWsZJpL7Sko3ObfRkPD2b0es7NoJwl0MELTWQ4Ps6NpC', '0', 0, '', NULL, 'admin', '2024-10-11 11:33:43', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (107, NULL, '202325350130', '张三三', '00', '', '', '0', '', '$2a$10$62ShaMC7ZrJVSzgL8Cu4bOCJjDhXaqXemRB.DX1rekKnhRTG82s6S', '0', 0, '', NULL, 'admin', '2024-12-08 13:49:32', 'admin', '2024-12-08 16:48:01', NULL);
@@ -2571,16 +2630,24 @@ CREATE TABLE `tb_course`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1888589132753674242 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1891087044944371714 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_course
 -- ----------------------------
-INSERT INTO `tb_course` VALUES (1, 'Java EE', 'Java 基础教程', 1865777929406795777, 100, '2024-09-03 00:00:00', '2024-12-31 00:00:00', '1', 1876522047536336898, NULL, '2024-10-11 13:42:40', 'admin', '2024-12-07 14:17:35', NULL, 0);
-INSERT INTO `tb_course` VALUES (3, '计算机操作系统', '计算机操作系统', 1865777547125346306, 106, '2024-09-03 00:00:00', '2024-12-18 00:00:00', '1', 1876522292307529730, NULL, '2024-11-23 22:40:10', 'admin', '2024-11-23 22:40:09', NULL, 0);
-INSERT INTO `tb_course` VALUES (1879105493781590018, '计算机网络', NULL, 1865774804440600577, 106, '2025-01-14 00:00:00', '2025-01-16 00:00:00', '1', 1883361190467784705, 'admin', '2025-01-14 17:57:16', 'admin', '2025-01-14 17:57:16', NULL, 0);
-INSERT INTO `tb_course` VALUES (1879105733238599681, '高等数学', NULL, 1865774917003137026, 100, '2025-01-13 00:00:00', '2025-01-15 00:00:00', '1', 1883361212890533890, 'admin', '2025-01-14 17:58:13', 'admin', '2025-01-14 17:58:13', NULL, 0);
-INSERT INTO `tb_course` VALUES (1888589132753674241, 'Python入门', NULL, 1888589040311214082, 100, '2025-01-29 00:00:00', '2025-02-13 00:00:00', '1', NULL, 'admin', '2025-02-09 22:01:52', NULL, '2025-02-09 22:01:52', NULL, 0);
+INSERT INTO `tb_course` VALUES (1, 'Java EE', 'Java 基础教程', 1865777929406795777, 100, '2024-09-03 00:00:00', '2024-12-31 00:00:00', '1', 1891000268121681922, NULL, '2024-10-11 13:42:40', 'admin', '2024-12-07 14:17:35', NULL, 0);
+INSERT INTO `tb_course` VALUES (3, '计算机操作系统', '计算机操作系统', 1865777547125346306, 106, '2024-09-03 00:00:00', '2024-12-18 00:00:00', '1', 1891000294214447106, NULL, '2024-11-23 22:40:10', 'admin', '2024-11-23 22:40:09', NULL, 0);
+INSERT INTO `tb_course` VALUES (1879105493781590018, '计算机网络', NULL, 1865774804440600577, 106, '2025-01-14 00:00:00', '2025-01-16 00:00:00', '1', 1891000318868566018, 'admin', '2025-01-14 17:57:16', 'admin', '2025-01-14 17:57:16', NULL, 0);
+INSERT INTO `tb_course` VALUES (1879105733238599681, '高等数学', NULL, 1865774917003137026, 100, '2025-01-13 00:00:00', '2025-01-15 00:00:00', '1', 1891000365639249921, 'admin', '2025-01-14 17:58:13', 'admin', '2025-01-14 17:58:13', NULL, 0);
+INSERT INTO `tb_course` VALUES (1888589132753674241, 'Python入门', NULL, 1888589040311214082, 100, '2025-01-29 00:00:00', '2025-02-13 00:00:00', '1', 1891000384131936257, 'admin', '2025-02-09 22:01:52', 'admin', '2025-02-09 22:01:52', NULL, 0);
+INSERT INTO `tb_course` VALUES (1891072036286013442, '深入浅出Java多线程', '深入浅出Java多线程', 1865777929406795777, 100, '2025-02-09 00:00:00', '2025-02-20 00:00:00', '1', 1891072068464713729, 'admin', '2025-02-16 18:28:02', 'admin', '2025-02-16 18:28:02', NULL, 0);
+INSERT INTO `tb_course` VALUES (1891072368944652289, '算法与数据结构', '算法与数据结构', 1865774893179490305, 112, '2025-02-10 00:00:00', '2025-02-19 00:00:00', '1', 1891072354658852865, 'admin', '2025-02-16 18:29:21', NULL, '2025-02-16 18:29:21', NULL, 0);
+INSERT INTO `tb_course` VALUES (1891072528177209345, '从0开始 独立完成企业级Java电商网站服务端开发', '从0开始 独立完成企业级Java电商网站服务端开发', 1865777929406795777, 106, '2025-02-09 00:00:00', '2025-02-25 00:00:00', '1', 1891072518488367105, 'admin', '2025-02-16 18:29:59', NULL, '2025-02-16 18:29:59', NULL, 0);
+INSERT INTO `tb_course` VALUES (1891072587992178689, '从0开始 独立完成企业级Java电商网站服务端开发', NULL, 1865777929406795777, 112, '2025-01-29 00:00:00', '2025-02-19 00:00:00', '0', 1891072584389271554, 'admin', '2025-02-16 18:30:14', NULL, '2025-02-16 18:30:14', NULL, 0);
+INSERT INTO `tb_course` VALUES (1891072653180051457, '从0开始 独立完成企业级Java电商网站服务端开发', '从0开始 独立完成企业级Java电商网站服务端开发', 1865777929406795777, 112, '2025-02-03 00:00:00', '2025-02-18 00:00:00', '2', 1891072649119965186, 'admin', '2025-02-16 18:30:29', NULL, '2025-02-16 18:30:29', NULL, 0);
+INSERT INTO `tb_course` VALUES (1891072721425571841, '从0开始 独立完成企业级Java电商网站服务端开发', NULL, 1865777929406795777, 103, '2025-02-04 00:00:00', '2025-02-12 00:00:00', '1', 1891072718145626113, 'admin', '2025-02-16 18:30:45', NULL, '2025-02-16 18:30:45', NULL, 0);
+INSERT INTO `tb_course` VALUES (1891072793651486721, '从0开始 独立完成企业级Java电商网站服务端开发', NULL, 1865777929406795777, 106, '2025-02-12 00:00:00', '2025-02-20 00:00:00', '1', 1891072789939527682, 'admin', '2025-02-16 18:31:03', NULL, '2025-02-16 18:31:03', NULL, 0);
+INSERT INTO `tb_course` VALUES (1891087044944371713, '从0开始 独立完成企业级Java电商网站服务端开发', NULL, 1865777929406795777, 112, '2025-02-02 00:00:00', '2025-02-19 00:00:00', '1', 1891087041463099393, 'admin', '2025-02-16 19:27:40', NULL, '2025-02-16 19:27:40', NULL, 0);
 
 -- ----------------------------
 -- Table structure for tb_course_chapter
@@ -2592,7 +2659,7 @@ CREATE TABLE `tb_course_chapter`  (
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '章节名称',
   `parent_id` bigint NULL DEFAULT 0 COMMENT '父级ID',
   `ancestors` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '祖级列表',
-  `order_num` bigint NULL DEFAULT 0 COMMENT '排序',
+  `order_num` int NULL DEFAULT 0 COMMENT '排序',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
@@ -2632,7 +2699,8 @@ CREATE TABLE `tb_course_material`  (
   `chapter_id` bigint NOT NULL COMMENT '关联章节ID',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '资料名称',
   `file_id` bigint NULL DEFAULT NULL COMMENT '文件ID',
-  `material_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '资料类型(0视频，1图片 ，2纯文本，3PPT，4PDF',
+  `material_type` tinyint NULL DEFAULT NULL COMMENT '资料类型(0视频，1图片 ，2纯文本，3PPT，4PDF',
+  `duration` int NULL DEFAULT NULL COMMENT '音视频时长',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
@@ -2640,21 +2708,23 @@ CREATE TABLE `tb_course_material`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1882637591008161795 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程资料表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1891022550395207682 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程资料表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_course_material
 -- ----------------------------
-INSERT INTO `tb_course_material` VALUES (1876561583700119553, 2, '哈哈哈哈.jpeg', 1876561576947290114, '2', NULL, '2025-01-07 17:28:41', NULL, '2025-01-07 17:28:41', NULL, 0);
-INSERT INTO `tb_course_material` VALUES (1876886158900076546, 13, '哈哈哈哈.jpeg', 1876885518002102274, '2', NULL, '2025-01-08 14:58:25', NULL, '2025-01-08 14:58:25', NULL, 0);
-INSERT INTO `tb_course_material` VALUES (1881637028783136770, 2, 'ruoyi (1).zip', 1881637001444663298, '6', NULL, '2025-01-21 17:36:41', NULL, '2025-01-21 17:36:41', NULL, 0);
-INSERT INTO `tb_course_material` VALUES (1881988073585610754, 2, '新建 PPT 演示文稿.ppt', 1881988043415982082, '4', NULL, '2025-01-22 16:51:37', NULL, '2025-01-22 16:51:37', NULL, 0);
-INSERT INTO `tb_course_material` VALUES (1882601882096492545, 1876896403235938306, '新建 DOCX 文档.docx', 1882601875763093506, '1', NULL, '2025-01-24 09:30:40', NULL, '2025-01-24 09:30:40', NULL, 0);
-INSERT INTO `tb_course_material` VALUES (1882603071684993026, 1882603043897729026, '新建 DOCX 文档.docx', 1882603066391781378, '1', NULL, '2025-01-24 09:35:24', NULL, '2025-01-24 09:35:24', NULL, 0);
-INSERT INTO `tb_course_material` VALUES (1882628567839723521, 1876896403235938306, '1.pdf', 1882628562336796673, '5', NULL, '2025-01-24 11:16:42', NULL, '2025-01-24 11:16:42', NULL, 0);
-INSERT INTO `tb_course_material` VALUES (1882637521458212866, 1882603043897729026, 'TODO.txt', 1882637513052827650, '1', NULL, '2025-01-24 11:52:17', NULL, '2025-01-24 11:52:17', NULL, 0);
-INSERT INTO `tb_course_material` VALUES (1882637554685489153, 1882603043897729026, 'tcl.js', 1882637550726066178, '1', NULL, '2025-01-24 11:52:25', NULL, '2025-01-24 11:52:25', NULL, 0);
-INSERT INTO `tb_course_material` VALUES (1882637591008161794, 1882603043897729026, 'index.html', 1882637587229093890, '1', NULL, '2025-01-24 11:52:34', NULL, '2025-01-24 11:52:34', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1876561583700119553, 2, '哈哈哈哈.jpeg', 1876561576947290114, 2, NULL, NULL, '2025-01-07 17:28:41', NULL, '2025-01-07 17:28:41', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1876886158900076546, 13, '哈哈哈哈.jpeg', 1876885518002102274, 2, NULL, NULL, '2025-01-08 14:58:25', NULL, '2025-01-08 14:58:25', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1881637028783136770, 2, 'ruoyi (1).zip', 1881637001444663298, 6, NULL, NULL, '2025-01-21 17:36:41', NULL, '2025-01-21 17:36:41', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1881988073585610754, 2, '新建 PPT 演示文稿.ppt', 1881988043415982082, 4, NULL, NULL, '2025-01-22 16:51:37', NULL, '2025-01-22 16:51:37', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1882601882096492545, 1876896403235938306, '新建 DOCX 文档.docx', 1882601875763093506, 1, NULL, NULL, '2025-01-24 09:30:40', NULL, '2025-01-24 09:30:40', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1882603071684993026, 1882603043897729026, '新建 DOCX 文档.docx', 1882603066391781378, 1, NULL, NULL, '2025-01-24 09:35:24', NULL, '2025-01-24 09:35:24', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1882628567839723521, 1876896403235938306, '1.pdf', 1882628562336796673, 5, NULL, NULL, '2025-01-24 11:16:42', NULL, '2025-01-24 11:16:42', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1882637521458212866, 1882603043897729026, 'TODO.txt', 1882637513052827650, 1, NULL, NULL, '2025-01-24 11:52:17', NULL, '2025-01-24 11:52:17', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1882637554685489153, 1882603043897729026, 'tcl.js', 1882637550726066178, 1, NULL, NULL, '2025-01-24 11:52:25', NULL, '2025-01-24 11:52:25', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1882637591008161794, 1882603043897729026, 'index.html', 1882637587229093890, 1, NULL, NULL, '2025-01-24 11:52:34', NULL, '2025-01-24 11:52:34', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1891017977513336833, 1876896403235938306, '5-3.mp3', 1891017875910516737, 3, 76, NULL, '2025-02-16 14:53:13', NULL, '2025-02-16 14:53:13', NULL, 0);
+INSERT INTO `tb_course_material` VALUES (1891022550395207681, 1876896403235938306, '5-3.mp3', 1891022531218849793, 3, 76, NULL, '2025-02-16 15:11:24', NULL, '2025-02-16 15:11:24', NULL, 0);
 
 -- ----------------------------
 -- Table structure for tb_direction
@@ -2668,7 +2738,7 @@ CREATE TABLE `tb_direction`  (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '立即删除字段',
+  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '课程方向表' ROW_FORMAT = Dynamic;
 
@@ -2877,6 +2947,7 @@ CREATE TABLE `tb_oss_file`  (
   `size` bigint NOT NULL COMMENT '文件大小',
   `origin_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '源文件名称',
   `file_type` int NOT NULL COMMENT '文件类型',
+  `duration` int NULL DEFAULT NULL COMMENT '音视频时长',
   `deleted` tinyint NULL DEFAULT 0 COMMENT '是否已删除',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建人',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -2888,36 +2959,54 @@ CREATE TABLE `tb_oss_file`  (
 -- ----------------------------
 -- Records of tb_oss_file
 -- ----------------------------
-INSERT INTO `tb_oss_file` VALUES (1876522047536336898, '677ccef633893c2b4aeab0fc.png', 'png', 'local-plus/677ccef633893c2b4aeab0fc.png', 'image/png', 3005, '1.png', 2, 0, 'admin', '2025-01-07 14:51:35', 'admin', '2025-01-22 17:52:34');
-INSERT INTO `tb_oss_file` VALUES (1876522292307529730, '677ccf3133893c2b4aeab0fd.jpeg', 'jpeg', 'local-plus/677ccf3133893c2b4aeab0fd.jpeg', 'image/jpeg', 34131, '2.jpg', 2, 0, 'admin', '2025-01-07 14:52:33', NULL, '2025-01-07 14:52:33');
-INSERT INTO `tb_oss_file` VALUES (1876561576947290114, '677cf3c73389506af672f2d4.jpeg', 'jpeg', 'local-plus/677cf3c73389506af672f2d4.jpeg', 'image/jpeg', 34131, '3.jpg', 2, 0, 'admin', '2025-01-07 17:28:39', NULL, '2025-01-07 17:28:39');
-INSERT INTO `tb_oss_file` VALUES (1876562447399587842, '677cf4963389506af672f2d5.jpeg', 'jpeg', 'local-plus/677cf4963389506af672f2d5.jpeg', 'image/jpeg', 34131, '4.jpg', 2, 0, 'admin', '2025-01-07 17:32:06', NULL, '2025-01-07 17:32:06');
-INSERT INTO `tb_oss_file` VALUES (1876885518002102274, '677e21783389de14f3ef462e.jpeg', 'jpeg', 'local-plus/677e21783389de14f3ef462e.jpeg', 'image/jpeg', 34131, '5.jpg', 2, 0, 'admin', '2025-01-08 14:55:53', NULL, '2025-01-08 14:55:53');
-INSERT INTO `tb_oss_file` VALUES (1881633878030360578, '678f67ba33898dbd06c6757d.zip', 'zip', 'local-plus/678f67ba33898dbd06c6757d.zip', 'application/x-zip-compressed', 17482, 'ruoyi (1).zip', 6, 0, 'admin', '2025-01-21 17:24:10', NULL, '2025-01-21 17:24:10');
-INSERT INTO `tb_oss_file` VALUES (1881637001444663298, '678f6aa233898dbd06c6757e.zip', 'zip', 'local-plus/678f6aa233898dbd06c6757e.zip', 'application/x-zip-compressed', 17482, 'ruoyi (1).zip', 6, 0, 'admin', '2025-01-21 17:36:34', NULL, '2025-01-21 17:36:34');
-INSERT INTO `tb_oss_file` VALUES (1881988043415982082, '6790b19133895ea7838349ad.ppt', 'ppt', 'local-plus/6790b19133895ea7838349ad.ppt', 'application/vnd.ms-powerpoint', 20992, '新建 PPT 演示文稿.ppt', 4, 0, 'admin', '2025-01-22 16:51:29', NULL, '2025-01-22 16:51:29');
-INSERT INTO `tb_oss_file` VALUES (1881989524491743233, '6790b2f2338932a26f44e011.pptx', 'pptx', 'local-plus/6790b2f2338932a26f44e011.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, 0, 'admin', '2025-01-22 16:57:23', NULL, '2025-01-22 16:57:23');
-INSERT INTO `tb_oss_file` VALUES (1881989850011676674, '6790b340338932a26f44e012.txt', 'txt', 'local-plus/6790b340338932a26f44e012.txt', 'text/plain', 57, 'TODO.txt', 1, 0, 'admin', '2025-01-22 16:58:40', NULL, '2025-01-22 16:58:40');
-INSERT INTO `tb_oss_file` VALUES (1881989999656054785, '6790b364338932a26f44e013.txt', 'txt', 'local-plus/6790b364338932a26f44e013.txt', 'text/plain', 57, 'TODO.txt', 1, 0, 'admin', '2025-01-22 16:59:16', NULL, '2025-01-22 16:59:16');
-INSERT INTO `tb_oss_file` VALUES (1881990332750901250, '6790b3b3338932a26f44e014.pdf', 'pdf', 'local-plus/6790b3b3338932a26f44e014.pdf', 'application/pdf', 1203, '未命名1.pdf', 5, 0, 'admin', '2025-01-22 17:00:35', NULL, '2025-01-22 17:00:35');
-INSERT INTO `tb_oss_file` VALUES (1881990433112207361, '6790b3cb338932a26f44e015.pptx', 'pptx', 'local-plus/6790b3cb338932a26f44e015.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, 0, 'admin', '2025-01-22 17:00:59', NULL, '2025-01-22 17:00:59');
-INSERT INTO `tb_oss_file` VALUES (1881990807076352001, '6790b424338932a26f44e016.pptx', 'pptx', 'local-plus/6790b424338932a26f44e016.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, 0, 'admin', '2025-01-22 17:02:28', NULL, '2025-01-22 17:02:28');
-INSERT INTO `tb_oss_file` VALUES (1881992602611757058, '6790b5d0338932a26f44e017.pptx', 'pptx', 'local-plus/6790b5d0338932a26f44e017.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, 0, 'admin', '2025-01-22 17:09:36', NULL, '2025-01-22 17:09:36');
-INSERT INTO `tb_oss_file` VALUES (1881992633385365505, '6790b5d8338932a26f44e018.ppt', 'ppt', 'local-plus/6790b5d8338932a26f44e018.ppt', 'application/vnd.ms-powerpoint', 20992, '新建 PPT 演示文稿.ppt', 4, 0, 'admin', '2025-01-22 17:09:44', NULL, '2025-01-22 17:09:44');
-INSERT INTO `tb_oss_file` VALUES (1881992751232724993, '6790b5f4338932a26f44e019.pptx', 'pptx', 'local-plus/6790b5f4338932a26f44e019.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, 1, 'admin', '2025-01-22 17:10:12', NULL, '2025-01-22 17:10:12');
-INSERT INTO `tb_oss_file` VALUES (1881992766101532673, '6790b5f7338932a26f44e01a.pdf', 'pdf', 'local-plus/6790b5f7338932a26f44e01a.pdf', 'application/pdf', 1203, '未命名1.pdf', 5, 0, 'admin', '2025-01-22 17:10:15', NULL, '2025-01-22 17:10:15');
-INSERT INTO `tb_oss_file` VALUES (1881992785659572226, '6790b5fc338932a26f44e01b.pdf', 'pdf', 'local-plus/6790b5fc338932a26f44e01b.pdf', 'application/pdf', 1203, '未命名1.pdf', 5, 0, 'admin', '2025-01-22 17:10:20', NULL, '2025-01-22 17:10:20');
-INSERT INTO `tb_oss_file` VALUES (1882601875763093506, '6792ed3e338914b045c1ed10.docx', 'docx', 'local-plus/6792ed3e338914b045c1ed10.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 45426, '新建 DOCX 文档.docx', 1, 0, 'admin', '2025-01-24 09:30:38', NULL, '2025-01-24 09:30:38');
-INSERT INTO `tb_oss_file` VALUES (1882603066391781378, '6792ee5a338914b045c1ed11.docx', 'docx', 'local-plus/6792ee5a338914b045c1ed11.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 45469, '新建 DOCX 文档.docx', 1, 0, 'admin', '2025-01-24 09:35:22', NULL, '2025-01-24 09:35:22');
-INSERT INTO `tb_oss_file` VALUES (1882628562336796673, '6793061933898e1b8e356871.pdf', 'pdf', 'local-plus/6793061933898e1b8e356871.pdf', 'application/pdf', 58509, '1.pdf', 5, 0, 'admin', '2025-01-24 11:16:41', NULL, '2025-01-24 11:16:41');
-INSERT INTO `tb_oss_file` VALUES (1882632972655845378, '67930a1333893299982e615f.xlsx', 'xlsx', 'local-plus/67930a1333893299982e615f.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 7780, '调拨单列表模板-导入失败.xlsx', 1, 0, 'admin', '2025-01-24 11:34:12', 'admin', '2025-01-24 11:38:05');
-INSERT INTO `tb_oss_file` VALUES (1882633394300837890, '67930a6c33893299982e6160.xls', 'xls', 'local-plus/67930a6c33893299982e6160.xls', 'application/vnd.ms-excel', 18432, '新建 XLS 工作表.xls', 1, 0, 'admin', '2025-01-24 11:35:53', 'admin', '2025-01-24 11:38:08');
-INSERT INTO `tb_oss_file` VALUES (1882633443466469377, '67930a9e33893299982e6161.csv', 'csv', 'local-plus/67930a9e33893299982e6161.csv', 'text/csv', 5, '1.csv', 1, 0, 'admin', '2025-01-24 11:36:05', NULL, '2025-01-24 11:36:05');
-INSERT INTO `tb_oss_file` VALUES (1882637513052827650, '67930e6c33895c7f2445c38c.txt', 'txt', 'local-plus/67930e6c33895c7f2445c38c.txt', 'text/plain', 57, 'TODO.txt', 1, 0, 'admin', '2025-01-24 11:52:15', NULL, '2025-01-24 11:52:15');
-INSERT INTO `tb_oss_file` VALUES (1882637550726066178, '67930e7833895c7f2445c38d.js', 'js', 'local-plus/67930e7833895c7f2445c38d.js', 'text/javascript', 6413, 'tcl.js', 1, 0, 'admin', '2025-01-24 11:52:24', NULL, '2025-01-24 11:52:24');
-INSERT INTO `tb_oss_file` VALUES (1882637587229093890, '67930e8133895c7f2445c38e.html', 'html', 'local-plus/67930e8133895c7f2445c38e.html', 'text/html', 549, 'index.html', 1, 0, 'admin', '2025-01-24 11:52:33', NULL, '2025-01-24 11:52:33');
-INSERT INTO `tb_oss_file` VALUES (1883361190467784705, '6795b069338968d7962673a0.jpeg', 'jpeg', 'local-plus/6795b069338968d7962673a0.jpeg', 'image/jpeg', 34131, '哈哈哈哈.jpeg', 2, 0, 'admin', '2025-01-26 11:47:53', NULL, '2025-01-26 11:47:53');
-INSERT INTO `tb_oss_file` VALUES (1883361212890533890, '6795b06e338968d7962673a1.jpeg', 'jpeg', 'local-plus/6795b06e338968d7962673a1.jpeg', 'image/jpeg', 34131, '哈哈哈哈.jpeg', 2, 0, 'admin', '2025-01-26 11:47:58', NULL, '2025-01-26 11:47:58');
+INSERT INTO `tb_oss_file` VALUES (1876522047536336898, '677ccef633893c2b4aeab0fc.png', 'png', 'local-plus/677ccef633893c2b4aeab0fc.png', 'image/png', 3005, '1.png', 2, NULL, 0, 'admin', '2025-01-07 14:51:35', 'admin', '2025-01-22 17:52:34');
+INSERT INTO `tb_oss_file` VALUES (1876522292307529730, '677ccf3133893c2b4aeab0fd.jpeg', 'jpeg', 'local-plus/677ccf3133893c2b4aeab0fd.jpeg', 'image/jpeg', 34131, '2.jpg', 2, NULL, 0, 'admin', '2025-01-07 14:52:33', NULL, '2025-01-07 14:52:33');
+INSERT INTO `tb_oss_file` VALUES (1876561576947290114, '677cf3c73389506af672f2d4.jpeg', 'jpeg', 'local-plus/677cf3c73389506af672f2d4.jpeg', 'image/jpeg', 34131, '3.jpg', 2, NULL, 0, 'admin', '2025-01-07 17:28:39', NULL, '2025-01-07 17:28:39');
+INSERT INTO `tb_oss_file` VALUES (1876562447399587842, '677cf4963389506af672f2d5.jpeg', 'jpeg', 'local-plus/677cf4963389506af672f2d5.jpeg', 'image/jpeg', 34131, '4.jpg', 2, NULL, 0, 'admin', '2025-01-07 17:32:06', NULL, '2025-01-07 17:32:06');
+INSERT INTO `tb_oss_file` VALUES (1876885518002102274, '677e21783389de14f3ef462e.jpeg', 'jpeg', 'local-plus/677e21783389de14f3ef462e.jpeg', 'image/jpeg', 34131, '5.jpg', 2, NULL, 0, 'admin', '2025-01-08 14:55:53', NULL, '2025-01-08 14:55:53');
+INSERT INTO `tb_oss_file` VALUES (1881633878030360578, '678f67ba33898dbd06c6757d.zip', 'zip', 'local-plus/678f67ba33898dbd06c6757d.zip', 'application/x-zip-compressed', 17482, 'ruoyi (1).zip', 6, NULL, 0, 'admin', '2025-01-21 17:24:10', NULL, '2025-01-21 17:24:10');
+INSERT INTO `tb_oss_file` VALUES (1881637001444663298, '678f6aa233898dbd06c6757e.zip', 'zip', 'local-plus/678f6aa233898dbd06c6757e.zip', 'application/x-zip-compressed', 17482, 'ruoyi (1).zip', 6, NULL, 0, 'admin', '2025-01-21 17:36:34', NULL, '2025-01-21 17:36:34');
+INSERT INTO `tb_oss_file` VALUES (1881988043415982082, '6790b19133895ea7838349ad.ppt', 'ppt', 'local-plus/6790b19133895ea7838349ad.ppt', 'application/vnd.ms-powerpoint', 20992, '新建 PPT 演示文稿.ppt', 4, NULL, 0, 'admin', '2025-01-22 16:51:29', NULL, '2025-01-22 16:51:29');
+INSERT INTO `tb_oss_file` VALUES (1881989524491743233, '6790b2f2338932a26f44e011.pptx', 'pptx', 'local-plus/6790b2f2338932a26f44e011.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, NULL, 0, 'admin', '2025-01-22 16:57:23', NULL, '2025-01-22 16:57:23');
+INSERT INTO `tb_oss_file` VALUES (1881989850011676674, '6790b340338932a26f44e012.txt', 'txt', 'local-plus/6790b340338932a26f44e012.txt', 'text/plain', 57, 'TODO.txt', 1, NULL, 0, 'admin', '2025-01-22 16:58:40', NULL, '2025-01-22 16:58:40');
+INSERT INTO `tb_oss_file` VALUES (1881989999656054785, '6790b364338932a26f44e013.txt', 'txt', 'local-plus/6790b364338932a26f44e013.txt', 'text/plain', 57, 'TODO.txt', 1, NULL, 0, 'admin', '2025-01-22 16:59:16', NULL, '2025-01-22 16:59:16');
+INSERT INTO `tb_oss_file` VALUES (1881990332750901250, '6790b3b3338932a26f44e014.pdf', 'pdf', 'local-plus/6790b3b3338932a26f44e014.pdf', 'application/pdf', 1203, '未命名1.pdf', 5, NULL, 0, 'admin', '2025-01-22 17:00:35', NULL, '2025-01-22 17:00:35');
+INSERT INTO `tb_oss_file` VALUES (1881990433112207361, '6790b3cb338932a26f44e015.pptx', 'pptx', 'local-plus/6790b3cb338932a26f44e015.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, NULL, 0, 'admin', '2025-01-22 17:00:59', NULL, '2025-01-22 17:00:59');
+INSERT INTO `tb_oss_file` VALUES (1881990807076352001, '6790b424338932a26f44e016.pptx', 'pptx', 'local-plus/6790b424338932a26f44e016.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, NULL, 0, 'admin', '2025-01-22 17:02:28', NULL, '2025-01-22 17:02:28');
+INSERT INTO `tb_oss_file` VALUES (1881992602611757058, '6790b5d0338932a26f44e017.pptx', 'pptx', 'local-plus/6790b5d0338932a26f44e017.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, NULL, 0, 'admin', '2025-01-22 17:09:36', NULL, '2025-01-22 17:09:36');
+INSERT INTO `tb_oss_file` VALUES (1881992633385365505, '6790b5d8338932a26f44e018.ppt', 'ppt', 'local-plus/6790b5d8338932a26f44e018.ppt', 'application/vnd.ms-powerpoint', 20992, '新建 PPT 演示文稿.ppt', 4, NULL, 0, 'admin', '2025-01-22 17:09:44', NULL, '2025-01-22 17:09:44');
+INSERT INTO `tb_oss_file` VALUES (1881992751232724993, '6790b5f4338932a26f44e019.pptx', 'pptx', 'local-plus/6790b5f4338932a26f44e019.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 35831, '新建 PPTX 演示文稿.pptx', 4, NULL, 1, 'admin', '2025-01-22 17:10:12', NULL, '2025-01-22 17:10:12');
+INSERT INTO `tb_oss_file` VALUES (1881992766101532673, '6790b5f7338932a26f44e01a.pdf', 'pdf', 'local-plus/6790b5f7338932a26f44e01a.pdf', 'application/pdf', 1203, '未命名1.pdf', 5, NULL, 0, 'admin', '2025-01-22 17:10:15', NULL, '2025-01-22 17:10:15');
+INSERT INTO `tb_oss_file` VALUES (1881992785659572226, '6790b5fc338932a26f44e01b.pdf', 'pdf', 'local-plus/6790b5fc338932a26f44e01b.pdf', 'application/pdf', 1203, '未命名1.pdf', 5, NULL, 0, 'admin', '2025-01-22 17:10:20', NULL, '2025-01-22 17:10:20');
+INSERT INTO `tb_oss_file` VALUES (1882601875763093506, '6792ed3e338914b045c1ed10.docx', 'docx', 'local-plus/6792ed3e338914b045c1ed10.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 45426, '新建 DOCX 文档.docx', 1, NULL, 0, 'admin', '2025-01-24 09:30:38', NULL, '2025-01-24 09:30:38');
+INSERT INTO `tb_oss_file` VALUES (1882603066391781378, '6792ee5a338914b045c1ed11.docx', 'docx', 'local-plus/6792ee5a338914b045c1ed11.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 45469, '新建 DOCX 文档.docx', 1, NULL, 0, 'admin', '2025-01-24 09:35:22', NULL, '2025-01-24 09:35:22');
+INSERT INTO `tb_oss_file` VALUES (1882628562336796673, '6793061933898e1b8e356871.pdf', 'pdf', 'local-plus/6793061933898e1b8e356871.pdf', 'application/pdf', 58509, '1.pdf', 5, NULL, 0, 'admin', '2025-01-24 11:16:41', NULL, '2025-01-24 11:16:41');
+INSERT INTO `tb_oss_file` VALUES (1882632972655845378, '67930a1333893299982e615f.xlsx', 'xlsx', 'local-plus/67930a1333893299982e615f.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 7780, '调拨单列表模板-导入失败.xlsx', 1, NULL, 0, 'admin', '2025-01-24 11:34:12', 'admin', '2025-01-24 11:38:05');
+INSERT INTO `tb_oss_file` VALUES (1882633394300837890, '67930a6c33893299982e6160.xls', 'xls', 'local-plus/67930a6c33893299982e6160.xls', 'application/vnd.ms-excel', 18432, '新建 XLS 工作表.xls', 1, NULL, 0, 'admin', '2025-01-24 11:35:53', 'admin', '2025-01-24 11:38:08');
+INSERT INTO `tb_oss_file` VALUES (1882633443466469377, '67930a9e33893299982e6161.csv', 'csv', 'local-plus/67930a9e33893299982e6161.csv', 'text/csv', 5, '1.csv', 1, NULL, 0, 'admin', '2025-01-24 11:36:05', NULL, '2025-01-24 11:36:05');
+INSERT INTO `tb_oss_file` VALUES (1882637513052827650, '67930e6c33895c7f2445c38c.txt', 'txt', 'local-plus/67930e6c33895c7f2445c38c.txt', 'text/plain', 57, 'TODO.txt', 1, NULL, 0, 'admin', '2025-01-24 11:52:15', NULL, '2025-01-24 11:52:15');
+INSERT INTO `tb_oss_file` VALUES (1882637550726066178, '67930e7833895c7f2445c38d.js', 'js', 'local-plus/67930e7833895c7f2445c38d.js', 'text/javascript', 6413, 'tcl.js', 1, NULL, 0, 'admin', '2025-01-24 11:52:24', NULL, '2025-01-24 11:52:24');
+INSERT INTO `tb_oss_file` VALUES (1882637587229093890, '67930e8133895c7f2445c38e.html', 'html', 'local-plus/67930e8133895c7f2445c38e.html', 'text/html', 549, 'index.html', 1, NULL, 0, 'admin', '2025-01-24 11:52:33', NULL, '2025-01-24 11:52:33');
+INSERT INTO `tb_oss_file` VALUES (1883361190467784705, '6795b069338968d7962673a0.jpeg', 'jpeg', 'local-plus/6795b069338968d7962673a0.jpeg', 'image/jpeg', 34131, '哈哈哈哈.jpeg', 2, NULL, 0, 'admin', '2025-01-26 11:47:53', NULL, '2025-01-26 11:47:53');
+INSERT INTO `tb_oss_file` VALUES (1883361212890533890, '6795b06e338968d7962673a1.jpeg', 'jpeg', 'local-plus/6795b06e338968d7962673a1.jpeg', 'image/jpeg', 34131, '哈哈哈哈.jpeg', 2, NULL, 0, 'admin', '2025-01-26 11:47:58', NULL, '2025-01-26 11:47:58');
+INSERT INTO `tb_oss_file` VALUES (1891000268121681922, '67b17adb8d4a0e52dbf21e21.jpg', 'jpg', 'local-plus/67b17adb8d4a0e52dbf21e21.jpg', 'image/jpeg', 149195, '201910302252112857.jpg', 2, NULL, 0, 'admin', '2025-02-16 13:42:51', NULL, '2025-02-16 13:42:51');
+INSERT INTO `tb_oss_file` VALUES (1891000294214447106, '67b17ae18d4a0e52dbf21e22.jpg', 'jpg', 'local-plus/67b17ae18d4a0e52dbf21e22.jpg', 'image/jpeg', 7987, '201910302253423378.jpg', 2, NULL, 0, 'admin', '2025-02-16 13:42:57', NULL, '2025-02-16 13:42:57');
+INSERT INTO `tb_oss_file` VALUES (1891000318868566018, '67b17ae78d4a0e52dbf21e23.jpg', 'jpg', 'local-plus/67b17ae78d4a0e52dbf21e23.jpg', 'image/jpeg', 14598, '202001242302475294.jpg', 2, NULL, 0, 'admin', '2025-02-16 13:43:03', NULL, '2025-02-16 13:43:03');
+INSERT INTO `tb_oss_file` VALUES (1891000349130469377, '67b17aee8d4a0e52dbf21e24.jpg', 'jpg', 'local-plus/67b17aee8d4a0e52dbf21e24.jpg', 'image/jpeg', 15742, '202001242303535808.jpg', 2, NULL, 0, 'admin', '2025-02-16 13:43:10', NULL, '2025-02-16 13:43:10');
+INSERT INTO `tb_oss_file` VALUES (1891000365639249921, '67b17af28d4a0e52dbf21e25.jpg', 'jpg', 'local-plus/67b17af28d4a0e52dbf21e25.jpg', 'image/jpeg', 149195, '201910302252112857.jpg', 2, NULL, 0, 'admin', '2025-02-16 13:43:14', NULL, '2025-02-16 13:43:14');
+INSERT INTO `tb_oss_file` VALUES (1891000384131936257, '67b17af78d4a0e52dbf21e26.jpg', 'jpg', 'local-plus/67b17af78d4a0e52dbf21e26.jpg', 'image/jpeg', 149195, '201910302252112857.jpg', 2, NULL, 0, 'admin', '2025-02-16 13:43:19', NULL, '2025-02-16 13:43:19');
+INSERT INTO `tb_oss_file` VALUES (1891017875910516737, '67b18afc8d4a15170fd5d6dc.mp3', 'mp3', 'local-plus/67b18afc8d4a15170fd5d6dc.mp3', 'audio/mpeg', 1225082, '5-3.mp3', 3, 76, 0, 'admin', '2025-02-16 14:52:49', NULL, '2025-02-16 14:52:49');
+INSERT INTO `tb_oss_file` VALUES (1891022531218849793, '67b18f918d4a7dd9bec1007d.mp3', 'mp3', 'local-plus/67b18f918d4a7dd9bec1007d.mp3', 'audio/mpeg', 1225082, '5-3.mp3', 3, 76, 0, 'admin', '2025-02-16 15:11:19', NULL, '2025-02-16 15:11:19');
+INSERT INTO `tb_oss_file` VALUES (1891072027041767426, '67b1bdb003edc969bc15670d.jpg', 'jpg', 'local-plus/67b1bdb003edc969bc15670d.jpg', 'image/jpeg', 15742, '202001242303535808.jpg', 2, NULL, 0, 'admin', '2025-02-16 18:28:00', NULL, '2025-02-16 18:28:00');
+INSERT INTO `tb_oss_file` VALUES (1891072068464713729, '67b1bdba03edc969bc15670e.jpg', 'jpg', 'local-plus/67b1bdba03edc969bc15670e.jpg', 'image/jpeg', 27960, '201910302250406011.jpg', 2, NULL, 0, 'admin', '2025-02-16 18:28:10', NULL, '2025-02-16 18:28:10');
+INSERT INTO `tb_oss_file` VALUES (1891072336598179841, '67b1bdfa03edc969bc15670f.jpg', 'jpg', 'local-plus/67b1bdfa03edc969bc15670f.jpg', 'image/jpeg', 15742, '202001242303535808.jpg', 2, NULL, 0, 'admin', '2025-02-16 18:29:14', NULL, '2025-02-16 18:29:14');
+INSERT INTO `tb_oss_file` VALUES (1891072354658852865, '67b1bdfe03edc969bc156710.jpg', 'jpg', 'local-plus/67b1bdfe03edc969bc156710.jpg', 'image/jpeg', 16308, '202001242304224484.jpg', 2, NULL, 0, 'admin', '2025-02-16 18:29:18', NULL, '2025-02-16 18:29:18');
+INSERT INTO `tb_oss_file` VALUES (1891072518488367105, '67b1be2503edc969bc156711.jpg', 'jpg', 'local-plus/67b1be2503edc969bc156711.jpg', 'image/jpeg', 16308, '202001242304224484.jpg', 2, NULL, 0, 'admin', '2025-02-16 18:29:57', NULL, '2025-02-16 18:29:57');
+INSERT INTO `tb_oss_file` VALUES (1891072584389271554, '67b1be3503edc969bc156712.jpg', 'jpg', 'local-plus/67b1be3503edc969bc156712.jpg', 'image/jpeg', 16308, '202001242304224484.jpg', 2, NULL, 0, 'admin', '2025-02-16 18:30:13', NULL, '2025-02-16 18:30:13');
+INSERT INTO `tb_oss_file` VALUES (1891072649119965186, '67b1be4403edc969bc156713.jpg', 'jpg', 'local-plus/67b1be4403edc969bc156713.jpg', 'image/jpeg', 27960, '201910302250406011.jpg', 2, NULL, 0, 'admin', '2025-02-16 18:30:28', NULL, '2025-02-16 18:30:28');
+INSERT INTO `tb_oss_file` VALUES (1891072718145626113, '67b1be5503edc969bc156714.jpg', 'jpg', 'local-plus/67b1be5503edc969bc156714.jpg', 'image/jpeg', 149195, '201910302252112857.jpg', 2, NULL, 0, 'admin', '2025-02-16 18:30:45', NULL, '2025-02-16 18:30:45');
+INSERT INTO `tb_oss_file` VALUES (1891072789939527682, '67b1be6603edc969bc156715.jpg', 'jpg', 'local-plus/67b1be6603edc969bc156715.jpg', 'image/jpeg', 149195, '201910302252112857.jpg', 2, NULL, 0, 'admin', '2025-02-16 18:31:02', NULL, '2025-02-16 18:31:02');
+INSERT INTO `tb_oss_file` VALUES (1891087041463099393, '67b1cbac03edc969bc156716.jpg', 'jpg', 'local-plus/67b1cbac03edc969bc156716.jpg', 'image/jpeg', 7987, '201910302253423378.jpg', 2, NULL, 0, 'admin', '2025-02-16 19:27:40', NULL, '2025-02-16 19:27:40');
 
 -- ----------------------------
 -- Table structure for tb_paper
@@ -3161,7 +3250,7 @@ INSERT INTO `tb_student_course` VALUES (1883353424533540865, 107, 3, 12.00, 0, N
 DROP TABLE IF EXISTS `tb_study_record`;
 CREATE TABLE `tb_study_record`  (
   `id` bigint NOT NULL COMMENT '学习记录ID',
-  `student_id` bigint NOT NULL COMMENT '学习者ID',
+  `user_id` bigint NOT NULL COMMENT '用户ID',
   `course_id` bigint NOT NULL COMMENT '课程ID',
   `completion_time` timestamp NULL DEFAULT NULL COMMENT '完成时间',
   `status` tinyint NOT NULL COMMENT '学习状态（0-未开始 1-进行中 2-已完成）',

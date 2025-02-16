@@ -148,6 +148,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         }
     }
 
+    @Override
+    public CourseVo selectCourseById(Long id, Long userId) {
+        Course course = baseMapper.selectById(id);
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(course);
+        CourseVo courseVo = buildVoForStudent(courseList).get(0);
+        if (userId != null) {
+            LambdaQueryWrapper<StudentCourse> wrapper = new LambdaQueryWrapper<StudentCourse>()
+                    .eq(StudentCourse::getCourseId, id)
+                    .eq(StudentCourse::getUserId, userId);
+            courseVo.setIsSelected(studentCourseService.getOne(wrapper) != null);
+        }
+        return courseVo;
+    }
+
     public List<CourseVo> buildVo(List<Course> courseList) {
         List<CourseVo> courseVoList = new ArrayList<>();
         for (Course course : courseList) {

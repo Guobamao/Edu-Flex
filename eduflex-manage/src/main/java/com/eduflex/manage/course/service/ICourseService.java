@@ -51,4 +51,13 @@ public interface ICourseService extends IService<Course>
      * @return 结果
      */
     List<CourseVo> selectCourseListByDirectionIdAndCategoryId(Long directionId, Long categoryId);
+
+    /**
+     * 根据课程ID查询课程信息
+     *
+     * @param id     课程ID
+     * @param userId
+     * @return 课程信息
+     */
+    CourseVo selectCourseById(Long id, Long userId);
 }

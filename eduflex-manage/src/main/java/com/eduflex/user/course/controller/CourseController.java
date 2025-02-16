@@ -6,10 +6,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.manage.course.domain.vo.CourseVo;
 import com.eduflex.manage.course.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,5 +33,14 @@ public class CourseController extends BaseController {
         startPage();
         List<CourseVo> list = courseService.selectCourseListByDirectionIdAndCategoryId(directionId, categoryId);
         return getDataTable(list);
+    }
+
+    @GetMapping("/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
+        if (getUserId() == null) {
+            return success(courseService.selectCourseById(id, null));
+        } else {
+            return success(courseService.selectCourseById(id, getUserId()));
+        }
     }
 }
