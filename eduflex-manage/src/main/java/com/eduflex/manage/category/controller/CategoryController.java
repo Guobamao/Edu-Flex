@@ -37,7 +37,7 @@ public class CategoryController extends BaseController
     /**
      * 查询课程分类列表
      */
-    @PreAuthorize("@ss.hasRole('admin')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(Category category)
     {

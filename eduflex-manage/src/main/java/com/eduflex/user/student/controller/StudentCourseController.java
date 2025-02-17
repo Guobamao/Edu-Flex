@@ -24,7 +24,7 @@ public class StudentCourseController extends BaseController {
     @Autowired
     private IStudentCourseService studentCourseService;
 
-    @PreAuthorize("@ss.hasRole('teacher')")
+    @PreAuthorize("@ss.hasRole('student')")
     @PostMapping
     public AjaxResult saveOrDelete(@RequestBody StudentCourseDto studentCourse) {
         studentCourse.setUserId(getUserId());

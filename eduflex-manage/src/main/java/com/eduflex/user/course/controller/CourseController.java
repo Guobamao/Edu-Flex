@@ -37,10 +37,10 @@ public class CourseController extends BaseController {
 
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
-        if (getUserId() == null) {
-            return success(courseService.selectCourseById(id, null));
-        } else {
+        try {
             return success(courseService.selectCourseById(id, getUserId()));
+        } catch (Exception e) {
+            return success(courseService.selectCourseById(id, null));
         }
     }
 }

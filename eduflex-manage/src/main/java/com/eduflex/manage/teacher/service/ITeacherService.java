@@ -65,5 +65,5 @@ public interface ITeacherService extends IService<Teacher>
      * @param id 教师ID
      * @return
      */
-    Teacher selectTeacherById(Long id);
+    TeacherVo selectTeacherById(Long id);
 }

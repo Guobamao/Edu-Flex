@@ -67,6 +67,12 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(teacherDto, sysUser);
         sysUser.setRoleIds(new Long[]{teacherDto.getRoleId()});
+//        // 设置头像
+//        if (teacherDto.getAvatar() != null) {
+//            sysUser.setAvatar(teacherDto.getAvatar());
+//        } else {
+//            sysUser.setAvatar(1876522047536336898L);
+//        }
         userService.insertUser(sysUser);
 
         // 再新增教师表信息
@@ -146,9 +152,8 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
      */
     @Override
     public TeacherVo selectTeacherById(Long id) {
-        Teacher teacher = baseMapper.selectById(id);
-        SysUser sysUser = userService.selectUserById(teacher.getUserId());
-        return buildVo(teacher, sysUser);
+        SysUser sysUser = userService.selectUserById(id);
+        return buildVo(sysUser);
     }
 
     private List<TeacherVo> buildVo(List<Teacher> teacherList, List<SysUser> userList) {
@@ -170,9 +175,8 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         return teacherVoList;
     }
 
-    private TeacherVo buildVo(Teacher teacher, SysUser sysUser) {
+    private TeacherVo buildVo(SysUser sysUser) {
         TeacherVo teacherVo = new TeacherVo();
-        BeanUtils.copyProperties(teacher, teacherVo);
         BeanUtils.copyProperties(sysUser, teacherVo);
         return teacherVo;
     }
