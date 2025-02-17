@@ -21,13 +21,15 @@ import com.eduflex.manage.route.service.IRouteService;
 import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.system.service.ISysUserService;
+import com.eduflex.user.search.domain.Search;
+import com.eduflex.user.search.service.ISearchService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 课程管理Service业务层处理
@@ -56,6 +58,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Autowired
     private ICourseChapterService courseChapterService;
 
+    @Autowired
+    private ISearchService searchService;
+
 
     /**
      * 查询课程管理列表
@@ -75,16 +80,14 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
                 .ge(course.getStartTime() != null, Course::getStartTime, course.getStartTime())
                 .le(course.getEndTime() != null, Course::getEndTime, course.getEndTime())
                 .eq(course.getStatus() != null, Course::getStatus, course.getStatus())
-                .eq(course.getTeacherId() != null, Course::getTeacherId, course.getTeacherId());
-        if (course.getCategoryId() != null) {
-            // 获取该分类下所有的子类，包括自身
-            List<Long> categoryIds = categoryService.list().stream()
-                    .filter(category -> category.getId().equals(course.getCategoryId()))
-                    .map(Category::getId).toList();
-            wrapper.in(!categoryIds.isEmpty(), Course::getCategoryId, categoryIds);
+                .eq(course.getTeacherId() != null, Course::getTeacherId, course.getTeacherId())
+                .eq(course.getCategoryId() != null, Course::getCategoryId, course.getCategoryId());
+
+        if (StrUtil.isNotBlank(course.getSearchValue())) {
+            wrapper.and(q -> q.like(Course::getName, course.getSearchValue())
+                    .or().like(Course::getDescription, course.getSearchValue()));
         }
         List<Course> courseList = baseMapper.selectList(wrapper);
-
         return buildVo(courseList);
     }
 
@@ -161,6 +164,60 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             courseVo.setIsSelected(studentCourseService.getOne(wrapper) != null);
         }
         return courseVo;
+    }
+
+    @Override
+    public List<CourseVo> listRelatedCourse(Long id) {
+        Long categoryId = baseMapper.selectById(id).getCategoryId();
+        // 获取同分类下的课程，并随机返回4个
+        if (categoryId != null) {
+            LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
+                    .eq(Course::getCategoryId, categoryId)
+                    .ne(Course::getId, id);
+            List<CourseVo> courseVos = buildVoForStudent(baseMapper.selectList(wrapper));
+            Collections.shuffle(courseVos);
+            return courseVos.subList(0, Math.min(courseVos.size(), 4));
+        }
+        return List.of();
+    }
+
+    @Override
+    public List<CourseVo> searchCourse(Course course) {
+        LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
+                .like(StrUtil.isNotBlank(course.getSearchValue()), Course::getName, course.getSearchValue())
+                .or()
+                .like(StrUtil.isNotBlank(course.getSearchValue()), Course::getDescription, course.getSearchValue());
+
+        // 搜索记录
+        LambdaQueryWrapper<Search> searchWrapper = new LambdaQueryWrapper<Search>()
+                .eq(Search::getSearchValue, course.getSearchValue());
+        long count = searchService.count(searchWrapper);
+        if (count == 0) {
+            Search search = new Search();
+            search.setSearchValue(course.getSearchValue());
+            searchService.save(search);
+        } else {
+            Search search = searchService.getOne(searchWrapper);
+            search.setSearchNum(search.getSearchNum() + 1);
+            searchService.updateById(search);
+        }
+
+        return buildVoForStudent(baseMapper.selectList(wrapper));
+    }
+
+    @Override
+    public List<CourseVo> listRecommend() {
+        // 去重课程ID，统计选课最多的课程ID
+        List<Long> courseIds = studentCourseService.list().stream()
+                .map(StudentCourse::getCourseId)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .limit(5)
+                .map(Map.Entry::getKey)
+                .toList();
+        return buildVoForStudent(baseMapper.selectByIds(courseIds));
     }
 
     public List<CourseVo> buildVo(List<Course> courseList) {

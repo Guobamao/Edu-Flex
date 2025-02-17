@@ -60,4 +60,24 @@ public interface ICourseService extends IService<Course>
      * @return 课程信息
      */
     CourseVo selectCourseById(Long id, Long userId);
+
+    /**
+     * 查询课程相关课程
+     * @param id 课程ID
+     * @return 结果
+     */
+    List<CourseVo> listRelatedCourse(Long id);
+
+    /**
+     * 关键词搜索课程
+     * @param course 查询条件
+     * @return 课程信息
+     */
+    List<CourseVo> searchCourse(Course course);
+
+    /**
+     * 查询推荐课程
+     * @return 推荐课程列表
+     */
+    List<CourseVo> listRecommend();
 }

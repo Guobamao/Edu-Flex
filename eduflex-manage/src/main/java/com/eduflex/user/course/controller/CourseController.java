@@ -3,6 +3,7 @@ package com.eduflex.user.course.controller;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.domain.vo.CourseVo;
 import com.eduflex.manage.course.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,22 @@ public class CourseController extends BaseController {
         } catch (Exception e) {
             return success(courseService.selectCourseById(id, null));
         }
+    }
+
+    @GetMapping("/listRelatedCourse/{id}")
+    public AjaxResult listRelatedCourse(@PathVariable("id") Long id) {
+        return success(courseService.listRelatedCourse(id));
+    }
+
+    @GetMapping("/search")
+    public TableDataInfo search(Course course) {
+        startPage();
+        List<CourseVo> list = courseService.searchCourse(course);
+        return getDataTable(list);
+    }
+
+    @GetMapping("/listRecommend")
+    public AjaxResult listRecommend() {
+        return success(courseService.listRecommend());
     }
 }
