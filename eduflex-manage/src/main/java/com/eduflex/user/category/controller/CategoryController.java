@@ -26,5 +26,4 @@ public class CategoryController extends BaseController {
     public AjaxResult list(@RequestParam Long directionId) {
         return success(categoryService.selectCourseListByDirectionId(directionId));
     }
-
 }

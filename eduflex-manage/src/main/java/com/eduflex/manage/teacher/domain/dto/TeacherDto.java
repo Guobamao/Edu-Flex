@@ -10,7 +10,7 @@ public class TeacherDto extends Teacher {
     private String email;
     private String phonenumber;
     private String sex;
-    private String avatar;
+    private Long avatar;
     private String password;
     private String status; // 状态：0启用，1停用
     private Long roleId; // 角色ID

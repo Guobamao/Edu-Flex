@@ -1,10 +1,9 @@
 package com.eduflex.system.service;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.common.core.domain.entity.SysUser;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 用户 业务层
@@ -139,10 +138,10 @@ public interface ISysUserService extends IService<SysUser>
     /**
      * 修改用户头像
      * @param userName 用户名
-     * @param avatar 头像地址
+     * @param fileId 头像文件ID
      * @return 结果
      */
-    boolean updateUserAvatar(String userName, String avatar);
+    boolean updateUserAvatar(String userName, Long fileId);
 
     /**
      * 重置用户密码

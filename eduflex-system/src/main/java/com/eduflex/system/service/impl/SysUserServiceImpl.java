@@ -1,27 +1,16 @@
 package com.eduflex.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.validation.Validator;
-
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.eduflex.common.core.domain.entity.SysDept;
-import com.eduflex.common.utils.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import com.eduflex.common.annotation.DataScope;
 import com.eduflex.common.constant.UserConstants;
+import com.eduflex.common.core.domain.entity.SysDept;
 import com.eduflex.common.core.domain.entity.SysRole;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.exception.ServiceException;
+import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.StringUtils;
 import com.eduflex.common.utils.bean.BeanValidators;
@@ -29,14 +18,21 @@ import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.system.domain.SysPost;
 import com.eduflex.system.domain.SysUserPost;
 import com.eduflex.system.domain.SysUserRole;
-import com.eduflex.system.mapper.SysPostMapper;
-import com.eduflex.system.mapper.SysRoleMapper;
-import com.eduflex.system.mapper.SysUserMapper;
-import com.eduflex.system.mapper.SysUserPostMapper;
-import com.eduflex.system.mapper.SysUserRoleMapper;
+import com.eduflex.system.mapper.*;
 import com.eduflex.system.service.ISysConfigService;
 import com.eduflex.system.service.ISysDeptService;
 import com.eduflex.system.service.ISysUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import javax.validation.Validator;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户 业务层处理
@@ -372,13 +368,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * 修改用户头像
      *
      * @param userName 用户名
-     * @param avatar 头像地址
+     * @param fileId 头像文件ID
      * @return 结果
      */
     @Override
-    public boolean updateUserAvatar(String userName, String avatar)
+    public boolean updateUserAvatar(String userName, Long fileId)
     {
-        return userMapper.updateUserAvatar(userName, avatar) > 0;
+        return userMapper.updateUserAvatar(userName, fileId) > 0;
     }
 
     /**

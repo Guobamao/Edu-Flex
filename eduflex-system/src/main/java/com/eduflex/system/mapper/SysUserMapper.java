@@ -1,10 +1,10 @@
 package com.eduflex.system.mapper;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 import com.eduflex.common.core.domain.entity.SysUser;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 用户表 数据层
@@ -73,10 +73,10 @@ public interface SysUserMapper extends BaseMapper<SysUser>
      * 修改用户头像
      *
      * @param userName 用户名
-     * @param avatar 头像地址
+     * @param fileId 头像地址
      * @return 结果
      */
-    int updateUserAvatar(@Param("userName") String userName, @Param("avatar") String avatar);
+    int updateUserAvatar(@Param("userName") String userName, @Param("fileId") Long fileId);
 
     /**
      * 重置用户密码

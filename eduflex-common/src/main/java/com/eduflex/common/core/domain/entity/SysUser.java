@@ -1,18 +1,18 @@
 package com.eduflex.common.core.domain.entity;
 
-import java.util.Date;
-import java.util.List;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.annotation.Excel.ColumnType;
 import com.eduflex.common.annotation.Excel.Type;
 import com.eduflex.common.annotation.Excels;
 import com.eduflex.common.core.domain.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用户对象 sys_user
@@ -56,7 +56,7 @@ public class SysUser extends BaseEntity
     private String sex;
 
     /** 用户头像 */
-    private String avatar;
+    private Long avatar;
 
     /** 密码 */
     private String password;

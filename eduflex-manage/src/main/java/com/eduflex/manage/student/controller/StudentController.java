@@ -1,33 +1,26 @@
 package com.eduflex.manage.student.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.eduflex.common.annotation.Log;
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.core.controller.BaseController;
+import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
+import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.student.domain.dto.StudentDto;
 import com.eduflex.manage.student.domain.vo.StudentGoalVo;
 import com.eduflex.manage.student.domain.vo.StudentVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.eduflex.common.annotation.Log;
-import com.eduflex.common.core.controller.BaseController;
-import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
 import com.eduflex.manage.student.service.IStudentService;
-import com.eduflex.common.utils.poi.ExcelUtil;
-import com.eduflex.common.core.page.TableDataInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 学生管理Controller
@@ -111,6 +104,7 @@ public class StudentController extends BaseController
         studentDto.setRoleId(EduFlexConstants.ROLE_STUDENT);
         studentDto.setCreateBy(getUsername());
         studentDto.setStatus(EduFlexConstants.STUDENT_STATUS_ENABLED);
+        studentDto.setAvatar(EduFlexConstants.DEFAULT_AVATAR);
         if (StrUtil.isNotBlank(studentDto.getPassword())) {
             studentDto.setPassword(SecurityUtils.encryptPassword(studentDto.getPassword()));
         } else {

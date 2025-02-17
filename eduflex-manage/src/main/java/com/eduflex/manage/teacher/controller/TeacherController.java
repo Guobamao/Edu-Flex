@@ -1,33 +1,26 @@
 package com.eduflex.manage.teacher.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
+import com.eduflex.common.annotation.Log;
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.core.controller.BaseController;
+import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.StringUtils;
+import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.teacher.domain.dto.TeacherDto;
 import com.eduflex.manage.teacher.domain.vo.TeacherVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.eduflex.common.annotation.Log;
-import com.eduflex.common.core.controller.BaseController;
-import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
 import com.eduflex.manage.teacher.service.ITeacherService;
-import com.eduflex.common.utils.poi.ExcelUtil;
-import com.eduflex.common.core.page.TableDataInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 教师管理Controller
@@ -99,6 +92,7 @@ public class TeacherController extends BaseController
         teacherDto.setCreateBy(getUsername());
         teacherDto.setStatus(EduFlexConstants.TEACHER_STATUS_ENABLED);
         teacherDto.setPassword(SecurityUtils.encryptPassword(teacherDto.getPassword()));
+        teacherDto.setAvatar(EduFlexConstants.DEFAULT_AVATAR);
         return toAjax(teacherService.insertTeacher(teacherDto));
     }
 

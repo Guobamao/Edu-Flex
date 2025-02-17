@@ -3,18 +3,18 @@ package com.eduflex.manage.comments.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.manage.comments.domain.Comments;
 import com.eduflex.manage.comments.domain.vo.CommentsVo;
+import com.eduflex.manage.comments.mapper.CommentsMapper;
+import com.eduflex.manage.comments.service.ICommentsService;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.comments.mapper.CommentsMapper;
-import com.eduflex.manage.comments.domain.Comments;
-import com.eduflex.manage.comments.service.ICommentsService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 评论管理Service业务层处理
@@ -51,11 +51,12 @@ public class CommentsServiceImpl extends ServiceImpl<CommentsMapper, Comments> i
             CommentsVo commentsVo = new CommentsVo();
             BeanUtil.copyProperties(comments, commentsVo);
 
-           commentsVo.setCourseName(courseService.getById(comments.getCourseId()).getName());
-           commentsVo.setUserName(sysUserService.selectUserById(comments.getUserId()).getUserName());
-           commentsVo.setNickName(sysUserService.selectUserById(comments.getUserId()).getNickName());
+            commentsVo.setCourseName(courseService.getById(comments.getCourseId()).getName());
 
-           commentsVos.add(commentsVo);
+            SysUser sysUser = sysUserService.selectUserById(comments.getUserId());
+            BeanUtil.copyProperties(sysUser, commentsVo);
+
+            commentsVos.add(commentsVo);
         }
         return commentsVos;
     }

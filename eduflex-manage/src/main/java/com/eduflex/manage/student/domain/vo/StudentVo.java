@@ -12,7 +12,7 @@ public class StudentVo extends Student {
     private String email;
     private String phonenumber;
     private String sex;
-    private String avatar;
+    private Long avatar;
     private String status;
     private String loginIp;
     private Date loginDate;

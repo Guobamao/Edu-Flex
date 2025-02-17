@@ -2,7 +2,12 @@ package com.eduflex.common.constant;
 
 import java.util.List;
 
-// 业务常量
+/**
+ * 业务常量
+ *
+ * @author 林煜鋒
+ * @date 2024-10-07
+ */
 public class EduFlexConstants {
 
     // 教师状态：启用
@@ -73,4 +78,7 @@ public class EduFlexConstants {
     public static final Integer STATUS_ENABLED = 1;
     // 状态 - 禁用
     public static final Integer STATUS_DISABLED = 0;
+
+    // 默认头像
+    public static final Long DEFAULT_AVATAR = 1891509518936834049L;
 }

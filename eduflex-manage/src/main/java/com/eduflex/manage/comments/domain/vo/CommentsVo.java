@@ -19,4 +19,6 @@ public class CommentsVo extends Comments {
     private String userName;
 
     private String nickName;
+
+    private Long avatar;
 }

@@ -6,17 +6,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.category.domain.Category;
+import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.course.domain.Course;
+import com.eduflex.manage.course.domain.dto.CourseDto;
+import com.eduflex.manage.course.domain.vo.CourseVo;
+import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
+import com.eduflex.manage.course_chapter.mapper.CourseMapper;
 import com.eduflex.manage.course_chapter.service.ICourseChapterService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.route.domain.Route;
-import com.eduflex.manage.course.domain.dto.CourseDto;
-import com.eduflex.manage.course.domain.vo.CourseVo;
-import com.eduflex.manage.course_chapter.mapper.CourseMapper;
-import com.eduflex.manage.category.service.ICategoryService;
-import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.route.service.IRouteService;
 import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.service.IStudentCourseService;
@@ -188,21 +188,23 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
                 .or()
                 .like(StrUtil.isNotBlank(course.getSearchValue()), Course::getDescription, course.getSearchValue());
 
-        // 搜索记录
-        LambdaQueryWrapper<Search> searchWrapper = new LambdaQueryWrapper<Search>()
-                .eq(Search::getSearchValue, course.getSearchValue());
-        long count = searchService.count(searchWrapper);
-        if (count == 0) {
-            Search search = new Search();
-            search.setSearchValue(course.getSearchValue());
-            searchService.save(search);
-        } else {
-            Search search = searchService.getOne(searchWrapper);
-            search.setSearchNum(search.getSearchNum() + 1);
-            searchService.updateById(search);
+        List<CourseVo> courseVoList = buildVoForStudent(baseMapper.selectList(wrapper));
+        if (!courseVoList.isEmpty()) {
+            // 搜索记录
+            LambdaQueryWrapper<Search> searchWrapper = new LambdaQueryWrapper<Search>()
+                    .eq(Search::getSearchValue, course.getSearchValue());
+            long count = searchService.count(searchWrapper);
+            if (count == 0) {
+                Search search = new Search();
+                search.setSearchValue(course.getSearchValue());
+                searchService.save(search);
+            } else {
+                Search search = searchService.getOne(searchWrapper);
+                search.setSearchNum(search.getSearchNum() + 1);
+                searchService.updateById(search);
+            }
         }
-
-        return buildVoForStudent(baseMapper.selectList(wrapper));
+        return courseVoList;
     }
 
     @Override
