@@ -54,7 +54,9 @@ public class CommentsServiceImpl extends ServiceImpl<CommentsMapper, Comments> i
             commentsVo.setCourseName(courseService.getById(comments.getCourseId()).getName());
 
             SysUser sysUser = sysUserService.selectUserById(comments.getUserId());
-            BeanUtil.copyProperties(sysUser, commentsVo);
+            commentsVo.setAvatar(sysUser.getAvatar());
+            commentsVo.setNickName(sysUser.getNickName());
+            commentsVo.setUserName(sysUser.getUserName());
 
             commentsVos.add(commentsVo);
         }

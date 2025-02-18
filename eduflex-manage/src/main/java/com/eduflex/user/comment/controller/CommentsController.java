@@ -6,9 +6,8 @@ import com.eduflex.manage.comments.domain.Comments;
 import com.eduflex.manage.comments.domain.vo.CommentsVo;
 import com.eduflex.manage.comments.service.ICommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ import java.util.List;
  */
 @RestController(value = "UserCommentController")
 @RequestMapping("/user/comment")
-public class CommentController extends BaseController {
+public class CommentsController extends BaseController {
 
     @Autowired
     private ICommentsService commentsService;
@@ -30,5 +29,13 @@ public class CommentController extends BaseController {
         startPage();
         List<CommentsVo> list = commentsService.selectCommentsList(comments);
         return getDataTable(list);
+    }
+
+    @PreAuthorize("@ss.hasRole('student')")
+    @PostMapping
+    public void add(@RequestBody Comments comments) {
+        comments.setUserId(getUserId());
+        comments.setCreateBy(getUsername());
+        commentsService.save(comments);
     }
 }
