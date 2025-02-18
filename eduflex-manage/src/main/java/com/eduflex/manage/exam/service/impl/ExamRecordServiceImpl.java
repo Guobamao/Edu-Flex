@@ -11,8 +11,8 @@ import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
 import com.eduflex.manage.exam.mapper.ExamRecordMapper;
 import com.eduflex.manage.exam.service.IExamRecordService;
 import com.eduflex.manage.exam.service.IExamService;
-import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
+import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.student.service.IStudentService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         StudentDto studentDto = new StudentDto();
         studentDto.setSearchValue(examRecord.getSearchValue());
 
-        List<Long> userIdList = studentService.selectStudentList(studentDto).stream().map(Student::getUserId).toList();
+        List<Long> userIdList = studentService.selectStudentList(studentDto).stream().map(StudentVo::getUserId).toList();
 
         if (userIdList.isEmpty()) {
             return Collections.emptyList();

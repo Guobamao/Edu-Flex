@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.student.domain.dto.StudentCourseDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
 import com.eduflex.manage.course.service.ICourseService;
@@ -38,8 +39,8 @@ public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, S
                 .eq(studentCourseDto.getUserId() != null, StudentCourse::getUserId, studentCourseDto.getUserId())
                 .eq(studentCourseDto.getCourseId() != null, StudentCourse::getCourseId, studentCourseDto.getCourseId())
                 .eq(studentCourseDto.getStatus() != null, StudentCourse::getStatus, studentCourseDto.getStatus());
-        if (studentCourseDto.getProgress() != null) {
-            wrapper.between(StudentCourse::getProgress, studentCourseDto.getProgress().get(0), studentCourseDto.getProgress().get(1));
+        if (studentCourseDto.getProgressList() != null) {
+            wrapper.between(StudentCourse::getProgress, studentCourseDto.getProgressList().get(0), studentCourseDto.getProgressList().get(1));
         }
 
         List<StudentCourse> studentCourses = baseMapper.selectList(wrapper);
@@ -52,7 +53,9 @@ public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, S
             studentCourseVo.setUserName(sysUser.getUserName());
             studentCourseVo.setNickName(sysUser.getNickName());
 
-            studentCourseVo.setCourseName(courseService.getById(studentCourse.getCourseId()).getName());
+            Course course = courseService.getById(studentCourse.getCourseId());
+            studentCourseVo.setCourseName(course.getName());
+            studentCourseVo.setCover(course.getCover());
 
             studentCourseVos.add(studentCourseVo);
         }

@@ -117,7 +117,10 @@ public class SecurityConfig
                         .antMatchers(HttpMethod.GET, "/common/preview/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/manage/files/previewFile/**").permitAll()
                         // 用户 GET 请求
-                        .antMatchers(HttpMethod.GET, "/user/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/user/category/**", "/user/comment/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/user/course/**", "/user/chapter/**", "/user/material/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/user/direction/**", "/user/search/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/user/teacher/**").permitAll()
                         // 字典 GET 请求
                         .antMatchers(HttpMethod.GET, "/system/dict/data/type/**").permitAll()
                     .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()

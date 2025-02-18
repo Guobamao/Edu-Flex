@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eduflex.manage.student.domain.Student;
+import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.study_record.domain.vo.StudyRecordVo;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.student.service.IStudentService;
@@ -59,7 +59,7 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
     private StudyRecordVo buildVo(StudyRecord studyRecord) {
         StudyRecordVo studyRecordVo = new StudyRecordVo();
         BeanUtils.copyProperties(studyRecord, studyRecordVo);
-        Student student = studentService.selectStudentById(studyRecord.getStudentId());
+        StudentVo student = studentService.selectStudentById(studyRecord.getStudentId());
         studyRecordVo.setNickName(userService.selectUserById(student.getUserId()).getNickName());
         studyRecordVo.setUserName(userService.selectUserById(student.getUserId()).getUserName());
         studyRecordVo.setCourseName(courseService.getById(studyRecord.getCourseId()).getName());

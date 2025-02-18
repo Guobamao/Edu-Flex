@@ -2,14 +2,15 @@ package com.eduflex.user.student.controller;
 
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.manage.student.domain.dto.StudentCourseDto;
+import com.eduflex.manage.student.domain.vo.StudentCourseVo;
 import com.eduflex.manage.student.service.IStudentCourseService;
-import com.eduflex.user.student.controller.domain.dto.StudentCourseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 学生选课 Controller
@@ -34,5 +35,17 @@ public class StudentCourseController extends BaseController {
         } else {
             return toAjax(studentCourseService.removeByUserIdAndCourseId(studentCourse.getUserId(), studentCourse.getCourseId()));
         }
+    }
+
+    /**
+     * 查询学生选课列表
+     */
+    @PreAuthorize("@ss.hasRole('student')")
+    @GetMapping("/list")
+    public TableDataInfo list(StudentCourseDto studentCourseDto) {
+        startPage();
+        studentCourseDto.setUserId(getUserId());
+        List<StudentCourseVo> list = studentCourseService.selectStudentCourseList(studentCourseDto);
+        return getDataTable(list);
     }
 }

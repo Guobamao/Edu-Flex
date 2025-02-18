@@ -14,7 +14,7 @@ import lombok.Data;
 
 /**
  * Entity基类
- * 
+ *
  * @author ruoyi
  */
 @Data

@@ -11,4 +11,5 @@ public class StudentCourseVo extends StudentCourse {
     private String userName;
     private String nickName;
     private String courseName;
+    private Long cover;
 }

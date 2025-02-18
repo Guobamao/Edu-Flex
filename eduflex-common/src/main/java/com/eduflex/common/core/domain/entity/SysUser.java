@@ -53,7 +53,7 @@ public class SysUser extends BaseEntity
 
     /** 用户性别 */
     @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
-    private String sex;
+    private Integer sex;
 
     /** 用户头像 */
     private Long avatar;
@@ -63,7 +63,7 @@ public class SysUser extends BaseEntity
 
     /** 帐号状态（0正常 1停用） */
     @Excel(name = "帐号状态", readConverterExp = "0=正常,1=停用")
-    private String status;
+    private Integer status;
 
     /** 最后登录IP */
     @Excel(name = "最后登录IP", type = Type.EXPORT)

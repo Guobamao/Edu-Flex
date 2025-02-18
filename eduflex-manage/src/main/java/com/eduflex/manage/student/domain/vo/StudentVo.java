@@ -1,19 +1,20 @@
 package com.eduflex.manage.student.domain.vo;
 
-import com.eduflex.manage.student.domain.Student;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class StudentVo extends Student {
+public class StudentVo {
+    private Long id;
+    private Long userId;
     private String nickName;
     private String userName;
     private String email;
     private String phonenumber;
-    private String sex;
+    private Integer sex;
     private Long avatar;
-    private String status;
+    private Integer status;
     private String loginIp;
     private Date loginDate;
 }
