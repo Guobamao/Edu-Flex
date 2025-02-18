@@ -133,25 +133,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     }
 
     @Override
-    public List<CourseVo> selectCourseListByDirectionIdAndCategoryId(Long directionId, Long categoryId) {
-        if (directionId != null) {
-            List<CourseVo> courseVoList = selectCourseListByDirectionId(directionId, "new");
-
-            if (categoryId != null) {
-                courseVoList = courseVoList.stream()
-                        .filter(courseVo -> courseVo.getCategoryId()
-                                .equals(categoryId))
-                        .toList();
-            }
-
-            return courseVoList;
-        } else {
-            LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<>();
-            return buildVoForStudent(baseMapper.selectList(wrapper));
-        }
-    }
-
-    @Override
     public CourseVo selectCourseById(Long id, Long userId) {
         Course course = baseMapper.selectById(id);
         List<Course> courseList = new ArrayList<>();
@@ -220,6 +201,30 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
                 .map(Map.Entry::getKey)
                 .toList();
         return buildVoForStudent(baseMapper.selectByIds(courseIds));
+    }
+
+    @Override
+    public List<CourseVo> selectCourseList(com.eduflex.user.course.domain.dto.CourseDto courseDto) {
+        if (courseDto.getDirectionId() != null) {
+            List<CourseVo> courseVos = selectCourseListByDirectionId(courseDto.getDirectionId(), "new");
+            if (courseDto.getCategoryId() != null) {
+                courseVos = courseVos.stream()
+                        .filter(courseVo -> courseVo.getCategoryId().equals(courseDto.getCategoryId()))
+                        .toList();
+            }
+            if (courseDto.getStatus() != null) {
+                courseVos = courseVos.stream()
+                        .filter(courseVo -> courseVo.getStatus().equals(courseDto.getStatus()))
+                        .toList();
+            }
+
+            return courseVos;
+        } else {
+            LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
+                    .eq(courseDto.getStatus() != null, Course::getStatus, courseDto.getStatus())
+                    .orderByDesc(Course::getCreateTime);
+            return buildVoForStudent(baseMapper.selectList(wrapper));
+        }
     }
 
     public List<CourseVo> buildVo(List<Course> courseList) {

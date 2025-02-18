@@ -6,6 +6,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.domain.vo.CourseVo;
 import com.eduflex.manage.course.service.ICourseService;
+import com.eduflex.user.course.domain.dto.CourseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,9 +31,9 @@ public class CourseController extends BaseController {
     }
 
     @GetMapping("/list")
-    public TableDataInfo list(Long directionId, Long categoryId) {
+    public TableDataInfo list(CourseDto courseDto) {
         startPage();
-        List<CourseVo> list = courseService.selectCourseListByDirectionIdAndCategoryId(directionId, categoryId);
+        List<CourseVo> list = courseService.selectCourseList(courseDto);
         return getDataTable(list);
     }
 

@@ -45,14 +45,6 @@ public interface ICourseService extends IService<Course>
     List<CourseVo> selectCourseListByDirectionId(Long directionId, String type);
 
     /**
-     * 根据方向id和分类id查询课程管理列表
-     * @param directionId 方向ID
-     * @param categoryId 分类ID
-     * @return 结果
-     */
-    List<CourseVo> selectCourseListByDirectionIdAndCategoryId(Long directionId, Long categoryId);
-
-    /**
      * 根据课程ID查询课程信息
      *
      * @param id     课程ID
@@ -80,4 +72,11 @@ public interface ICourseService extends IService<Course>
      * @return 推荐课程列表
      */
     List<CourseVo> listRecommend();
+
+    /**
+     * 查询课程列表
+     * @param courseDto 查询条件
+     * @return 课程列表
+     */
+    List<CourseVo> selectCourseList(com.eduflex.user.course.domain.dto.CourseDto courseDto);
 }

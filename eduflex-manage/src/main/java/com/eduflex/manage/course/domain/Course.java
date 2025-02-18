@@ -59,5 +59,5 @@ public class Course extends BaseEntity
 
     /** 课程状态(0=未开始 1=进行中 2=已结束) */
     @Excel(name = "课程状态(0=未开始 1=进行中 2=已结束)")
-    private String status;
+    private Integer status;
 }
