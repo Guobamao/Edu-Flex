@@ -7,10 +7,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.manage.exam.domain.ExamRecord;
 import com.eduflex.manage.exam.domain.vo.ExamVo;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.paper.service.IPaperService;
+import com.eduflex.user.exam.domain.dto.ExamDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eduflex.manage.exam.mapper.ExamMapper;

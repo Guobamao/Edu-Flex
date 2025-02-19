@@ -1,6 +1,8 @@
 package com.eduflex.manage.exam.service;
 
 import java.util.List;
+
+import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.manage.exam.domain.ExamRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.exam.domain.dto.ExamRecordDto;
@@ -37,4 +39,11 @@ public interface IExamRecordService extends IService<ExamRecord> {
      * @return 考试列表
      */
     List<ExamVo> selectExamRecordList(ExamDto examDto);
+
+    /**
+     * 创建考试
+     * @param examDto 查询条件
+     * @return 结果
+     */
+    String createExam(ExamDto examDto);
 }

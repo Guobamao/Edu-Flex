@@ -2,7 +2,9 @@ package com.eduflex.manage.exam.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.course.service.ICourseService;
@@ -19,6 +21,8 @@ import com.eduflex.manage.student.domain.vo.StudentCourseVo;
 import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.manage.student.service.IStudentService;
+import com.eduflex.quartz.domain.SysJob;
+import com.eduflex.quartz.service.ISysJobService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.exam.domain.dto.ExamDto;
 import com.eduflex.user.exam.domain.vo.ExamVo;
@@ -52,6 +56,9 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
 
     @Autowired
     private ICourseService courseService;
+
+    @Autowired
+    private ISysJobService jobService;
 
     @Override
     public List<ExamRecordVo> selectExamRecordList(ExamRecordDto examRecord) {
@@ -147,6 +154,40 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             }).toList();
         }
         return List.of();
+    }
+
+    @Override
+    public String createExam(ExamDto examDto) {
+        LambdaQueryWrapper<ExamRecord> wrapper = new LambdaQueryWrapper<ExamRecord>()
+                .eq(ExamRecord::getUserId, examDto.getUserId())
+                .eq(ExamRecord::getStatus, EduFlexConstants.STATUS_IN_PROGRESS);
+        if (baseMapper.selectCount(wrapper) > 0) {
+            throw new ServiceException("您有正在进行的考试！");
+        }
+
+        // 查找考试
+        Exam exam = examService.getById(examDto.getExamId());
+        if (exam == null) {
+            throw new ServiceException("考试不存在");
+        }
+
+        if (exam.getPublished().equals(EduFlexConstants.EXAM_PUBLISH_STATUS_UNPUBLISHED) {
+            throw new ServiceException("考试未发布");
+        }
+
+        if (exam.getStatus().equals(EduFlexConstants.STATUS_UNSTARTED)) {
+            throw new ServiceException("考试未开始");
+        }
+
+        if (exam.getStatus().equals(EduFlexConstants.STATUS_ENDED)) {
+            throw new ServiceException("考试已结束");
+        }
+
+
+        // 创建强制交卷任务
+        SysJob sysJob = new SysJob();
+        sysJob.setJobName("强制交卷-" + examDto.getExamId());
+        jobService.insertJob()
     }
 
     private ExamRecordVo buildVo(ExamRecord examRecord) {

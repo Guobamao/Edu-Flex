@@ -95,4 +95,9 @@ public class EduFlexConstants {
     public static final Integer HOMEWORK_STATUS_PENDING = 1;
     // 作业状态 - 已批阅
     public static final Integer HOMEWORK_STATUS_REVIEWED = 2;
+
+    // 考试发布状态 - 未发布
+    public static final Integer EXAM_PUBLISH_STATUS_UNPUBLISHED = 0;
+    // 考试发布状态 - 已发布
+    public static final Integer EXAM_PUBLISH_STATUS_PUBLISHED = 1;
 }

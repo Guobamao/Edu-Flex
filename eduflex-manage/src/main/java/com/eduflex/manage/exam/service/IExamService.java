@@ -4,6 +4,7 @@ import java.util.List;
 import com.eduflex.manage.exam.domain.Exam;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.exam.domain.vo.ExamVo;
+import com.eduflex.user.exam.domain.dto.ExamDto;
 
 /**
  * 考试管理 Service接口
