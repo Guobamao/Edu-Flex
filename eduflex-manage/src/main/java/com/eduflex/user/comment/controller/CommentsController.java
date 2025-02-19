@@ -17,7 +17,7 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2025-02-16
  */
-@RestController(value = "UserCommentController")
+@RestController(value = "UserCommentsController")
 @RequestMapping("/user/comment")
 public class CommentsController extends BaseController {
 

@@ -27,7 +27,7 @@ public class HomeworkStudent extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 作业ID */
+    /** 学生作业ID */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
@@ -40,6 +40,10 @@ public class HomeworkStudent extends BaseEntity
     /** 提交时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date submitTime;
-    /** 提交状态 */
+
+    // 提交状态（0-未做 1-待批阅 2-已批阅）
     private Integer status;
+
+    // 作答内容
+    private String answer;
 }

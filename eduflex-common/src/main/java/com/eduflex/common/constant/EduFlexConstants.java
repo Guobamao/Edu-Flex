@@ -81,4 +81,18 @@ public class EduFlexConstants {
 
     // 默认头像
     public static final Long DEFAULT_AVATAR = 1891509518936834049L;
+
+    // 通用状态 - 未开始
+    public static final Integer STATUS_UNSTARTED = 0;
+    // 通用状态 - 进行中
+    public static final Integer STATUS_IN_PROGRESS = 1;
+    // 通用状态 - 已结束
+    public static final Integer STATUS_ENDED = 2;
+
+    // 作业状态 - 未做
+    public static final Integer HOMEWORK_STATUS_UNDO = 0;
+    // 作业状态 - 待批阅
+    public static final Integer HOMEWORK_STATUS_PENDING = 1;
+    // 作业状态 - 已批阅
+    public static final Integer HOMEWORK_STATUS_REVIEWED = 2;
 }

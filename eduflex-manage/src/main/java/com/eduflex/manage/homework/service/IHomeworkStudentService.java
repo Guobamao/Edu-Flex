@@ -22,4 +22,18 @@ public interface IHomeworkStudentService extends IService<HomeworkStudent> {
      * @return 作业列表
      */
     List<HomeworkVo> selectHomeworkList(HomeworkDto homework);
+
+    /**
+     * 获取学生作业详情
+     * @param homeworkDto 查询条件
+     * @return 作业详情
+     */
+    HomeworkVo selectHomework(HomeworkDto homeworkDto);
+
+    /**
+     * 更新学生作业 （提交作业、批阅作业）
+     * @param homeworkDto 更新条件
+     * @return 修改结果
+     */
+    boolean submitHomework(HomeworkDto homeworkDto);
 }

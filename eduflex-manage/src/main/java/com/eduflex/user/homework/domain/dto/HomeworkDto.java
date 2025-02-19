@@ -6,4 +6,6 @@ import lombok.Data;
 public class HomeworkDto {
     private Long userId;
     private Long courseId;
+    private Long homeworkId;
+    private String answer;
 }
