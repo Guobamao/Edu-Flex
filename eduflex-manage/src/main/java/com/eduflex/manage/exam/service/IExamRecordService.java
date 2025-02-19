@@ -5,6 +5,8 @@ import com.eduflex.manage.exam.domain.ExamRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.exam.domain.dto.ExamRecordDto;
 import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
+import com.eduflex.user.exam.domain.dto.ExamDto;
+import com.eduflex.user.exam.domain.vo.ExamVo;
 
 /**
  * 考试记录 Service接口
@@ -28,4 +30,11 @@ public interface IExamRecordService extends IService<ExamRecord> {
      * @return 考试记录
      */
     ExamRecordVo selectExamRecordById(Long id);
+
+    /**
+     * 学生端 - 获取考试列表
+     * @param examDto 查询条件
+     * @return 考试列表
+     */
+    List<ExamVo> selectExamRecordList(ExamDto examDto);
 }

@@ -18,7 +18,6 @@ import com.eduflex.manage.student.domain.vo.StudentCourseVo;
 import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.user.homework.domain.dto.HomeworkDto;
 import com.eduflex.user.homework.domain.vo.HomeworkVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +60,8 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
         // 查询课程下的作业
         if (!courseIds.isEmpty()) {
             LambdaQueryWrapper<Homework> homeworkWrapper = new LambdaQueryWrapper<Homework>()
-                    .in(Homework::getCourseId, courseIds);
+                    .in(Homework::getCourseId, courseIds)
+                    .orderByDesc(Homework::getCreateTime);
             List<Homework> homeworkList = homeworkService.list(homeworkWrapper);
 
             return homeworkList.stream().map(v -> {

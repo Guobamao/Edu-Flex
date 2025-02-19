@@ -28,4 +28,6 @@ public class ExamRecord {
     private Date startTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date submitTime;
 }
