@@ -3,6 +3,7 @@ package com.eduflex.user.exam.controller;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.exception.job.TaskException;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.exam.domain.Exam;
 import com.eduflex.manage.exam.service.IExamRecordService;
@@ -10,6 +11,7 @@ import com.eduflex.manage.exam.service.IExamService;
 import com.eduflex.user.exam.domain.dto.ExamDto;
 import com.eduflex.user.exam.domain.vo.ExamDetailVo;
 import com.eduflex.user.exam.domain.vo.ExamVo;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +48,7 @@ public class ExamController extends BaseController {
     }
 
     @GetMapping("/create")
-    public AjaxResult createExam(ExamDto examDto) {
+    public AjaxResult createExam(ExamDto examDto) throws SchedulerException, TaskException {
         examDto.setUserId(getUserId());
         return success(examRecordService.createExam(examDto));
     }

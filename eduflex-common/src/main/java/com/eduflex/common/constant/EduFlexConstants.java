@@ -100,4 +100,14 @@ public class EduFlexConstants {
     public static final Integer EXAM_PUBLISH_STATUS_UNPUBLISHED = 0;
     // 考试发布状态 - 已发布
     public static final Integer EXAM_PUBLISH_STATUS_PUBLISHED = 1;
+
+    // 考试状态 - 未开始
+    public static final Integer EXAM_STATUS_UNSTARTED = 0;
+    // 考试状态 - 进行中
+    public static final Integer EXAM_STATUS_IN_PROGRESS = 1;
+    // 考试状态 - 待批阅
+    public static final Integer EXAM_STATUS_PENDING = 2;
+    // 考试状态 - 已完成
+    public static final Integer EXAM_STATUS_ENDED = 3;
+
 }

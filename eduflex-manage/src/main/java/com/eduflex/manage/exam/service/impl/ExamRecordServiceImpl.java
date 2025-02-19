@@ -5,16 +5,22 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.exception.ServiceException;
+import com.eduflex.common.exception.job.TaskException;
+import com.eduflex.common.utils.CronUtils;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.exam.domain.Exam;
+import com.eduflex.manage.exam.domain.ExamAnswer;
 import com.eduflex.manage.exam.domain.ExamRecord;
 import com.eduflex.manage.exam.domain.dto.ExamRecordDto;
 import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
 import com.eduflex.manage.exam.mapper.ExamRecordMapper;
+import com.eduflex.manage.exam.service.IExamAnswerService;
 import com.eduflex.manage.exam.service.IExamRecordService;
 import com.eduflex.manage.exam.service.IExamService;
+import com.eduflex.manage.paper.domain.vo.PaperQuestionVo;
+import com.eduflex.manage.paper.service.IPaperQuestionService;
 import com.eduflex.manage.student.domain.dto.StudentCourseDto;
 import com.eduflex.manage.student.domain.dto.StudentDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
@@ -26,12 +32,13 @@ import com.eduflex.quartz.service.ISysJobService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.exam.domain.dto.ExamDto;
 import com.eduflex.user.exam.domain.vo.ExamVo;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
+import static com.eduflex.common.utils.SecurityUtils.getUsername;
 
 /**
  * 考试记录Service业务层处理
@@ -59,6 +66,12 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
 
     @Autowired
     private ISysJobService jobService;
+
+    @Autowired
+    private IPaperQuestionService paperQuestionService;
+
+    @Autowired
+    private IExamAnswerService examAnswerService;
 
     @Override
     public List<ExamRecordVo> selectExamRecordList(ExamRecordDto examRecord) {
@@ -157,7 +170,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
     }
 
     @Override
-    public String createExam(ExamDto examDto) {
+    public Long createExam(ExamDto examDto) throws SchedulerException, TaskException {
         LambdaQueryWrapper<ExamRecord> wrapper = new LambdaQueryWrapper<ExamRecord>()
                 .eq(ExamRecord::getUserId, examDto.getUserId())
                 .eq(ExamRecord::getStatus, EduFlexConstants.STATUS_IN_PROGRESS);
@@ -171,7 +184,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             throw new ServiceException("考试不存在");
         }
 
-        if (exam.getPublished().equals(EduFlexConstants.EXAM_PUBLISH_STATUS_UNPUBLISHED) {
+        if (exam.getPublished().equals(EduFlexConstants.EXAM_PUBLISH_STATUS_UNPUBLISHED)) {
             throw new ServiceException("考试未发布");
         }
 
@@ -183,11 +196,117 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             throw new ServiceException("考试已结束");
         }
 
+        // 创建考试记录
+        ExamRecord examRecord = new ExamRecord();
+        examRecord.setExamId(exam.getId());
+        examRecord.setPaperId(exam.getPaperId());
+        examRecord.setUserId(examDto.getUserId());
+        examRecord.setStatus(EduFlexConstants.STATUS_IN_PROGRESS);
+        examRecord.setCreateBy(getUsername());
+
 
         // 创建强制交卷任务
         SysJob sysJob = new SysJob();
-        sysJob.setJobName("强制交卷-" + examDto.getExamId());
-        jobService.insertJob()
+        sysJob.setJobName("强制交卷-" + examRecord.getId());
+        sysJob.setJobGroup("DEFAULT");
+        String cron = CronUtils.dateToCron(calculateExamEndTime(exam));
+        sysJob.setCronExpression(cron);
+        sysJob.setInvokeTarget("breakExamTask.ryParams(" + examRecord.getId() + "L)");
+        sysJob.setStatus("0");
+        sysJob.setMisfirePolicy("1");
+        jobService.insertJob(sysJob);
+
+        examRecord.setJobId(sysJob.getJobId());
+        baseMapper.insert(examRecord);
+        return examRecord.getId();
+    }
+
+    @Override
+    public void handExam(Long recordId) throws SchedulerException {
+        // 获取考试记录
+        ExamRecord examRecord = baseMapper.selectById(recordId);
+        if (examRecord.getStatus().equals(EduFlexConstants.STATUS_IN_PROGRESS)) {
+            throw new ServiceException("考试状态不正确！");
+        }
+
+        // 获取学生考试答案记录
+        ExamAnswer examAnswer = new ExamAnswer();
+        examAnswer.setRecordId(recordId);
+        List<ExamAnswer> examAnswers = examAnswerService.selectExamAnswerList(examAnswer);
+
+        // 计算客观分
+        Map<Integer, List<PaperQuestionVo>> integerListMap = paperQuestionService.selectQuestionByPaperId(examRecord.getPaperId());
+        List<PaperQuestionVo> singleChoiceList = integerListMap.get(EduFlexConstants.SINGLE_CHOICE);
+        List<PaperQuestionVo> multipleChoiceList = integerListMap.get(EduFlexConstants.MULTIPLE_CHOICE);
+        List<PaperQuestionVo> judgeList = integerListMap.get(EduFlexConstants.JUDGMENT);
+
+        int singleScore = 0;
+        int multipleScore = 0;
+        int judgeScore = 0;
+        for (PaperQuestionVo paperQuestionVo : singleChoiceList) {
+            // 获取题目ID
+            Long questionId = paperQuestionVo.getId();
+            for (ExamAnswer answer : examAnswers) {
+                if (answer.getQuestionId().equals(questionId)) {
+                    if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
+                        singleScore += paperQuestionVo.getScore();
+                    }
+                }
+            }
+        }
+        for (PaperQuestionVo paperQuestionVo : multipleChoiceList) {
+            // 获取题目ID
+            Long questionId = paperQuestionVo.getId();
+            for (ExamAnswer answer : examAnswers) {
+                if (answer.getQuestionId().equals(questionId)) {
+                    if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
+                        multipleScore += paperQuestionVo.getScore();
+                    }
+                }
+            }
+        }
+        for (PaperQuestionVo paperQuestionVo : judgeList) {
+            // 获取题目ID
+            Long questionId = paperQuestionVo.getId();
+            for (ExamAnswer answer : examAnswers) {
+                if (answer.getQuestionId().equals(questionId)) {
+                    if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
+                        judgeScore += paperQuestionVo.getScore();
+                    }
+                }
+            }
+       }
+
+        // 设置分数为客观题分
+        examRecord.setScore(singleScore + multipleScore + judgeScore);
+        // 设置提交时间
+        examRecord.setSubmitTime(DateUtils.getNowDate());
+        examRecord.setUpdateBy("System");
+        // 计算考试时长
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        int duration = (int) ((System.currentTimeMillis() - examRecord.getCreateTime().getTime()) / 1000 / 1000);
+        if (duration == 0) {
+            duration = 1;
+        }
+        examRecord.setDuration(duration);
+
+        // 判断是否有客观题（填空题 / 简答题）
+        List<PaperQuestionVo> blankList = integerListMap.get(EduFlexConstants.FILL_BLANK);
+        List<PaperQuestionVo> shortAnswerList = integerListMap.get(EduFlexConstants.SHORT_ANSWER);
+        if (!blankList.isEmpty() || !shortAnswerList.isEmpty()) {
+            // 若有 则设置为待批阅
+            examRecord.setStatus(EduFlexConstants.EXAM_STATUS_PENDING);
+        } else {
+            // 没有则设置为考试结束
+            examRecord.setStatus(EduFlexConstants.EXAM_STATUS_ENDED);
+            // 更新考试记录
+            baseMapper.updateById(examRecord);
+        }
+
+        // 终止定时任务
+        SysJob sysJob = jobService.selectJobById(examRecord.getJobId());
+        jobService.changeStatus(sysJob);
     }
 
     private ExamRecordVo buildVo(ExamRecord examRecord) {
@@ -212,5 +331,29 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             examRecordVoList.add(examRecordVo);
         }
         return examRecordVoList;
+    }
+
+    public Date calculateExamEndTime(Exam exam) {
+        // 如果设置了限时，优先使用限时的结束时间
+        if (exam.getLimited() == 1) {
+            // 计算当前时间到结束时间的分钟差
+            long diff = exam.getEndTime().getTime() - DateUtils.getNowDate().getTime();
+            if (diff > 0) {
+                // 判断时间差是否大于考试时长，如果大于，则使用考试时长，否则使用剩余时间
+                if (diff > exam.getDuration() * 60 * 1000) {
+                    return new Date(exam.getEndTime().getTime() - exam.getDuration() * 60 * 1000);
+                } else {
+                    return new Date(exam.getEndTime().getTime() - diff);
+                }
+            } else {
+                return exam.getEndTime();
+            }
+        } else {
+            // 如果没有限时，使用考试时长和开始考试时间来计算结束时间
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(DateUtils.getNowDate());
+            calendar.add(Calendar.MINUTE, exam.getDuration());
+            return calendar.getTime();
+        }
     }
 }

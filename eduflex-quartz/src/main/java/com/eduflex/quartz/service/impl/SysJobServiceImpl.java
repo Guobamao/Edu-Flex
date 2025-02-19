@@ -1,14 +1,6 @@
 package com.eduflex.quartz.service.impl;
 
-import java.util.List;
-import javax.annotation.PostConstruct;
-import org.quartz.JobDataMap;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import cn.hutool.core.util.StrUtil;
 import com.eduflex.common.constant.ScheduleConstants;
 import com.eduflex.common.exception.job.TaskException;
 import com.eduflex.quartz.domain.SysJob;
@@ -16,6 +8,16 @@ import com.eduflex.quartz.mapper.SysJobMapper;
 import com.eduflex.quartz.service.ISysJobService;
 import com.eduflex.quartz.util.CronUtils;
 import com.eduflex.quartz.util.ScheduleUtils;
+import org.quartz.JobDataMap;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * 定时任务调度信息 服务层
@@ -201,7 +203,9 @@ public class SysJobServiceImpl implements ISysJobService
     @Transactional(rollbackFor = Exception.class)
     public int insertJob(SysJob job) throws SchedulerException, TaskException
     {
-        job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
+        if (StrUtil.isBlank(job.getStatus())) {
+            job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
+        }
         int rows = jobMapper.insertJob(job);
         if (rows > 0)
         {
