@@ -70,6 +70,18 @@ public class ExamController extends BaseController {
     }
 
     /**
+     * 交卷
+     * @param examDto 查询条件
+     * @return 结果
+     */
+    @PreAuthorize("@ss.hasRole('student')")
+    @PostMapping("/submit")
+    public AjaxResult submitExam(@RequestBody ExamDto examDto) {
+        examRecordService.handExam(examDto.getRecordId());
+        return success();
+    }
+
+    /**
      * 获取考试记录详情
      * @param id 考试记录ID
      * @return 考试记录详情
@@ -80,9 +92,20 @@ public class ExamController extends BaseController {
         return success(examRecordService.selectExamRecordById(id));
     }
 
+    /**
+     * 获取考试记录结果
+     * @param id 考试记录ID
+     * @return 考试记录结果
+     */
     @PreAuthorize("@ss.hasRole('student')")
     @GetMapping("/result/{id}")
     public AjaxResult getExamResult(@PathVariable("id") Long id) {
-        return success(examRecordService.selectExamRecordById(id));
+        return success(examRecordService.selectExamResultById(id));
+    }
+
+    @PreAuthorize("@ss.hasRole('student')")
+    @GetMapping("/check")
+    public AjaxResult checkExam() {
+        return success(examRecordService.checkExam(getUserId()));
     }
 }

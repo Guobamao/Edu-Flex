@@ -38,4 +38,6 @@ public class ExamVo {
     // 提交时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date submitTime;
+    // 记录ID
+    private Long recordId;
 }

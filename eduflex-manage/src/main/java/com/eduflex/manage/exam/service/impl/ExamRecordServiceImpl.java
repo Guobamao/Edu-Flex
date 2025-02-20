@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.exception.ServiceException;
+import com.eduflex.common.exception.job.TaskException;
+import com.eduflex.common.utils.CronUtils;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.course.service.ICourseService;
@@ -29,13 +31,16 @@ import com.eduflex.quartz.domain.SysJob;
 import com.eduflex.quartz.service.ISysJobService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.exam.domain.dto.ExamDto;
+import com.eduflex.user.exam.domain.vo.ExamResultQuestionVo;
+import com.eduflex.user.exam.domain.vo.ExamResultVo;
 import com.eduflex.user.exam.domain.vo.ExamVo;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
+import static com.eduflex.common.utils.SecurityUtils.getUsername;
 
 /**
  * 考试记录Service业务层处理
@@ -150,11 +155,13 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
                 LambdaQueryWrapper<ExamRecord> wrapper = new LambdaQueryWrapper<ExamRecord>()
                         .eq(ExamRecord::getUserId, examDto.getUserId())
                         .eq(ExamRecord::getExamId, v.getId());
-                ExamRecord examRecord = getOne(wrapper);
-                if (examRecord != null) {
+                List<ExamRecord> examRecordList = list(wrapper);
+                if (!examRecordList.isEmpty()) {
                     // 设置提交状态
+                    ExamRecord examRecord = examRecordList.get(examRecordList.size() - 1);
                     examVo.setSubmitStatus(examRecord.getStatus());
                     examVo.setSubmitTime(examRecord.getSubmitTime());
+                    examVo.setRecordId(examRecord.getId());
                 } else {
                     // 设置提交状态为未开始
                     examVo.setSubmitStatus(0);
@@ -167,7 +174,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
     }
 
     @Override
-    public Long createExam(ExamDto examDto) {
+    public Long createExam(ExamDto examDto) throws SchedulerException, TaskException {
         LambdaQueryWrapper<ExamRecord> wrapper = new LambdaQueryWrapper<ExamRecord>()
                 .eq(ExamRecord::getUserId, examDto.getUserId())
                 .eq(ExamRecord::getStatus, EduFlexConstants.STATUS_IN_PROGRESS);
@@ -200,7 +207,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         examRecord.setUserId(examDto.getUserId());
         examRecord.setStatus(EduFlexConstants.STATUS_IN_PROGRESS);
         examRecord.setCreateBy(getUsername());
-
+        baseMapper.insert(examRecord);
 
         // 创建强制交卷任务
         SysJob sysJob = new SysJob();
@@ -214,102 +221,187 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         jobService.insertJob(sysJob);
 
         examRecord.setJobId(sysJob.getJobId());
-        baseMapper.insert(examRecord);
+        baseMapper.updateById(examRecord);
         return examRecord.getId();
     }
 
     @Override
-    public void handExam(Long recordId) throws SchedulerException {
+    public void handExam(Long recordId) {
         // 获取考试记录
         ExamRecord examRecord = baseMapper.selectById(recordId);
-        if (examRecord.getStatus().equals(EduFlexConstants.STATUS_IN_PROGRESS)) {
-            throw new ServiceException("考试状态不正确！");
-        }
 
-        // 获取学生考试答案记录
+        // 判断考试状态, 若为待批阅 / 已完成，则跳过
+        if (examRecord.getStatus().equals(EduFlexConstants.EXAM_STATUS_PENDING) || examRecord.getStatus().equals(EduFlexConstants.EXAM_STATUS_ENDED)) {
+            return;
+        }
+        if (examRecord.getStatus().equals(EduFlexConstants.STATUS_IN_PROGRESS)) {
+
+            // 获取学生考试答案记录
+            ExamAnswer examAnswer = new ExamAnswer();
+            examAnswer.setRecordId(recordId);
+            List<ExamAnswer> examAnswers = examAnswerService.selectExamAnswerList(examAnswer);
+
+            // 计算客观分
+            Map<Integer, List<PaperQuestionVo>> integerListMap = paperQuestionService.selectQuestionByPaperId(examRecord.getPaperId());
+            List<PaperQuestionVo> singleChoiceList = integerListMap.get(EduFlexConstants.SINGLE_CHOICE);
+            List<PaperQuestionVo> multipleChoiceList = integerListMap.get(EduFlexConstants.MULTIPLE_CHOICE);
+            List<PaperQuestionVo> judgeList = integerListMap.get(EduFlexConstants.JUDGMENT);
+
+            int singleScore = 0;
+            int multipleScore = 0;
+            int judgeScore = 0;
+            singleScore = calculateScore(examAnswers, singleChoiceList, singleScore);
+            multipleScore = calculateScore(examAnswers, multipleChoiceList, multipleScore);
+            judgeScore = calculateScore(examAnswers, judgeList, judgeScore);
+
+            // 设置分数为客观题分
+            examRecord.setScore(singleScore + multipleScore + judgeScore);
+
+            // 设置提交时间
+            examRecord.setSubmitTime(DateUtils.getNowDate());
+            examRecord.setUpdateBy("System");
+
+            // 计算考试时长
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            int duration = (int) ((System.currentTimeMillis() - examRecord.getCreateTime().getTime()) / 1000);
+            if (duration == 0) {
+                duration = 1;
+            }
+            examRecord.setDuration(duration);
+
+            // 判断是否有客观题（填空题 / 简答题）
+            List<PaperQuestionVo> blankList = integerListMap.get(EduFlexConstants.FILL_BLANK);
+            List<PaperQuestionVo> shortAnswerList = integerListMap.get(EduFlexConstants.SHORT_ANSWER);
+            if (!blankList.isEmpty() || !shortAnswerList.isEmpty()) {
+                // 若有 则设置为待批阅
+                examRecord.setStatus(EduFlexConstants.EXAM_STATUS_PENDING);
+            } else {
+                // 没有则设置为考试结束
+                examRecord.setStatus(EduFlexConstants.EXAM_STATUS_ENDED);
+            }
+
+            // 更新考试记录
+            baseMapper.updateById(examRecord);
+
+            // 终止定时任务
+            SysJob sysJob = jobService.selectJobById(examRecord.getJobId());
+            try {
+                jobService.changeStatus(sysJob);
+            } catch (SchedulerException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
+    public ExamResultVo selectExamResultById(Long id) {
+        ExamRecord examRecord = baseMapper.selectById(id);
+        if (examRecord != null) {
+            return buildResultVo(examRecord);
+        }
+        return null;
+    }
+
+    @Override
+    public ExamRecord checkExam(Long userId) {
+        LambdaQueryWrapper<ExamRecord> wrapper = new LambdaQueryWrapper<ExamRecord>()
+                .eq(ExamRecord::getUserId, userId)
+                .eq(ExamRecord::getStatus, EduFlexConstants.STATUS_IN_PROGRESS);
+        return baseMapper.selectOne(wrapper);
+    }
+
+    private ExamResultVo buildResultVo(ExamRecord examRecord) {
+        ExamResultVo examResultVo = new ExamResultVo();
+
+        SysUser sysUser = userService.selectUserById(examRecord.getUserId());
+        examResultVo.setUserName(sysUser.getUserName());
+        examResultVo.setNickName(sysUser.getNickName());
+
+        Exam exam = examService.getById(examRecord.getExamId());
+        examResultVo.setExamName(exam.getName());
+
+        examResultVo.setDuration(examRecord.getDuration());
+        examResultVo.setScore(examRecord.getScore());
+        examResultVo.setStatus(examRecord.getStatus());
+
         ExamAnswer examAnswer = new ExamAnswer();
-        examAnswer.setRecordId(recordId);
+        examAnswer.setRecordId(examRecord.getId());
         List<ExamAnswer> examAnswers = examAnswerService.selectExamAnswerList(examAnswer);
 
-        // 计算客观分
+        List<ExamResultQuestionVo> questionList = new ArrayList<>();
+
         Map<Integer, List<PaperQuestionVo>> integerListMap = paperQuestionService.selectQuestionByPaperId(examRecord.getPaperId());
         List<PaperQuestionVo> singleChoiceList = integerListMap.get(EduFlexConstants.SINGLE_CHOICE);
         List<PaperQuestionVo> multipleChoiceList = integerListMap.get(EduFlexConstants.MULTIPLE_CHOICE);
         List<PaperQuestionVo> judgeList = integerListMap.get(EduFlexConstants.JUDGMENT);
-
-        int singleScore = 0;
-        int multipleScore = 0;
-        int judgeScore = 0;
-        for (PaperQuestionVo paperQuestionVo : singleChoiceList) {
-            // 获取题目ID
-            Long questionId = paperQuestionVo.getId();
-            for (ExamAnswer answer : examAnswers) {
-                if (answer.getQuestionId().equals(questionId)) {
-                    if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
-                        singleScore += paperQuestionVo.getScore();
-                    }
-                }
-            }
-        }
-        for (PaperQuestionVo paperQuestionVo : multipleChoiceList) {
-            // 获取题目ID
-            Long questionId = paperQuestionVo.getId();
-            for (ExamAnswer answer : examAnswers) {
-                if (answer.getQuestionId().equals(questionId)) {
-                    if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
-                        multipleScore += paperQuestionVo.getScore();
-                    }
-                }
-            }
-        }
-        for (PaperQuestionVo paperQuestionVo : judgeList) {
-            // 获取题目ID
-            Long questionId = paperQuestionVo.getId();
-            for (ExamAnswer answer : examAnswers) {
-                if (answer.getQuestionId().equals(questionId)) {
-                    if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
-                        judgeScore += paperQuestionVo.getScore();
-                    }
-                }
-            }
-       }
-
-        // 设置分数为客观题分
-        examRecord.setScore(singleScore + multipleScore + judgeScore);
-        // 设置提交时间
-        examRecord.setSubmitTime(DateUtils.getNowDate());
-        examRecord.setUpdateBy("System");
-        // 计算考试时长
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        int duration = (int) ((System.currentTimeMillis() - examRecord.getCreateTime().getTime()) / 1000 / 1000);
-        if (duration == 0) {
-            duration = 1;
-        }
-        examRecord.setDuration(duration);
-
-        // 判断是否有客观题（填空题 / 简答题）
         List<PaperQuestionVo> blankList = integerListMap.get(EduFlexConstants.FILL_BLANK);
         List<PaperQuestionVo> shortAnswerList = integerListMap.get(EduFlexConstants.SHORT_ANSWER);
-        if (!blankList.isEmpty() || !shortAnswerList.isEmpty()) {
-            // 若有 则设置为待批阅
-            examRecord.setStatus(EduFlexConstants.EXAM_STATUS_PENDING);
-        } else {
-            // 没有则设置为考试结束
-            examRecord.setStatus(EduFlexConstants.EXAM_STATUS_ENDED);
-            // 更新考试记录
-            baseMapper.updateById(examRecord);
-        }
+        List<PaperQuestionVo> allQuestionList = new ArrayList<>();
+        allQuestionList.addAll(singleChoiceList);
+        allQuestionList.addAll(multipleChoiceList);
+        allQuestionList.addAll(judgeList);
+        allQuestionList.addAll(blankList);
+        allQuestionList.addAll(shortAnswerList);
+        for (PaperQuestionVo paperQuestionVo : allQuestionList) {
+            ExamResultQuestionVo examResultQuestionVo = new ExamResultQuestionVo();
+            examResultQuestionVo.setId(paperQuestionVo.getId());
+            examResultQuestionVo.setTitle(paperQuestionVo.getTitle());
+            examResultQuestionVo.setOptions(paperQuestionVo.getOptions());
+            examResultQuestionVo.setOrderNum(paperQuestionVo.getOrderNum());
+            examResultQuestionVo.setRightAnswer(paperQuestionVo.getAnswer());
+            examResultQuestionVo.setType(paperQuestionVo.getType());
+            if (!paperQuestionVo.getType().equals(EduFlexConstants.FILL_BLANK) || !paperQuestionVo.getType().equals(EduFlexConstants.SHORT_ANSWER)) {
+                examResultQuestionVo.setIsRight(EduFlexConstants.STATUS_DISABLED);
+                examResultQuestionVo.setScore(paperQuestionVo.getScore());
+                for (ExamAnswer answer : examAnswers) {
+                    if (answer.getQuestionId().equals(paperQuestionVo.getId())) {
+                        examResultQuestionVo.setAnswer(answer.getAnswer());
+                        if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
+                            examResultQuestionVo.setIsRight(EduFlexConstants.STATUS_ENABLED);
+                        } else {
+                            examResultQuestionVo.setIsRight(EduFlexConstants.STATUS_DISABLED);
+                        }
 
-        // 终止定时任务
-        SysJob sysJob = jobService.selectJobById(examRecord.getJobId());
-        jobService.changeStatus(sysJob);
+                    }
+                }
+            } else {
+                examResultQuestionVo.setIsChecked(EduFlexConstants.STATUS_DISABLED);
+                examResultQuestionVo.setScore(0);
+                for (ExamAnswer answer : examAnswers) {
+                    if (answer.getQuestionId().equals(paperQuestionVo.getId())) {
+                        examResultQuestionVo.setAnswer(answer.getAnswer());
+                        if (answer.getIsChecked().equals(EduFlexConstants.STATUS_ENABLED)) {
+                            examResultQuestionVo.setScore(paperQuestionVo.getScore());
+                        }
+                    }
+                }
+            }
+            questionList.add(examResultQuestionVo);
+        }
+        examResultVo.setQuestionList(questionList);
+        return examResultVo;
+    }
+
+    private int calculateScore(List<ExamAnswer> examAnswers, List<PaperQuestionVo> questionList, int totalScore) {
+        for (PaperQuestionVo paperQuestionVo : questionList) {
+            // 获取题目ID
+            Long questionId = paperQuestionVo.getId();
+            for (ExamAnswer answer : examAnswers) {
+                if (answer.getQuestionId().equals(questionId)) {
+                    if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
+                        totalScore += paperQuestionVo.getScore();
+                        break;
+                    }
+                }
+            }
+        }
+        return totalScore;
     }
 
     private ExamRecordVo buildVo(ExamRecord examRecord) {
         ExamRecordVo examRecordVo = new ExamRecordVo();
         BeanUtils.copyProperties(examRecord, examRecordVo);
-
         Exam exam = examService.getById(examRecord.getExamId());
         examRecordVo.setExamName(exam.getName());
         SysUser user = userService.selectUserById(examRecord.getUserId());

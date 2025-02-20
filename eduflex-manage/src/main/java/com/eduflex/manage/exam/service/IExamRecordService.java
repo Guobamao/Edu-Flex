@@ -1,14 +1,16 @@
 package com.eduflex.manage.exam.service;
 
-import java.util.List;
-
-import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.manage.exam.domain.ExamRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.common.exception.job.TaskException;
+import com.eduflex.manage.exam.domain.ExamRecord;
 import com.eduflex.manage.exam.domain.dto.ExamRecordDto;
 import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
 import com.eduflex.user.exam.domain.dto.ExamDto;
+import com.eduflex.user.exam.domain.vo.ExamResultVo;
 import com.eduflex.user.exam.domain.vo.ExamVo;
+import org.quartz.SchedulerException;
+
+import java.util.List;
 
 /**
  * 考试记录 Service接口
@@ -45,5 +47,26 @@ public interface IExamRecordService extends IService<ExamRecord> {
      * @param examDto 查询条件
      * @return 考试记录ID
      */
-    Long createExam(ExamDto examDto);
+    Long createExam(ExamDto examDto) throws SchedulerException, TaskException;
+
+    /**
+     * 交卷操作
+     * @param recordId 考试记录ID
+     */
+    void handExam(Long recordId);
+
+    /**
+     * 获取考试结果
+     * @param id 考试记录ID
+     * @return 考试结果
+     */
+    ExamResultVo selectExamResultById(Long id);
+
+    /**
+     * 检查进行中的考试
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
+    ExamRecord checkExam(Long userId);
 }

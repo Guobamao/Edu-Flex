@@ -17,4 +17,5 @@ public class ExamAnswer {
     private Long recordId;
     private Long questionId;
     private String answer;
+    private Integer isChecked;
 }
