@@ -25,6 +25,11 @@ public class StudentCourseController extends BaseController {
     @Autowired
     private IStudentCourseService studentCourseService;
 
+    /**
+     * 选课 / 推选
+     * @param studentCourse 选课条件
+     * @return 结果
+     */
     @PreAuthorize("@ss.hasRole('student')")
     @PostMapping
     public AjaxResult saveOrDelete(@RequestBody StudentCourseDto studentCourse) {

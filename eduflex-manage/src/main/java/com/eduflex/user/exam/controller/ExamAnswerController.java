@@ -5,6 +5,7 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.manage.exam.domain.ExamAnswer;
 import com.eduflex.manage.exam.service.IExamAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class ExamAnswerController extends BaseController {
      * @param examAnswer 答案信息
      * @return 结果
      */
+    @PreAuthorize("@ss.hasRole('student')")
     @PostMapping("/add")
     public AjaxResult add(@RequestBody ExamAnswer examAnswer) {
         return success(examAnswerService.insertAnswer(examAnswer));

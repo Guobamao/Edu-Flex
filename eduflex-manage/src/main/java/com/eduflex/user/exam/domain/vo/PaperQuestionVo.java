@@ -1,10 +1,7 @@
 package com.eduflex.user.exam.domain.vo;
 
-import com.eduflex.manage.exam.domain.ExamAnswer;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
-
-import java.util.List;
 
 /**
  * 用户端 - 考试试卷题目Vo

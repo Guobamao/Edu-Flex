@@ -19,6 +19,11 @@ public class HomeworkController extends BaseController {
     @Autowired
     private IHomeworkStudentService homeworkStudentService;
 
+    /**
+     * 获取作业列表
+     * @param homework 查询条件
+     * @return 作业列表
+     */
     @PreAuthorize("@ss.hasRole('student')")
     @GetMapping("/list")
     public TableDataInfo list(HomeworkDto homework) {
@@ -28,6 +33,11 @@ public class HomeworkController extends BaseController {
         return getDataTable(list);
     }
 
+    /**
+     * 获取作业信息
+     * @param id 作业ID
+     * @return 作业信息
+     */
     @PreAuthorize("@ss.hasRole('student')")
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
@@ -38,6 +48,11 @@ public class HomeworkController extends BaseController {
         return success(homework);
     }
 
+    /**
+     * 提交作业
+     * @param homeworkDto 作业信息
+     * @return 结果
+     */
     @PreAuthorize("@ss.hasRole('student')")
     @PutMapping("/submit")
     public AjaxResult submitHomework(@RequestBody HomeworkDto homeworkDto) {

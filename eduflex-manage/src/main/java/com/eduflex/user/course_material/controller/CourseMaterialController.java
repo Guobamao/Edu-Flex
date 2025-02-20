@@ -24,6 +24,11 @@ public class CourseMaterialController extends BaseController {
     @Autowired
     private ICourseMaterialService courseMaterialService;
 
+    /**
+     * 获取课程资料
+     * @param courseMaterial 查询条件
+     * @return 课程资料列表
+     */
     @GetMapping("/list")
     public AjaxResult list(CourseMaterial courseMaterial) {
         List<CourseMaterial> list = courseMaterialService.selectCourseMaterialList(courseMaterial);

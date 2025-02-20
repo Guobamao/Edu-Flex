@@ -24,6 +24,11 @@ public class CommentsController extends BaseController {
     @Autowired
     private ICommentsService commentsService;
 
+    /**
+     * 获取与课程评论列表
+     * @param comments 查询条件
+     * @return 课程评论列表
+     */
     @GetMapping("/list")
     public TableDataInfo list(Comments comments) {
         startPage();
@@ -31,6 +36,10 @@ public class CommentsController extends BaseController {
         return getDataTable(list);
     }
 
+    /**
+     * 发表评论
+     * @param comments 评论内容
+     */
     @PreAuthorize("@ss.hasRole('student')")
     @PostMapping
     public void add(@RequestBody Comments comments) {

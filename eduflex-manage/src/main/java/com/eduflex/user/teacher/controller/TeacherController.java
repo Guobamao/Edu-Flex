@@ -22,6 +22,11 @@ public class TeacherController extends BaseController {
     @Autowired
     private ITeacherService teacherService;
 
+    /**
+     * 获取教师详细信息
+     * @param id 教师用户ID
+     * @return 教师详细信息
+     */
     @GetMapping("/{id}")
     public AjaxResult getTeacherInfo(@PathVariable("id") Long id) {
         return AjaxResult.success(teacherService.selectTeacherById(id));

@@ -15,6 +15,10 @@ public class SearchController extends BaseController {
     @Autowired
     private ISearchService searchService;
 
+    /**
+     * 获取搜索列表（热搜）
+     * @return 搜索列表
+     */
     @GetMapping("/list")
     public AjaxResult list() {
         return success(searchService.selectSearchList());
