@@ -3,6 +3,7 @@ package com.eduflex.manage.exam.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.core.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_exam_record")
-public class ExamRecord {
+public class ExamRecord extends BaseEntity {
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     private Long examId;

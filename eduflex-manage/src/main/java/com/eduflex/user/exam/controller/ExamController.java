@@ -11,10 +11,7 @@ import com.eduflex.user.exam.domain.dto.ExamDto;
 import com.eduflex.user.exam.domain.vo.ExamDetailVo;
 import com.eduflex.user.exam.domain.vo.ExamVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,5 +46,10 @@ public class ExamController extends BaseController {
     public AjaxResult createExam(ExamDto examDto) {
         examDto.setUserId(getUserId());
         return success(examRecordService.createExam(examDto));
+    }
+
+    @GetMapping("/detail/{id}")
+    public AjaxResult getExamRecordDetail(@PathVariable("id") Long id) {
+        return success(examRecordService.selectExamRecordById(id));
     }
 }
