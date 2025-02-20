@@ -77,4 +77,10 @@ public class ExamController extends BaseController {
     public AjaxResult getExamRecordDetail(@PathVariable("id") Long id) {
         return success(examRecordService.selectExamRecordById(id));
     }
+
+    @PreAuthorize("@ss.hasRole('student')")
+    @GetMapping("/result/{id}")
+    public AjaxResult getExamResult(@PathVariable("id") Long id) {
+        return success(examRecordService.selectExamRecordById(id));
+    }
 }

@@ -1,10 +1,14 @@
 package com.eduflex.manage.exam.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import java.util.List;
 
+import com.eduflex.manage.exam.domain.ExamRecord;
+import com.eduflex.manage.exam.service.IExamRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eduflex.manage.exam.mapper.ExamAnswerMapper;
 import com.eduflex.manage.exam.domain.ExamAnswer;
@@ -18,6 +22,9 @@ import com.eduflex.manage.exam.service.IExamAnswerService;
  */
 @Service
 public class ExamAnswerServiceImpl extends ServiceImpl<ExamAnswerMapper, ExamAnswer> implements IExamAnswerService {
+
+    @Autowired
+    private IExamRecordService examRecordService;
 
     @Override
     public List<ExamAnswer> selectExamAnswerList(ExamAnswer examAnswer) {
@@ -34,10 +41,18 @@ public class ExamAnswerServiceImpl extends ServiceImpl<ExamAnswerMapper, ExamAns
 
         if (baseMapper.selectOne(wrapper) == null) {
             baseMapper.insert(examAnswer);
-            return "success";
         } else {
             baseMapper.update(examAnswer, wrapper);
-            return "success";
         }
+
+        // 计算考试用时
+        ExamRecord examRecord = examRecordService.getById(examAnswer.getRecordId());
+        int i = (int) ((System.currentTimeMillis() - examRecord.getCreateTime().getTime()) / 1000);
+        LambdaUpdateWrapper<ExamRecord> set = new LambdaUpdateWrapper<ExamRecord>()
+                .eq(ExamRecord::getId, examRecord.getId())
+                .set(ExamRecord::getDuration, i);
+        examRecordService.update(set);
+
+        return "success";
     }
 }
