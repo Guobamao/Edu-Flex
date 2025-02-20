@@ -22,6 +22,11 @@ public class CategoryController extends BaseController {
     @Autowired
     private ICategoryService categoryService;
 
+    /**
+     * 根据方向ID查询课程分类
+     * @param directionId 方向ID
+     * @return 课程分类列表
+     */
     @GetMapping("/listByDirection")
     public AjaxResult list(@RequestParam Long directionId) {
         return success(categoryService.selectCourseListByDirectionId(directionId));

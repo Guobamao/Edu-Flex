@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.exception.ServiceException;
-import com.eduflex.common.exception.job.TaskException;
-import com.eduflex.common.utils.CronUtils;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.course.service.ICourseService;
@@ -32,13 +30,12 @@ import com.eduflex.quartz.service.ISysJobService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.exam.domain.dto.ExamDto;
 import com.eduflex.user.exam.domain.vo.ExamVo;
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-
-import static com.eduflex.common.utils.SecurityUtils.getUsername;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 考试记录Service业务层处理
@@ -170,7 +167,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
     }
 
     @Override
-    public Long createExam(ExamDto examDto) throws SchedulerException, TaskException {
+    public Long createExam(ExamDto examDto) {
         LambdaQueryWrapper<ExamRecord> wrapper = new LambdaQueryWrapper<ExamRecord>()
                 .eq(ExamRecord::getUserId, examDto.getUserId())
                 .eq(ExamRecord::getStatus, EduFlexConstants.STATUS_IN_PROGRESS);
@@ -312,11 +309,39 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
     private ExamRecordVo buildVo(ExamRecord examRecord) {
         ExamRecordVo examRecordVo = new ExamRecordVo();
         BeanUtils.copyProperties(examRecord, examRecordVo);
+
         Exam exam = examService.getById(examRecord.getExamId());
         examRecordVo.setExamName(exam.getName());
         SysUser user = userService.selectUserById(examRecord.getUserId());
         examRecordVo.setUserName(user.getUserName());
         examRecordVo.setNickName(user.getNickName());
+
+        // 计算考试剩余时间
+        if (exam.getLimited() == 1) {
+            // 限时考试，计算当前时间与考试结束时间的差值
+            if ((examRecord.getEndTime().getTime() - System.currentTimeMillis()) / 1000 <= exam.getDuration() * 60) {
+                examRecordVo.setLeftSeconds((int) ((examRecord.getEndTime().getTime() - System.currentTimeMillis()) / 1000));
+            } else {
+                int leftSeconds = (int) (exam.getDuration() * 60 - (System.currentTimeMillis() - examRecord.getStartTime().getTime()) / 1000);
+                examRecordVo.setLeftSeconds(leftSeconds);
+            }
+        } else {
+            // 不限时考试，则计算当前时间与考试结束时间（创建时间 + 考试时长）的差值
+            long l = examRecord.getCreateTime().getTime() + exam.getDuration() * 60 * 1000;
+            examRecordVo.setLeftSeconds((int) ((l - System.currentTimeMillis()) / 1000));
+        }
+
+        // 设置题目
+        Map<Integer, List<PaperQuestionVo>> integerListMap = paperQuestionService.selectQuestionByPaperId(examRecord.getPaperId());
+        examRecordVo.setSingleChoiceQuestionList(convertQuestionList(integerListMap.get(EduFlexConstants.SINGLE_CHOICE)));
+        examRecordVo.setMultipleChoiceQuestionList(convertQuestionList(integerListMap.get(EduFlexConstants.MULTIPLE_CHOICE)));
+        examRecordVo.setJudgeQuestionList(convertQuestionList(integerListMap.get(EduFlexConstants.JUDGMENT)));
+        examRecordVo.setFillQuestionList(convertQuestionList(integerListMap.get(EduFlexConstants.FILL_BLANK)));
+        examRecordVo.setShortAnswerQuestionList(convertQuestionList(integerListMap.get(EduFlexConstants.SHORT_ANSWER)));
+
+        ExamAnswer examAnswer = new ExamAnswer();
+        examAnswer.setRecordId(examRecord.getId());
+        examRecordVo.setExamAnswerList(examAnswerService.selectExamAnswerList(examAnswer));
         return examRecordVo;
     }
 
@@ -355,5 +380,15 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             calendar.add(Calendar.MINUTE, exam.getDuration());
             return calendar.getTime();
         }
+    }
+
+    private List<com.eduflex.user.exam.domain.vo.PaperQuestionVo> convertQuestionList(List<PaperQuestionVo> paperQuestionVoList) {
+        List<com.eduflex.user.exam.domain.vo.PaperQuestionVo> convertedList = new ArrayList<>();
+        paperQuestionVoList.forEach(paperQuestionVo -> {
+            com.eduflex.user.exam.domain.vo.PaperQuestionVo questionVo = new com.eduflex.user.exam.domain.vo.PaperQuestionVo();
+            BeanUtils.copyProperties(paperQuestionVo, questionVo);
+            convertedList.add(questionVo);
+        });
+        return convertedList;
     }
 }

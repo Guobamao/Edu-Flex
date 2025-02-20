@@ -15,4 +15,5 @@ import java.util.Map;
  */
 public interface IPaperQuestionService extends IService<PaperQuestion> {
     Map<Integer, List<PaperQuestionVo>> selectQuestionByPaperId(Long id);
+
 }

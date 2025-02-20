@@ -18,4 +18,11 @@ public interface IExamAnswerService extends IService<ExamAnswer> {
      * @return 考试答案记录集合
      */
     List<ExamAnswer> selectExamAnswerList(ExamAnswer examAnswer);
+
+    /**
+     * 提交答案
+     * @param examAnswer 答案信息
+     * @return 结果
+     */
+    String insertAnswer(ExamAnswer examAnswer);
 }

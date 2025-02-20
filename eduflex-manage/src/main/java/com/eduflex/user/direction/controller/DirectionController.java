@@ -23,6 +23,11 @@ public class DirectionController extends BaseController {
     @Autowired
     private IDirectionService directionService;
 
+    /**
+     * 获取课程方向列表
+     * @param direction 查询条件
+     * @return 课程方向列表
+     */
     @GetMapping("/list")
     public AjaxResult list(Direction direction) {
         return success(directionService.selectDirectionList(direction));

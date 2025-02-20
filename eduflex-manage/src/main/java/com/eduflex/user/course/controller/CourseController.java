@@ -25,11 +25,22 @@ public class CourseController extends BaseController {
     @Autowired
     private ICourseService courseService;
 
+    /**
+     * 通过课程方向查询课程列表
+     * @param directionId 课程方向ID
+     * @param type 类型（new / recommend)
+     * @return 课程列表
+     */
     @GetMapping("/listByDirection")
     public AjaxResult list(@RequestParam Long directionId, @RequestParam String type) {
         return success(courseService.selectCourseListByDirectionId(directionId, type));
     }
 
+    /**
+     * 查询课程列表
+     * @param courseDto 查询条件
+     * @return 课程列表
+     */
     @GetMapping("/list")
     public TableDataInfo list(CourseDto courseDto) {
         startPage();
@@ -37,6 +48,11 @@ public class CourseController extends BaseController {
         return getDataTable(list);
     }
 
+    /**
+     * 获取课程详细信息
+     * @param id 课程ID
+     * @return 课程信息
+     */
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         try {
@@ -46,11 +62,21 @@ public class CourseController extends BaseController {
         }
     }
 
+    /**
+     * 相关课程列表
+     * @param id 课程ID
+     * @return 课程列表
+     */
     @GetMapping("/listRelatedCourse/{id}")
     public AjaxResult listRelatedCourse(@PathVariable("id") Long id) {
         return success(courseService.listRelatedCourse(id));
     }
 
+    /**
+     * 关键词搜索课程
+     * @param course 查询条件
+     * @return 课程列表
+     */
     @GetMapping("/search")
     public TableDataInfo search(Course course) {
         startPage();
@@ -58,6 +84,10 @@ public class CourseController extends BaseController {
         return getDataTable(list);
     }
 
+    /**
+     * 获取推荐课程列表
+     * @return 推荐课程列表
+     */
     @GetMapping("/listRecommend")
     public AjaxResult listRecommend() {
         return success(courseService.listRecommend());

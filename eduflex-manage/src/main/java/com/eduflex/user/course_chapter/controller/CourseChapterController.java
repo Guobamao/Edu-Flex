@@ -23,6 +23,11 @@ public class CourseChapterController extends BaseController {
     @Autowired
     private ICourseChapterService courseChapterService;
 
+    /**
+     * 获取课程章节
+     * @param courseChapter 查询条件
+     * @return 课程章节列表
+     */
     @GetMapping("/list")
     public AjaxResult list(CourseChapter courseChapter) {
         List<CourseChapter> list = courseChapterService.selectCourseChapterList(courseChapter);

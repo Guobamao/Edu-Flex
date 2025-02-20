@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user/student")
 public class StudentController extends BaseController {
 
+    /**
+     * 学生个人信息
+     * @return 学生个人信息
+     */
     @PreAuthorize("@ss.hasRole('student')")
     @GetMapping("/profile")
     public AjaxResult profile() {
