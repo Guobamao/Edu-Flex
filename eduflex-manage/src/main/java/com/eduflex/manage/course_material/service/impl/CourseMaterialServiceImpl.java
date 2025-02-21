@@ -8,14 +8,23 @@ import java.util.Set;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.manage.course.domain.Course;
+import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
 import com.eduflex.manage.course_chapter.mapper.CourseChapterMapper;
+import com.eduflex.manage.course_chapter.service.ICourseChapterService;
+import com.eduflex.manage.study_record.domain.StudyRecord;
+import com.eduflex.manage.study_record.service.IStudyRecordService;
+import com.eduflex.user.course_material.domain.vo.CourseMaterialVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eduflex.manage.course_material.mapper.CourseMaterialMapper;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.eduflex.common.utils.SecurityUtils.getUserId;
 
 /**
  * 课程资料Service业务层处理
@@ -27,7 +36,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper, CourseMaterial> implements ICourseMaterialService
 {
     @Autowired
-    private CourseChapterMapper courseChapterMapper;
+    private ICourseChapterService courseChapterService;
+
+    @Autowired
+    private IStudyRecordService studyRecordService;
+
+    @Autowired
+    private ICourseService courseService;
 
     /**
      * 查询课程资料列表
@@ -71,7 +86,7 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
 
             wrapper.eq(CourseMaterial::getChapterId, chapterId);
             courseChapter.setHasChildren(baseMapper.selectList(wrapper).isEmpty() ? Boolean.FALSE : Boolean.TRUE);
-            courseChapterMapper.updateById(courseChapter);
+            courseChapterService.updateById(courseChapter);
         }
         return result;
     }
@@ -88,5 +103,30 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
         LambdaQueryWrapper<CourseMaterial> wrapper = new LambdaQueryWrapper<CourseMaterial>()
                 .eq(CourseMaterial::getFileId, id);
         baseMapper.delete(wrapper);
+    }
+
+    @Override
+    public CourseMaterialVo selectById(Long id) {
+        CourseMaterial courseMaterial = baseMapper.selectById(id);
+        CourseChapter courseChapter = courseChapterService.getById(courseMaterial.getChapterId());
+        Course course = courseService.getById(courseChapter.getCourseId());
+
+        CourseMaterialVo courseMaterialVo = new CourseMaterialVo();
+        BeanUtils.copyProperties(courseMaterial, courseMaterialVo);
+        courseMaterialVo.setChapterName(courseChapter.getName());
+        courseMaterialVo.setCourseId(courseChapter.getCourseId());
+        courseMaterialVo.setCourseName(course.getName());
+        LambdaQueryWrapper<StudyRecord> wrapper = new LambdaQueryWrapper<StudyRecord>()
+                .eq(StudyRecord::getUserId, getUserId())
+                .eq(StudyRecord::getCourseId, courseChapter.getCourseId())
+                .eq(StudyRecord::getChapterId, courseMaterial.getChapterId())
+                .eq(StudyRecord::getMaterialId, courseMaterial.getId());
+        StudyRecord studyRecord = studyRecordService.getOne(wrapper);
+        if (studyRecord != null) {
+            courseMaterialVo.setStatus(studyRecord.getStatus());
+            courseMaterialVo.setLastPosition(studyRecord.getLastPosition());
+            courseMaterialVo.setProgress(studyRecord.getProgress());
+        }
+        return courseMaterialVo;
     }
 }

@@ -1,4 +1,4 @@
-package com.eduflex.web.controller.common;
+package com.eduflex.manage.file.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
@@ -7,10 +7,10 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
-import com.eduflex.web.domain.FileImages;
-import com.eduflex.web.domain.OssFile;
-import com.eduflex.web.service.FileImagesService;
-import com.eduflex.web.service.OssFileService;
+import com.eduflex.manage.file.domain.FileImages;
+import com.eduflex.manage.file.domain.OssFile;
+import com.eduflex.manage.file.service.IFileImagesService;
+import com.eduflex.manage.file.service.IOssFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +38,10 @@ public class OssFileController extends BaseController {
 
     private static final Logger log = LoggerFactory.getLogger(OssFileController.class);
     @Autowired
-    private OssFileService ossFileService;
+    private IOssFileService ossFileService;
 
     @Autowired
-    private FileImagesService fileImagesService;
+    private IFileImagesService fileImagesService;
 
     /**
      * 查询资源管理列表

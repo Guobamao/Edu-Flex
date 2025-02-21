@@ -5,7 +5,9 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +35,17 @@ public class CourseMaterialController extends BaseController {
     public AjaxResult list(CourseMaterial courseMaterial) {
         List<CourseMaterial> list = courseMaterialService.selectCourseMaterialList(courseMaterial);
         return success(list);
+    }
+
+
+    /**
+     * 获取课程资料详情
+     * @param id 课程资料ID
+     * @return 课程资料详情
+     */
+    @PreAuthorize("@ss.hasRole('student')")
+    @GetMapping("/{id}")
+    public AjaxResult getMaterialInfo(@PathVariable("id") Long id) {
+        return success(courseMaterialService.selectById(id));
     }
 }

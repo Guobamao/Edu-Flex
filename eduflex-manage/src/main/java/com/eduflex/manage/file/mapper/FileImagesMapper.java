@@ -1,7 +1,7 @@
-package com.eduflex.web.mapper;
+package com.eduflex.manage.file.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.eduflex.web.domain.FileImages;
+import com.eduflex.manage.file.domain.FileImages;
 
 /**
  * <p>

@@ -7,8 +7,8 @@ import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.utils.StringUtils;
 import com.eduflex.common.utils.file.FileUtils;
-import com.eduflex.web.domain.OssFile;
-import com.eduflex.web.service.OssFileService;
+import com.eduflex.manage.file.domain.OssFile;
+import com.eduflex.manage.file.service.IOssFileService;
 import com.eduflex.web.utils.MediaUtil;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.FileStorageService;
@@ -43,7 +43,7 @@ public class CommonController extends BaseController {
     private FileStorageService fileStorageService;
 
     @Autowired
-    private OssFileService ossFileService;
+    private IOssFileService ossFileService;
 
     private static final String FILE_DELIMETER = ",";
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
+import com.eduflex.user.course_material.domain.vo.CourseMaterialVo;
 
 /**
  * 课程资料Service接口
@@ -40,7 +41,14 @@ public interface ICourseMaterialService extends IService<CourseMaterial>
     /**
      * 根据文件id删除课程资料
      *
-     * @param id
+     * @param id 文件ID
      */
     void removeByFileId(Long id);
+
+    /**
+     * 查看课程资料
+     * @param id 课程资料id
+     * @return 课程资料信息
+     */
+    CourseMaterialVo selectById(Long id);
 }

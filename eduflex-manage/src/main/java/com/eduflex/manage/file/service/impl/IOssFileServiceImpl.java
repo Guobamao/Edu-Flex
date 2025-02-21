@@ -1,13 +1,14 @@
-package com.eduflex.web.service.impl;
+package com.eduflex.manage.file.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
-import com.eduflex.web.domain.OssFile;
-import com.eduflex.web.mapper.OssFileMapper;
-import com.eduflex.web.service.OssFileService;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.manage.file.domain.OssFile;
+import com.eduflex.manage.file.mapper.OssFileMapper;
+import com.eduflex.manage.file.service.IOssFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ import java.util.List;
  * @since 2025-01-03
  */
 @Service
-public class OssFileServiceImpl extends ServiceImpl<OssFileMapper, OssFile> implements OssFileService {
+public class IOssFileServiceImpl extends ServiceImpl<OssFileMapper, OssFile> implements IOssFileService {
 
     @Autowired
     private ICourseMaterialService courseMaterialService;

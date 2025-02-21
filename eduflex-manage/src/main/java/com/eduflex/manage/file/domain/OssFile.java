@@ -1,4 +1,4 @@
-package com.eduflex.web.domain;
+package com.eduflex.manage.file.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;

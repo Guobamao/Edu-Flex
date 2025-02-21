@@ -4,19 +4,30 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
+import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.utils.DateUtils;
+import com.eduflex.manage.course_material.domain.CourseMaterial;
+import com.eduflex.manage.course_material.service.ICourseMaterialService;
+import com.eduflex.manage.file.domain.FileImages;
+import com.eduflex.manage.file.service.IFileImagesService;
+import com.eduflex.manage.file.service.IOssFileService;
 import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.study_record.domain.vo.StudyRecordVo;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.student.service.IStudentService;
 import com.eduflex.system.service.ISysUserService;
+import com.eduflex.user.study_record.domain.dto.StudyRecordDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eduflex.manage.study_record.mapper.StudyRecordMapper;
 import com.eduflex.manage.study_record.domain.StudyRecord;
 import com.eduflex.manage.study_record.service.IStudyRecordService;
+
+import static com.eduflex.common.utils.SecurityUtils.getUsername;
 
 /**
  * 学习记录管理Service业务层处理
@@ -34,6 +45,15 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
 
     @Autowired
     private ISysUserService userService;
+
+    @Autowired
+    private ICourseMaterialService courseMaterialService;
+
+    @Autowired
+    private IOssFileService ossFileService;
+
+    @Autowired
+    private IFileImagesService fileImagesService;
 
     /**
      * 查询学习记录管理列表
@@ -54,6 +74,106 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
     @Override
     public StudyRecordVo selectById(Long id) {
         return buildVo(baseMapper.selectById(id));
+    }
+
+    @Override
+    public String saveStudyRecord(StudyRecordDto studyRecordDto) {
+        LambdaQueryWrapper<StudyRecord> studyRecordWrapper = new LambdaQueryWrapper<StudyRecord>()
+                .eq(StudyRecord::getUserId, studyRecordDto.getUserId())
+                .eq(StudyRecord::getCourseId, studyRecordDto.getCourseId())
+                .eq(StudyRecord::getChapterId, studyRecordDto.getChapterId())
+                .eq(StudyRecord::getMaterialId, studyRecordDto.getMaterialId());
+
+        LambdaQueryWrapper<CourseMaterial> materialWrapper = new LambdaQueryWrapper<CourseMaterial>()
+                .eq(CourseMaterial::getId, studyRecordDto.getMaterialId())
+                .eq(CourseMaterial::getChapterId, studyRecordDto.getChapterId());
+        CourseMaterial courseMaterial = courseMaterialService.getOne(materialWrapper);
+        if (courseMaterial == null) {
+            return "课程资料不存在";
+        }
+        studyRecordDto.setMaterialType(courseMaterial.getMaterialType());
+        if (courseMaterial.getMaterialType().equals(EduFlexConstants.FILE_TYPE_TEXT) ||
+                courseMaterial.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PPT) ||
+                courseMaterial.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PDF)) {
+            List<FileImages> fileImages = fileImagesService.getByFileId(courseMaterial.getFileId());
+            if (fileImages.isEmpty()) {
+                return "课程资料不存在";
+            }
+            FileImages fileImage = fileImages.stream().max(Comparator.comparing(FileImages::getPageNumber)).orElse(null);
+            Integer maxNumber = fileImage.getPageNumber();
+            studyRecordDto.setMaxDuration(maxNumber);
+        } else if (courseMaterial.getMaterialType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
+            studyRecordDto.setMaxDuration(courseMaterial.getDuration());
+        }
+
+        if (baseMapper.selectOne(studyRecordWrapper) == null) {
+            // 不存在记录，新增
+            StudyRecord studyRecord = new StudyRecord();
+            studyRecord.setUserId(studyRecordDto.getUserId());
+            studyRecord.setCourseId(studyRecordDto.getCourseId());
+            studyRecord.setChapterId(studyRecordDto.getChapterId());
+            studyRecord.setMaterialId(studyRecordDto.getMaterialId());
+            // 进行中
+            studyRecord.setStatus(EduFlexConstants.STATUS_IN_PROGRESS);
+            studyRecord.setCreateBy(getUsername());
+            // 计算学习进度
+            if (studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_TEXT) ||
+                    studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PPT) ||
+                    studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PDF)) {
+                int progress = (studyRecordDto.getPicIndex() + 1) * 100 / studyRecordDto.getMaxDuration();
+                studyRecord.setProgress(progress);
+                if (progress == 100) {
+                    studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+                }
+            } else if (studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
+                int progress = studyRecordDto.getLastPosition() * 100 / studyRecordDto.getMaxDuration();
+                studyRecord.setProgress(progress);
+                if (progress == 100) {
+                    studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+                }
+            } else {
+                studyRecord.setProgress(100);
+                studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+            }
+            // 学习时长
+            studyRecord.setDuration(studyRecordDto.getDuration());
+            baseMapper.insert(studyRecord);
+            if (studyRecord.getProgress() == 100) {
+                return "当前资料已学习完成";
+            }
+        } else {
+            // 记录存在，更新记录
+            StudyRecord studyRecord = baseMapper.selectOne(studyRecordWrapper);
+            studyRecord.setUpdateBy(getUsername());
+            if (studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_TEXT) ||
+                    studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PPT) ||
+                    studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PDF)) {
+                int progress = (studyRecordDto.getPicIndex() + 1) * 100 / studyRecordDto.getMaxDuration();
+                if (progress > studyRecord.getProgress()) {
+                    studyRecord.setProgress(progress);
+                }
+                if (progress == 100) {
+                    studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+                }
+            } else if (studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
+                int progress = studyRecordDto.getLastPosition() * 100 / studyRecordDto.getMaxDuration();
+                if (progress > studyRecord.getProgress()) {
+                    studyRecord.setProgress(progress);
+                }
+                if (progress == 100) {
+                    studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+                }
+            } else {
+                studyRecord.setProgress(100);
+                studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+            }
+            studyRecord.setDuration(studyRecord.getDuration() + studyRecordDto.getDuration());
+            baseMapper.updateById(studyRecord);
+            if (studyRecord.getProgress() == 100) {
+                return "当前资料已学习完成";
+            }
+        }
+        return "记录上传成功";
     }
 
     private StudyRecordVo buildVo(StudyRecord studyRecord) {

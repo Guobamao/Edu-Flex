@@ -1,14 +1,14 @@
-package com.eduflex.web.service.impl;
+package com.eduflex.manage.file.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.converter.PDFConverter;
-import com.eduflex.web.domain.FileImages;
-import com.eduflex.web.domain.OssFile;
-import com.eduflex.web.mapper.FileImagesMapper;
-import com.eduflex.web.service.FileImagesService;
-import com.eduflex.web.service.OssFileService;
+import com.eduflex.manage.file.domain.FileImages;
+import com.eduflex.manage.file.domain.OssFile;
+import com.eduflex.manage.file.mapper.FileImagesMapper;
+import com.eduflex.manage.file.service.IFileImagesService;
+import com.eduflex.manage.file.service.IOssFileService;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +27,10 @@ import java.util.List;
  * @since 2025-01-24
  */
 @Service
-public class FileImagesServiceImpl extends ServiceImpl<FileImagesMapper, FileImages> implements FileImagesService {
+public class IFileImagesServiceImpl extends ServiceImpl<FileImagesMapper, FileImages> implements IFileImagesService {
 
     @Autowired
-    private OssFileService ossFileService;
+    private IOssFileService ossFileService;
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -38,14 +38,10 @@ public class FileImagesServiceImpl extends ServiceImpl<FileImagesMapper, FileIma
     @Override
     public List<FileImages> getByFileId(Long id) {
         LambdaQueryWrapper<FileImages> wrapper = new LambdaQueryWrapper<FileImages>()
-                .select(FileImages::getId)
                 .eq(FileImages::getFileId, id);
 
         // 如果有数据，则返回数据
-        if (this.count(wrapper) > 0) {
-            wrapper.orderByAsc(FileImages::getPageNumber);
-            return baseMapper.selectList(wrapper);
-        } else {
+        if (this.count(wrapper) == 0) {
             // 如果没有数据，则转换后存储。
             OssFile ossFile = ossFileService.getById(id);
             List<byte[]> bytes = null;
@@ -79,7 +75,6 @@ public class FileImagesServiceImpl extends ServiceImpl<FileImagesMapper, FileIma
                     fileImagesList.add(fileImages);
                 }
             }
-
             baseMapper.insert(fileImagesList);
         }
         wrapper.orderByAsc(FileImages::getPageNumber);

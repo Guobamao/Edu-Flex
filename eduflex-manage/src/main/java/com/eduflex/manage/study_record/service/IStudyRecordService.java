@@ -4,6 +4,7 @@ import java.util.List;
 import com.eduflex.manage.study_record.domain.StudyRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.study_record.domain.vo.StudyRecordVo;
+import com.eduflex.user.study_record.domain.dto.StudyRecordDto;
 
 /**
  * 学习记录管理Service接口
@@ -27,4 +28,11 @@ public interface IStudyRecordService extends IService<StudyRecord> {
      * @return 结果
      */
     StudyRecordVo selectById(Long id);
+
+    /**
+     * 保存学习记录
+     * @param studyRecordDto 查询条件
+     * @return 结果
+     */
+    String saveStudyRecord(StudyRecordDto studyRecordDto);
 }
