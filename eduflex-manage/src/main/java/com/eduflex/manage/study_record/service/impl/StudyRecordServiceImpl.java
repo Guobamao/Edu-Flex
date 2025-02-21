@@ -44,7 +44,7 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
     @Override
     public List<StudyRecordVo> selectStudyRecordList(StudyRecord studyRecord) {
         LambdaQueryWrapper<StudyRecord> wrapper = new LambdaQueryWrapper<StudyRecord>()
-                .eq(studyRecord.getStudentId() != null, StudyRecord::getStudentId, studyRecord.getStudentId())
+                .eq(studyRecord.getUserId() != null, StudyRecord::getUserId, studyRecord.getUserId())
                 .eq(studyRecord.getCourseId() != null, StudyRecord::getCourseId, studyRecord.getCourseId())
                 .eq(studyRecord.getStatus() != null, StudyRecord::getStatus, studyRecord.getStatus());
 
@@ -59,7 +59,7 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
     private StudyRecordVo buildVo(StudyRecord studyRecord) {
         StudyRecordVo studyRecordVo = new StudyRecordVo();
         BeanUtils.copyProperties(studyRecord, studyRecordVo);
-        StudentVo student = studentService.selectStudentById(studyRecord.getStudentId());
+        StudentVo student = studentService.selectStudentById(studyRecord.getUserId());
         studyRecordVo.setNickName(userService.selectUserById(student.getUserId()).getNickName());
         studyRecordVo.setUserName(userService.selectUserById(student.getUserId()).getUserName());
         studyRecordVo.setCourseName(courseService.getById(studyRecord.getCourseId()).getName());

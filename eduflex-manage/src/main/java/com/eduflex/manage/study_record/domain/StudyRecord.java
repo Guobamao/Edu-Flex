@@ -39,7 +39,7 @@ public class StudyRecord extends BaseEntity {
      * 学习者
      */
     @Excel(name = "学习者")
-    private Long studentId;
+    private Long userId;
 
     /**
      * 课程
@@ -48,21 +48,51 @@ public class StudyRecord extends BaseEntity {
     private Long courseId;
 
     /**
-     * 完成时间
+     * 课程
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "完成时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date completionTime;
+    @Excel(name = "课程")
+    private Long chapterId;
+
+    /**
+     * 课程
+     */
+    @Excel(name = "课程")
+    private Long materialId;
 
     /**
      * 状态
      */
     @Excel(name = "状态")
-    private Long status;
+    private Integer status;
+
+    /**
+     * 开始时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "学习开始时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
+
+    /**
+     * 学习结束时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "学习结束时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
+
+    /**
+     * 学习时长（秒）
+     */
+    private Integer duration;
+
+    /**
+     * 音视频上次播放进度（秒）
+     */
+    private Integer lastPosition;
 
     /**
      * 课程进度百分比（0-100）
      */
-    @Excel(name = "课程进度百分比", readConverterExp = "0=-100")
-    private BigDecimal progress;
+    @Excel(name = "课程进度百分比", readConverterExp = "0-100")
+    private Integer progress;
+
 }

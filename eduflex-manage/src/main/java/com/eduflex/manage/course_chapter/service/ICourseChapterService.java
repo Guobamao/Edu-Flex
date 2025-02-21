@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
+import com.eduflex.user.course_chapter.domain.CourseChapterVo;
+import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
 
 /**
  * 课程内容章节管理Service接口
@@ -36,4 +38,11 @@ public interface ICourseChapterService extends IService<CourseChapter>
      * @return 结果
      */
     int deleteCourseChapterByIds(Long[] ids);
+
+    /**
+     * 查询课程章节列表 - 带进度
+     * @param courseChapter 查询条件
+     * @return 课程章节列表
+     */
+    List<CourseChapterVo> selectCourseChapterListWithProgress(CourseChapterDto courseChapter);
 }

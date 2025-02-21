@@ -1,7 +1,9 @@
 package com.eduflex.user.exam.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +23,9 @@ public class ExamResultVo {
     private Integer score;
     // 考试状态
     private Integer status;
+    // 创建时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
     // 题目列表
     private List<ExamResultQuestionVo> questionList;
 }

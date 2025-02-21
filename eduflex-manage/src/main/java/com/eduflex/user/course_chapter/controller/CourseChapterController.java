@@ -4,6 +4,9 @@ import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
 import com.eduflex.manage.course_chapter.service.ICourseChapterService;
+import com.eduflex.user.course_chapter.domain.CourseChapterVo;
+import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +27,21 @@ public class CourseChapterController extends BaseController {
     private ICourseChapterService courseChapterService;
 
     /**
-     * 获取课程章节
-     * @param courseChapter 查询条件
+     * 获取课程章节列表 - 带学习进度
+     * @param courseChapterDto 查询条件
      * @return 课程章节列表
      */
     @GetMapping("/list")
-    public AjaxResult list(CourseChapter courseChapter) {
-        List<CourseChapter> list = courseChapterService.selectCourseChapterList(courseChapter);
-        return success(list);
+    public AjaxResult list(CourseChapterDto courseChapterDto) {
+        try {
+            courseChapterDto.setUserId(getUserId());
+            List<CourseChapterVo> list = courseChapterService.selectCourseChapterListWithProgress(courseChapterDto);
+            return success(list);
+        } catch (Exception e) {
+            CourseChapter courseChapter = new CourseChapter();
+            BeanUtils.copyProperties(courseChapterDto, courseChapter);
+            List<CourseChapter> list = courseChapterService.selectCourseChapterList(courseChapter);
+            return success(list);
+        }
     }
 }

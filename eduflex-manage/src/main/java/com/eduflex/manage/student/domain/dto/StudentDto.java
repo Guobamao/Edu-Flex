@@ -16,7 +16,7 @@ public class StudentDto extends Student {
     private String phonenumber;
     private String sex;
     // 状态：0正常 1停用
-    private String status;
+    private Integer status;
     private String password;
     private Long avatar;
     // 角色ID

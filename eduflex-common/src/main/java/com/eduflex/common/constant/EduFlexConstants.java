@@ -11,16 +11,16 @@ import java.util.List;
 public class EduFlexConstants {
 
     // 教师状态：启用
-    public static final String TEACHER_STATUS_ENABLED = "0";
+    public static final Integer TEACHER_STATUS_ENABLED = 1;
 
     // 教师状态：停用
-    public static final String TEACHER_STATUS_DISABLED = "0";
+    public static final Integer TEACHER_STATUS_DISABLED = 0;
 
     // 学生状态：启用
-    public static final String STUDENT_STATUS_ENABLED = "0";
+    public static final Integer STUDENT_STATUS_ENABLED = 1;
 
     // 学生状态：停用
-    public static final String STUDENT_STATUS_DISABLED = "0";
+    public static final Integer STUDENT_STATUS_DISABLED = 0;
 
     // 角色字典 - 教师
     public static final Long ROLE_TEACHER = 3L;
@@ -49,11 +49,17 @@ public class EduFlexConstants {
     // 文件类型列表 - PPT
     public static final List<String> FILE_TYPE_PPT_LIST = List.of("application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation");
 
+    // 文件类型 - 文本
     public static final Integer FILE_TYPE_TEXT = 1;
+    // 文件类型 - 图片
     public static final Integer FILE_TYPE_IMAGE = 2;
+    // 文件类型 - 音视频
     public static final Integer FILE_TYPE_VIDEO_AUDIO = 3;
+    // 文件类型 - PPT
     public static final Integer FILE_TYPE_PPT = 4;
+    // 文件类型 - PDF
     public static final Integer FILE_TYPE_PDF = 5;
+    // 文件类型 - 其他文件
     public static final Integer FILE_TYPE_OTHER = 6;
 
     // 单选题

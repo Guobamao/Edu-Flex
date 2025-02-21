@@ -40,7 +40,7 @@ public class CourseMaterial extends BaseEntity
     @Excel(name = "链接")
     private Long fileId;
 
-    /** 资料类型 0视频 1图片 2纯文本 3PPT 4PDF */
+    /** 资料类型 1-纯文本 2-图片 3-音视频 4-幻灯片 5-PDF 6-其他文件 */
     private Integer materialType;
 
     /** 音视频时长 */

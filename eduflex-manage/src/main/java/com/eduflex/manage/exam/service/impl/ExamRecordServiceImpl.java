@@ -324,6 +324,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         examResultVo.setDuration(examRecord.getDuration());
         examResultVo.setScore(examRecord.getScore());
         examResultVo.setStatus(examRecord.getStatus());
+        examResultVo.setCreateTime(examRecord.getCreateTime());
 
         ExamAnswer examAnswer = new ExamAnswer();
         examAnswer.setRecordId(examRecord.getId());
