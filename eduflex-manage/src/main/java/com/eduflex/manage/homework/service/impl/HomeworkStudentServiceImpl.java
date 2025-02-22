@@ -54,7 +54,7 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
             studentCourse.setCourseId(homework.getCourseId());
         }
 
-        List<StudentCourseVo> studentCourseVos = studentCourseService.selectStudentCourseList(studentCourse);
+        List<StudentCourseVo> studentCourseVos = studentCourseService.buildVo(studentCourseService.selectStudentCourseList(studentCourse));
         List<Long> courseIds = studentCourseVos.stream().map(StudentCourseVo::getCourseId).toList();
 
         // 查询课程下的作业

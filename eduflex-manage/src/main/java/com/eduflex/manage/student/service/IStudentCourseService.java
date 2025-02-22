@@ -1,10 +1,11 @@
 package com.eduflex.manage.student.service;
 
-import java.util.List;
-import com.eduflex.manage.student.domain.StudentCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.domain.dto.StudentCourseDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
+
+import java.util.List;
 
 /**
  * 学生选课Service接口
@@ -19,7 +20,7 @@ public interface IStudentCourseService extends IService<StudentCourse> {
      * @param studentCourseDto 学生选课
      * @return 学生选课集合
      */
-    List<StudentCourseVo> selectStudentCourseList(StudentCourseDto studentCourseDto);
+    List<StudentCourse> selectStudentCourseList(StudentCourseDto studentCourseDto);
 
 
     /**
@@ -36,4 +37,11 @@ public interface IStudentCourseService extends IService<StudentCourse> {
      * @return
      */
     int removeByUserIdAndCourseId(Long userId, Long courseId);
+
+    /**
+     * 构建学生选课VO集合
+     * @param studentCourses 学生选课集合
+     * @return 学生选课VO集合
+     */
+    List<StudentCourseVo> buildVo(List<StudentCourse> studentCourses);
 }

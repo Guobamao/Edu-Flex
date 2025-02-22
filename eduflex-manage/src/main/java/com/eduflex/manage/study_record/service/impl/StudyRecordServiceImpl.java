@@ -2,30 +2,28 @@ package com.eduflex.manage.study_record.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 import com.eduflex.common.constant.EduFlexConstants;
-import com.eduflex.common.utils.DateUtils;
+import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.file.domain.FileImages;
 import com.eduflex.manage.file.service.IFileImagesService;
 import com.eduflex.manage.file.service.IOssFileService;
 import com.eduflex.manage.student.domain.vo.StudentVo;
-import com.eduflex.manage.study_record.domain.vo.StudyRecordVo;
-import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.student.service.IStudentService;
+import com.eduflex.manage.study_record.domain.StudyRecord;
+import com.eduflex.manage.study_record.domain.vo.StudyRecordVo;
+import com.eduflex.manage.study_record.mapper.StudyRecordMapper;
+import com.eduflex.manage.study_record.service.IStudyRecordService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.study_record.domain.dto.StudyRecordDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.study_record.mapper.StudyRecordMapper;
-import com.eduflex.manage.study_record.domain.StudyRecord;
-import com.eduflex.manage.study_record.service.IStudyRecordService;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import static com.eduflex.common.utils.SecurityUtils.getUsername;
 
@@ -101,9 +99,12 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
             }
             FileImages fileImage = fileImages.stream().max(Comparator.comparing(FileImages::getPageNumber)).orElse(null);
             Integer maxNumber = fileImage.getPageNumber();
+            // 最大页码
             studyRecordDto.setMaxDuration(maxNumber);
         } else if (courseMaterial.getMaterialType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
             studyRecordDto.setMaxDuration(courseMaterial.getDuration());
+        } else {
+            studyRecordDto.setMaxDuration(1);
         }
 
         if (baseMapper.selectOne(studyRecordWrapper) == null) {

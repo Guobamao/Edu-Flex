@@ -11,9 +11,11 @@ import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.StringUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.teacher.domain.Teacher;
 import com.eduflex.manage.teacher.domain.dto.TeacherDto;
 import com.eduflex.manage.teacher.domain.vo.TeacherVo;
 import com.eduflex.manage.teacher.service.ITeacherService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +45,9 @@ public class TeacherController extends BaseController
     public TableDataInfo list(TeacherDto teacherDto)
     {
         startPage();
-        List<TeacherVo> list = teacherService.selectTeacherList(teacherDto);
-        return getDataTable(list);
+        PageInfo<Teacher> pageInfo = new PageInfo<>(teacherService.selectTeacherList(teacherDto));
+        List<TeacherVo> list = teacherService.buildVo(pageInfo.getList(), teacherDto);
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -55,7 +58,7 @@ public class TeacherController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, TeacherDto teacherDto)
     {
-        List<TeacherVo> list = teacherService.selectTeacherList(teacherDto);
+        List<TeacherVo> list = teacherService.buildVo(teacherService.selectTeacherList(teacherDto), teacherDto);
         ExcelUtil<TeacherVo> util = new ExcelUtil<>(TeacherVo.class);
         util.exportExcel(response, list, "教师管理数据");
     }

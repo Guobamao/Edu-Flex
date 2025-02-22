@@ -1,28 +1,29 @@
 package com.eduflex.manage.course_material.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
-import com.eduflex.manage.course_chapter.mapper.CourseChapterMapper;
 import com.eduflex.manage.course_chapter.service.ICourseChapterService;
+import com.eduflex.manage.course_material.domain.CourseMaterial;
+import com.eduflex.manage.course_material.mapper.CourseMaterialMapper;
+import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.study_record.domain.StudyRecord;
 import com.eduflex.manage.study_record.service.IStudyRecordService;
+import com.eduflex.user.course_material.domain.dto.CourseMaterialDto;
 import com.eduflex.user.course_material.domain.vo.CourseMaterialVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.course_material.mapper.CourseMaterialMapper;
-import com.eduflex.manage.course_material.domain.CourseMaterial;
-import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static com.eduflex.common.utils.SecurityUtils.getUserId;
 
@@ -128,5 +129,33 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
             courseMaterialVo.setProgress(studyRecord.getProgress());
         }
         return courseMaterialVo;
+    }
+
+    @Override
+    public List<CourseMaterialVo> selectCourseMaterialListWithProgress(CourseMaterialDto courseMaterialDto) {
+        LambdaQueryWrapper<CourseMaterial> wrapper = new LambdaQueryWrapper<CourseMaterial>()
+                .eq(courseMaterialDto.getChapterId() != null, CourseMaterial::getChapterId, courseMaterialDto.getChapterId());
+        List<CourseMaterial> courseMaterialList = baseMapper.selectList(wrapper);
+
+        List<CourseMaterialVo> courseMaterialVoList = new ArrayList<>();
+
+        for (CourseMaterial courseMaterial : courseMaterialList) {
+            CourseMaterialVo courseMaterialVo = new CourseMaterialVo();
+            BeanUtils.copyProperties(courseMaterial, courseMaterialVo);
+            LambdaQueryWrapper<StudyRecord> studyRecordWrapper = new LambdaQueryWrapper<StudyRecord>()
+                    .eq(StudyRecord::getUserId, courseMaterialDto.getUserId())
+                    .eq(StudyRecord::getChapterId, courseMaterial.getChapterId())
+                    .eq(StudyRecord::getMaterialId, courseMaterial.getId());
+            StudyRecord studyRecord = studyRecordService.getOne(studyRecordWrapper);
+            if (studyRecord != null) {
+                courseMaterialVo.setStatus(studyRecord.getStatus());
+                courseMaterialVo.setProgress(studyRecord.getProgress());
+            } else {
+                courseMaterialVo.setStatus(EduFlexConstants.STATUS_UNSTARTED);
+                courseMaterialVo.setProgress(0);
+            }
+            courseMaterialVoList.add(courseMaterialVo);
+        }
+        return courseMaterialVoList;
     }
 }

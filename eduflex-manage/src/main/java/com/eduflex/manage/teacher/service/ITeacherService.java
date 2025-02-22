@@ -1,11 +1,11 @@
 package com.eduflex.manage.teacher.service;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.teacher.domain.Teacher;
 import com.eduflex.manage.teacher.domain.dto.TeacherDto;
 import com.eduflex.manage.teacher.domain.vo.TeacherVo;
+
+import java.util.List;
 
 /**
  * 教师管理Service接口
@@ -21,7 +21,7 @@ public interface ITeacherService extends IService<Teacher>
      * @param teacherDto 教师管理
      * @return 教师管理集合
      */
-    List<TeacherVo> selectTeacherList(TeacherDto teacherDto);
+    List<Teacher> selectTeacherList(TeacherDto teacherDto);
 
     /**
      * 新增教师管理
@@ -66,4 +66,12 @@ public interface ITeacherService extends IService<Teacher>
      * @return
      */
     TeacherVo selectTeacherById(Long id);
+
+    /**
+     * 构建教师集合Vo对象
+     * @param teacherList 教师集合
+     * @param teacherDto 查询条件
+     * @return 教师集合Vo对象
+     */
+    List<TeacherVo> buildVo(List<Teacher> teacherList, TeacherDto teacherDto);
 }

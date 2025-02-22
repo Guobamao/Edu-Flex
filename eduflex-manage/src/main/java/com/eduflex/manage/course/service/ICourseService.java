@@ -1,11 +1,11 @@
 package com.eduflex.manage.course.service;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.domain.dto.CourseDto;
 import com.eduflex.manage.course.domain.vo.CourseVo;
+
+import java.util.List;
 
 /**
  * 课程管理Service接口
@@ -17,10 +17,11 @@ public interface ICourseService extends IService<Course>
 {
     /**
      * 查询课程管理列表
+     *
      * @param course 课程管理
      * @return 课程管理集合
      */
-    List<CourseVo> selectCourseList(Course course);
+    List<Course> selectCourseList(Course course);
 
     /**
      * 根据id集合查询课程管理列表
@@ -38,11 +39,12 @@ public interface ICourseService extends IService<Course>
 
     /**
      * 根据方向id查询课程管理列表
+     *
      * @param directionId 方向id
-     * @param type 类型
+     * @param type        类型
      * @return 结果
      */
-    List<CourseVo> selectCourseListByDirectionId(Long directionId, String type);
+    List<Course> selectCourseListByDirectionId(Long directionId, String type);
 
     /**
      * 根据课程ID查询课程信息
@@ -62,10 +64,11 @@ public interface ICourseService extends IService<Course>
 
     /**
      * 关键词搜索课程
+     *
      * @param course 查询条件
      * @return 课程信息
      */
-    List<CourseVo> searchCourse(Course course);
+    List<Course> searchCourse(Course course);
 
     /**
      * 查询推荐课程
@@ -78,5 +81,19 @@ public interface ICourseService extends IService<Course>
      * @param courseDto 查询条件
      * @return 课程列表
      */
-    List<CourseVo> selectCourseList(com.eduflex.user.course.domain.dto.CourseDto courseDto);
+    List<Course> selectCourseList(com.eduflex.user.course.domain.dto.CourseDto courseDto);
+
+    /**
+     * 构建课程列表 Vo 对象
+     * @param courseList 课程列表
+     * @return 课程列表
+     */
+    List<CourseVo> buildVo(List<Course> courseList);
+
+    /**
+     * 构建课程列表 Vo 对象 - 学生端
+     * @param courseList 课程列表
+     * @return 课程列表 Vo 对象
+     */
+    List<CourseVo> buildVoForStudent(List<Course> courseList);
 }

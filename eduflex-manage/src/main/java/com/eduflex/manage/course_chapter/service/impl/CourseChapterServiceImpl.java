@@ -1,13 +1,5 @@
 package com.eduflex.manage.course_chapter.service.impl;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,6 +8,9 @@ import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.StringUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.manage.course_chapter.domain.CourseChapter;
+import com.eduflex.manage.course_chapter.mapper.CourseChapterMapper;
+import com.eduflex.manage.course_chapter.service.ICourseChapterService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.study_record.domain.StudyRecord;
@@ -24,9 +19,12 @@ import com.eduflex.user.course_chapter.domain.CourseChapterVo;
 import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.course_chapter.mapper.CourseChapterMapper;
-import com.eduflex.manage.course_chapter.domain.CourseChapter;
-import com.eduflex.manage.course_chapter.service.ICourseChapterService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 课程内容章节管理Service业务层处理
@@ -119,15 +117,17 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
                                 .eq(StudyRecord::getCourseId, courseChapter.getCourseId())
                                 .eq(StudyRecord::getChapterId, courseMaterial.getChapterId())
                                 .eq(StudyRecord::getMaterialId, courseMaterial.getId());
-                        List<StudyRecord> studyRecordList = studyRecordService.list(studyRecordWrapper);
-                        for (StudyRecord studyRecord : studyRecordList) {
-                            if (courseMaterial.getMaterialType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
-                                progress += studyRecord.getProgress() * 2;
-                                weight += 2;
-                            } else {
-                                progress += studyRecord.getProgress();
-                                weight += 1;
-                            }
+                        StudyRecord studyRecord = studyRecordService.getOne(studyRecordWrapper);
+                        if (studyRecord == null) {
+                            weight += 1;
+                            continue;
+                        }
+                        if (courseMaterial.getMaterialType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
+                            progress += studyRecord.getProgress() * 2;
+                            weight += 2;
+                        } else {
+                            progress += studyRecord.getProgress();
+                            weight += 1;
                         }
                     }
                 }
@@ -166,7 +166,6 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
                 courseChapterVoList.add(courseChapterVo);
             }
         }
-
         // 最后构建树形结构
         return buildVoTree(courseChapterVoList);
     }

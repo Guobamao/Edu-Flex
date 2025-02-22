@@ -8,9 +8,9 @@ import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.exam.domain.ExamRecord;
-import com.eduflex.manage.exam.domain.dto.ExamRecordDto;
 import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
 import com.eduflex.manage.exam.service.IExamRecordService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +35,12 @@ public class ExamRecordController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('manage:record:list')")
     @GetMapping("/list")
-    public TableDataInfo list(ExamRecordDto examRecord)
+    public TableDataInfo list(ExamRecord examRecord)
     {
         startPage();
-        List<ExamRecordVo> list = examRecordService.selectExamRecordList(examRecord);
-        return getDataTable(list);
+        PageInfo<ExamRecord> pageInfo = new PageInfo<>(examRecordService.selectExamRecordList(examRecord));
+        List<ExamRecordVo> list = examRecordService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -48,9 +49,9 @@ public class ExamRecordController extends BaseController {
     @PreAuthorize("@ss.hasPermi('manage:record:export')")
     @Log(title = "考试记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, ExamRecordDto examRecord)
+    public void export(HttpServletResponse response, ExamRecord examRecord)
     {
-        List<ExamRecordVo> list = examRecordService.selectExamRecordList(examRecord);
+        List<ExamRecordVo> list = examRecordService.buildVo(examRecordService.selectExamRecordList(examRecord));
         ExcelUtil<ExamRecordVo> util = new ExcelUtil<>(ExamRecordVo.class);
         util.exportExcel(response, list, "考试记录数据");
     }

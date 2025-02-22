@@ -1,10 +1,6 @@
 package com.eduflex.manage.student.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,17 +8,20 @@ import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.goal.domain.GoalStudent;
+import com.eduflex.manage.goal.service.IGoalStudentService;
+import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
 import com.eduflex.manage.student.domain.vo.StudentGoalVo;
 import com.eduflex.manage.student.domain.vo.StudentVo;
-import com.eduflex.manage.goal.service.IGoalStudentService;
+import com.eduflex.manage.student.mapper.StudentMapper;
+import com.eduflex.manage.student.service.IStudentService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.student.mapper.StudentMapper;
-import com.eduflex.manage.student.domain.Student;
-import com.eduflex.manage.student.service.IStudentService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.eduflex.common.utils.SecurityUtils.getUsername;
 
@@ -42,29 +41,11 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     private IGoalStudentService goalStudentService;
 
     @Override
-    public List<StudentVo> selectStudentList(StudentDto studentDto)
+    public List<Student> selectStudentList()
     {
         LambdaQueryWrapper<Student> studentWrapper = new LambdaQueryWrapper<Student>()
                 .select(Student::getId, Student::getUserId);
-
-        List<Long> idList = baseMapper.selectList(studentWrapper).stream().map(Student::getUserId).toList();
-
-        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<SysUser>()
-                .in(SysUser::getUserId, idList)
-                .like(StrUtil.isNotBlank(studentDto.getUserName()), SysUser::getUserName, studentDto.getUserName())
-                .like(StrUtil.isNotBlank(studentDto.getNickName()), SysUser::getNickName, studentDto.getNickName())
-                .like(StrUtil.isNotBlank(studentDto.getPhonenumber()), SysUser::getPhonenumber, studentDto.getPhonenumber());
-
-        if (StrUtil.isNotBlank(studentDto.getSearchValue())) {
-            wrapper.and(w -> w.like(SysUser::getUserName, studentDto.getSearchValue())
-                    .or()
-                    .like(SysUser::getNickName, studentDto.getSearchValue())
-                    .or()
-                    .like(SysUser::getPhonenumber, studentDto.getSearchValue())
-                    .or()
-                    .like(SysUser::getEmail, studentDto.getSearchValue()));
-        }
-        return buildVo(baseMapper.selectList(studentWrapper), userService.list(wrapper));
+        return baseMapper.selectList(studentWrapper);
     }
 
     @Transactional
@@ -154,7 +135,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Override
     public List<StudentGoalVo> selectStudentListForGoal(StudentDto studentDto) {
-        List<StudentVo> studentList = selectStudentList(studentDto);
+        List<StudentVo> studentList = buildVo(selectStudentList(), studentDto);
 
         List<StudentGoalVo> studentGoalVos = new ArrayList<>();
         for (StudentVo student : studentList) {
@@ -167,23 +148,26 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return studentGoalVos;
     }
 
-    private List<StudentVo> buildVo(List<Student> studentList, List<SysUser> userList) {
-        Map<Long, Student> studentMap = new HashMap<>();
-        for (Student student : studentList) {
-            studentMap.put(student.getUserId(), student);
-        }
+    @Override
+    public List<StudentVo> buildVo(List<Student> studentList, StudentDto studentDto) {
+        List<Long> idList = studentList.stream().map(Student::getUserId).toList();
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<SysUser>()
+                .in(SysUser::getUserId, idList)
+                .like(StrUtil.isNotBlank(studentDto.getUserName()), SysUser::getUserName, studentDto.getUserName())
+                .like(StrUtil.isNotBlank(studentDto.getNickName()), SysUser::getNickName, studentDto.getNickName())
+                .like(StrUtil.isNotBlank(studentDto.getPhonenumber()), SysUser::getPhonenumber, studentDto.getPhonenumber());
 
-        List<StudentVo> studentVoList = new ArrayList<>();
-        for (SysUser user : userList) {
-            StudentVo studentVo = new StudentVo();
-            BeanUtils.copyProperties(user, studentVo);
-            Student student = studentMap.get(user.getUserId());
-            if (student != null) {
-                BeanUtils.copyProperties(student, studentVo);
-            }
-            studentVoList.add(studentVo);
+        if (StrUtil.isNotBlank(studentDto.getSearchValue())) {
+            wrapper.and(w -> w.like(SysUser::getUserName, studentDto.getSearchValue())
+                    .or()
+                    .like(SysUser::getNickName, studentDto.getSearchValue())
+                    .or()
+                    .like(SysUser::getPhonenumber, studentDto.getSearchValue())
+                    .or()
+                    .like(SysUser::getEmail, studentDto.getSearchValue()));
         }
-        return studentVoList;
+        List<SysUser> userList = userService.list(wrapper);
+        return BeanUtil.copyToList(userList, StudentVo.class);
     }
 
     private StudentVo buildVo(Student student, SysUser sysUser) {

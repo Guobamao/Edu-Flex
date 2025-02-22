@@ -1,33 +1,27 @@
 package com.eduflex.manage.paper.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
+import com.eduflex.common.annotation.Log;
+import com.eduflex.common.core.controller.BaseController;
+import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.paper.domain.Paper;
 import com.eduflex.manage.paper.domain.PaperQuestion;
 import com.eduflex.manage.paper.domain.dto.PaperDto;
 import com.eduflex.manage.paper.domain.dto.PaperQuestionDto;
 import com.eduflex.manage.paper.domain.vo.PaperVo;
 import com.eduflex.manage.paper.service.IPaperQuestionService;
 import com.eduflex.manage.paper.service.IPaperRepoService;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.eduflex.common.annotation.Log;
-import com.eduflex.common.core.controller.BaseController;
-import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.paper.domain.Paper;
 import com.eduflex.manage.paper.service.IPaperService;
-import com.eduflex.common.utils.poi.ExcelUtil;
-import com.eduflex.common.core.page.TableDataInfo;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 试卷管理Controller
@@ -56,8 +50,9 @@ public class PaperController extends BaseController
     public TableDataInfo list(Paper paper)
     {
         startPage();
-        List<PaperVo> list = examPaperService.selectExamPaperList(paper);
-        return getDataTable(list);
+        PageInfo<Paper> pageInfo = new PageInfo<>(examPaperService.selectExamPaperList(paper));
+        List<PaperVo> list = examPaperService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -68,7 +63,7 @@ public class PaperController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, Paper paper)
     {
-        List<PaperVo> list = examPaperService.selectExamPaperList(paper);
+        List<PaperVo> list = examPaperService.buildVo(examPaperService.selectExamPaperList(paper));
         ExcelUtil<PaperVo> util = new ExcelUtil<>(PaperVo.class);
         util.exportExcel(response, list, "试卷管理数据");
     }

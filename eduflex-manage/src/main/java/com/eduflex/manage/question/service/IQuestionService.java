@@ -1,9 +1,10 @@
 package com.eduflex.manage.question.service;
 
-import java.util.List;
-import com.eduflex.manage.question.domain.Question;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.question.domain.Question;
 import com.eduflex.manage.question.domain.vo.QuestionVo;
+
+import java.util.List;
 
 /**
  * 题目管理Service接口
@@ -18,7 +19,7 @@ public interface IQuestionService extends IService<Question> {
      * @param question 题目管理
      * @return 题目管理集合
      */
-    List<QuestionVo> selectExamQuestionList(Question question);
+    List<Question> selectExamQuestionList(Question question);
 
     /**
      * 查询题目数量
@@ -28,4 +29,11 @@ public interface IQuestionService extends IService<Question> {
      * @return 数量
      */
     Integer getQuestionCount(Long repoId, Integer type);
+
+    /**
+     * 构建题目集合Vo对象
+     * @param questionList 题目集合
+     * @return 题目集合Vo对象
+     */
+    List<QuestionVo> buildVo(List<Question> questionList);
 }

@@ -3,19 +3,18 @@ package com.eduflex.manage.category.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.category.domain.Category;
 import com.eduflex.manage.category.domain.vo.CategoryVo;
 import com.eduflex.manage.category.mapper.CategoryMapper;
+import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.direction.service.IDirectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.category.service.ICategoryService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 课程分类Service业务层处理
@@ -35,12 +34,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
      * @return 课程分类
      */
     @Override
-    public List<CategoryVo> selectCategoryList(Category category) {
+    public List<Category> selectCategoryList(Category category) {
         LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<Category>()
                 .like(StrUtil.isNotBlank(category.getName()), Category::getName, category.getName())
                 .eq(category.getDirectionId() != null, Category::getDirectionId, category.getDirectionId())
                 .eq(category.getStatus() != null, Category::getStatus, category.getStatus());
-        return buildVo(baseMapper.selectList(wrapper));
+        return baseMapper.selectList(wrapper);
     }
 
     @Override
@@ -51,7 +50,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return baseMapper.selectList(wrapper);
     }
 
-    private List<CategoryVo> buildVo(List<Category> categoryList) {
+    @Override
+    public List<CategoryVo> buildVo(List<Category> categoryList) {
         List<CategoryVo> categoryVoList = new ArrayList<>();
         for (Category category : categoryList) {
             CategoryVo categoryVo = new CategoryVo();

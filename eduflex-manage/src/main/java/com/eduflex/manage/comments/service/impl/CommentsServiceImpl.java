@@ -32,19 +32,18 @@ public class CommentsServiceImpl extends ServiceImpl<CommentsMapper, Comments> i
     private ISysUserService sysUserService;
 
     @Override
-    public List<CommentsVo> selectCommentsList(Comments comments) {
+    public List<Comments> selectCommentsList(Comments comments) {
         LambdaQueryWrapper<Comments> wrapper = new LambdaQueryWrapper<Comments>()
                 .eq(comments.getCourseId() != null, Comments::getCourseId, comments.getCourseId())
                 .eq(comments.getUserId() != null, Comments::getUserId, comments.getUserId())
                 .eq(comments.getParentId() != null, Comments::getParentId, comments.getParentId())
                 .like(comments.getContent() != null, Comments::getContent, comments.getContent());
 
-        List<Comments> commentsList = baseMapper.selectList(wrapper);
-
-        return buildVo(commentsList);
+        return baseMapper.selectList(wrapper);
     }
 
-    private List<CommentsVo> buildVo(List<Comments> commentsList) {
+    @Override
+    public List<CommentsVo> buildVo(List<Comments> commentsList) {
         List<CommentsVo> commentsVos = new ArrayList<>();
 
         for (Comments comments : commentsList) {

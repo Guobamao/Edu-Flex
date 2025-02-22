@@ -6,7 +6,6 @@ import java.util.Date;
 
 @Data
 public class StudentVo {
-    private Long id;
     private Long userId;
     private String nickName;
     private String userName;

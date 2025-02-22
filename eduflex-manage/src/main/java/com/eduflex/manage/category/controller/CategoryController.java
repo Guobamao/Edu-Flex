@@ -1,25 +1,19 @@
 package com.eduflex.manage.category.controller;
 
-import java.util.List;
-
-import com.eduflex.common.core.page.TableDataInfo;
-import com.eduflex.manage.category.domain.Category;
-import com.eduflex.manage.category.domain.vo.CategoryVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
+import com.eduflex.manage.category.domain.Category;
+import com.eduflex.manage.category.domain.vo.CategoryVo;
 import com.eduflex.manage.category.service.ICategoryService;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 课程分类Controller
@@ -42,8 +36,9 @@ public class CategoryController extends BaseController
     public TableDataInfo list(Category category)
     {
         startPage();
-        List<CategoryVo> list = courseCategoryService.selectCategoryList(category);
-        return getDataTable(list);
+        PageInfo<Category> pageInfo = new PageInfo<>(courseCategoryService.selectCategoryList(category));
+        List<CategoryVo> list = courseCategoryService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**

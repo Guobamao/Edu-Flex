@@ -1,29 +1,23 @@
 package com.eduflex.manage.exam.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
-import com.eduflex.common.utils.DateUtils;
-import com.eduflex.manage.exam.domain.vo.ExamVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.exam.domain.Exam;
-import com.eduflex.manage.exam.service.IExamService;
-import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.DateUtils;
+import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.exam.domain.Exam;
+import com.eduflex.manage.exam.domain.vo.ExamVo;
+import com.eduflex.manage.exam.service.IExamService;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 考试管理Controller
@@ -44,8 +38,9 @@ public class ExamController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(Exam exam) {
         startPage();
-        List<ExamVo> list = examService.selectExamList(exam);
-        return getDataTable(list);
+        PageInfo<Exam> pageInfo = new PageInfo<>(examService.selectExamList(exam));
+        List<ExamVo> list = examService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -55,7 +50,7 @@ public class ExamController extends BaseController {
     @Log(title = "考试管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Exam exam) {
-        List<ExamVo> list = examService.selectExamList(exam);
+        List<ExamVo> list = examService.buildVo(examService.selectExamList(exam));
         ExcelUtil<ExamVo> util = new ExcelUtil<>(ExamVo.class);
         util.exportExcel(response, list, "考试管理数据");
     }

@@ -1,29 +1,23 @@
 package com.eduflex.manage.comments.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
-import com.eduflex.common.utils.DateUtils;
-import com.eduflex.manage.comments.domain.vo.CommentsVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.comments.domain.Comments;
-import com.eduflex.manage.comments.service.ICommentsService;
-import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.DateUtils;
+import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.comments.domain.Comments;
+import com.eduflex.manage.comments.domain.vo.CommentsVo;
+import com.eduflex.manage.comments.service.ICommentsService;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 评论管理Controller
@@ -46,8 +40,9 @@ public class CommentsController extends BaseController
     public TableDataInfo list(Comments comments)
     {
         startPage();
-        List<CommentsVo> list = commentsService.selectCommentsList(comments);
-        return getDataTable(list);
+        PageInfo<Comments> pageInfo = new PageInfo<>(commentsService.selectCommentsList(comments));
+        List<CommentsVo> list = commentsService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -58,7 +53,7 @@ public class CommentsController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, Comments comments)
     {
-        List<CommentsVo> list = commentsService.selectCommentsList(comments);
+        List<CommentsVo> list = commentsService.buildVo(commentsService.selectCommentsList(comments));
         ExcelUtil<CommentsVo> util = new ExcelUtil<>(CommentsVo.class);
         util.exportExcel(response, list, "评论管理数据");
     }

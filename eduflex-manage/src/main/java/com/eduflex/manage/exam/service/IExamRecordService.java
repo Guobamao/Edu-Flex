@@ -3,7 +3,6 @@ package com.eduflex.manage.exam.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.common.exception.job.TaskException;
 import com.eduflex.manage.exam.domain.ExamRecord;
-import com.eduflex.manage.exam.domain.dto.ExamRecordDto;
 import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
 import com.eduflex.user.exam.domain.dto.ExamDto;
 import com.eduflex.user.exam.domain.vo.ExamResultVo;
@@ -26,7 +25,7 @@ public interface IExamRecordService extends IService<ExamRecord> {
      * @param examRecord 考试记录
      * @return 考试记录集合
      */
-    List<ExamRecordVo> selectExamRecordList(ExamRecordDto examRecord);
+    List<ExamRecord> selectExamRecordList(ExamRecord examRecord);
 
     /**
      * 查询考试记录
@@ -69,4 +68,11 @@ public interface IExamRecordService extends IService<ExamRecord> {
      * @return 结果
      */
     ExamRecord checkExam(Long userId);
+
+    /**
+     * 构建考试记录Vo集合
+     * @param examRecordList 考试记录集合
+     * @return 考试记录Vo集合
+     */
+    List<ExamRecordVo> buildVo(List<ExamRecord> examRecordList);
 }

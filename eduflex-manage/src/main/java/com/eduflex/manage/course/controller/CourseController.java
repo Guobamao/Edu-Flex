@@ -1,33 +1,27 @@
 package com.eduflex.manage.course.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
-import com.eduflex.common.core.domain.entity.SysUser;
-import com.eduflex.common.core.domain.model.LoginUser;
-import com.eduflex.common.utils.SecurityUtils;
-import com.eduflex.manage.course.domain.dto.CourseDto;
-import com.eduflex.manage.course.domain.vo.CourseVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.course.domain.Course;
-import com.eduflex.manage.course.service.ICourseService;
-import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.core.domain.model.LoginUser;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.SecurityUtils;
+import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.course.domain.Course;
+import com.eduflex.manage.course.domain.dto.CourseDto;
+import com.eduflex.manage.course.domain.vo.CourseVo;
+import com.eduflex.manage.course.service.ICourseService;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 课程管理Controller
@@ -61,8 +55,9 @@ public class CourseController extends BaseController
         }
 
         startPage();
-        List<CourseVo> list = courseService.selectCourseList(course);
-        return getDataTable(list);
+        PageInfo<Course> pageInfo = new PageInfo<>(courseService.selectCourseList(course));
+        List<CourseVo> list = courseService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -84,7 +79,7 @@ public class CourseController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, Course course)
     {
-        List<CourseVo> list = courseService.selectCourseList(course);
+        List<CourseVo> list = courseService.buildVo(courseService.selectCourseList(course));
         ExcelUtil<CourseVo> util = new ExcelUtil<>(CourseVo.class);
         util.exportExcel(response, list, "课程管理数据");
     }

@@ -5,6 +5,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.manage.comments.domain.Comments;
 import com.eduflex.manage.comments.domain.vo.CommentsVo;
 import com.eduflex.manage.comments.service.ICommentsService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,9 @@ public class CommentsController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(Comments comments) {
         startPage();
-        List<CommentsVo> list = commentsService.selectCommentsList(comments);
-        return getDataTable(list);
+        PageInfo<Comments> pageInfo = new PageInfo<>(commentsService.selectCommentsList(comments));
+        List<CommentsVo> list = commentsService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**

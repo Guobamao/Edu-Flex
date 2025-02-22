@@ -1,12 +1,12 @@
 package com.eduflex.manage.student.service;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
 import com.eduflex.manage.student.domain.vo.StudentGoalVo;
 import com.eduflex.manage.student.domain.vo.StudentVo;
+
+import java.util.List;
 
 /**
  * 学生管理Service接口
@@ -19,11 +19,9 @@ public interface IStudentService extends IService<Student>
 
     /**
      * 查询学生管理列表
-     *
-     * @param studentDto 学生管理
      * @return 学生管理集合
      */
-    List<StudentVo> selectStudentList(StudentDto studentDto);
+    List<Student> selectStudentList();
 
     /**
      * 新增学生管理
@@ -91,4 +89,13 @@ public interface IStudentService extends IService<Student>
      * @return
      */
     List<StudentGoalVo> selectStudentListForGoal(StudentDto studentDto);
+
+    /**
+     * 构建学生列表集合Vo对象
+     *
+     * @param studentList 学生列表
+     * @param studentDto 查询条件
+     * @return 学生列表Vo集合
+     */
+    List<StudentVo> buildVo(List<Student> studentList, StudentDto studentDto);
 }

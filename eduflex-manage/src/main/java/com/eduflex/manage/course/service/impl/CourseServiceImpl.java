@@ -69,7 +69,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
      * @return 课程管理
      */
     @Override
-    public List<CourseVo> selectCourseList(Course course)
+    public List<Course> selectCourseList(Course course)
     {
         // 获取course的params Map中startTime的值
         course.setStartTime(DateUtils.parseDate(course.getParams().get("startTime")));
@@ -87,8 +87,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             wrapper.and(q -> q.like(Course::getName, course.getSearchValue())
                     .or().like(Course::getDescription, course.getSearchValue()));
         }
-        List<Course> courseList = baseMapper.selectList(wrapper);
-        return buildVo(courseList);
+        return baseMapper.selectList(wrapper);
     }
 
     @Override
@@ -98,7 +97,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     public List<CourseVo> selectCourseListForRoute(CourseDto course) {
-        List<CourseVo> courseVos = selectCourseList(course);
+        List<CourseVo> courseVos = buildVo(selectCourseList(course));
 
         if (course.getRouteId() != null) {
             Route route = learningRouteService.getById(course.getRouteId());
@@ -115,7 +114,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     }
 
     @Override
-    public List<CourseVo> selectCourseListByDirectionId(Long directionId, String type) {
+    public List<Course> selectCourseListByDirectionId(Long directionId, String type) {
         Category category = new Category();
         category.setDirectionId(directionId);
         List<Long> categoryIds = categoryService.selectCategoryList(category).stream().map(Category::getId).toList();
@@ -129,7 +128,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         if ("new".equals(type)) {
             wrapper.orderByDesc(StrUtil.isNotBlank(type), Course::getCreateTime);
         }
-        return buildVoForStudent(baseMapper.selectList(wrapper));
+        return baseMapper.selectList(wrapper);
     }
 
     @Override
@@ -163,14 +162,14 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     }
 
     @Override
-    public List<CourseVo> searchCourse(Course course) {
+    public List<Course> searchCourse(Course course) {
         LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
                 .like(StrUtil.isNotBlank(course.getSearchValue()), Course::getName, course.getSearchValue())
                 .or()
                 .like(StrUtil.isNotBlank(course.getSearchValue()), Course::getDescription, course.getSearchValue());
 
-        List<CourseVo> courseVoList = buildVoForStudent(baseMapper.selectList(wrapper));
-        if (!courseVoList.isEmpty()) {
+        List<Course> courseList = baseMapper.selectList(wrapper);
+        if (!courseList.isEmpty()) {
             // 搜索记录
             LambdaQueryWrapper<Search> searchWrapper = new LambdaQueryWrapper<Search>()
                     .eq(Search::getSearchValue, course.getSearchValue());
@@ -185,7 +184,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
                 searchService.updateById(search);
             }
         }
-        return courseVoList;
+        return courseList;
     }
 
     @Override
@@ -204,29 +203,29 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     }
 
     @Override
-    public List<CourseVo> selectCourseList(com.eduflex.user.course.domain.dto.CourseDto courseDto) {
+    public List<Course> selectCourseList(com.eduflex.user.course.domain.dto.CourseDto courseDto) {
         if (courseDto.getDirectionId() != null) {
-            List<CourseVo> courseVos = selectCourseListByDirectionId(courseDto.getDirectionId(), "new");
+            List<Course> courseList = selectCourseListByDirectionId(courseDto.getDirectionId(), "new");
             if (courseDto.getCategoryId() != null) {
-                courseVos = courseVos.stream()
+                courseList = courseList.stream()
                         .filter(courseVo -> courseVo.getCategoryId().equals(courseDto.getCategoryId()))
                         .toList();
             }
             if (courseDto.getStatus() != null) {
-                courseVos = courseVos.stream()
+                courseList = courseList.stream()
                         .filter(courseVo -> courseVo.getStatus().equals(courseDto.getStatus()))
                         .toList();
             }
-
-            return courseVos;
+            return courseList;
         } else {
             LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
                     .eq(courseDto.getStatus() != null, Course::getStatus, courseDto.getStatus())
                     .orderByDesc(Course::getCreateTime);
-            return buildVoForStudent(baseMapper.selectList(wrapper));
+            return baseMapper.selectList(wrapper);
         }
     }
 
+    @Override
     public List<CourseVo> buildVo(List<Course> courseList) {
         List<CourseVo> courseVoList = new ArrayList<>();
         for (Course course : courseList) {
@@ -240,6 +239,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         return courseVoList;
     }
 
+    @Override
     public List<CourseVo> buildVoForStudent(List<Course> courseList) {
         List<CourseVo> courseVoList = new ArrayList<>();
         for (Course course : courseList) {

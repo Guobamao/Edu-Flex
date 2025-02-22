@@ -4,21 +4,20 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.eduflex.common.constant.EduFlexConstants;
-import com.eduflex.manage.repo.domain.dto.RepoDto;
-import com.eduflex.manage.repo.domain.vo.RepoVo;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.question.service.IQuestionService;
+import com.eduflex.manage.repo.domain.Repo;
+import com.eduflex.manage.repo.domain.dto.RepoDto;
+import com.eduflex.manage.repo.domain.vo.RepoVo;
+import com.eduflex.manage.repo.mapper.RepoMapper;
+import com.eduflex.manage.repo.service.IRepoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.repo.mapper.RepoMapper;
-import com.eduflex.manage.repo.domain.Repo;
-import com.eduflex.manage.repo.service.IRepoService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 题库管理Service业务层处理
@@ -36,7 +35,7 @@ public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements IR
     private IQuestionService questionService;
 
     @Override
-    public List<RepoVo> selectRepoList(RepoDto repo) {
+    public List<Repo> selectRepoList(RepoDto repo) {
         LambdaQueryWrapper<Repo> wrapper = new LambdaQueryWrapper<Repo>()
                 .like(StrUtil.isNotBlank(repo.getName()), Repo::getName, repo.getName())
                 .eq(repo.getCourseId() != null, Repo::getCourseId, repo.getCourseId());
@@ -45,10 +44,11 @@ public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements IR
             List<Long> idList = CollUtil.toList(repo.getExcludes());
             wrapper.notIn(Repo::getId, idList);
         }
-        return buildVo(baseMapper.selectList(wrapper));
+        return baseMapper.selectList(wrapper);
     }
 
-    private List<RepoVo> buildVo(List<Repo> repoList) {
+    @Override
+    public List<RepoVo> buildVo(List<Repo> repoList) {
         List<RepoVo> repoVoList = new ArrayList<>();
         for (Repo repo : repoList) {
             RepoVo repoVo = new RepoVo();

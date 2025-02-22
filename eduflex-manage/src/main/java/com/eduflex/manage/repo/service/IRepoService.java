@@ -1,10 +1,11 @@
 package com.eduflex.manage.repo.service;
 
-import java.util.List;
-import com.eduflex.manage.repo.domain.Repo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.repo.domain.Repo;
 import com.eduflex.manage.repo.domain.dto.RepoDto;
 import com.eduflex.manage.repo.domain.vo.RepoVo;
+
+import java.util.List;
 
 /**
  * 题库管理 Service接口
@@ -19,5 +20,12 @@ public interface IRepoService extends IService<Repo> {
      * @param repo 题库管理
      * @return 题库管理集合
      */
-    List<RepoVo> selectRepoList(RepoDto repo);
+    List<Repo> selectRepoList(RepoDto repo);
+
+    /**
+     * 构建题库集合Vo对象
+     * @param repoList 题库集合
+     * @return 题库集合Vo对象
+     */
+    List<RepoVo> buildVo(List<Repo> repoList);
 }

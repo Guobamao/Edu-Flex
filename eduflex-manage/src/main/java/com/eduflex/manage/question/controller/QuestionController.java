@@ -1,29 +1,23 @@
 package com.eduflex.manage.question.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
-import com.eduflex.common.utils.DateUtils;
-import com.eduflex.manage.question.domain.vo.QuestionVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.question.domain.Question;
-import com.eduflex.manage.question.service.IQuestionService;
-import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.DateUtils;
+import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.question.domain.Question;
+import com.eduflex.manage.question.domain.vo.QuestionVo;
+import com.eduflex.manage.question.service.IQuestionService;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 题目管理Controller
@@ -46,8 +40,9 @@ public class QuestionController extends BaseController
     public TableDataInfo list(Question question)
     {
         startPage();
-        List<QuestionVo> list = examQuestionService.selectExamQuestionList(question);
-        return getDataTable(list);
+        PageInfo<Question> pageInfo = new PageInfo<>(examQuestionService.selectExamQuestionList(question));
+        List<QuestionVo> list = examQuestionService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -58,7 +53,7 @@ public class QuestionController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, Question question)
     {
-        List<QuestionVo> list = examQuestionService.selectExamQuestionList(question);
+        List<QuestionVo> list = examQuestionService.buildVo(examQuestionService.selectExamQuestionList(question));
         ExcelUtil<QuestionVo> util = new ExcelUtil<>(QuestionVo.class);
         util.exportExcel(response, list, "题目管理数据");
     }

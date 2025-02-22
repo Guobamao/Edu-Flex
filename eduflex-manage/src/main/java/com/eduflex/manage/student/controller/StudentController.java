@@ -11,10 +11,12 @@ import com.eduflex.common.enums.BusinessType;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
 import com.eduflex.manage.student.domain.vo.StudentGoalVo;
 import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.student.service.IStudentService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +45,9 @@ public class StudentController extends BaseController
     public TableDataInfo list(StudentDto studentDto)
     {
         startPage();
-        List<StudentVo> list = studentService.selectStudentList(studentDto);
-        return getDataTable(list);
+        PageInfo<Student> pageInfo = new PageInfo<>(studentService.selectStudentList());
+        List<StudentVo> list = studentService.buildVo(pageInfo.getList(), studentDto);
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -68,7 +71,7 @@ public class StudentController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, StudentDto studentDto)
     {
-        List<StudentVo> list = studentService.selectStudentList(studentDto);
+        List<StudentVo> list = studentService.buildVo(studentService.selectStudentList(), studentDto);
         ExcelUtil<StudentVo> util = new ExcelUtil<>(StudentVo.class);
         util.exportExcel(response, list, "学生管理数据");
     }

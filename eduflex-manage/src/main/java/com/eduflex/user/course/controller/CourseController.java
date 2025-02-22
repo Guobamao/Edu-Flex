@@ -7,6 +7,7 @@ import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.domain.vo.CourseVo;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.user.course.domain.dto.CourseDto;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,8 +45,9 @@ public class CourseController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(CourseDto courseDto) {
         startPage();
-        List<CourseVo> list = courseService.selectCourseList(courseDto);
-        return getDataTable(list);
+        PageInfo<Course> pageInfo = new PageInfo<>(courseService.selectCourseList(courseDto));
+        List<CourseVo> courseVoList = courseService.buildVoForStudent(pageInfo.getList());
+        return getDataTable(courseVoList, pageInfo.getTotal());
     }
 
     /**
@@ -80,7 +82,8 @@ public class CourseController extends BaseController {
     @GetMapping("/search")
     public TableDataInfo search(Course course) {
         startPage();
-        List<CourseVo> list = courseService.searchCourse(course);
+        PageInfo<Course> pageInfo = new PageInfo<>(courseService.searchCourse(course));
+        List<CourseVo> list = courseService.buildVoForStudent(pageInfo.getList());
         return getDataTable(list);
     }
 

@@ -13,7 +13,6 @@ import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.exam.domain.Exam;
 import com.eduflex.manage.exam.domain.ExamAnswer;
 import com.eduflex.manage.exam.domain.ExamRecord;
-import com.eduflex.manage.exam.domain.dto.ExamRecordDto;
 import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
 import com.eduflex.manage.exam.mapper.ExamRecordMapper;
 import com.eduflex.manage.exam.service.IExamAnswerService;
@@ -22,9 +21,7 @@ import com.eduflex.manage.exam.service.IExamService;
 import com.eduflex.manage.paper.domain.vo.PaperQuestionVo;
 import com.eduflex.manage.paper.service.IPaperQuestionService;
 import com.eduflex.manage.student.domain.dto.StudentCourseDto;
-import com.eduflex.manage.student.domain.dto.StudentDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
-import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.manage.student.service.IStudentService;
 import com.eduflex.quartz.domain.SysJob;
@@ -76,23 +73,13 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
     private IExamAnswerService examAnswerService;
 
     @Override
-    public List<ExamRecordVo> selectExamRecordList(ExamRecordDto examRecord) {
-
-        StudentDto studentDto = new StudentDto();
-        studentDto.setSearchValue(examRecord.getSearchValue());
-
-        List<Long> userIdList = studentService.selectStudentList(studentDto).stream().map(StudentVo::getUserId).toList();
-
-        if (userIdList.isEmpty()) {
-            return Collections.emptyList();
-        }
+    public List<ExamRecord> selectExamRecordList(ExamRecord examRecord) {
         LambdaQueryWrapper<ExamRecord> wrapper = new LambdaQueryWrapper<ExamRecord>()
                 .eq(examRecord.getExamId() != null, ExamRecord::getExamId, examRecord.getExamId())
                 .eq(examRecord.getStatus() != null, ExamRecord::getStatus, examRecord.getStatus())
-                .eq(examRecord.getPassed() != null, ExamRecord::getPassed, examRecord.getPassed())
-                .in(ExamRecord::getUserId, userIdList);
+                .eq(examRecord.getPassed() != null, ExamRecord::getPassed, examRecord.getPassed());
 
-        return buildVo(baseMapper.selectList(wrapper));
+        return baseMapper.selectList(wrapper);
     }
 
     @Override
@@ -111,7 +98,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             studentCourseDto.setCourseId(examDto.getCourseId());
         }
 
-        List<StudentCourseVo> studentCourseVos = studentCourseService.selectStudentCourseList(studentCourseDto);
+        List<StudentCourseVo> studentCourseVos = studentCourseService.buildVo(studentCourseService.selectStudentCourseList(studentCourseDto));
         List<Long> courseIds = studentCourseVos.stream().map(StudentCourseVo::getCourseId).toList();
 
         // 查询课程下的考试
@@ -438,7 +425,8 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         return examRecordVo;
     }
 
-    private List<ExamRecordVo> buildVo(List<ExamRecord> examRecordList) {
+    @Override
+    public List<ExamRecordVo> buildVo(List<ExamRecord> examRecordList) {
         List<ExamRecordVo> examRecordVoList = new ArrayList<>();
         for (ExamRecord examRecord : examRecordList) {
             ExamRecordVo examRecordVo = new ExamRecordVo();

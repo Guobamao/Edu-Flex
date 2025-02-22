@@ -1,10 +1,10 @@
 package com.eduflex.manage.category.service;
 
-import java.util.List;
-
-import com.eduflex.manage.category.domain.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.category.domain.Category;
 import com.eduflex.manage.category.domain.vo.CategoryVo;
+
+import java.util.List;
 
 /**
  * 课程分类Service接口
@@ -20,7 +20,7 @@ public interface ICategoryService extends IService<Category> {
      * @param category 课程分类
      * @return 课程分类集合
      */
-    List<CategoryVo> selectCategoryList(Category category);
+    List<Category> selectCategoryList(Category category);
 
     /**
      * 根据方向ID查询课程分类列表
@@ -28,4 +28,11 @@ public interface ICategoryService extends IService<Category> {
      * @return 结果
      */
     List<Category> selectCourseListByDirectionId(Long directionId);
+
+    /**
+     * 构建课程分类Vo集合
+     * @param categoryList 课程分类集合
+     * @return 课程分类Vo集合
+     */
+    List<CategoryVo> buildVo(List<Category> categoryList);
 }

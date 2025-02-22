@@ -3,29 +3,28 @@ package com.eduflex.manage.paper.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import java.util.*;
-import java.util.stream.Collectors;
-
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.manage.course.service.ICourseService;
+import com.eduflex.manage.paper.domain.Paper;
 import com.eduflex.manage.paper.domain.PaperQuestion;
 import com.eduflex.manage.paper.domain.PaperRepo;
+import com.eduflex.manage.paper.domain.dto.PaperDto;
+import com.eduflex.manage.paper.domain.dto.PaperQuestionDto;
+import com.eduflex.manage.paper.domain.vo.PaperQuestionVo;
+import com.eduflex.manage.paper.domain.vo.PaperVo;
+import com.eduflex.manage.paper.mapper.PaperMapper;
 import com.eduflex.manage.paper.service.IPaperQuestionService;
 import com.eduflex.manage.paper.service.IPaperRepoService;
 import com.eduflex.manage.paper.service.IPaperService;
 import com.eduflex.manage.question.domain.Question;
-import com.eduflex.manage.paper.domain.dto.PaperDto;
-import com.eduflex.manage.paper.domain.dto.PaperQuestionDto;
 import com.eduflex.manage.question.service.IQuestionService;
 import com.eduflex.manage.repo.domain.dto.RepoInfo;
-import com.eduflex.manage.paper.domain.vo.PaperQuestionVo;
-import com.eduflex.manage.paper.domain.vo.PaperVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.paper.mapper.PaperMapper;
-import com.eduflex.manage.paper.domain.Paper;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 试卷管理Service业务层处理
@@ -52,11 +51,11 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
     private IPaperQuestionService examPaperQuestionService;
 
     @Override
-    public List<PaperVo> selectExamPaperList(Paper paper) {
+    public List<Paper> selectExamPaperList(Paper paper) {
         LambdaQueryWrapper<Paper> wrapper = new LambdaQueryWrapper<Paper>()
                 .like(StrUtil.isNotBlank(paper.getTitle()), Paper::getTitle, paper.getTitle())
                 .eq(paper.getCourseId() != null, Paper::getCourseId, paper.getCourseId());
-        return buildVo(baseMapper.selectList(wrapper));
+        return baseMapper.selectList(wrapper);
     }
 
     @Override
@@ -216,7 +215,8 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         return selectedQuestions;
     }
 
-    private List<PaperVo> buildVo(List<Paper> paperList) {
+    @Override
+    public List<PaperVo> buildVo(List<Paper> paperList) {
         List<PaperVo> examPaperVoList = new ArrayList<>();
         for (Paper paper : paperList) {
             PaperVo examPaperVo = new PaperVo();

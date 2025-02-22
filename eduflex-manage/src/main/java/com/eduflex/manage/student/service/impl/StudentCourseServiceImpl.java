@@ -2,22 +2,21 @@ package com.eduflex.manage.student.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.manage.course.domain.Course;
+import com.eduflex.manage.course.service.ICourseService;
+import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.domain.dto.StudentCourseDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
-import com.eduflex.manage.course.service.ICourseService;
+import com.eduflex.manage.student.mapper.StudentCourseMapper;
+import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.student.mapper.StudentCourseMapper;
-import com.eduflex.manage.student.domain.StudentCourse;
-import com.eduflex.manage.student.service.IStudentCourseService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 学生选课Service业务层处理
@@ -34,7 +33,7 @@ public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, S
     private ICourseService courseService;
 
     @Override
-    public List<StudentCourseVo> selectStudentCourseList(StudentCourseDto studentCourseDto) {
+    public List<StudentCourse> selectStudentCourseList(StudentCourseDto studentCourseDto) {
         LambdaQueryWrapper<StudentCourse> wrapper = new LambdaQueryWrapper<StudentCourse>()
                 .eq(studentCourseDto.getUserId() != null, StudentCourse::getUserId, studentCourseDto.getUserId())
                 .eq(studentCourseDto.getCourseId() != null, StudentCourse::getCourseId, studentCourseDto.getCourseId())
@@ -42,8 +41,11 @@ public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, S
         if (studentCourseDto.getProgressList() != null) {
             wrapper.between(StudentCourse::getProgress, studentCourseDto.getProgressList().get(0), studentCourseDto.getProgressList().get(1));
         }
+        return baseMapper.selectList(wrapper);
+    }
 
-        List<StudentCourse> studentCourses = baseMapper.selectList(wrapper);
+    @Override
+    public List<StudentCourseVo> buildVo(List<StudentCourse> studentCourses) {
         List<StudentCourseVo> studentCourseVos = new ArrayList<>();
         for (StudentCourse studentCourse : studentCourses) {
             StudentCourseVo studentCourseVo = new StudentCourseVo();
@@ -59,7 +61,6 @@ public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, S
 
             studentCourseVos.add(studentCourseVo);
         }
-
         return studentCourseVos;
     }
 

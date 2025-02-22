@@ -2,8 +2,11 @@ package com.eduflex.user.course_material.controller;
 
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
+import com.eduflex.user.course_material.domain.dto.CourseMaterialDto;
+import com.eduflex.user.course_material.domain.vo.CourseMaterialVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +31,21 @@ public class CourseMaterialController extends BaseController {
 
     /**
      * 获取课程资料
-     * @param courseMaterial 查询条件
+     * @param courseMaterialDto 查询条件
      * @return 课程资料列表
      */
     @GetMapping("/list")
-    public AjaxResult list(CourseMaterial courseMaterial) {
-        List<CourseMaterial> list = courseMaterialService.selectCourseMaterialList(courseMaterial);
-        return success(list);
+    public AjaxResult list(CourseMaterialDto courseMaterialDto) {
+        try {
+            courseMaterialDto.setUserId(getUserId());
+            List<CourseMaterialVo> list = courseMaterialService.selectCourseMaterialListWithProgress(courseMaterialDto);
+            return success(list);
+        } catch (Exception e) {
+            CourseMaterial courseMaterial = new CourseMaterial();
+            BeanUtils.copyProperties(courseMaterialDto, courseMaterial);
+            List<CourseMaterial> list = courseMaterialService.selectCourseMaterialList(courseMaterial);
+            return success(list);
+        }
     }
 
 

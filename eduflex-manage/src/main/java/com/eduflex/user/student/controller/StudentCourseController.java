@@ -3,9 +3,11 @@ package com.eduflex.user.student.controller;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.domain.dto.StudentCourseDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
 import com.eduflex.manage.student.service.IStudentCourseService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +52,8 @@ public class StudentCourseController extends BaseController {
     public TableDataInfo list(StudentCourseDto studentCourseDto) {
         startPage();
         studentCourseDto.setUserId(getUserId());
-        List<StudentCourseVo> list = studentCourseService.selectStudentCourseList(studentCourseDto);
-        return getDataTable(list);
+        PageInfo<StudentCourse> pageInfo = new PageInfo<>(studentCourseService.selectStudentCourseList(studentCourseDto));
+        List<StudentCourseVo> list = studentCourseService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 }

@@ -1,14 +1,14 @@
 package com.eduflex.manage.paper.service;
 
-import java.util.List;
-import java.util.Map;
-
-import com.eduflex.manage.paper.domain.Paper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.paper.domain.Paper;
 import com.eduflex.manage.paper.domain.dto.PaperDto;
 import com.eduflex.manage.paper.domain.dto.PaperQuestionDto;
 import com.eduflex.manage.paper.domain.vo.PaperQuestionVo;
 import com.eduflex.manage.paper.domain.vo.PaperVo;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 试卷管理Service接口
@@ -23,7 +23,7 @@ public interface IPaperService extends IService<Paper> {
      * @param paper 试卷管理
      * @return 试卷管理集合
      */
-    List<PaperVo> selectExamPaperList(Paper paper);
+    List<Paper> selectExamPaperList(Paper paper);
 
     /**
      * 组卷
@@ -40,4 +40,11 @@ public interface IPaperService extends IService<Paper> {
      * @return 组卷结果
      */
     boolean composePaper(PaperQuestionDto paperQuestionDto);
+
+    /**
+     * 构建试卷集合Vo对象
+     * @param paperList 试卷集合
+     * @return 试卷集合Vo对象
+     */
+    List<PaperVo> buildVo(List<Paper> paperList);
 }

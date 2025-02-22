@@ -1,25 +1,23 @@
 package com.eduflex.manage.teacher.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.utils.DateUtils;
+import com.eduflex.manage.teacher.domain.Teacher;
 import com.eduflex.manage.teacher.domain.dto.TeacherDto;
 import com.eduflex.manage.teacher.domain.vo.TeacherVo;
+import com.eduflex.manage.teacher.mapper.TeacherMapper;
+import com.eduflex.manage.teacher.service.ITeacherService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.teacher.mapper.TeacherMapper;
-import com.eduflex.manage.teacher.domain.Teacher;
-import com.eduflex.manage.teacher.service.ITeacherService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.eduflex.common.utils.SecurityUtils.getUsername;
 
@@ -41,17 +39,11 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
      * @return 教师管理
      */
     @Override
-    public List<TeacherVo> selectTeacherList(TeacherDto teacherDto) {
+    public List<Teacher> selectTeacherList(TeacherDto teacherDto) {
         LambdaQueryWrapper<Teacher> teacherWrapper = new LambdaQueryWrapper<Teacher>()
                 .select(Teacher::getId, Teacher::getUserId);
 
-        List<Long> idList = baseMapper.selectList(teacherWrapper).stream().map(Teacher::getUserId).toList();
-
-        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<SysUser>()
-                .in(SysUser::getUserId, idList)
-                .like(StrUtil.isNotBlank(teacherDto.getNickName()), SysUser::getNickName, teacherDto.getNickName())
-                .like(StrUtil.isNotBlank(teacherDto.getPhonenumber()), SysUser::getPhonenumber, teacherDto.getPhonenumber());
-        return buildVo(baseMapper.selectList(teacherWrapper), userService.list(wrapper));
+        return baseMapper.selectList(teacherWrapper);
     }
 
     /**
@@ -156,23 +148,16 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         return buildVo(sysUser);
     }
 
-    private List<TeacherVo> buildVo(List<Teacher> teacherList, List<SysUser> userList) {
-        Map<Long, Teacher> teacherMap = new HashMap<>();
-        for (Teacher teacher : teacherList) {
-            teacherMap.put(teacher.getUserId(), teacher);
-        }
+    @Override
+    public List<TeacherVo> buildVo(List<Teacher> teacherList, TeacherDto teacherDto) {
+        List<Long> idList = teacherList.stream().map(Teacher::getUserId).toList();
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<SysUser>()
+                .in(SysUser::getUserId, idList)
+                .like(StrUtil.isNotBlank(teacherDto.getNickName()), SysUser::getNickName, teacherDto.getNickName())
+                .like(StrUtil.isNotBlank(teacherDto.getPhonenumber()), SysUser::getPhonenumber, teacherDto.getPhonenumber());
 
-        List<TeacherVo> teacherVoList = new ArrayList<>();
-        for (SysUser user : userList) {
-            TeacherVo teacherVo = new TeacherVo();
-            BeanUtils.copyProperties(user, teacherVo);
-            Teacher teacher = teacherMap.get(user.getUserId());
-            if (teacher != null) {
-                BeanUtils.copyProperties(teacher, teacherVo);
-            }
-            teacherVoList.add(teacherVo);
-        }
-        return teacherVoList;
+        List<SysUser> userList = userService.list(wrapper);
+        return BeanUtil.copyToList(userList, TeacherVo.class);
     }
 
     private TeacherVo buildVo(SysUser sysUser) {

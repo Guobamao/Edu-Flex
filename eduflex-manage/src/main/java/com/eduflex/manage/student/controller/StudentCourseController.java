@@ -1,30 +1,24 @@
 package com.eduflex.manage.student.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
-import com.eduflex.common.utils.DateUtils;
-import com.eduflex.manage.student.domain.dto.StudentCourseDto;
-import com.eduflex.manage.student.domain.vo.StudentCourseVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.student.domain.StudentCourse;
-import com.eduflex.manage.student.service.IStudentCourseService;
-import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.DateUtils;
+import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.student.domain.StudentCourse;
+import com.eduflex.manage.student.domain.dto.StudentCourseDto;
+import com.eduflex.manage.student.domain.vo.StudentCourseVo;
+import com.eduflex.manage.student.service.IStudentCourseService;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 学生选课 Controller
@@ -45,8 +39,9 @@ public class StudentCourseController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(StudentCourseDto studentCourseDto) {
         startPage();
-        List<StudentCourseVo> list = studentCourseService.selectStudentCourseList(studentCourseDto);
-        return getDataTable(list);
+        PageInfo<StudentCourse> pageInfo = new PageInfo<>(studentCourseService.selectStudentCourseList(studentCourseDto));
+        List<StudentCourseVo> list = studentCourseService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -56,7 +51,7 @@ public class StudentCourseController extends BaseController {
     @Log(title = "学生选课", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, StudentCourseDto studentCourseDto) {
-        List<StudentCourseVo> list = studentCourseService.selectStudentCourseList(studentCourseDto);
+        List<StudentCourseVo> list = studentCourseService.buildVo(studentCourseService.selectStudentCourseList(studentCourseDto));
         ExcelUtil<StudentCourseVo> util = new ExcelUtil<>(StudentCourseVo.class);
         util.exportExcel(response, list, "学生选课数据");
     }
