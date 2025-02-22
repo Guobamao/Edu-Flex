@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.utils.DateUtils;
-import com.eduflex.manage.category.domain.Category;
 import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.domain.dto.CourseDto;
@@ -31,6 +30,8 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static com.eduflex.common.utils.SecurityUtils.getUserId;
+
 /**
  * 课程管理Service业务层处理
  *
@@ -38,8 +39,7 @@ import java.util.stream.Collectors;
  * @date 2024-10-10
  */
 @Service
-public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements ICourseService
-{
+public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements ICourseService {
     @Autowired
     private ICategoryService categoryService;
 
@@ -69,8 +69,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
      * @return 课程管理
      */
     @Override
-    public List<Course> selectCourseList(Course course)
-    {
+    public List<Course> selectCourseList(Course course) {
         // 获取course的params Map中startTime的值
         course.setStartTime(DateUtils.parseDate(course.getParams().get("startTime")));
         course.setEndTime(DateUtils.parseDate(course.getParams().get("endTime")));
@@ -114,34 +113,19 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     }
 
     @Override
-    public List<Course> selectCourseListByDirectionId(Long directionId, String type) {
-        Category category = new Category();
-        category.setDirectionId(directionId);
-        List<Long> categoryIds = categoryService.selectCategoryList(category).stream().map(Category::getId).toList();
-
-        if (categoryIds.isEmpty()) {
-            return new ArrayList<>();
-        }
-        LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
-                .in(Course::getCategoryId, categoryIds);
-
-        if ("new".equals(type)) {
-            wrapper.orderByDesc(StrUtil.isNotBlank(type), Course::getCreateTime);
-        }
-        return baseMapper.selectList(wrapper);
-    }
-
-    @Override
-    public CourseVo selectCourseById(Long id, Long userId) {
+    public CourseVo selectCourseById(Long id) {
         Course course = baseMapper.selectById(id);
         List<Course> courseList = new ArrayList<>();
         courseList.add(course);
         CourseVo courseVo = buildVoForStudent(courseList).get(0);
-        if (userId != null) {
+        try {
+            Long userId = getUserId();
             LambdaQueryWrapper<StudentCourse> wrapper = new LambdaQueryWrapper<StudentCourse>()
                     .eq(StudentCourse::getCourseId, id)
                     .eq(StudentCourse::getUserId, userId);
             courseVo.setIsSelected(studentCourseService.getOne(wrapper) != null);
+        } catch (Exception e) {
+            courseVo.setIsSelected(false);
         }
         return courseVo;
     }
@@ -204,25 +188,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     public List<Course> selectCourseList(com.eduflex.user.course.domain.dto.CourseDto courseDto) {
-        if (courseDto.getDirectionId() != null) {
-            List<Course> courseList = selectCourseListByDirectionId(courseDto.getDirectionId(), "new");
-            if (courseDto.getCategoryId() != null) {
-                courseList = courseList.stream()
-                        .filter(courseVo -> courseVo.getCategoryId().equals(courseDto.getCategoryId()))
-                        .toList();
-            }
-            if (courseDto.getStatus() != null) {
-                courseList = courseList.stream()
-                        .filter(courseVo -> courseVo.getStatus().equals(courseDto.getStatus()))
-                        .toList();
-            }
-            return courseList;
-        } else {
-            LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
-                    .eq(courseDto.getStatus() != null, Course::getStatus, courseDto.getStatus())
-                    .orderByDesc(Course::getCreateTime);
-            return baseMapper.selectList(wrapper);
-        }
+        LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
+                .eq(courseDto.getDirectionId() != null, Course::getDirectionId, courseDto.getDirectionId())
+                .eq(courseDto.getCategoryId() != null, Course::getCategoryId, courseDto.getCategoryId())
+                .eq(courseDto.getStatus() != null, Course::getStatus, courseDto.getStatus())
+                .orderByDesc("new".equals(courseDto.getType()), Course::getCreateTime);
+        return baseMapper.selectList(wrapper);
     }
 
     @Override
@@ -233,7 +204,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             BeanUtils.copyProperties(course, courseVo);
             courseVo.setTeacherName(userService.selectUserById(course.getTeacherId()).getNickName());
             courseVo.setCategoryName(categoryService.getById(course.getCategoryId()).getName());
-
             courseVoList.add(courseVo);
         }
         return courseVoList;

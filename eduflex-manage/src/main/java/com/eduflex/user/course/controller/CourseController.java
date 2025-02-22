@@ -9,7 +9,10 @@ import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.user.course.domain.dto.CourseDto;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -25,17 +28,6 @@ public class CourseController extends BaseController {
 
     @Autowired
     private ICourseService courseService;
-
-    /**
-     * 通过课程方向查询课程列表
-     * @param directionId 课程方向ID
-     * @param type 类型（new / recommend)
-     * @return 课程列表
-     */
-    @GetMapping("/listByDirection")
-    public AjaxResult list(@RequestParam Long directionId, @RequestParam String type) {
-        return success(courseService.selectCourseListByDirectionId(directionId, type));
-    }
 
     /**
      * 查询课程列表
@@ -57,11 +49,7 @@ public class CourseController extends BaseController {
      */
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
-        try {
-            return success(courseService.selectCourseById(id, getUserId()));
-        } catch (Exception e) {
-            return success(courseService.selectCourseById(id, null));
-        }
+        return success(courseService.selectCourseById(id));
     }
 
     /**

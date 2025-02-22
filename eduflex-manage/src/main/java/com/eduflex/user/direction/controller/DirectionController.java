@@ -1,13 +1,15 @@
 package com.eduflex.user.direction.controller;
 
 import com.eduflex.common.core.controller.BaseController;
-import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.manage.direction.domain.Direction;
 import com.eduflex.manage.direction.service.IDirectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 /**
@@ -29,7 +31,9 @@ public class DirectionController extends BaseController {
      * @return 课程方向列表
      */
     @GetMapping("/list")
-    public AjaxResult list(Direction direction) {
-        return success(directionService.selectDirectionList(direction));
+    public TableDataInfo list(Direction direction) {
+        startPage();
+        List<Direction> list = directionService.selectDirectionList(direction);
+        return getDataTable(list);
     }
 }

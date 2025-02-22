@@ -1,16 +1,16 @@
 package com.eduflex.manage.course.domain;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 课程管理对象 tb_course
@@ -36,6 +36,9 @@ public class Course extends BaseEntity
 
     /** 课程描述 */
     private String description;
+
+    /** 方向ID */
+    private Long directionId;
 
     /** 分类ID */
     private Long categoryId;

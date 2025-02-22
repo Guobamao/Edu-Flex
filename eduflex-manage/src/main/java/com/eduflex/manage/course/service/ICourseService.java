@@ -13,11 +13,9 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2024-10-10
  */
-public interface ICourseService extends IService<Course>
-{
+public interface ICourseService extends IService<Course>  {
     /**
      * 查询课程管理列表
-     *
      * @param course 课程管理
      * @return 课程管理集合
      */
@@ -38,22 +36,11 @@ public interface ICourseService extends IService<Course>
     List<CourseVo> selectCourseListForRoute(CourseDto course);
 
     /**
-     * 根据方向id查询课程管理列表
-     *
-     * @param directionId 方向id
-     * @param type        类型
-     * @return 结果
-     */
-    List<Course> selectCourseListByDirectionId(Long directionId, String type);
-
-    /**
      * 根据课程ID查询课程信息
-     *
-     * @param id     课程ID
-     * @param userId
+     * @param id  课程ID
      * @return 课程信息
      */
-    CourseVo selectCourseById(Long id, Long userId);
+    CourseVo selectCourseById(Long id);
 
     /**
      * 查询课程相关课程
