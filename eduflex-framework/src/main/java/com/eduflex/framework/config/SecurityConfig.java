@@ -1,5 +1,9 @@
 package com.eduflex.framework.config;
 
+import com.eduflex.framework.config.properties.PermitAllUrlProperties;
+import com.eduflex.framework.security.filter.JwtAuthenticationTokenFilter;
+import com.eduflex.framework.security.handle.AuthenticationEntryPointImpl;
+import com.eduflex.framework.security.handle.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +20,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.filter.CorsFilter;
-import com.eduflex.framework.config.properties.PermitAllUrlProperties;
-import com.eduflex.framework.security.filter.JwtAuthenticationTokenFilter;
-import com.eduflex.framework.security.handle.AuthenticationEntryPointImpl;
-import com.eduflex.framework.security.handle.LogoutSuccessHandlerImpl;
 
 /**
  * spring security配置
@@ -115,12 +115,14 @@ public class SecurityConfig
                     // 静态资源，可匿名访问
                     .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/common/preview/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/common/previewVideo/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/manage/files/previewFile/**").permitAll()
                         // 用户 GET 请求
                         .antMatchers(HttpMethod.GET, "/user/category/**", "/user/comment/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/user/course/**", "/user/chapter/**", "/user/material/list").permitAll()
                         .antMatchers(HttpMethod.GET, "/user/direction/**", "/user/search/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/user/teacher/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/user/student/register").permitAll()
                         // 字典 GET 请求
                         .antMatchers(HttpMethod.GET, "/system/dict/data/type/**").permitAll()
                     .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()

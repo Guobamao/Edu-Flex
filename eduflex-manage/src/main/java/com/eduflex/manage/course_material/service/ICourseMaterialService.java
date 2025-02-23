@@ -27,10 +27,10 @@ public interface ICourseMaterialService extends IService<CourseMaterial>
     /**
      * 批量删除课程资料
      *
-     * @param ids 需要删除的课程资料主键集合
+     * @param idList 需要删除的课程资料主键集合
      * @return 结果
      */
-    int deleteCourseMaterialByIds(Long[] ids);
+    int deleteCourseMaterialByIds(List<Long> idList);
 
     /**
      * 根据文件id查询课程资料

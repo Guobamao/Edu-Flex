@@ -399,10 +399,10 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         // 计算考试剩余时间
         if (exam.getLimited() == 1) {
             // 限时考试，计算当前时间与考试结束时间的差值
-            if ((examRecord.getEndTime().getTime() - System.currentTimeMillis()) / 1000 <= exam.getDuration() * 60) {
-                examRecordVo.setLeftSeconds((int) ((examRecord.getEndTime().getTime() - System.currentTimeMillis()) / 1000));
+            if ((exam.getEndTime().getTime() - System.currentTimeMillis()) / 1000 <= exam.getDuration() * 60) {
+                examRecordVo.setLeftSeconds((int) ((exam.getEndTime().getTime() - System.currentTimeMillis()) / 1000));
             } else {
-                int leftSeconds = (int) (exam.getDuration() * 60 - (System.currentTimeMillis() - examRecord.getStartTime().getTime()) / 1000);
+                int leftSeconds = (int) (((examRecord.getCreateTime().getTime() + exam.getDuration() * 60 * 1000) - System.currentTimeMillis()) / 1000);
                 examRecordVo.setLeftSeconds(leftSeconds);
             }
         } else {

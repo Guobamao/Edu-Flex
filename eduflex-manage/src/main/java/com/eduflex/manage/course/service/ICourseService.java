@@ -1,9 +1,11 @@
 package com.eduflex.manage.course.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.common.exception.job.TaskException;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.domain.dto.CourseDto;
 import com.eduflex.manage.course.domain.vo.CourseVo;
+import org.quartz.SchedulerException;
 
 import java.util.List;
 
@@ -83,4 +85,18 @@ public interface ICourseService extends IService<Course>  {
      * @return 课程列表 Vo 对象
      */
     List<CourseVo> buildVoForStudent(List<Course> courseList);
+
+    /**
+     * 新增课程
+     * @param course 课程信息
+     * @return 结果
+     */
+    int saveCourse(Course course) throws SchedulerException, TaskException;
+
+    /**
+     * 修改课程
+     * @param course 课程信息
+     * @return 结果
+     */
+    int updateCourse(Course course) throws SchedulerException, TaskException;
 }

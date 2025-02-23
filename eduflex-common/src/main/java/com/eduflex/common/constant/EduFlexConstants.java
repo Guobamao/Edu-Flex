@@ -86,7 +86,7 @@ public class EduFlexConstants {
     public static final Integer STATUS_DISABLED = 0;
 
     // 默认头像
-    public static final Long DEFAULT_AVATAR = 1891509518936834049L;
+    public static final Long DEFAULT_AVATAR = 1893339122660020225L;
 
     // 通用状态 - 未开始
     public static final Integer STATUS_UNSTARTED = 0;

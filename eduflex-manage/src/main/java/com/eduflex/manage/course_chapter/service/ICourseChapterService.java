@@ -1,11 +1,11 @@
 package com.eduflex.manage.course_chapter.service;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
 import com.eduflex.user.course_chapter.domain.CourseChapterVo;
 import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
+
+import java.util.List;
 
 /**
  * 课程内容章节管理Service接口
@@ -21,23 +21,15 @@ public interface ICourseChapterService extends IService<CourseChapter>
      * @param courseChapter 课程内容章节管理
      * @return 课程内容章节管理集合
      */
-    List<CourseChapter> selectCourseChapterList(CourseChapter courseChapter);
-
-    /**
-     * 新增课程内容章节管理
-     *
-     * @param courseChapter 课程内容章节管理
-     * @return 结果
-     */
-    int insertCourseChapter(CourseChapter courseChapter);
+    List<com.eduflex.manage.course_chapter.domain.vo.CourseChapterVo> selectCourseChapterList(CourseChapter courseChapter);
 
     /**
      * 批量删除课程内容章节管理
      *
-     * @param ids 需要删除的课程内容章节管理主键集合
+     * @param idList id集合
      * @return 结果
      */
-    int deleteCourseChapterByIds(Long[] ids);
+    int deleteCourseChapterByIds(List<Long> idList);
 
     /**
      * 查询课程章节列表 - 带进度
@@ -45,4 +37,11 @@ public interface ICourseChapterService extends IService<CourseChapter>
      * @return 课程章节列表
      */
     List<CourseChapterVo> selectCourseChapterListWithProgress(CourseChapterDto courseChapter);
+
+    /**
+     * 新增课程章节信息
+     * @param courseChapter 课程章节信息
+     * @return 结果
+     */
+    int saveChapter(CourseChapter courseChapter);
 }

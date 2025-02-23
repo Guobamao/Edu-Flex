@@ -1,12 +1,14 @@
-package com.eduflex.user.course_chapter.domain;
+package com.eduflex.manage.course_chapter.domain.vo;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 /**
- * 用户端 - 课程章节Vo视图
+ * 管理端 - 课程章节视图Vo对象
  * @author 林煜鋒
  */
 @Data
+@Alias("AdminCourseChapterVo")
 public class CourseChapterVo {
     // 章节ID
     private Long id;
@@ -20,6 +22,4 @@ public class CourseChapterVo {
     private Integer sort;
     // 是否关联资料
     private Boolean hasChildren;
-    // 学习进度
-    private Integer progress;
 }

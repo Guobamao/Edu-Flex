@@ -17,7 +17,13 @@ public interface IFileImagesService extends IService<FileImages> {
      * 根据文件id查询图片
      *
      * @param id 文件id
-     * @return
+     * @return 图片列表
      */
     List<FileImages> getByFileId(Long id);
+
+    /**
+     * 生成图片
+     * @param fileId 文件ID
+     */
+    void generateFileImages(Long fileId);
 }

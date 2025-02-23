@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.service.ICourseService;
@@ -103,9 +104,13 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
                 .eq(HomeworkStudent::getHomeworkId, homeworkDto.getHomeworkId());
         // 获取学生作业记录
         HomeworkStudent homeworkStudent = baseMapper.selectOne(wrapper);
+
         HomeworkVo homeworkVo = new HomeworkVo();
 
         Homework homework = homeworkService.getById(homeworkDto.getHomeworkId());
+        if (homework == null) {
+            throw new ServiceException("作业不存在");
+        }
         Course course = courseService.getById(homework.getCourseId());
 
         homeworkVo.setHomeworkId(homeworkDto.getHomeworkId());

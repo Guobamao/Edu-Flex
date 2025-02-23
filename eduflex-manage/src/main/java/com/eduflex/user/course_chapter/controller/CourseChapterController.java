@@ -34,13 +34,14 @@ public class CourseChapterController extends BaseController {
     @GetMapping("/list")
     public AjaxResult list(CourseChapterDto courseChapterDto) {
         try {
+            // 用户已登录 - 显示进度
             courseChapterDto.setUserId(getUserId());
             List<CourseChapterVo> list = courseChapterService.selectCourseChapterListWithProgress(courseChapterDto);
             return success(list);
         } catch (Exception e) {
             CourseChapter courseChapter = new CourseChapter();
             BeanUtils.copyProperties(courseChapterDto, courseChapter);
-            List<CourseChapter> list = courseChapterService.selectCourseChapterList(courseChapter);
+            List<com.eduflex.manage.course_chapter.domain.vo.CourseChapterVo> list = courseChapterService.selectCourseChapterList(courseChapter);
             return success(list);
         }
     }

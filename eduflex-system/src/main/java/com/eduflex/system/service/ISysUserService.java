@@ -2,6 +2,7 @@ package com.eduflex.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.system.domain.SysUserRole;
 
 import java.util.List;
 
@@ -173,4 +174,10 @@ public interface ISysUserService extends IService<SysUser>
      * @return 结果
      */
     String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
+
+    /**
+     * 插入用户和角色关联信息
+     * @param userRole 用户和角色关联信息
+     */
+    void insertUserRole(SysUserRole userRole);
 }

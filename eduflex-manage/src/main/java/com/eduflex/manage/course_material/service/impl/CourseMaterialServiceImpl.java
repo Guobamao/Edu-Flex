@@ -1,9 +1,9 @@
 package com.eduflex.manage.course_material.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.service.ICourseService;
@@ -18,12 +18,9 @@ import com.eduflex.user.course_material.domain.dto.CourseMaterialDto;
 import com.eduflex.user.course_material.domain.vo.CourseMaterialVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static com.eduflex.common.utils.SecurityUtils.getUserId;
 
@@ -64,32 +61,13 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
     /**
      * 批量删除课程资料
      *
-     * @param ids 需要删除的课程资料主键
+     * @param idList 需要删除的课程资料主键
      * @return 结果
      */
     @Override
-    @Transactional
-    public int deleteCourseMaterialByIds(Long[] ids)
+    public int deleteCourseMaterialByIds(List<Long> idList)
     {
-        // 用HashSet存储根据ids查询的chapterId
-        Set<Long> chapterIds = new HashSet<>();
-        for (Long id : ids) {
-            chapterIds.add(baseMapper.selectById(id).getChapterId());
-        }
-
-        ArrayList<Long> idList = CollUtil.toList(ids);
-        int result = baseMapper.deleteByIds(idList);
-
-        LambdaQueryWrapper<CourseMaterial> wrapper = new LambdaQueryWrapper<>();
-        for (Long chapterId : chapterIds) {
-            CourseChapter courseChapter = new CourseChapter();
-            courseChapter.setId(chapterId);
-
-            wrapper.eq(CourseMaterial::getChapterId, chapterId);
-            courseChapter.setHasChildren(baseMapper.selectList(wrapper).isEmpty() ? Boolean.FALSE : Boolean.TRUE);
-            courseChapterService.updateById(courseChapter);
-        }
-        return result;
+        return baseMapper.deleteByIds(idList);
     }
 
     @Override
@@ -109,6 +87,9 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
     @Override
     public CourseMaterialVo selectById(Long id) {
         CourseMaterial courseMaterial = baseMapper.selectById(id);
+        if (courseMaterial == null) {
+            throw new ServiceException("课程资料不存在");
+        }
         CourseChapter courseChapter = courseChapterService.getById(courseMaterial.getChapterId());
         Course course = courseService.getById(courseChapter.getCourseId());
 

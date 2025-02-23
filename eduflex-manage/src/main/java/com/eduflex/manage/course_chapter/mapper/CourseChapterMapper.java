@@ -12,4 +12,4 @@ import com.eduflex.manage.course_chapter.domain.CourseChapter;
  */
 public interface CourseChapterMapper extends BaseMapper<CourseChapter>
 {
-    int selectMaxOrderNum(Long parentId);}
+}

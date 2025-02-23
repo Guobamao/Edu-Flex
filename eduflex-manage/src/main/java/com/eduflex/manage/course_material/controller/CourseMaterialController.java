@@ -1,26 +1,20 @@
 package com.eduflex.manage.course_material.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
-import com.eduflex.common.utils.poi.ExcelUtil;
-import com.eduflex.common.core.page.TableDataInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 课程资料Controller
@@ -78,6 +72,7 @@ public class CourseMaterialController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody CourseMaterial courseMaterial)
     {
+        courseMaterial.setCreateBy(getUsername());
         return toAjax(courseMaterialService.save(courseMaterial));
     }
 
@@ -89,6 +84,7 @@ public class CourseMaterialController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody CourseMaterial courseMaterial)
     {
+        courseMaterial.setUpdateBy(getUsername());
         return toAjax(courseMaterialService.updateById(courseMaterial));
     }
 
@@ -100,6 +96,7 @@ public class CourseMaterialController extends BaseController
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(courseMaterialService.deleteCourseMaterialByIds(ids));
+        List<Long> idList = CollUtil.toList(ids);
+        return toAjax(courseMaterialService.deleteCourseMaterialByIds(idList));
     }
 }

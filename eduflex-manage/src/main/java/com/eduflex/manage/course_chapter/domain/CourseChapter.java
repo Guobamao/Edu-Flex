@@ -3,12 +3,12 @@ package com.eduflex.manage.course_chapter.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.TreeEntity;
 
 /**
  * 课程内容章节管理对象 tb_course_chapter
@@ -21,7 +21,7 @@ import com.eduflex.common.core.domain.TreeEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_course_chapter")
-public class CourseChapter extends TreeEntity<CourseChapter>
+public class CourseChapter extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -35,4 +35,7 @@ public class CourseChapter extends TreeEntity<CourseChapter>
     /** 章节名称 */
     @Excel(name = "章节名称")
     private String name;
+
+    /** 章节排序 */
+    private Integer sort;
 }

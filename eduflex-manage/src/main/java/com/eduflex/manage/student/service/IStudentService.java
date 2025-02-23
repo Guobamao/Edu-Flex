@@ -1,6 +1,7 @@
 package com.eduflex.manage.student.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.common.core.domain.model.RegisterBody;
 import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
 import com.eduflex.manage.student.domain.vo.StudentGoalVo;
@@ -98,4 +99,11 @@ public interface IStudentService extends IService<Student>
      * @return 学生列表Vo集合
      */
     List<StudentVo> buildVo(List<Student> studentList, StudentDto studentDto);
+
+    /**
+     * 注册学生账号
+     * @param user 注册信息
+     * @return 结果
+     */
+    String register(RegisterBody user);
 }

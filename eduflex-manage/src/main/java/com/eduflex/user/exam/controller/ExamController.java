@@ -51,6 +51,9 @@ public class ExamController extends BaseController {
     @GetMapping("/{id}")
     public AjaxResult getExamInfo(@PathVariable("id") Long id) {
         Exam exam = examService.getById(id);
+        if (exam == null) {
+            return error("考试不存在");
+        }
         ExamDetailVo examDetailVo = new ExamDetailVo();
         BeanUtils.copyProperties(exam, examDetailVo);
 

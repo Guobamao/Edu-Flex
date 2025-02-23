@@ -8,6 +8,7 @@ import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.core.domain.model.LoginUser;
 import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.exception.job.TaskException;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.course.domain.Course;
@@ -15,6 +16,7 @@ import com.eduflex.manage.course.domain.dto.CourseDto;
 import com.eduflex.manage.course.domain.vo.CourseVo;
 import com.eduflex.manage.course.service.ICourseService;
 import com.github.pagehelper.PageInfo;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -105,10 +107,9 @@ public class CourseController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Course course)
-    {
+    public AjaxResult add(@RequestBody Course course) throws SchedulerException, TaskException {
         course.setCreateBy(getUsername());
-        return toAjax(courseService.save(course));
+        return toAjax(courseService.saveCourse(course));
     }
 
     /**
@@ -117,10 +118,9 @@ public class CourseController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Course course)
-    {
+    public AjaxResult edit(@RequestBody Course course) throws SchedulerException, TaskException {
         course.setUpdateBy(getUsername());
-        return toAjax(courseService.updateById(course));
+        return toAjax(courseService.updateCourse(course));
     }
 
     /**

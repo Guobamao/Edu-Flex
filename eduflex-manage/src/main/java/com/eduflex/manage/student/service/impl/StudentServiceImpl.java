@@ -4,9 +4,12 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.core.domain.model.RegisterBody;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.framework.web.service.SysRegisterService;
 import com.eduflex.manage.goal.domain.GoalStudent;
 import com.eduflex.manage.goal.service.IGoalStudentService;
 import com.eduflex.manage.student.domain.Student;
@@ -15,6 +18,7 @@ import com.eduflex.manage.student.domain.vo.StudentGoalVo;
 import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.student.mapper.StudentMapper;
 import com.eduflex.manage.student.service.IStudentService;
+import com.eduflex.system.domain.SysUserRole;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +43,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Autowired
     private IGoalStudentService goalStudentService;
+
+    @Autowired
+    private SysRegisterService registerService;
 
     @Override
     public List<Student> selectStudentList()
@@ -168,6 +175,25 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
         List<SysUser> userList = userService.list(wrapper);
         return BeanUtil.copyToList(userList, StudentVo.class);
+    }
+
+    @Override
+    public String register(RegisterBody user) {
+        String register = registerService.register(user);
+        if (StrUtil.isEmpty(register)) {
+            SysUser sysUser = userService.selectUserByUserName(user.getUsername());
+            if (sysUser != null) {
+                Student student = new Student();
+                student.setUserId(sysUser.getUserId());
+                baseMapper.insert(student);
+
+                SysUserRole userRole = new SysUserRole();
+                userRole.setUserId(sysUser.getUserId());
+                userRole.setRoleId(EduFlexConstants.ROLE_STUDENT);
+                userService.insertUserRole(userRole);
+            }
+        }
+        return "";
     }
 
     private StudentVo buildVo(Student student, SysUser sysUser) {

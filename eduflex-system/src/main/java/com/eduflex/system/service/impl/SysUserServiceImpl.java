@@ -553,4 +553,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
         return successMsg.toString();
     }
+
+    @Override
+    public void insertUserRole(SysUserRole userRole) {
+        List<SysUserRole> userRoles = List.of(userRole);
+        userRoleMapper.batchUserRole(userRoles);
+    }
 }

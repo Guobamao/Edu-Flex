@@ -8,6 +8,7 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.utils.StringUtils;
 import com.eduflex.common.utils.file.FileUtils;
 import com.eduflex.manage.file.domain.OssFile;
+import com.eduflex.manage.file.service.IFileImagesService;
 import com.eduflex.manage.file.service.IOssFileService;
 import com.eduflex.web.utils.MediaUtil;
 import org.dromara.x.file.storage.core.FileInfo;
@@ -44,6 +45,9 @@ public class CommonController extends BaseController {
 
     @Autowired
     private IOssFileService ossFileService;
+    
+    @Autowired
+    private IFileImagesService fileImagesService;
 
     private static final String FILE_DELIMETER = ",";
 
@@ -114,6 +118,28 @@ public class CommonController extends BaseController {
         }
     }
 
+    @GetMapping("/previewVideo/{id}")
+    public void previewVideo(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        OssFile ossFile = ossFileService.getById(id);
+        String path = "D:\\Temp\\" + ossFile.getPath();
+        try {
+//            response.setContentType(ossFile.getType());
+//            os = response.getOutputStream();
+            FileInputStream fileInputStream = new FileInputStream(path);
+            byte[] buffer = new byte[1024];
+            int len;
+            while((len = fileInputStream.read(buffer)) != -1) {
+                response.getOutputStream().write(buffer, 0, len);
+            }
+            fileInputStream.close();
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+
+        } catch (IOException e) {
+            log.error("预览文件失败", e);
+        }
+    }
+
     /**
      * 通用上传请求（单个）
      */
@@ -157,6 +183,11 @@ public class CommonController extends BaseController {
 
             ossFileService.save(ossFile);
 
+            if (ossFile.getFileType().equals(EduFlexConstants.FILE_TYPE_TEXT) ||
+                    ossFile.getFileType().equals(EduFlexConstants.FILE_TYPE_PPT) ||
+                    ossFile.getFileType().equals(EduFlexConstants.FILE_TYPE_PDF)) {
+                fileImagesService.generateFileImages(ossFile.getId());
+            }
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileId", ossFile.getId());
             ajax.put("fileName", ossFile.getOriginName());

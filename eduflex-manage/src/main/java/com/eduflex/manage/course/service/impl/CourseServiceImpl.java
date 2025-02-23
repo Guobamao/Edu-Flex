@@ -4,6 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.exception.ServiceException;
+import com.eduflex.common.exception.job.TaskException;
+import com.eduflex.common.utils.CronUtils;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.course.domain.Course;
@@ -19,9 +22,12 @@ import com.eduflex.manage.route.domain.Route;
 import com.eduflex.manage.route.service.IRouteService;
 import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.service.IStudentCourseService;
+import com.eduflex.quartz.domain.SysJob;
+import com.eduflex.quartz.service.ISysJobService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.search.domain.Search;
 import com.eduflex.user.search.service.ISearchService;
+import org.quartz.SchedulerException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +66,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private ISearchService searchService;
+
+    @Autowired
+    private ISysJobService jobService;
 
 
     /**
@@ -115,8 +124,10 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Override
     public CourseVo selectCourseById(Long id) {
         Course course = baseMapper.selectById(id);
-        List<Course> courseList = new ArrayList<>();
-        courseList.add(course);
+        if (course == null) {
+            throw new ServiceException("课程不存在");
+        }
+        List<Course> courseList = List.of(course);
         CourseVo courseVo = buildVoForStudent(courseList).get(0);
         try {
             Long userId = getUserId();
@@ -251,5 +262,77 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             courseVoList.add(courseVo);
         }
         return courseVoList;
+    }
+
+    @Override
+    public int saveCourse(Course course) throws SchedulerException, TaskException {
+        int i = baseMapper.insert(course);
+        if (i > 0) {
+            // 判断当前时间是否在开始时间之前
+            if (DateUtils.getNowDate().before(course.getStartTime())) {
+                course.setStatus(EduFlexConstants.STATUS_UNSTARTED);
+                SysJob sysJob = new SysJob();
+                sysJob.setJobName("课程状态开始-" + course.getId());
+                sysJob.setJobGroup("DEFAULT");
+                String cron = CronUtils.dateToCron(course.getStartTime());
+                sysJob.setCronExpression(cron);
+                sysJob.setInvokeTarget("handleCourseStatusTask.start(" + course.getId() + "L)");
+                sysJob.setStatus("0");
+                sysJob.setMisfirePolicy("1");
+                jobService.insertJob(sysJob);
+
+                sysJob.setJobName("课程状态结束-" + course.getId());
+                sysJob.setJobGroup("DEFAULT");
+                sysJob.setCronExpression(CronUtils.dateToCron(course.getEndTime()));
+                sysJob.setInvokeTarget("handleCourseStatusTask.end(" + course.getId() + "L)");
+                sysJob.setStatus("0");
+                sysJob.setMisfirePolicy("1");
+                jobService.insertJob(sysJob);
+            } else if (DateUtils.getNowDate().after(course.getStartTime()) && DateUtils.getNowDate().before(course.getEndTime())) {
+                course.setStatus(EduFlexConstants.STATUS_IN_PROGRESS);
+                SysJob sysJob = new SysJob();
+                sysJob.setJobName("课程状态结束-" + course.getId());
+                sysJob.setJobGroup("DEFAULT");
+                sysJob.setCronExpression(CronUtils.dateToCron(course.getEndTime()));
+                sysJob.setInvokeTarget("handleCourseStatusTask.end(" + course.getId() + "L)");
+                sysJob.setStatus("0");
+                sysJob.setMisfirePolicy("1");
+                jobService.insertJob(sysJob);
+            } else {
+                course.setStatus(EduFlexConstants.STATUS_ENDED);
+            }
+            baseMapper.updateById(course);
+        }
+        return i;
+    }
+
+    @Override
+    public int updateCourse(Course course) throws SchedulerException, TaskException {
+        // 判断当前时间是否在开始时间之前
+        if (DateUtils.getNowDate().before(course.getStartTime())) {
+            course.setStatus(EduFlexConstants.STATUS_UNSTARTED);
+            SysJob startJob = new SysJob();
+            startJob.setJobName("课程状态开始-" + course.getId());
+            startJob = jobService.selectJobList(startJob).get(0);
+            startJob.setCronExpression(CronUtils.dateToCron(course.getStartTime()));
+            jobService.updateJob(startJob);
+
+            SysJob endJob = new SysJob();
+            endJob.setJobName("课程状态结束-" + course.getId());
+            endJob = jobService.selectJobList(endJob).get(0);
+            endJob.setCronExpression(CronUtils.dateToCron(course.getEndTime()));
+            jobService.updateJob(endJob);
+        } else if (DateUtils.getNowDate().after(course.getStartTime()) && DateUtils.getNowDate().before(course.getEndTime())) {
+            course.setStatus(EduFlexConstants.STATUS_IN_PROGRESS);
+            SysJob endJob = new SysJob();
+            endJob.setJobName("课程状态结束-" + course.getId());
+            endJob = jobService.selectJobList(endJob).get(0);
+            endJob.setCronExpression(CronUtils.dateToCron(course.getEndTime()));
+            jobService.updateJob(endJob);
+
+        } else {
+            course.setStatus(EduFlexConstants.STATUS_ENDED);
+        }
+        return baseMapper.updateById(course);
     }
 }
