@@ -8,6 +8,7 @@ import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.exam.domain.ExamRecord;
+import com.eduflex.manage.exam.domain.PendingDto;
 import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
 import com.eduflex.manage.exam.service.IExamRecordService;
 import com.github.pagehelper.PageInfo;
@@ -63,7 +64,7 @@ public class ExamRecordController extends BaseController {
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(examRecordService.selectExamRecordById(id));
+        return success(examRecordService.selectExamResultById(id));
     }
 
     /**
@@ -99,4 +100,12 @@ public class ExamRecordController extends BaseController {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(examRecordService.removeByIds(idList));
     }
+
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @PutMapping("/pending")
+    public AjaxResult pending(@RequestBody PendingDto pendingDto)
+    {
+        return toAjax(examRecordService.pending(pendingDto));
+    }
+
 }

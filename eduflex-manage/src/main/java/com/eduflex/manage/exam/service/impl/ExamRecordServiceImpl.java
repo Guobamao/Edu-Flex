@@ -13,6 +13,7 @@ import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.exam.domain.Exam;
 import com.eduflex.manage.exam.domain.ExamAnswer;
 import com.eduflex.manage.exam.domain.ExamRecord;
+import com.eduflex.manage.exam.domain.PendingDto;
 import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
 import com.eduflex.manage.exam.mapper.ExamRecordMapper;
 import com.eduflex.manage.exam.service.IExamAnswerService;
@@ -23,7 +24,6 @@ import com.eduflex.manage.paper.service.IPaperQuestionService;
 import com.eduflex.manage.student.domain.dto.StudentCourseDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
 import com.eduflex.manage.student.service.IStudentCourseService;
-import com.eduflex.manage.student.service.IStudentService;
 import com.eduflex.quartz.domain.SysJob;
 import com.eduflex.quartz.service.ISysJobService;
 import com.eduflex.system.service.ISysUserService;
@@ -34,6 +34,7 @@ import com.eduflex.user.exam.domain.vo.ExamVo;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -50,9 +51,6 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
 
     @Autowired
     private ISysUserService userService;
-
-    @Autowired
-    private IStudentService studentService;
 
     @Autowired
     private IExamService examService;
@@ -339,28 +337,30 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             examResultQuestionVo.setOrderNum(paperQuestionVo.getOrderNum());
             examResultQuestionVo.setRightAnswer(paperQuestionVo.getAnswer());
             examResultQuestionVo.setType(paperQuestionVo.getType());
-            if (!paperQuestionVo.getType().equals(EduFlexConstants.FILL_BLANK) || !paperQuestionVo.getType().equals(EduFlexConstants.SHORT_ANSWER)) {
-                examResultQuestionVo.setIsRight(EduFlexConstants.STATUS_DISABLED);
-                examResultQuestionVo.setScore(paperQuestionVo.getScore());
+            examResultQuestionVo.setScore(paperQuestionVo.getScore());
+            // 选择判断题
+            if (!paperQuestionVo.getType().equals(EduFlexConstants.FILL_BLANK) && !paperQuestionVo.getType().equals(EduFlexConstants.SHORT_ANSWER)) {
                 for (ExamAnswer answer : examAnswers) {
                     if (answer.getQuestionId().equals(paperQuestionVo.getId())) {
                         examResultQuestionVo.setAnswer(answer.getAnswer());
                         if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
                             examResultQuestionVo.setIsRight(EduFlexConstants.STATUS_ENABLED);
+                            examResultQuestionVo.setGetScore(paperQuestionVo.getScore());
                         } else {
                             examResultQuestionVo.setIsRight(EduFlexConstants.STATUS_DISABLED);
+                            examResultQuestionVo.setGetScore(0);
                         }
 
                     }
                 }
             } else {
-                examResultQuestionVo.setIsChecked(EduFlexConstants.STATUS_DISABLED);
-                examResultQuestionVo.setScore(0);
+                // 填空简答题
                 for (ExamAnswer answer : examAnswers) {
                     if (answer.getQuestionId().equals(paperQuestionVo.getId())) {
                         examResultQuestionVo.setAnswer(answer.getAnswer());
+                        examResultQuestionVo.setIsChecked(answer.getIsChecked());
                         if (answer.getIsChecked().equals(EduFlexConstants.STATUS_ENABLED)) {
-                            examResultQuestionVo.setScore(paperQuestionVo.getScore());
+                            examResultQuestionVo.setGetScore(paperQuestionVo.getScore());
                         }
                     }
                 }
@@ -378,6 +378,8 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             for (ExamAnswer answer : examAnswers) {
                 if (answer.getQuestionId().equals(questionId)) {
                     if (answer.getAnswer().equals(paperQuestionVo.getAnswer())) {
+                        answer.setScore(paperQuestionVo.getScore());
+                        examAnswerService.updateById(answer);
                         totalScore += paperQuestionVo.getScore();
                         break;
                     }
@@ -437,6 +439,90 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             examRecordVoList.add(examRecordVo);
         }
         return examRecordVoList;
+    }
+
+    @Override
+    @Transactional
+    public Boolean pending(PendingDto pendingDto) {
+        ExamRecord examRecord = baseMapper.selectById(pendingDto.getRecordId());
+        Exam exam = examService.getById(examRecord.getExamId());
+        LambdaQueryWrapper<ExamAnswer> answerWrapper = new LambdaQueryWrapper<ExamAnswer>()
+                .eq(ExamAnswer::getRecordId, pendingDto.getRecordId())
+                .eq(ExamAnswer::getQuestionId, pendingDto.getQuestionId());
+        ExamAnswer examAnswer = examAnswerService.getOne(answerWrapper);
+        if (examAnswer == null) {
+            examAnswer = new ExamAnswer();
+            examAnswer.setRecordId(pendingDto.getRecordId());
+            examAnswer.setQuestionId(pendingDto.getQuestionId());
+            examAnswer.setAnswer("[]");
+            examAnswer.setIsChecked(EduFlexConstants.STATUS_ENABLED);
+            examAnswer.setScore(pendingDto.getPendingScore());
+            examAnswerService.save(examAnswer);
+            examRecord.setScore(examRecord.getScore() + pendingDto.getPendingScore());
+            Map<Integer, List<PaperQuestionVo>> integerListMap = paperQuestionService.selectQuestionByPaperId(examRecord.getPaperId());
+            List<PaperQuestionVo> blankQuestionList = integerListMap.get(EduFlexConstants.FILL_BLANK);
+            List<PaperQuestionVo> shortQuestionList = integerListMap.get(EduFlexConstants.SHORT_ANSWER);
+            List<PaperQuestionVo> questionList = new ArrayList<>();
+            questionList.addAll(blankQuestionList);
+            questionList.addAll(shortQuestionList);
+
+            int i = 0;
+            for (PaperQuestionVo question : questionList) {
+                LambdaQueryWrapper<ExamAnswer> wrapper = new LambdaQueryWrapper<ExamAnswer>()
+                        .eq(ExamAnswer::getRecordId, examRecord.getId())
+                        .eq(ExamAnswer::getQuestionId, question.getId());
+                ExamAnswer answer = examAnswerService.getOne(wrapper);
+                if (answer != null) {
+                    if (answer.getIsChecked().equals(EduFlexConstants.STATUS_DISABLED)){
+                        i += 1;
+                    }
+                } else {
+                    i += 1;
+                }
+            }
+
+            if (i == 0) {
+                examRecord.setStatus(EduFlexConstants.EXAM_STATUS_ENDED);
+                examRecord.setPassed(examRecord.getScore() >= exam.getPassScore() ? EduFlexConstants.STATUS_ENABLED : EduFlexConstants.STATUS_DISABLED);
+            }
+
+            baseMapper.updateById(examRecord);
+            return true;
+        } else {
+            examAnswer.setIsChecked(EduFlexConstants.STATUS_ENABLED);
+            examAnswer.setScore(pendingDto.getPendingScore());
+            examRecord.setScore(examRecord.getScore() + pendingDto.getPendingScore());
+
+            Map<Integer, List<PaperQuestionVo>> integerListMap = paperQuestionService.selectQuestionByPaperId(examRecord.getPaperId());
+            List<PaperQuestionVo> blankQuestionList = integerListMap.get(EduFlexConstants.FILL_BLANK);
+            List<PaperQuestionVo> shortQuestionList = integerListMap.get(EduFlexConstants.SHORT_ANSWER);
+            List<PaperQuestionVo> questionList = new ArrayList<>();
+            questionList.addAll(blankQuestionList);
+            questionList.addAll(shortQuestionList);
+
+            int i = 0;
+            for (PaperQuestionVo question : questionList) {
+                LambdaQueryWrapper<ExamAnswer> wrapper = new LambdaQueryWrapper<ExamAnswer>()
+                        .eq(ExamAnswer::getRecordId, examRecord.getId())
+                        .eq(ExamAnswer::getQuestionId, question.getId());
+                ExamAnswer answer = examAnswerService.getOne(wrapper);
+                if (answer != null) {
+                    if (answer.getIsChecked().equals(EduFlexConstants.STATUS_DISABLED)){
+                        i += 1;
+                    }
+                } else {
+                    i += 1;
+                }
+            }
+
+            if (i == 0) {
+                examRecord.setStatus(EduFlexConstants.EXAM_STATUS_ENDED);
+                examRecord.setPassed(examRecord.getScore() >= exam.getPassScore() ? EduFlexConstants.STATUS_ENABLED : EduFlexConstants.STATUS_DISABLED);
+            }
+
+            baseMapper.updateById(examRecord);
+            return examAnswerService.updateById(examAnswer);
+        }
     }
 
     public Date calculateExamEndTime(Exam exam) {

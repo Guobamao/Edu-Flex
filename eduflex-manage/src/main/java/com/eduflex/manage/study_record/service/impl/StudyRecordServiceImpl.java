@@ -127,6 +127,7 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
                     studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
                 }
             } else if (studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
+                studyRecord.setLastPosition(studyRecordDto.getLastPosition());
                 int progress = studyRecordDto.getLastPosition() * 100 / studyRecordDto.getMaxDuration();
                 studyRecord.setProgress(progress);
                 if (progress == 100) {
@@ -157,6 +158,7 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
                     studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
                 }
             } else if (studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
+                studyRecord.setLastPosition(studyRecordDto.getLastPosition());
                 int progress = studyRecordDto.getLastPosition() * 100 / studyRecordDto.getMaxDuration();
                 if (progress > studyRecord.getProgress()) {
                     studyRecord.setProgress(progress);

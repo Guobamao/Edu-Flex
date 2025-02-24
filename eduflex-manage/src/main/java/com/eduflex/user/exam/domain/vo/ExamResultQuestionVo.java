@@ -17,6 +17,8 @@ public class ExamResultQuestionVo {
     private Integer orderNum;
     // 题目分数
     private Integer score;
+    // 获得分
+    private Integer getScore;
     // 已填答案
     private String answer;
     // 正确答案

@@ -3,6 +3,7 @@ package com.eduflex.manage.exam.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.common.exception.job.TaskException;
 import com.eduflex.manage.exam.domain.ExamRecord;
+import com.eduflex.manage.exam.domain.PendingDto;
 import com.eduflex.manage.exam.domain.vo.ExamRecordVo;
 import com.eduflex.user.exam.domain.dto.ExamDto;
 import com.eduflex.user.exam.domain.vo.ExamResultVo;
@@ -75,4 +76,12 @@ public interface IExamRecordService extends IService<ExamRecord> {
      * @return 考试记录Vo集合
      */
     List<ExamRecordVo> buildVo(List<ExamRecord> examRecordList);
+
+    /**
+     * 批阅考试题目
+     *
+     * @param pendingDto 批阅条件
+     * @return 结果
+     */
+    Boolean pending(PendingDto pendingDto);
 }

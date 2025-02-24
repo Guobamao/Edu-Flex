@@ -16,6 +16,7 @@ import org.dromara.x.file.storage.core.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,9 +25,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class CommonController extends BaseController {
 
     @Autowired
     private IOssFileService ossFileService;
-    
+
     @Autowired
     private IFileImagesService fileImagesService;
 
@@ -88,8 +87,9 @@ public class CommonController extends BaseController {
 
     /**
      * 通用图片预览请求
-     * @param id 文件ID
-     * @param request HttpServletRequest
+     *
+     * @param id       文件ID
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
      * @throws IOException
      */
@@ -123,15 +123,26 @@ public class CommonController extends BaseController {
         OssFile ossFile = ossFileService.getById(id);
         String path = "D:\\Temp\\" + ossFile.getPath();
         try {
-//            response.setContentType(ossFile.getType());
-//            os = response.getOutputStream();
-            FileInputStream fileInputStream = new FileInputStream(path);
-            byte[] buffer = new byte[1024];
-            int len;
-            while((len = fileInputStream.read(buffer)) != -1) {
+            File file = new File(path);
+            String range = request.getHeader("Range");
+            long lenStart = 0;
+            if (range != null && range.length() > 7) {
+                range = range.substring(6, range.length() - 1);
+                lenStart = Long.parseLong(range);
+            }
+            int size = 1048576;
+            response.setHeader("Content-Range", "bytes " + lenStart + "-" + ((file.length() - lenStart - 2 < size) ? file.length() - 1 : lenStart + size - 1) + "/" + file.length());
+            response.setHeader("Content-Type", ossFile.getType());
+            response.setStatus(HttpStatus.PARTIAL_CONTENT.value());//响应码206表示响应内容为部分数据，需要多次请求
+            RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
+            randomAccessFile.seek(lenStart);//设置读取的开始字节数
+            //视频每次返回一兆数据
+            byte[] buffer = new byte[size];
+            int len = randomAccessFile.read(buffer);
+            if (len != -1) {
                 response.getOutputStream().write(buffer, 0, len);
             }
-            fileInputStream.close();
+            randomAccessFile.close();
             response.getOutputStream().flush();
             response.getOutputStream().close();
 

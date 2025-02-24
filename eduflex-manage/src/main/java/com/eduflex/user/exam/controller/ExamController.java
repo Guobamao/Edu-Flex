@@ -106,6 +106,10 @@ public class ExamController extends BaseController {
         return success(examRecordService.selectExamResultById(id));
     }
 
+    /**
+     * 检查是否有进行中的考试
+     * @return 结果
+     */
     @PreAuthorize("@ss.hasRole('student')")
     @GetMapping("/check")
     public AjaxResult checkExam() {

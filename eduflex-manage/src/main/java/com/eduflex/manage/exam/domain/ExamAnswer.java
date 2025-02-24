@@ -18,4 +18,5 @@ public class ExamAnswer {
     private Long questionId;
     private String answer;
     private Integer isChecked;
+    private Integer score;
 }
