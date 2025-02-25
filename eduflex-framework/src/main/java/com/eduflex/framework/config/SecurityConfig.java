@@ -122,6 +122,7 @@ public class SecurityConfig
                         .antMatchers(HttpMethod.GET, "/user/course/**", "/user/chapter/**", "/user/material/list").permitAll()
                         .antMatchers(HttpMethod.GET, "/user/direction/**", "/user/search/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/user/teacher/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/user/evaluation/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/user/student/register").permitAll()
                         // 字典 GET 请求
                         .antMatchers(HttpMethod.GET, "/system/dict/data/type/**").permitAll()
