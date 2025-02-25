@@ -40,4 +40,8 @@ public class ExamVo {
     private Date submitTime;
     // 记录ID
     private Long recordId;
+    // 是否通过
+    private Integer passed;
+    // 最终分数
+    private Integer finalScore;
 }

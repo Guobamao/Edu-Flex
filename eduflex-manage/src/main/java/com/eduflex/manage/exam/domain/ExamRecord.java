@@ -22,6 +22,7 @@ public class ExamRecord extends BaseEntity {
     private Long paperId;
     private Long userId;
     private Integer score;
+    // 考试记录状态（0-未开始 1-进行中 2-待批阅 3-已完成）
     private Integer status;
     private Integer passed;
     private Integer duration;
@@ -29,7 +30,5 @@ public class ExamRecord extends BaseEntity {
     private Date startTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date submitTime;
     private Long jobId;
 }

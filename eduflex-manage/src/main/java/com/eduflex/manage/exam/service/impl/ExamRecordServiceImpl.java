@@ -103,7 +103,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         if (!courseIds.isEmpty()) {
             LambdaQueryWrapper<Exam> examWrapper = new LambdaQueryWrapper<Exam>()
                     .in(Exam::getCourseId, courseIds)
-                    .eq(Exam::getPublished, 1)
+                    .eq(Exam::getPublished, EduFlexConstants.EXAM_PUBLISH_STATUS_PUBLISHED)
                     .orderByDesc(Exam::getCreateTime);
             List<Exam> examList = examService.list(examWrapper);
 
@@ -121,13 +121,13 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
                 if (v.getLimited() == 1) {
                     if (DateUtils.getNowDate().before(v.getStartTime())) {
                         // 如果当前时间在考试开始时间之前，则设置考试状态为未开始
-                        examVo.setStatus(0);
+                        examVo.setStatus(EduFlexConstants.EXAM_STATUS_UNSTARTED);
                     } else if (DateUtils.getNowDate().after(v.getStartTime()) && DateUtils.getNowDate().before(v.getEndTime())) {
                         // 如果当前时间在考试开始时间之后，并且在考试结束时间之前，则设置考试状态为进行中
-                        examVo.setStatus(1);
+                        examVo.setStatus(EduFlexConstants.EXAM_STATUS_IN_PROGRESS);
                     } else if (DateUtils.getNowDate().after(v.getEndTime())) {
                         // 如果当前时间在考试结束时间之后，则设置考试状态为已结束
-                        examVo.setStatus(2);
+                        examVo.setStatus(EduFlexConstants.EXAM_STATUS_ENDED);
                     }
 
                     examVo.setStartTime(v.getStartTime());
@@ -145,8 +145,9 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
                     // 设置提交状态
                     ExamRecord examRecord = examRecordList.get(examRecordList.size() - 1);
                     examVo.setSubmitStatus(examRecord.getStatus());
-                    examVo.setSubmitTime(examRecord.getSubmitTime());
                     examVo.setRecordId(examRecord.getId());
+                    examVo.setPassed(examRecord.getPassed());
+                    examVo.setFinalScore(examRecord.getScore());
                 } else {
                     // 设置提交状态为未开始
                     examVo.setSubmitStatus(0);
@@ -192,6 +193,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         examRecord.setUserId(examDto.getUserId());
         examRecord.setStatus(EduFlexConstants.STATUS_IN_PROGRESS);
         examRecord.setCreateBy(getUsername());
+        examRecord.setStartTime(DateUtils.getNowDate());
         baseMapper.insert(examRecord);
 
         // 创建强制交卷任务
@@ -214,12 +216,16 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
     public void handExam(Long recordId) {
         // 获取考试记录
         ExamRecord examRecord = baseMapper.selectById(recordId);
+        // 获取考试
+        Exam exam = examService.getById(examRecord.getExamId());
 
         // 判断考试状态, 若为待批阅 / 已完成，则跳过
-        if (examRecord.getStatus().equals(EduFlexConstants.EXAM_STATUS_PENDING) || examRecord.getStatus().equals(EduFlexConstants.EXAM_STATUS_ENDED)) {
+        if (examRecord.getStatus().equals(EduFlexConstants.EXAM_RECORD_STATUS_PENDING) || examRecord.getStatus().equals(EduFlexConstants.EXAM_RECORD_STATUS_ENDED)) {
             return;
         }
-        if (examRecord.getStatus().equals(EduFlexConstants.STATUS_IN_PROGRESS)) {
+        if (examRecord.getStatus().equals(EduFlexConstants.EXAM_RECORD_STATUS_IN_PROGRESS)) {
+            // 设置结束时间
+            examRecord.setEndTime(DateUtils.getNowDate());
 
             // 获取学生考试答案记录
             ExamAnswer examAnswer = new ExamAnswer();
@@ -242,14 +248,12 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             // 设置分数为客观题分
             examRecord.setScore(singleScore + multipleScore + judgeScore);
 
-            // 设置提交时间
-            examRecord.setSubmitTime(DateUtils.getNowDate());
             examRecord.setUpdateBy("System");
 
             // 计算考试时长
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            int duration = (int) ((System.currentTimeMillis() - examRecord.getCreateTime().getTime()) / 1000);
+            int duration = (int) ((System.currentTimeMillis() - examRecord.getStartTime().getTime()) / 1000);
             if (duration == 0) {
                 duration = 1;
             }
@@ -260,10 +264,12 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             List<PaperQuestionVo> shortAnswerList = integerListMap.get(EduFlexConstants.SHORT_ANSWER);
             if (!blankList.isEmpty() || !shortAnswerList.isEmpty()) {
                 // 若有 则设置为待批阅
-                examRecord.setStatus(EduFlexConstants.EXAM_STATUS_PENDING);
+                examRecord.setStatus(EduFlexConstants.EXAM_RECORD_STATUS_PENDING);
             } else {
                 // 没有则设置为考试结束
-                examRecord.setStatus(EduFlexConstants.EXAM_STATUS_ENDED);
+                examRecord.setStatus(EduFlexConstants.EXAM_RECORD_STATUS_ENDED);
+                // 设置考试通过状态
+                examRecord.setPassed(examRecord.getScore() >= exam.getPassScore() ? EduFlexConstants.EXAM_PASSED : EduFlexConstants.EXAM_FAILED);
             }
 
             // 更新考试记录
@@ -360,7 +366,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
                         examResultQuestionVo.setAnswer(answer.getAnswer());
                         examResultQuestionVo.setIsChecked(answer.getIsChecked());
                         if (answer.getIsChecked().equals(EduFlexConstants.STATUS_ENABLED)) {
-                            examResultQuestionVo.setGetScore(paperQuestionVo.getScore());
+                            examResultQuestionVo.setGetScore(answer.getScore());
                         }
                     }
                 }
@@ -466,6 +472,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             questionList.addAll(blankQuestionList);
             questionList.addAll(shortQuestionList);
 
+            // 获取未批改的题目数量
             int i = 0;
             for (PaperQuestionVo question : questionList) {
                 LambdaQueryWrapper<ExamAnswer> wrapper = new LambdaQueryWrapper<ExamAnswer>()
@@ -482,8 +489,8 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             }
 
             if (i == 0) {
-                examRecord.setStatus(EduFlexConstants.EXAM_STATUS_ENDED);
-                examRecord.setPassed(examRecord.getScore() >= exam.getPassScore() ? EduFlexConstants.STATUS_ENABLED : EduFlexConstants.STATUS_DISABLED);
+                examRecord.setStatus(EduFlexConstants.EXAM_RECORD_STATUS_ENDED);
+                examRecord.setPassed(examRecord.getScore() >= exam.getPassScore() ? EduFlexConstants.EXAM_PASSED : EduFlexConstants.EXAM_FAILED);
             }
 
             baseMapper.updateById(examRecord);
@@ -516,8 +523,8 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             }
 
             if (i == 0) {
-                examRecord.setStatus(EduFlexConstants.EXAM_STATUS_ENDED);
-                examRecord.setPassed(examRecord.getScore() >= exam.getPassScore() ? EduFlexConstants.STATUS_ENABLED : EduFlexConstants.STATUS_DISABLED);
+                examRecord.setStatus(EduFlexConstants.EXAM_RECORD_STATUS_ENDED);
+                examRecord.setPassed(examRecord.getScore() >= exam.getPassScore() ? EduFlexConstants.EXAM_PASSED : EduFlexConstants.EXAM_FAILED);
             }
 
             baseMapper.updateById(examRecord);

@@ -101,6 +101,11 @@ public class ExamRecordController extends BaseController {
         return toAjax(examRecordService.removeByIds(idList));
     }
 
+    /**
+     * 批阅试卷
+     * @param pendingDto 批阅信息
+     * @return  结果
+     */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @PutMapping("/pending")
     public AjaxResult pending(@RequestBody PendingDto pendingDto)

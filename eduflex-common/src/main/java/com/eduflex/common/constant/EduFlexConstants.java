@@ -111,9 +111,20 @@ public class EduFlexConstants {
     public static final Integer EXAM_STATUS_UNSTARTED = 0;
     // 考试状态 - 进行中
     public static final Integer EXAM_STATUS_IN_PROGRESS = 1;
-    // 考试状态 - 待批阅
-    public static final Integer EXAM_STATUS_PENDING = 2;
     // 考试状态 - 已完成
-    public static final Integer EXAM_STATUS_ENDED = 3;
+    public static final Integer EXAM_STATUS_ENDED = 2;
 
+    // 考试记录状态 - 未开始
+    public static final Integer EXAM_RECORD_STATUS_UNSTARTED = 0;
+    // 考试记录状态 - 进行中
+    public static final Integer EXAM_RECORD_STATUS_IN_PROGRESS = 1;
+    // 考试记录状态 - 待批阅
+    public static final Integer EXAM_RECORD_STATUS_PENDING = 2;
+    // 考试记录状态 - 已完成
+    public static final Integer EXAM_RECORD_STATUS_ENDED = 3;
+
+    // 考试通过
+    public static final Integer EXAM_PASSED = 1;
+    // 考试不通过
+    public static final Integer EXAM_FAILED = 0;
 }
