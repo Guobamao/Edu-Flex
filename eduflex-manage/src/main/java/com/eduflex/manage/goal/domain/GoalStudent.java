@@ -1,18 +1,17 @@
 package com.eduflex.manage.goal.domain;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 学习目标-学生关联对象 tb_goal_student
@@ -57,7 +56,7 @@ public class GoalStudent extends BaseEntity {
      * 学习进度百分比
      */
     @Excel(name = "学习进度百分比")
-    private BigDecimal progress;
+    private Integer progress;
 
     /**
      * 学习目标结束时间

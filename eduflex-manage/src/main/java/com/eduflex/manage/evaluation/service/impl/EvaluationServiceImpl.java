@@ -2,20 +2,20 @@ package com.eduflex.manage.evaluation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.exception.ServiceException;
-import com.eduflex.common.utils.DateUtils;
+import com.eduflex.manage.course.domain.Course;
+import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.evaluation.domain.Evaluation;
 import com.eduflex.manage.evaluation.mapper.EvaluationMapper;
+import com.eduflex.manage.evaluation.service.IEvaluationService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.evaluation.domain.vo.EvaluationVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.evaluation.service.IEvaluationService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 课程评价管理Service业务层处理
@@ -28,6 +28,9 @@ public class EvaluationServiceImpl extends ServiceImpl<EvaluationMapper, Evaluat
 
     @Autowired
     private ISysUserService sysUserService;
+
+    @Autowired
+    private ICourseService courseService;
 
     @Override
     public List<Evaluation> selectEvaluationList(Evaluation evaluation) {
@@ -49,6 +52,10 @@ public class EvaluationServiceImpl extends ServiceImpl<EvaluationMapper, Evaluat
             evaluationVo.setScore(evaluation.getScore());
             evaluationVo.setContent(evaluation.getContent());
             evaluationVo.setCreateTime(evaluation.getCreateTime());
+
+            Course course = courseService.getById(evaluation.getCourseId());
+            evaluationVo.setCourseId(course.getId());
+            evaluationVo.setCourseName(course.getName());
             evaluationVoList.add(evaluationVo);
         }
         return evaluationVoList;

@@ -7,9 +7,14 @@ import java.util.Date;
 
 /**
  * 用户端 - 课程评价 Vo对象
+ * @author 林煜鋒
  */
 @Data
 public class EvaluationVo {
+    // 课程ID
+    private Long courseId;
+    // 课程名称
+    private String courseName;
     // 评价者名称
     private String nickName;
     // 评分

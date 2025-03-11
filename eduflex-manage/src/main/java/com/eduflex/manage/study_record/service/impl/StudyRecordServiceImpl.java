@@ -8,7 +8,6 @@ import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.file.domain.FileImages;
 import com.eduflex.manage.file.service.IFileImagesService;
-import com.eduflex.manage.file.service.IOssFileService;
 import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.student.service.IStudentService;
 import com.eduflex.manage.study_record.domain.StudyRecord;
@@ -46,9 +45,6 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
 
     @Autowired
     private ICourseMaterialService courseMaterialService;
-
-    @Autowired
-    private IOssFileService ossFileService;
 
     @Autowired
     private IFileImagesService fileImagesService;
@@ -121,6 +117,7 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
             if (studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_TEXT) ||
                     studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PPT) ||
                     studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PDF)) {
+                studyRecord.setLastPosition(studyRecordDto.getPicIndex());
                 int progress = (studyRecordDto.getPicIndex() + 1) * 100 / studyRecordDto.getMaxDuration();
                 studyRecord.setProgress(progress);
                 if (progress == 100) {
@@ -150,21 +147,26 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
             if (studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_TEXT) ||
                     studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PPT) ||
                     studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_PDF)) {
-                int progress = (studyRecordDto.getPicIndex() + 1) * 100 / studyRecordDto.getMaxDuration();
-                if (progress > studyRecord.getProgress()) {
-                    studyRecord.setProgress(progress);
-                }
-                if (progress == 100) {
-                    studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+                if (studyRecordDto.getPicIndex() > studyRecord.getLastPosition()) {
+                    studyRecord.setLastPosition(studyRecordDto.getPicIndex());
+                    int progress = (studyRecordDto.getPicIndex() + 1) * 100 / studyRecordDto.getMaxDuration();
+                    if (progress > studyRecord.getProgress()) {
+                        studyRecord.setProgress(progress);
+                    }
+                    if (progress == 100) {
+                        studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+                    }
                 }
             } else if (studyRecordDto.getMaterialType().equals(EduFlexConstants.FILE_TYPE_VIDEO_AUDIO)) {
-                studyRecord.setLastPosition(studyRecordDto.getLastPosition());
-                int progress = studyRecordDto.getLastPosition() * 100 / studyRecordDto.getMaxDuration();
-                if (progress > studyRecord.getProgress()) {
-                    studyRecord.setProgress(progress);
-                }
-                if (progress == 100) {
-                    studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+                if (studyRecordDto.getLastPosition() > studyRecord.getLastPosition()) {
+                    studyRecord.setLastPosition(studyRecordDto.getLastPosition());
+                    int progress = studyRecordDto.getLastPosition() * 100 / studyRecordDto.getMaxDuration();
+                    if (progress > studyRecord.getProgress()) {
+                        studyRecord.setProgress(progress);
+                    }
+                    if (progress == 100) {
+                        studyRecord.setStatus(EduFlexConstants.STATUS_ENDED);
+                    }
                 }
             } else {
                 studyRecord.setProgress(100);

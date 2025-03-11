@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.service.ICourseService;
+import com.eduflex.manage.course_chapter.service.ICourseChapterService;
 import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.domain.dto.StudentCourseDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
 import com.eduflex.manage.student.mapper.StudentCourseMapper;
 import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.system.service.ISysUserService;
+import com.eduflex.user.course_chapter.domain.CourseChapterVo;
+import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, S
 
     @Autowired
     private ICourseService courseService;
+
+    @Autowired
+    private ICourseChapterService courseChapterService;
 
     @Override
     public List<StudentCourse> selectStudentCourseList(StudentCourseDto studentCourseDto) {
@@ -58,6 +64,14 @@ public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, S
             Course course = courseService.getById(studentCourse.getCourseId());
             studentCourseVo.setCourseName(course.getName());
             studentCourseVo.setCover(course.getCover());
+
+            CourseChapterDto courseChapterDto = new CourseChapterDto();
+            courseChapterDto.setUserId(studentCourse.getUserId());
+            courseChapterDto.setCourseId(course.getId());
+            List<CourseChapterVo> courseChapterVos = courseChapterService.selectCourseChapterListWithProgress(courseChapterDto);
+            // 对每一项的progress相加，处理总数size,使用stream
+            int progress = courseChapterVos.stream().mapToInt(CourseChapterVo::getProgress).sum();
+            studentCourseVo.setProgress(progress / courseChapterVos.size());
 
             studentCourseVos.add(studentCourseVo);
         }
