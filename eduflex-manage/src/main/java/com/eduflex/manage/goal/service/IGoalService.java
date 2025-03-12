@@ -1,8 +1,10 @@
 package com.eduflex.manage.goal.service;
 
-import java.util.List;
-import com.eduflex.manage.goal.domain.Goal;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.goal.domain.Goal;
+import com.eduflex.manage.goal.domain.vo.GoalVo;
+
+import java.util.List;
 
 /**
  * 学习目标管理Service接口
@@ -18,4 +20,11 @@ public interface IGoalService extends IService<Goal> {
      * @return 学习目标管理集合
      */
     List<Goal> selectLearningGoalList(Goal goal);
+
+    /**
+     * 构建学习目标集合Vo对象
+     * @param list 学习目标集合
+     * @return 学习目标集合Vo对象集合
+     */
+    List<GoalVo> buildVo(List<Goal> list);
 }

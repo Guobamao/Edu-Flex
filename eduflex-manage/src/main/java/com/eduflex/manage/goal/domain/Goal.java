@@ -3,12 +3,15 @@ package com.eduflex.manage.goal.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 学习目标管理对象 tb_learning_goal
@@ -32,6 +35,11 @@ public class Goal extends BaseEntity {
     private Long id;
 
     /**
+     * 关联用户ID
+     */
+    private Long userId;
+
+    /**
      * 名称
      */
     @Excel(name = "名称")
@@ -45,5 +53,11 @@ public class Goal extends BaseEntity {
     /**
      * 目标完成期限
      */
-    private Integer deadline;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date deadline;
+
+    /**
+     * 完成状态（0-未完成 1-已完成）
+     */
+    private Integer status;
 }

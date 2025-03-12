@@ -10,7 +10,6 @@ import com.eduflex.common.utils.CronUtils;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.course.domain.Course;
-import com.eduflex.manage.course.domain.dto.CourseDto;
 import com.eduflex.manage.course.domain.vo.CourseVo;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
@@ -18,8 +17,6 @@ import com.eduflex.manage.course_chapter.mapper.CourseMapper;
 import com.eduflex.manage.course_chapter.service.ICourseChapterService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
-import com.eduflex.manage.route.domain.Route;
-import com.eduflex.manage.route.service.IRouteService;
 import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.quartz.domain.SysJob;
@@ -32,7 +29,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -51,9 +51,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private ISysUserService userService;
-
-    @Autowired
-    private IRouteService learningRouteService;
 
     @Autowired
     private IStudentCourseService studentCourseService;
@@ -101,24 +98,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Override
     public List<CourseVo> selectCourseListByIds(List<Long> ids) {
         return buildVo(listByIds(ids));
-    }
-
-    @Override
-    public List<CourseVo> selectCourseListForRoute(CourseDto course) {
-        List<CourseVo> courseVos = buildVo(selectCourseList(course));
-
-        if (course.getRouteId() != null) {
-            Route route = learningRouteService.getById(course.getRouteId());
-
-            String[] split = route.getCoursesId().replace("[", "").replace("]", "").replace("\"", "").split(",");
-            List<Long> coursesId = Arrays.stream(split).map(Long::parseLong).toList();
-
-            for (CourseVo courseVo : courseVos) {
-                courseVo.setIsSelected(coursesId.contains(courseVo.getId()));
-            }
-        }
-
-        return courseVos;
     }
 
     @Override

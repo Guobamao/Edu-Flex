@@ -10,8 +10,6 @@ import com.eduflex.common.core.domain.model.RegisterBody;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.framework.web.service.SysRegisterService;
-import com.eduflex.manage.goal.domain.GoalStudent;
-import com.eduflex.manage.goal.service.IGoalStudentService;
 import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
 import com.eduflex.manage.student.domain.vo.StudentGoalVo;
@@ -40,9 +38,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 {
     @Autowired
     private ISysUserService userService;
-
-    @Autowired
-    private IGoalStudentService goalStudentService;
 
     @Autowired
     private SysRegisterService registerService;
@@ -148,8 +143,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         for (StudentVo student : studentList) {
             StudentGoalVo studentGoalVo = new StudentGoalVo();
             BeanUtils.copyProperties(student, studentGoalVo);
-            GoalStudent goalStudent = goalStudentService.getByUserId(student.getUserId());
-            studentGoalVo.setIsSelected(goalStudent != null);
             studentGoalVos.add(studentGoalVo);
         }
         return studentGoalVos;

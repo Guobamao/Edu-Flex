@@ -12,7 +12,6 @@ import com.eduflex.common.exception.job.TaskException;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.course.domain.Course;
-import com.eduflex.manage.course.domain.dto.CourseDto;
 import com.eduflex.manage.course.domain.vo.CourseVo;
 import com.eduflex.manage.course.service.ICourseService;
 import com.github.pagehelper.PageInfo;
@@ -60,17 +59,6 @@ public class CourseController extends BaseController
         PageInfo<Course> pageInfo = new PageInfo<>(courseService.selectCourseList(course));
         List<CourseVo> list = courseService.buildVo(pageInfo.getList());
         return getDataTable(list, pageInfo.getTotal());
-    }
-
-    /**
-     * 查询课程列表 - 学习路线
-     */
-    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
-    @GetMapping("/route/list")
-    public TableDataInfo listForRoute(CourseDto course) {
-        startPage();
-        List<CourseVo> list = courseService.selectCourseListForRoute(course);
-        return getDataTable(list);
     }
 
     /**

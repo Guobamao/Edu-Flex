@@ -127,4 +127,9 @@ public class EduFlexConstants {
     public static final Integer EXAM_PASSED = 1;
     // 考试不通过
     public static final Integer EXAM_FAILED = 0;
+
+    // 目标完成状态 - 未完成
+    public static final Integer GOAL_UNFINISHED = 0;
+    // 目标完成状态 - 已完成
+    public static final Integer GOAL_FINISHED = 1;
 }

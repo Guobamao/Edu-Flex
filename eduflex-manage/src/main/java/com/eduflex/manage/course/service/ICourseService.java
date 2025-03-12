@@ -3,7 +3,6 @@ package com.eduflex.manage.course.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.common.exception.job.TaskException;
 import com.eduflex.manage.course.domain.Course;
-import com.eduflex.manage.course.domain.dto.CourseDto;
 import com.eduflex.manage.course.domain.vo.CourseVo;
 import org.quartz.SchedulerException;
 
@@ -29,13 +28,6 @@ public interface ICourseService extends IService<Course>  {
      * @return 结果
      */
     List<CourseVo> selectCourseListByIds(List<Long> ids);
-
-    /**
-     * 查询课程管理列表 - 学习路线
-     * @param course 条件
-     * @return 结果
-     */
-    List<CourseVo> selectCourseListForRoute(CourseDto course);
 
     /**
      * 根据课程ID查询课程信息

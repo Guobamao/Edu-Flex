@@ -3,13 +3,12 @@ package com.eduflex.manage.study_record.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.file.domain.FileImages;
 import com.eduflex.manage.file.service.IFileImagesService;
-import com.eduflex.manage.student.domain.vo.StudentVo;
-import com.eduflex.manage.student.service.IStudentService;
 import com.eduflex.manage.study_record.domain.StudyRecord;
 import com.eduflex.manage.study_record.domain.vo.StudyRecordVo;
 import com.eduflex.manage.study_record.mapper.StudyRecordMapper;
@@ -38,9 +37,6 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
     private ICourseService courseService;
 
     @Autowired
-    private IStudentService studentService;
-
-    @Autowired
     private ISysUserService userService;
 
     @Autowired
@@ -67,7 +63,7 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
 
     @Override
     public StudyRecordVo selectById(Long id) {
-        return buildVo(baseMapper.selectById(id));
+        return buildVo(List.of(baseMapper.selectById(id))).get(0);
     }
 
     @Override
@@ -181,21 +177,16 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
         return "记录上传成功";
     }
 
-    private StudyRecordVo buildVo(StudyRecord studyRecord) {
-        StudyRecordVo studyRecordVo = new StudyRecordVo();
-        BeanUtils.copyProperties(studyRecord, studyRecordVo);
-        StudentVo student = studentService.selectStudentById(studyRecord.getUserId());
-        studyRecordVo.setNickName(userService.selectUserById(student.getUserId()).getNickName());
-        studyRecordVo.setUserName(userService.selectUserById(student.getUserId()).getUserName());
-        studyRecordVo.setCourseName(courseService.getById(studyRecord.getCourseId()).getName());
-        return studyRecordVo;
-    }
-
     private List<StudyRecordVo> buildVo(List<StudyRecord> studyRecordList) {
         List<StudyRecordVo> studyRecordVoList = new ArrayList<>();
         for (StudyRecord studyRecord : studyRecordList) {
-            StudyRecordVo studyRecordVo = buildVo(studyRecord);
+            StudyRecordVo studyRecordVo = new StudyRecordVo();
 
+            BeanUtils.copyProperties(studyRecord, studyRecordVo);
+            SysUser sysUser = userService.selectUserById(studyRecord.getUserId());
+            studyRecordVo.setNickName(sysUser.getNickName());
+            studyRecordVo.setUserName(sysUser.getUserName());
+            studyRecordVo.setCourseName(courseService.getById(studyRecord.getCourseId()).getName());
             studyRecordVoList.add(studyRecordVo);
         }
         return studyRecordVoList;
