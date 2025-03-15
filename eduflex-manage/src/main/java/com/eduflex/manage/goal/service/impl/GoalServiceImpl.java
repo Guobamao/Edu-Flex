@@ -1,5 +1,6 @@
 package com.eduflex.manage.goal.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,6 +11,7 @@ import com.eduflex.manage.goal.domain.vo.GoalVo;
 import com.eduflex.manage.goal.mapper.GoalMapper;
 import com.eduflex.manage.goal.service.IGoalService;
 import com.eduflex.system.service.ISysUserService;
+import com.eduflex.user.goal.controller.UserGoalVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +31,11 @@ public class GoalServiceImpl extends ServiceImpl<GoalMapper, Goal> implements IG
     private ISysUserService sysUserService;
 
     @Override
-    public List<Goal> selectLearningGoalList(Goal goal) {
+    public List<Goal> selectGoalList(Goal goal) {
         LambdaQueryWrapper<Goal> wrapper = new LambdaQueryWrapper<Goal>()
                 .like(StrUtil.isNotBlank(goal.getGoalName()), Goal::getGoalName, goal.getGoalName())
-                .eq(goal.getStatus() != null, Goal::getStatus, goal.getStatus());
+                .eq(goal.getStatus() != null, Goal::getStatus, goal.getStatus())
+                .eq(goal.getUserId() != null, Goal::getUserId, goal.getUserId());
         return baseMapper.selectList(wrapper);
     }
 
@@ -48,5 +51,11 @@ public class GoalServiceImpl extends ServiceImpl<GoalMapper, Goal> implements IG
             goalVoList.add(goalVo);
         }
         return goalVoList;
+    }
+
+    @Override
+    public List<UserGoalVo> selectUserGoalList(Goal goal) {
+        List<Goal> goalList = selectGoalList(goal);
+        return BeanUtil.copyToList(goalList, UserGoalVo.class);
     }
 }

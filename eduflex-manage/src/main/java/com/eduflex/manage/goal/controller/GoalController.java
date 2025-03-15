@@ -37,7 +37,7 @@ public class GoalController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(Goal goal) {
         startPage();
-        PageInfo<Goal> pageInfo = new PageInfo<>(goalService.selectLearningGoalList(goal));
+        PageInfo<Goal> pageInfo = new PageInfo<>(goalService.selectGoalList(goal));
         List<GoalVo> list = goalService.buildVo(pageInfo.getList());
         return getDataTable(list, pageInfo.getTotal());
     }
@@ -49,7 +49,7 @@ public class GoalController extends BaseController {
     @Log(title = "学习目标管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Goal goal) {
-        List<GoalVo> list = goalService.buildVo(goalService.selectLearningGoalList(goal));
+        List<GoalVo> list = goalService.buildVo(goalService.selectGoalList(goal));
         ExcelUtil<GoalVo> util = new ExcelUtil<>(GoalVo.class);
         util.exportExcel(response, list, "学习目标管理数据");
     }
@@ -62,6 +62,17 @@ public class GoalController extends BaseController {
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         List<Goal> goal = List.of(goalService.getById(id));
         return success(goalService.buildVo(goal).get(0));
+    }
+
+    /**
+     * 新增学习目标管理
+     */
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @Log(title = "学习目标管理", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@RequestBody Goal goal) {
+        goal.setCreateBy(getUsername());
+        return toAjax(goalService.save(goal));
     }
 
     /**
