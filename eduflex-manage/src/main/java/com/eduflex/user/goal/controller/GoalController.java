@@ -1,13 +1,17 @@
 package com.eduflex.user.goal.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.manage.goal.domain.Goal;
 import com.eduflex.manage.goal.service.IGoalService;
+import com.eduflex.user.goal.domain.vo.UserGoalVo;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 学习目标 - 用户端Controller
@@ -21,8 +25,35 @@ public class GoalController extends BaseController {
     private IGoalService goalService;
 
     @GetMapping("/list")
-    public AjaxResult list(Goal goal) {
+    public TableDataInfo list(Goal goal) {
+        startPage();
         goal.setUserId(getUserId());
-        return AjaxResult.success(goalService.selectUserGoalList(goal));
+        PageInfo<Goal> pageInfo = new PageInfo<>(goalService.selectGoalList(goal));
+        List<UserGoalVo> userGoalVos = BeanUtil.copyToList(pageInfo.getList(), UserGoalVo.class);
+        return getDataTable(userGoalVos, pageInfo.getTotal());
+    }
+
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
+        Goal goal = goalService.getById(id);
+        return success(BeanUtil.copyProperties(goal, UserGoalVo.class));
+    }
+
+    @PostMapping
+    public AjaxResult add(@RequestBody Goal goal) {
+        goal.setUserId(getUserId());
+        goal.setCreateBy(getUsername());
+        return toAjax(goalService.save(goal));
+    }
+
+    @PutMapping
+    public AjaxResult edit(@RequestBody Goal goal) {
+        goal.setUpdateBy(getUsername());
+        return toAjax(goalService.updateById(goal));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public AjaxResult remove(@PathVariable Long id) {
+        return toAjax(goalService.removeGoal(id));
     }
 }

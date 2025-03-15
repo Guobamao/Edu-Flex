@@ -1,4 +1,4 @@
-package com.eduflex.user.goal.controller;
+package com.eduflex.user.goal.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
