@@ -12,6 +12,5 @@ import org.apache.ibatis.type.Alias;
 public class CourseDto {
     private Long directionId;
     private Long categoryId;
-    private Integer status;
     private String type;
 }

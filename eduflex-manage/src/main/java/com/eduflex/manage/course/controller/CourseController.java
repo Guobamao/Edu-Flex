@@ -97,7 +97,7 @@ public class CourseController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Course course) throws SchedulerException, TaskException {
         course.setCreateBy(getUsername());
-        return toAjax(courseService.saveCourse(course));
+        return toAjax(courseService.save(course));
     }
 
     /**
@@ -108,7 +108,7 @@ public class CourseController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Course course) throws SchedulerException, TaskException {
         course.setUpdateBy(getUsername());
-        return toAjax(courseService.updateCourse(course));
+        return toAjax(courseService.updateById(course));
     }
 
     /**

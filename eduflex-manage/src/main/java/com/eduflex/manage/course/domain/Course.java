@@ -5,12 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.core.domain.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 /**
  * 课程管理对象 tb_course
@@ -49,18 +46,4 @@ public class Course extends BaseEntity
 
     /** 课程封面 */
     private Long cover;
-
-    /** 开始时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date startTime;
-
-    /** 结束时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date endTime;
-
-    /** 课程状态(0=未开始 1=进行中 2=已结束) */
-    @Excel(name = "课程状态(0=未开始 1=进行中 2=已结束)")
-    private Integer status;
 }
