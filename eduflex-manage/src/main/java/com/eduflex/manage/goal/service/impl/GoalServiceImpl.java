@@ -47,10 +47,8 @@ public class GoalServiceImpl extends ServiceImpl<GoalMapper, Goal> implements IG
     @Transactional
     public int removeGoal(Long id) {
         baseMapper.deleteById(id);
-
         LambdaQueryWrapper<Plan> wrapper = new LambdaQueryWrapper<Plan>()
                 .eq(Plan::getGoalId, id);
-
         return planService.remove(wrapper) ? 1 : 0;
     }
 

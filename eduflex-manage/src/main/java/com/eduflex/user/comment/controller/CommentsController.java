@@ -3,8 +3,8 @@ package com.eduflex.user.comment.controller;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.manage.comments.domain.Comments;
-import com.eduflex.manage.comments.domain.vo.CommentsVo;
 import com.eduflex.manage.comments.service.ICommentsService;
+import com.eduflex.user.comment.domain.vo.UserCommentVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,8 +33,8 @@ public class CommentsController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(Comments comments) {
         startPage();
-        PageInfo<Comments> pageInfo = new PageInfo<>(commentsService.selectCommentsList(comments));
-        List<CommentsVo> list = commentsService.buildVo(pageInfo.getList());
+        PageInfo<Comments> pageInfo = new PageInfo<>(commentsService.selectUserCommentsList(comments));
+        List<UserCommentVo> list = commentsService.buildUserVo(pageInfo.getList());
         return getDataTable(list, pageInfo.getTotal());
     }
 
