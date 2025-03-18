@@ -5,15 +5,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.manage.course.service.ICourseService;
+import com.eduflex.manage.course_chapter.service.ICourseChapterService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.file.domain.FileImages;
 import com.eduflex.manage.file.service.IFileImagesService;
+import com.eduflex.manage.student.domain.StudentCourse;
+import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.manage.study_record.domain.StudyRecord;
 import com.eduflex.manage.study_record.domain.vo.StudyRecordVo;
 import com.eduflex.manage.study_record.mapper.StudyRecordMapper;
 import com.eduflex.manage.study_record.service.IStudyRecordService;
 import com.eduflex.system.service.ISysUserService;
+import com.eduflex.user.course_chapter.domain.CourseChapterVo;
+import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
 import com.eduflex.user.study_record.domain.dto.StudyRecordDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +49,12 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
 
     @Autowired
     private IFileImagesService fileImagesService;
+
+    @Autowired
+    private IStudentCourseService studentCourseService;
+
+    @Autowired
+    private ICourseChapterService courseChapterService;
 
     /**
      * 查询学习记录管理列表
@@ -173,6 +184,28 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
             if (studyRecord.getProgress() == 100) {
                 return "当前资料已学习完成";
             }
+        }
+
+        // 计算课程学习进度
+        CourseChapterDto courseChapterDto = new CourseChapterDto();
+        courseChapterDto.setCourseId(studyRecordDto.getCourseId());
+        courseChapterDto.setUserId(studyRecordDto.getUserId());
+        List<CourseChapterVo> courseChapterVos = courseChapterService.selectCourseChapterListWithProgress(courseChapterDto);
+        int total = courseChapterVos.stream().mapToInt(CourseChapterVo::getProgress).sum();
+        int progress = total / courseChapterVos.size();
+        StudentCourse studentCourse = studentCourseService.getOne(new LambdaQueryWrapper<StudentCourse>().eq(StudentCourse::getCourseId, studyRecordDto.getCourseId())
+                .eq(StudentCourse::getUserId, studyRecordDto.getUserId()));
+        if (progress == 100) {
+            // 课程学习完成
+            studentCourse.setProgress(progress);
+            studentCourse.setStatus(EduFlexConstants.STATUS_ENDED);
+            studentCourseService.updateById(studentCourse);
+        } else {
+            // 更新课程学习进度
+            studentCourse.setProgress(progress);
+            studentCourse.setStatus(EduFlexConstants.STATUS_IN_PROGRESS);
+            studentCourse.setUpdateBy(getUsername());
+            studentCourseService.updateById(studentCourse);
         }
         return "记录上传成功";
     }

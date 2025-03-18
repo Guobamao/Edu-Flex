@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * 课程章节数据传输对象
+ * @author 林煜鋒
  */
 @Data
 public class CourseChapterDto {
@@ -11,6 +12,4 @@ public class CourseChapterDto {
     private Long userId;
     // 课程ID
     private Long courseId;
-    // 父级章节ID
-    private Long parentId;
 }
