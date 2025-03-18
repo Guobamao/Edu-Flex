@@ -16,7 +16,6 @@ import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.service.IStudentCourseService;
-import com.eduflex.quartz.service.ISysJobService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.search.domain.Search;
 import com.eduflex.user.search.service.ISearchService;
@@ -24,10 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -58,9 +54,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private ISearchService searchService;
-
-    @Autowired
-    private ISysJobService jobService;
 
 
     /**
@@ -168,8 +161,80 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public List<Course> selectCourseList(com.eduflex.user.course.domain.dto.CourseDto courseDto) {
         LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
                 .eq(courseDto.getDirectionId() != null, Course::getDirectionId, courseDto.getDirectionId())
-                .eq(courseDto.getCategoryId() != null, Course::getCategoryId, courseDto.getCategoryId())
-                .orderByDesc("new".equals(courseDto.getType()), Course::getCreateTime);
+                .eq(courseDto.getCategoryId() != null, Course::getCategoryId, courseDto.getCategoryId());
+        if ("new".equals(courseDto.getType())) {
+            // 最新课程，按时间排序
+            wrapper.orderByDesc(Course::getCreateTime);
+            return baseMapper.selectList(wrapper);
+        } else if ("recommend".equals(courseDto.getType())) {
+            // 推荐课程
+            Long userId = null;
+            try {
+                userId = getUserId();
+            } catch (Exception ignored) {
+            }
+            if (userId == null) {
+                // 若用户未登录，则按选课数最多的课程
+                return recommendByEnrollmentCount(wrapper);
+            }
+
+            // 用户已登录，判断是否有选课记录
+            List<StudentCourse> studentCourseList = studentCourseService.list(new LambdaQueryWrapper<StudentCourse>()
+                    .eq(StudentCourse::getUserId, userId));
+
+            // 若没有选课记录，则按选课人数推荐
+            if (studentCourseList.isEmpty()) {
+                return recommendByEnrollmentCount(wrapper);
+            } else {
+                List<Long> similarUserIds = findSimilarUsers(userId, studentCourseList);
+                // 推荐的课程ID
+                List<Long> recommendedCourseIds = studentCourseService.list(new LambdaQueryWrapper<StudentCourse>()
+                                .in(StudentCourse::getUserId, similarUserIds))
+                        .stream().map(StudentCourse::getCourseId).distinct().toList();
+
+                // 若无推荐结果，则按选课人数推荐
+                if (recommendedCourseIds.isEmpty()) {
+                    return recommendByEnrollmentCount(wrapper);
+                } else {
+                    wrapper.in(Course::getId, recommendedCourseIds);
+                    return baseMapper.selectList(wrapper);
+                }
+            }
+        }
+        return baseMapper.selectList(wrapper);
+    }
+
+    private List<Long> findSimilarUsers(Long userId, List<StudentCourse> studentCourseList) {
+        // 若有选课记录，则协同过滤推荐课程
+        List<StudentCourse> allStudentCourses = studentCourseService.list();
+        // 用户相似度
+        Map<Long, Integer> userSimilarity = new HashMap<>();
+
+        for (StudentCourse studentCourse : allStudentCourses) {
+            if (!studentCourse.getUserId().equals(userId) &&
+                    studentCourseList.stream().anyMatch(myStudentCourse -> myStudentCourse.getCourseId().equals(studentCourse.getCourseId()))) {
+                userSimilarity.merge(studentCourse.getUserId(), 1, Integer::sum);
+            }
+        }
+
+        // 相似的用户ID
+        return userSimilarity.entrySet().stream()
+                .sorted(Map.Entry.<Long, Integer>comparingByValue().reversed())
+                .limit(5)
+                .map(Map.Entry::getKey)
+                .toList();
+    }
+
+    private List<Course> recommendByEnrollmentCount(LambdaQueryWrapper<Course> wrapper) {
+        List<Long> courseIds = studentCourseService.list().stream()
+                .collect(Collectors.groupingBy(StudentCourse::getCourseId, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .limit(5)
+                .map(Map.Entry::getKey)
+                .toList();
+        wrapper.in(Course::getId, courseIds);
         return baseMapper.selectList(wrapper);
     }
 
