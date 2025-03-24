@@ -5,7 +5,7 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.manage.evaluation.domain.Evaluation;
 import com.eduflex.manage.evaluation.service.IEvaluationService;
-import com.eduflex.user.evaluation.domain.vo.EvaluationVo;
+import com.eduflex.user.evaluation.domain.vo.UserEvaluationVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +31,8 @@ public class EvaluationController extends BaseController {
     public TableDataInfo list(Evaluation evaluation) {
         startPage();
         PageInfo<Evaluation> pageInfo = new PageInfo<>(evaluationService.selectEvaluationList(evaluation));
-        List<EvaluationVo> evaluationVoList = evaluationService.buildVo(pageInfo.getList());
-        return getDataTable(evaluationVoList, pageInfo.getTotal());
+        List<UserEvaluationVo> userEvaluationVoList = evaluationService.buildUserVo(pageInfo.getList());
+        return getDataTable(userEvaluationVoList, pageInfo.getTotal());
     }
 
     /**

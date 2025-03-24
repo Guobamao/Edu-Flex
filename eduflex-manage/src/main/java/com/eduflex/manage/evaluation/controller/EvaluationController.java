@@ -1,28 +1,22 @@
 package com.eduflex.manage.evaluation.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
-import com.eduflex.common.utils.DateUtils;
-import com.eduflex.manage.evaluation.domain.Evaluation;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.evaluation.service.IEvaluationService;
-import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.evaluation.domain.Evaluation;
+import com.eduflex.manage.evaluation.domain.vo.EvaluationVo;
+import com.eduflex.manage.evaluation.service.IEvaluationService;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 课程评价管理Controller
@@ -43,8 +37,18 @@ public class EvaluationController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(Evaluation evaluation) {
         startPage();
-        List<Evaluation> list = evaluationService.selectEvaluationList(evaluation);
-        return getDataTable(list);
+        PageInfo<Evaluation> pageInfo = new PageInfo<>(evaluationService.selectEvaluationList(evaluation));
+        List<EvaluationVo> list = evaluationService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
+    }
+
+    /**
+     * 评价统计
+     */
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @GetMapping("/statistics/{courseId}")
+    public AjaxResult statistics(@PathVariable("courseId") Long courseId) {
+        return success(evaluationService.statistics(courseId));
     }
 
     /**

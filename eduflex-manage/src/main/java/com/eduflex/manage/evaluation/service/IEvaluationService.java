@@ -1,9 +1,12 @@
 package com.eduflex.manage.evaluation.service;
 
-import java.util.List;
-import com.eduflex.manage.evaluation.domain.Evaluation;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.eduflex.user.evaluation.domain.vo.EvaluationVo;
+import com.eduflex.manage.evaluation.domain.Evaluation;
+import com.eduflex.manage.evaluation.domain.vo.EvaluationStatistics;
+import com.eduflex.manage.evaluation.domain.vo.EvaluationVo;
+import com.eduflex.user.evaluation.domain.vo.UserEvaluationVo;
+
+import java.util.List;
 
 /**
  * 课程评价管理 Service接口
@@ -22,10 +25,17 @@ public interface IEvaluationService extends IService<Evaluation> {
 
     /**
      * 构建课程评价Vo对象
+     * @param list 课程评价集合
+     * @return 课程评价集合Vo
+     */
+    List<EvaluationVo> buildVo(List<Evaluation> list);
+
+    /**
+     * 构建课程评价Vo对象
      * @param evaluationList 课程评价集合
      * @return 课程评价Vo集合
      */
-    List<EvaluationVo> buildVo(List<Evaluation> evaluationList);
+    List<UserEvaluationVo> buildUserVo(List<Evaluation> evaluationList);
 
     /**
      * 保存课程评价
@@ -33,4 +43,11 @@ public interface IEvaluationService extends IService<Evaluation> {
      * @return 结果
      */
     int saveEvaluation(Evaluation evaluation);
+
+    /**
+     * 课程评价统计
+     * @param courseId 课程ID
+     * @return 课程评价统计
+     */
+    EvaluationStatistics statistics(Long courseId);
 }

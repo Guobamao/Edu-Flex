@@ -10,7 +10,7 @@ import java.util.Date;
  * @author 林煜鋒
  */
 @Data
-public class EvaluationVo {
+public class UserEvaluationVo {
     // 课程ID
     private Long courseId;
     // 课程名称

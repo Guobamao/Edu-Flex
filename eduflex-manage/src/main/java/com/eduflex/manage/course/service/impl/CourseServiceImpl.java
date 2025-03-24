@@ -14,6 +14,8 @@ import com.eduflex.manage.course_chapter.mapper.CourseMapper;
 import com.eduflex.manage.course_chapter.service.ICourseChapterService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
+import com.eduflex.manage.evaluation.domain.Evaluation;
+import com.eduflex.manage.evaluation.service.IEvaluationService;
 import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.system.service.ISysUserService;
@@ -54,6 +56,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private ISearchService searchService;
+
+    @Autowired
+    private IEvaluationService evaluationService;
 
 
     /**
@@ -246,6 +251,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             BeanUtils.copyProperties(course, courseVo);
             courseVo.setTeacherName(userService.selectUserById(course.getTeacherId()).getNickName());
             courseVo.setCategoryName(categoryService.getById(course.getCategoryId()).getName());
+            courseVo.setSelectedNum((int) studentCourseService.count(new LambdaQueryWrapper<StudentCourse>()
+                    .eq(StudentCourse::getCourseId, course.getId())));
+            List<Evaluation> evaluationList = evaluationService.list(new LambdaQueryWrapper<Evaluation>().eq(Evaluation::getCourseId, course.getId()));
+            evaluationList.stream().mapToDouble(Evaluation::getScore).average().ifPresent(courseVo::setAvgScore);
+
+            List<CourseChapter> courseChapterList = courseChapterService.list(new LambdaQueryWrapper<CourseChapter>().eq(CourseChapter::getCourseId, course.getId()));
+            if (courseChapterList.isEmpty()) {
+                courseVo.setResourceNum(0);
+            } else {
+                List<Long> chapterIdList = courseChapterList.stream().map(CourseChapter::getId).toList();
+
+                LambdaQueryWrapper<CourseMaterial> materialLambdaQueryWrapper = new LambdaQueryWrapper<CourseMaterial>()
+                        .in(CourseMaterial::getChapterId, chapterIdList);
+                courseVo.setResourceNum((int) courseMaterialService.count(materialLambdaQueryWrapper));
+            }
             courseVoList.add(courseVo);
         }
         return courseVoList;
