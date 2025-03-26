@@ -1,27 +1,20 @@
 package com.eduflex.manage.exam.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.exam.domain.ExamAnswer;
 import com.eduflex.manage.exam.service.IExamAnswerService;
-import com.eduflex.common.utils.poi.ExcelUtil;
-import com.eduflex.common.core.page.TableDataInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 考试答案记录Controller
@@ -39,7 +32,7 @@ public class ExamAnswerController extends BaseController
     /**
      * 查询考试答案记录列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:answer:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(ExamAnswer examAnswer)
     {
@@ -51,7 +44,7 @@ public class ExamAnswerController extends BaseController
     /**
      * 导出考试答案记录列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:answer:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试答案记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ExamAnswer examAnswer)
@@ -64,7 +57,7 @@ public class ExamAnswerController extends BaseController
     /**
      * 获取考试答案记录详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:answer:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -74,7 +67,7 @@ public class ExamAnswerController extends BaseController
     /**
      * 新增考试答案记录
      */
-    @PreAuthorize("@ss.hasPermi('manage:answer:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试答案记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ExamAnswer examAnswer)
@@ -85,7 +78,7 @@ public class ExamAnswerController extends BaseController
     /**
      * 修改考试答案记录
      */
-    @PreAuthorize("@ss.hasPermi('manage:answer:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试答案记录", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody ExamAnswer examAnswer)
@@ -96,7 +89,7 @@ public class ExamAnswerController extends BaseController
     /**
      * 删除考试答案记录
      */
-    @PreAuthorize("@ss.hasPermi('manage:answer:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试答案记录", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

@@ -33,7 +33,7 @@ public class EvaluationController extends BaseController {
     /**
      * 查询课程评价管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:evaluation:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(Evaluation evaluation) {
         startPage();
@@ -54,7 +54,7 @@ public class EvaluationController extends BaseController {
     /**
      * 导出课程评价管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:evaluation:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程评价管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Evaluation evaluation) {
@@ -66,7 +66,7 @@ public class EvaluationController extends BaseController {
     /**
      * 获取课程评价管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:evaluation:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(evaluationService.getById(id));
@@ -75,7 +75,7 @@ public class EvaluationController extends BaseController {
     /**
      * 新增课程评价管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:evaluation:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程评价管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Evaluation evaluation) {
@@ -87,7 +87,7 @@ public class EvaluationController extends BaseController {
     /**
      * 修改课程评价管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:evaluation:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程评价管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Evaluation evaluation) {
@@ -98,7 +98,7 @@ public class EvaluationController extends BaseController {
     /**
      * 删除课程评价管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:evaluation:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程评价管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {

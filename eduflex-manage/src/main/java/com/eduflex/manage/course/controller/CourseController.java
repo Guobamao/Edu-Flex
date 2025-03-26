@@ -77,14 +77,14 @@ public class CourseController extends BaseController
     /**
      * 获取课程管理详细信息
      */
-    @PreAuthorize("@ss.hasRole('admin')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
         return success(courseService.getById(id));
     }
 
-    @PreAuthorize("@ss.hasRole('admin')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @PostMapping("/listByIds")
     public AjaxResult getInfoByIds(@RequestBody List<Long> ids) {
         return success(courseService.selectCourseListByIds(ids));
@@ -92,7 +92,7 @@ public class CourseController extends BaseController
     /**
      * 新增课程管理
      */
-    @PreAuthorize("@ss.hasRole('admin')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Course course) throws SchedulerException, TaskException {
@@ -103,7 +103,7 @@ public class CourseController extends BaseController
     /**
      * 修改课程管理
      */
-    @PreAuthorize("@ss.hasRole('admin')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Course course) throws SchedulerException, TaskException {
@@ -114,12 +114,11 @@ public class CourseController extends BaseController
     /**
      * 删除课程管理
      */
-    @PreAuthorize("@ss.hasRole('admin')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        // 数组改成列表
         ArrayList<Long> idList = CollUtil.toList(ids);
         return toAjax(courseService.removeByIds(idList));
     }

@@ -1,28 +1,21 @@
 package com.eduflex.manage.direction.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
-import com.eduflex.common.utils.DateUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
+import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.DateUtils;
+import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.direction.domain.Direction;
 import com.eduflex.manage.direction.service.IDirectionService;
-import com.eduflex.common.utils.poi.ExcelUtil;
-import com.eduflex.common.core.page.TableDataInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 课程方向Controller
@@ -40,7 +33,7 @@ public class DirectionController extends BaseController
     /**
      * 查询课程方向列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:direction:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(Direction direction)
     {
@@ -52,7 +45,7 @@ public class DirectionController extends BaseController
     /**
      * 导出课程方向列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:direction:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程方向", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Direction direction)
@@ -65,7 +58,7 @@ public class DirectionController extends BaseController
     /**
      * 获取课程方向详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:direction:query')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -75,7 +68,7 @@ public class DirectionController extends BaseController
     /**
      * 新增课程方向
      */
-    @PreAuthorize("@ss.hasPermi('manage:direction:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程方向", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Direction direction)
@@ -88,7 +81,7 @@ public class DirectionController extends BaseController
     /**
      * 修改课程方向
      */
-    @PreAuthorize("@ss.hasPermi('manage:direction:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程方向", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Direction direction)
@@ -101,7 +94,7 @@ public class DirectionController extends BaseController
     /**
      * 删除课程方向
      */
-    @PreAuthorize("@ss.hasPermi('manage:direction:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程方向", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

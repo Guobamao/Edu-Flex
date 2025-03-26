@@ -1,17 +1,17 @@
-package com.eduflex.manage.comments.domain;
+package com.eduflex.manage.comment.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
 
 /**
- * 评论管理对象 tb_comments
+ * 评论管理对象 tb_comment
  *
  * @author 林煜鋒
  * @date 2025-01-21
@@ -21,8 +21,8 @@ import com.eduflex.common.core.domain.BaseEntity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_comments")
-public class Comments extends BaseEntity {
+@TableName("tb_comment")
+public class Comment extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

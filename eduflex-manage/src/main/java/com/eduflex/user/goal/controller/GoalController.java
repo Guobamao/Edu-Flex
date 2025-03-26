@@ -9,6 +9,7 @@ import com.eduflex.manage.goal.service.IGoalService;
 import com.eduflex.user.goal.domain.vo.UserGoalVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class GoalController extends BaseController {
     @Autowired
     private IGoalService goalService;
 
+    @PreAuthorize("@ss.hasRole('student')")
     @GetMapping("/list")
     public TableDataInfo list(Goal goal) {
         startPage();
@@ -33,12 +35,14 @@ public class GoalController extends BaseController {
         return getDataTable(userGoalVos, pageInfo.getTotal());
     }
 
+    @PreAuthorize("@ss.hasRole('student')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         Goal goal = goalService.getById(id);
         return success(BeanUtil.copyProperties(goal, UserGoalVo.class));
     }
 
+    @PreAuthorize("@ss.hasRole('student')")
     @PostMapping
     public AjaxResult add(@RequestBody Goal goal) {
         goal.setUserId(getUserId());
@@ -46,12 +50,14 @@ public class GoalController extends BaseController {
         return toAjax(goalService.save(goal));
     }
 
+    @PreAuthorize("@ss.hasRole('student')")
     @PutMapping
     public AjaxResult edit(@RequestBody Goal goal) {
         goal.setUpdateBy(getUsername());
         return toAjax(goalService.updateById(goal));
     }
 
+    @PreAuthorize("@ss.hasRole('student')")
     @DeleteMapping(value = "/{id}")
     public AjaxResult remove(@PathVariable Long id) {
         return toAjax(goalService.removeGoal(id));

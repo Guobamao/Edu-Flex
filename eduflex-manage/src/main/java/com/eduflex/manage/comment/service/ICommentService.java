@@ -1,8 +1,8 @@
-package com.eduflex.manage.comments.service;
+package com.eduflex.manage.comment.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.eduflex.manage.comments.domain.Comments;
-import com.eduflex.manage.comments.domain.vo.CommentsVo;
+import com.eduflex.manage.comment.domain.Comment;
+import com.eduflex.manage.comment.domain.vo.CommentVo;
 import com.eduflex.user.comment.domain.vo.UserCommentVo;
 
 import java.util.List;
@@ -13,33 +13,33 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2025-01-21
  */
-public interface ICommentsService extends IService<Comments> {
+public interface ICommentService extends IService<Comment> {
     /**
      * 查询评论管理列表
      *
-     * @param comments 评论管理
+     * @param comment 评论管理
      * @return 评论管理集合
      */
-    List<Comments> selectCommentsList(Comments comments);
+    List<Comment> selectCommentsList(Comment comment);
 
     /**
      * 构建评论集合Vo对象
-     * @param commentsList 评论集合
+     * @param commentList 评论集合
      * @return 评论集合Vo对象
      */
-    List<CommentsVo> buildVo(List<Comments> commentsList);
+    List<CommentVo> buildVo(List<Comment> commentList);
 
     /**
      * 查询用户端评论列表
-     * @param comments 查询条件
+     * @param comment 查询条件
      * @return 结果
      */
-    List<Comments> selectUserCommentsList(Comments comments);
+    List<Comment> selectUserCommentsList(Comment comment);
 
     /**
      * 构建用户端
      * @param list 评论集合
      * @return 评论集合Vo对象
      */
-    List<UserCommentVo> buildUserVo(List<Comments> list);
+    List<UserCommentVo> buildUserVo(List<Comment> list);
 }

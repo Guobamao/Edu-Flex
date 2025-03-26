@@ -8,6 +8,7 @@ import com.eduflex.manage.evaluation.service.IEvaluationService;
 import com.eduflex.user.evaluation.domain.vo.UserEvaluationVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class EvaluationController extends BaseController {
      * @param evaluation 课程评价信息
      * @return 结果
      */
+    @PreAuthorize("@ss.hasRole('student')")
     @PostMapping
     public AjaxResult save(@RequestBody Evaluation evaluation) {
         evaluation.setUserId(getUserId());

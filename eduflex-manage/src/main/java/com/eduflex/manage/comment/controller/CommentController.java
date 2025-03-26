@@ -1,4 +1,4 @@
-package com.eduflex.manage.comments.controller;
+package com.eduflex.manage.comment.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
@@ -8,9 +8,9 @@ import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
-import com.eduflex.manage.comments.domain.Comments;
-import com.eduflex.manage.comments.domain.vo.CommentsVo;
-import com.eduflex.manage.comments.service.ICommentsService;
+import com.eduflex.manage.comment.domain.Comment;
+import com.eduflex.manage.comment.domain.vo.CommentVo;
+import com.eduflex.manage.comment.service.ICommentService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,83 +26,83 @@ import java.util.List;
  * @date 2025-01-21
  */
 @RestController
-@RequestMapping("/manage/comments")
-public class CommentsController extends BaseController
+@RequestMapping("/manage/comment")
+public class CommentController extends BaseController
 {
     @Autowired
-    private ICommentsService commentsService;
+    private ICommentService commentService;
 
     /**
      * 查询评论管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:comments:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(Comments comments)
+    public TableDataInfo list(Comment comment)
     {
         startPage();
-        PageInfo<Comments> pageInfo = new PageInfo<>(commentsService.selectCommentsList(comments));
-        List<CommentsVo> list = commentsService.buildVo(pageInfo.getList());
+        PageInfo<Comment> pageInfo = new PageInfo<>(commentService.selectCommentsList(comment));
+        List<CommentVo> list = commentService.buildVo(pageInfo.getList());
         return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
      * 导出评论管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:comments:export')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "评论管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Comments comments)
+    public void export(HttpServletResponse response, Comment comment)
     {
-        List<CommentsVo> list = commentsService.buildVo(commentsService.selectCommentsList(comments));
-        ExcelUtil<CommentsVo> util = new ExcelUtil<>(CommentsVo.class);
+        List<CommentVo> list = commentService.buildVo(commentService.selectCommentsList(comment));
+        ExcelUtil<CommentVo> util = new ExcelUtil<>(CommentVo.class);
         util.exportExcel(response, list, "评论管理数据");
     }
 
     /**
      * 获取评论管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:comments:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(commentsService.getById(id));
+        return success(commentService.getById(id));
     }
 
     /**
      * 新增评论管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:comments:add')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "评论管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Comments comments)
+    public AjaxResult add(@RequestBody Comment comment)
     {
-        comments.setCreateBy(getUsername());
-        comments.setCreateTime(DateUtils.getNowDate());
-        return toAjax(commentsService.save(comments));
+        comment.setCreateBy(getUsername());
+        comment.setCreateTime(DateUtils.getNowDate());
+        return toAjax(commentService.save(comment));
     }
 
     /**
      * 修改评论管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:comments:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "评论管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Comments comments)
+    public AjaxResult edit(@RequestBody Comment comment)
     {
-        comments.setUpdateBy(getUsername());
-        comments.setUpdateTime(DateUtils.getNowDate());
-        return toAjax(commentsService.updateById(comments));
+        comment.setUpdateBy(getUsername());
+        comment.setUpdateTime(DateUtils.getNowDate());
+        return toAjax(commentService.updateById(comment));
     }
 
     /**
      * 删除评论管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:comments:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "评论管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         List<Long> idList = CollUtil.toList(ids);
-        return toAjax(commentsService.removeByIds(idList));
+        return toAjax(commentService.removeByIds(idList));
     }
 }

@@ -35,7 +35,7 @@ public class RepoController extends BaseController {
     /**
      * 查询题库管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:repo:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(RepoDto repo) {
         startPage();
@@ -47,7 +47,7 @@ public class RepoController extends BaseController {
     /**
      * 导出题库管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:repo:export')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "题库管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, RepoDto repo) {
@@ -59,7 +59,7 @@ public class RepoController extends BaseController {
     /**
      * 获取题库管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:repo:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(repoService.getById(id));
@@ -68,7 +68,7 @@ public class RepoController extends BaseController {
     /**
      * 新增题库管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:repo:add')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "题库管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Repo repo) {
@@ -80,7 +80,7 @@ public class RepoController extends BaseController {
     /**
      * 修改题库管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:repo:edit')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "题库管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Repo repo) {
@@ -92,7 +92,7 @@ public class RepoController extends BaseController {
     /**
      * 删除题库管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:repo:remove')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "题库管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {

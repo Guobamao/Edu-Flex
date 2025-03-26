@@ -35,7 +35,7 @@ public class PlanController extends BaseController {
     /**
      * 查询学习计划管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:plan:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(Plan plan) {
         startPage();
@@ -47,7 +47,7 @@ public class PlanController extends BaseController {
     /**
      * 导出学习计划管理列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:plan:export')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "学习计划管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Plan plan) {
@@ -59,7 +59,7 @@ public class PlanController extends BaseController {
     /**
      * 获取学习计划管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:plan:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(planService.getById(id));
@@ -68,7 +68,7 @@ public class PlanController extends BaseController {
     /**
      * 新增学习计划管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:plan:add')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "学习计划管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Plan plan) {
@@ -79,7 +79,7 @@ public class PlanController extends BaseController {
     /**
      * 修改学习计划管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:plan:edit')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "学习计划管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Plan plan) {
@@ -91,7 +91,7 @@ public class PlanController extends BaseController {
     /**
      * 删除学习计划管理
      */
-    @PreAuthorize("@ss.hasPermi('manage:plan:remove')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "学习计划管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {

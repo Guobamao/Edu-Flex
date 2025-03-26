@@ -46,7 +46,7 @@ public class OssFileController extends BaseController {
     /**
      * 查询资源管理列表
      */
-    @PreAuthorize("@ss.hasAnyRoles('admin')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping("/list")
     public TableDataInfo list(OssFile ossFile) {
         startPage();
@@ -57,7 +57,7 @@ public class OssFileController extends BaseController {
     /**
      * 导出资源列表
      */
-    @PreAuthorize("@ss.hasAnyRoles('admin')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "资源管理", businessType = com.eduflex.common.enums.BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, OssFile ossFile) {
@@ -69,7 +69,7 @@ public class OssFileController extends BaseController {
     /**
      * 获取资源详细信息
      */
-    @PreAuthorize("@ss.hasAnyRoles('admin')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(ossFileService.getById(id));
@@ -78,7 +78,7 @@ public class OssFileController extends BaseController {
     /**
      * 修改资源信息
      */
-    @PreAuthorize("@ss.hasAnyRoles('admin')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "资源管理", businessType = com.eduflex.common.enums.BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody OssFile ossFile) {
@@ -90,7 +90,7 @@ public class OssFileController extends BaseController {
     /**
      * 删除资源信息
      */
-    @PreAuthorize("@ss.hasAnyRoles('admin')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "资源管理", businessType = com.eduflex.common.enums.BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {

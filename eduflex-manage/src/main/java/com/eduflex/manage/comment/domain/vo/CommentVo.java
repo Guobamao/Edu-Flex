@@ -1,6 +1,6 @@
-package com.eduflex.manage.comments.domain.vo;
+package com.eduflex.manage.comment.domain.vo;
 
-import com.eduflex.manage.comments.domain.Comments;
+import com.eduflex.manage.comment.domain.Comment;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CommentsVo extends Comments {
+public class CommentVo extends Comment {
     private String courseName;
 
     private String userName;

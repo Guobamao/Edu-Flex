@@ -34,7 +34,7 @@ public class ExamRecordController extends BaseController {
     /**
      * 查询考试记录列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:record:list')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
     public TableDataInfo list(ExamRecord examRecord)
     {
@@ -47,7 +47,7 @@ public class ExamRecordController extends BaseController {
     /**
      * 导出考试记录列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:record:export')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "考试记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ExamRecord examRecord)
@@ -60,7 +60,7 @@ public class ExamRecordController extends BaseController {
     /**
      * 获取考试记录详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:record:query')")
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -70,7 +70,7 @@ public class ExamRecordController extends BaseController {
     /**
      * 新增考试记录
      */
-    @PreAuthorize("@ss.hasPermi('manage:record:add')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ExamRecord examRecord)
@@ -81,7 +81,7 @@ public class ExamRecordController extends BaseController {
     /**
      * 修改考试记录
      */
-    @PreAuthorize("@ss.hasPermi('manage:record:edit')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试记录", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody ExamRecord examRecord)
@@ -92,7 +92,7 @@ public class ExamRecordController extends BaseController {
     /**
      * 删除考试记录
      */
-    @PreAuthorize("@ss.hasPermi('manage:record:remove')")
+    @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
