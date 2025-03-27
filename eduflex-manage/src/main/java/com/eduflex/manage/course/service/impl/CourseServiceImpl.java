@@ -192,6 +192,11 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
                 return recommendByEnrollmentCount(wrapper);
             } else {
                 List<Long> similarUserIds = findSimilarUsers(userId, studentCourseList);
+                if (similarUserIds.isEmpty()) {
+                    // 无相似用户，则按创建时间排序
+                    wrapper.orderByDesc(Course::getCreateTime);
+                    return baseMapper.selectList(wrapper);
+                }
                 // 推荐的课程ID
                 List<Long> recommendedCourseIds = studentCourseService.list(new LambdaQueryWrapper<StudentCourse>()
                                 .in(StudentCourse::getUserId, similarUserIds))
