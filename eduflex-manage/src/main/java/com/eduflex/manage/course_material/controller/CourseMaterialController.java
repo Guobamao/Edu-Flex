@@ -7,8 +7,12 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
 import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.course_chapter.controller.CourseChapterController;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
+import com.eduflex.manage.student.domain.StudentCourse;
+import com.eduflex.manage.student.service.IStudentCourseService;
+import com.eduflex.user.course_material.domain.dto.CourseMaterialDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +32,11 @@ public class CourseMaterialController extends BaseController
 {
     @Autowired
     private ICourseMaterialService courseMaterialService;
+
+    @Autowired
+    private IStudentCourseService studentCourseService;
+    @Autowired
+    private CourseChapterController courseChapterController;
 
     /**
      * 查询课程资料列表
@@ -98,5 +107,14 @@ public class CourseMaterialController extends BaseController
     {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(courseMaterialService.deleteCourseMaterialByIds(idList));
+    }
+
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @GetMapping("/list/withProgress")
+    public AjaxResult listWithProgress(CourseMaterialDto courseMaterialDto) {
+        StudentCourse studentCourse = studentCourseService.getById(courseMaterialDto.getRecordId());
+        courseMaterialDto.setUserId(studentCourse.getUserId());
+        courseMaterialDto.setChapterId(courseMaterialDto.getChapterId());
+        return success(courseMaterialService.selectCourseMaterialListWithProgress(courseMaterialDto));
     }
 }

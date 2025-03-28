@@ -63,13 +63,13 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
      * @return 学习记录管理
      */
     @Override
-    public List<StudyRecordVo> selectStudyRecordList(StudyRecord studyRecord) {
+    public List<StudyRecord> selectStudyRecordList(StudyRecord studyRecord) {
         LambdaQueryWrapper<StudyRecord> wrapper = new LambdaQueryWrapper<StudyRecord>()
                 .eq(studyRecord.getUserId() != null, StudyRecord::getUserId, studyRecord.getUserId())
                 .eq(studyRecord.getCourseId() != null, StudyRecord::getCourseId, studyRecord.getCourseId())
                 .eq(studyRecord.getStatus() != null, StudyRecord::getStatus, studyRecord.getStatus());
 
-        return buildVo(baseMapper.selectList(wrapper));
+        return baseMapper.selectList(wrapper);
     }
 
     @Override
@@ -210,7 +210,8 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
         return "记录上传成功";
     }
 
-    private List<StudyRecordVo> buildVo(List<StudyRecord> studyRecordList) {
+    @Override
+    public List<StudyRecordVo> buildVo(List<StudyRecord> studyRecordList) {
         List<StudyRecordVo> studyRecordVoList = new ArrayList<>();
         for (StudyRecord studyRecord : studyRecordList) {
             StudyRecordVo studyRecordVo = new StudyRecordVo();

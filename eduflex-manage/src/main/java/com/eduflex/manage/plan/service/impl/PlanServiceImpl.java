@@ -40,7 +40,9 @@ public class PlanServiceImpl extends ServiceImpl<PlanMapper, Plan> implements IP
     @Override
     public List<Plan> selectPlanList(Plan plan) {
         LambdaQueryWrapper<Plan> wrapper = new LambdaQueryWrapper<Plan>()
-                .eq(plan.getUserId() != null, Plan::getUserId, plan.getUserId());
+                .eq(plan.getUserId() != null, Plan::getUserId, plan.getUserId())
+                .eq(plan.getGoalId() != null, Plan::getGoalId, plan.getGoalId())
+                .like(plan.getTitle() != null, Plan::getTitle, plan.getTitle());
         return baseMapper.selectList(wrapper);
     }
 

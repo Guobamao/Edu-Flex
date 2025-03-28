@@ -11,4 +11,6 @@ public class CourseMaterialDto {
     private Long userId;
     // 章节ID
     private Long chapterId;
+    // 选课记录ID (用于管理端查看用户课程章节学习进度）
+    private Long recordId;
 }

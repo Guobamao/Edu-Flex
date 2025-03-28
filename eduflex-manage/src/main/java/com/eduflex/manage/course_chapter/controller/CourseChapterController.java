@@ -9,6 +9,9 @@ import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
 import com.eduflex.manage.course_chapter.domain.vo.CourseChapterVo;
 import com.eduflex.manage.course_chapter.service.ICourseChapterService;
+import com.eduflex.manage.student.domain.StudentCourse;
+import com.eduflex.manage.student.service.IStudentCourseService;
+import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,9 @@ public class CourseChapterController extends BaseController
 {
     @Autowired
     private ICourseChapterService courseChapterService;
+
+    @Autowired
+    private IStudentCourseService studentCourseService;
 
     /**
      * 查询课程内容章节管理列表
@@ -97,5 +103,14 @@ public class CourseChapterController extends BaseController
     {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(courseChapterService.deleteCourseChapterByIds(idList));
+    }
+
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @GetMapping("/list/withProgress")
+    public AjaxResult listWithProgress(CourseChapterDto courseChapterDto) {
+        StudentCourse studentCourse = studentCourseService.getById(courseChapterDto.getRecordId());
+        courseChapterDto.setUserId(studentCourse.getUserId());
+        courseChapterDto.setCourseId(studentCourse.getCourseId());
+        return success(courseChapterService.selectCourseChapterListWithProgress(courseChapterDto));
     }
 }

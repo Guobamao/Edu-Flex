@@ -71,4 +71,25 @@ public class Plan extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "结束日期", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
+
+    /**
+     * 计划状态（0-未开始 1-进行中 2-已完成）
+     */
+    private Integer status;
+
+    /**
+     * 优先级（0-低优先级 1-中优先级 2-高优先级）
+     */
+    private Integer priority;
+
+    /**
+     * 任务提醒时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date reminderTime;
+
+    /**
+     * 计划被调整次数
+     */
+    private Integer adjustCount;
 }

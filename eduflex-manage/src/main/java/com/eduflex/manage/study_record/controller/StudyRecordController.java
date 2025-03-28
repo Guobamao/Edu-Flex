@@ -10,6 +10,7 @@ import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.study_record.domain.StudyRecord;
 import com.eduflex.manage.study_record.domain.vo.StudyRecordVo;
 import com.eduflex.manage.study_record.service.IStudyRecordService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,7 @@ public class StudyRecordController extends BaseController
     @Autowired
     private IStudyRecordService studyRecordService;
 
+
     /**
      * 查询学习记录管理列表
      */
@@ -38,8 +40,9 @@ public class StudyRecordController extends BaseController
     public TableDataInfo list(StudyRecord studyRecord)
     {
         startPage();
-        List<StudyRecordVo> list = studyRecordService.selectStudyRecordList(studyRecord);
-        return getDataTable(list);
+        PageInfo<StudyRecord> pageInfo = new PageInfo<>(studyRecordService.selectStudyRecordList(studyRecord));
+        List<StudyRecordVo> list = studyRecordService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -50,7 +53,7 @@ public class StudyRecordController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, StudyRecord studyRecord)
     {
-        List<StudyRecordVo> list = studyRecordService.selectStudyRecordList(studyRecord);
+        List<StudyRecordVo> list = studyRecordService.buildVo(studyRecordService.selectStudyRecordList(studyRecord));
         ExcelUtil<StudyRecordVo> util = new ExcelUtil<>(StudyRecordVo.class);
         util.exportExcel(response, list, "学习记录管理数据");
     }

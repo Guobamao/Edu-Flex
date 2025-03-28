@@ -12,4 +12,7 @@ public class CourseChapterDto {
     private Long userId;
     // 课程ID
     private Long courseId;
+
+    // 选课记录ID (用于管理端查看用户课程章节学习进度）
+    private Long recordId;
 }

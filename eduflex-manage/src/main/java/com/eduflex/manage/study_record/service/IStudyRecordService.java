@@ -1,10 +1,11 @@
 package com.eduflex.manage.study_record.service;
 
-import java.util.List;
-import com.eduflex.manage.study_record.domain.StudyRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.study_record.domain.StudyRecord;
 import com.eduflex.manage.study_record.domain.vo.StudyRecordVo;
 import com.eduflex.user.study_record.domain.dto.StudyRecordDto;
+
+import java.util.List;
 
 /**
  * 学习记录管理Service接口
@@ -20,7 +21,7 @@ public interface IStudyRecordService extends IService<StudyRecord> {
      * @param studyRecord 学习记录管理
      * @return 学习记录管理集合
      */
-    List<StudyRecordVo> selectStudyRecordList(StudyRecord studyRecord);
+    List<StudyRecord> selectStudyRecordList(StudyRecord studyRecord);
 
     /**
      * 根据id查询学习记录管理
@@ -35,4 +36,11 @@ public interface IStudyRecordService extends IService<StudyRecord> {
      * @return 结果
      */
     String saveStudyRecord(StudyRecordDto studyRecordDto);
+
+    /**
+     * 管理端 - 构建学习记录Vo集合
+     * @param studyRecordList 学习记录集合
+     * @return 学习记录Vo集合
+     */
+    List<StudyRecordVo> buildVo(List<StudyRecord> studyRecordList);
 }
