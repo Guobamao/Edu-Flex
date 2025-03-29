@@ -78,11 +78,6 @@ public class Plan extends BaseEntity {
     private Integer status;
 
     /**
-     * 优先级（0-低优先级 1-中优先级 2-高优先级）
-     */
-    private Integer priority;
-
-    /**
      * 任务提醒时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

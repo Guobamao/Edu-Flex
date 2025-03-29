@@ -58,4 +58,9 @@ public interface IPlanService extends IService<Plan> {
      * @return 结果
      */
     UserPlanVo getUserPlanById(Long id);
+
+    /**
+     * 自动任务：调整学习计划
+     */
+    void adjustPlan();
 }
