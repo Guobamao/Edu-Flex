@@ -62,7 +62,8 @@ public class PlanController extends BaseController {
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return success(planService.getById(id));
+        List<Plan> plan = List.of(planService.getById(id));
+        return success(planService.buildVo(plan).get(0));
     }
 
     /**
