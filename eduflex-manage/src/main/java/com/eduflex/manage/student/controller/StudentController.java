@@ -13,7 +13,6 @@ import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
-import com.eduflex.manage.student.domain.vo.StudentGoalVo;
 import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.student.service.IStudentService;
 import com.github.pagehelper.PageInfo;
@@ -51,19 +50,6 @@ public class StudentController extends BaseController
     }
 
     /**
-     * 查询学生管理列表（目标关联学生）
-     * @param studentDto 查询条件
-     * @return 结果
-     */
-    @PreAuthorize("@ss.hasRole('admin')")
-    @GetMapping("/goal/list")
-    public TableDataInfo listForGoal(StudentDto studentDto) {
-        startPage();
-        List<StudentGoalVo> list = studentService.selectStudentListForGoal(studentDto);
-        return getDataTable(list);
-    }
-
-    /**
      * 导出学生管理列表
      */
     @PreAuthorize("@ss.hasRole('admin')")
@@ -80,10 +66,10 @@ public class StudentController extends BaseController
      * 获取学生管理详细信息
      */
     @PreAuthorize("@ss.hasRole('admin')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    @GetMapping(value = "/{userId}")
+    public AjaxResult getInfo(@PathVariable("userId") Long userId)
     {
-        return success(studentService.selectStudentById(id));
+        return success(studentService.selectStudentById(userId));
     }
 
     /**

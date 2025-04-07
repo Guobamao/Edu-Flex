@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.common.core.domain.model.RegisterBody;
 import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
-import com.eduflex.manage.student.domain.vo.StudentGoalVo;
 import com.eduflex.manage.student.domain.vo.StudentVo;
 
 import java.util.List;
@@ -79,17 +78,10 @@ public interface IStudentService extends IService<Student>
     /**
      * 获取学生信息
      *
-     * @param id 学生ID
+     * @param userId 学生ID
      * @return
      */
-    StudentVo selectStudentById(Long id);
-
-    /**
-     * 查询学生列表 - 包含学习目标信息
-     * @param studentDto 学生查询条件
-     * @return
-     */
-    List<StudentGoalVo> selectStudentListForGoal(StudentDto studentDto);
+    StudentVo selectStudentById(Long userId);
 
     /**
      * 构建学生列表集合Vo对象

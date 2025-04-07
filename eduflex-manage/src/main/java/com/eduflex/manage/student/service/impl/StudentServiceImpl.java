@@ -12,7 +12,6 @@ import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.framework.web.service.SysRegisterService;
 import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
-import com.eduflex.manage.student.domain.vo.StudentGoalVo;
 import com.eduflex.manage.student.domain.vo.StudentVo;
 import com.eduflex.manage.student.mapper.StudentMapper;
 import com.eduflex.manage.student.service.IStudentService;
@@ -22,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.eduflex.common.utils.SecurityUtils.getUsername;
@@ -129,23 +127,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
-    public StudentVo selectStudentById(Long id) {
-        Student student = baseMapper.selectById(id);
-        SysUser sysUser = userService.selectUserById(student.getUserId());
-        return buildVo(student, sysUser);
-    }
-
-    @Override
-    public List<StudentGoalVo> selectStudentListForGoal(StudentDto studentDto) {
-        List<StudentVo> studentList = buildVo(selectStudentList(), studentDto);
-
-        List<StudentGoalVo> studentGoalVos = new ArrayList<>();
-        for (StudentVo student : studentList) {
-            StudentGoalVo studentGoalVo = new StudentGoalVo();
-            BeanUtils.copyProperties(student, studentGoalVo);
-            studentGoalVos.add(studentGoalVo);
-        }
-        return studentGoalVos;
+    public StudentVo selectStudentById(Long userId) {
+        SysUser sysUser = userService.selectUserById(userId);
+        return BeanUtil.copyProperties(sysUser, StudentVo.class);
     }
 
     @Override
@@ -187,12 +171,5 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             }
         }
         return "";
-    }
-
-    private StudentVo buildVo(Student student, SysUser sysUser) {
-        StudentVo studentVo = new StudentVo();
-        BeanUtils.copyProperties(student, studentVo);
-        BeanUtils.copyProperties(sysUser, studentVo);
-        return studentVo;
     }
 }
