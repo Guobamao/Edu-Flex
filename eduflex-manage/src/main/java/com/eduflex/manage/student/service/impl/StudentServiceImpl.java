@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.core.domain.model.RegisterBody;
-import com.eduflex.common.utils.DateUtils;
+import com.eduflex.common.exception.ServiceException;
+import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.common.utils.bean.BeanValidators;
 import com.eduflex.framework.web.service.SysRegisterService;
 import com.eduflex.manage.student.domain.Student;
 import com.eduflex.manage.student.domain.dto.StudentDto;
@@ -21,9 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Validator;
 import java.util.List;
-
-import static com.eduflex.common.utils.SecurityUtils.getUsername;
 
 /**
  * 学生管理Service业务层处理
@@ -32,17 +33,18 @@ import static com.eduflex.common.utils.SecurityUtils.getUsername;
  * @date 2024-10-07
  */
 @Service
-public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService
-{
+public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService {
     @Autowired
     private ISysUserService userService;
 
     @Autowired
     private SysRegisterService registerService;
 
+    @Autowired
+    protected Validator validator;
+
     @Override
-    public List<Student> selectStudentList()
-    {
+    public List<Student> selectStudentList() {
         LambdaQueryWrapper<Student> studentWrapper = new LambdaQueryWrapper<Student>()
                 .select(Student::getId, Student::getUserId);
         return baseMapper.selectList(studentWrapper);
@@ -50,40 +52,45 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Transactional
     @Override
-    public int insertStudent(StudentDto studentDto)
-    {
+    public int insertStudent(StudentDto studentDto) {
+        // 设置角色为学生
+        studentDto.setRoleId(EduFlexConstants.ROLE_STUDENT);
+        studentDto.setStatus(EduFlexConstants.STUDENT_STATUS_ENABLED);
+        studentDto.setAvatar(EduFlexConstants.DEFAULT_AVATAR);
+
+        if (StrUtil.isNotBlank(studentDto.getPassword())) {
+            studentDto.setPassword(SecurityUtils.encryptPassword(studentDto.getPassword()));
+        } else {
+            studentDto.setPassword(SecurityUtils.encryptPassword("Axy" + studentDto.getUserName()));
+        }
+
         // 先新增用户
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(studentDto, sysUser);
-        sysUser.setRoleIds(new Long[] { studentDto.getRoleId() });
+        sysUser.setRoleIds(new Long[]{studentDto.getRoleId()});
         userService.insertUser(sysUser);
 
         // 新增学生表信息
         Student student = new Student();
         student.setUserId(sysUser.getUserId());
+        student.setCreateBy(studentDto.getCreateBy());
+
         return baseMapper.insert(student);
     }
 
     @Transactional
     @Override
-    public int updateStudent(StudentDto studentDto)
-    {
+    public int updateStudent(StudentDto studentDto) {
+        studentDto.setRoleId(EduFlexConstants.ROLE_STUDENT);
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(studentDto, sysUser);
-        sysUser.setRoleIds(new Long[] { studentDto.getRoleId() });
-        userService.updateUser(sysUser);
-
-        Student student = new Student();
-        student.setId(studentDto.getId());
-        student.setUpdateBy(getUsername());
-        student.setUpdateTime(DateUtils.getNowDate());
-        return baseMapper.updateById(student);
+        sysUser.setRoleIds(new Long[]{studentDto.getRoleId()});
+        return userService.updateUser(sysUser);
     }
 
     @Override
     @Transactional
-    public int deleteStudentByIds(List<Long> idList)
-    {
+    public int deleteStudentByIds(List<Long> idList) {
         // 查询关联的userId
         LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<Student>()
                 .select(Student::getUserId)
@@ -171,5 +178,54 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             }
         }
         return "";
+    }
+
+    @Override
+    public String importStudent(List<StudentDto> studentList, boolean uploadSupport, String operName) {
+        if (studentList.isEmpty()) {
+            throw new ServiceException("导入学生数据不能为空！");
+        }
+
+        int successNum = 0;
+        int failedNum = 0;
+        StringBuilder successMsg = new StringBuilder();
+        StringBuilder failureMsg = new StringBuilder();
+        for (StudentDto studentDto : studentList) {
+            try {
+                // 验证是否存在该学生
+                SysUser sysUser = userService.selectUserByUserName(studentDto.getUserName());
+                if (sysUser == null) {
+                    BeanValidators.validateWithException(validator, studentDto);
+                    studentDto.setSex(EduFlexConstants.SEX_UNKNOWN);
+                    studentDto.setCreateBy(operName);
+                    insertStudent(studentDto);
+                    successNum++;
+                    successMsg.append("<br/>" + successNum + "、账号 " + studentDto.getUserName() + " 导入成功");
+                } else if (uploadSupport) {
+                    BeanValidators.validateWithException(validator, studentDto);
+                    userService.checkUserAllowed(sysUser);
+                    studentDto.setUserId(sysUser.getUserId());
+                    studentDto.setUpdateBy(operName);
+                    updateStudent(studentDto);
+                    successNum++;
+                    successMsg.append("<br/>" + successNum + "、账号 " + studentDto.getUserName() + " 更新成功");
+                } else {
+                    failedNum++;
+                    failureMsg.append("<br/>" + failedNum + "、账号 " + studentDto.getUserName() + " 已存在");
+                }
+            } catch (Exception e) {
+                failedNum++;
+                String msg = "<br/>" + failedNum + "、账号 " + studentDto.getUserName() + " 导入失败：";
+                failureMsg.append(msg + e.getMessage());
+                log.error(msg, e);
+            }
+        }
+        if (failedNum > 0) {
+            failureMsg.insert(0, "很抱歉，导入失败！共 " + failedNum + " 条数据格式不正确，错误如下：");
+            throw new ServiceException(failureMsg.toString());
+        } else {
+            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+        }
+        return successMsg.toString();
     }
 }

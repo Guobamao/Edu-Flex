@@ -1,5 +1,6 @@
 package com.eduflex.manage.course.domain.vo;
 
+import com.eduflex.common.annotation.Excel;
 import com.eduflex.manage.course.domain.Course;
 import lombok.Data;
 
@@ -9,16 +10,23 @@ import lombok.Data;
  */
 @Data
 public class CourseVo extends Course {
+    @Excel(name = "教师名称")
     private String teacherName;
+    @Excel(name = "课程方向")
+    private String directionName;
+    @Excel(name = "课程分类")
     private String categoryName;
 
     // 选课人数
+    @Excel(name = "选课人数")
     private Integer selectedNum;
 
     // 综合评分
+    @Excel(name = "综合评分")
     private Double avgScore;
 
     // 资源数
+    @Excel(name = "资源数")
     private Integer resourceNum;
 
     private Boolean isSelected;

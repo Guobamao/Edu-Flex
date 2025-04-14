@@ -98,4 +98,13 @@ public interface IStudentService extends IService<Student>
      * @return 结果
      */
     String register(RegisterBody user);
+
+    /**
+     * 导入学生数据
+     * @param studentList 导入学生数据
+     * @param uploadSupport 是否更新支持，如果已存在，则进行更新数据
+     * @param operName 操作用户
+     * @return 结果
+     */
+    String importStudent(List<StudentDto> studentList, boolean uploadSupport, String operName);
 }

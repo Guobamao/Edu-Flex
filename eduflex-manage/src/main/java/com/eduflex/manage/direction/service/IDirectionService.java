@@ -1,8 +1,9 @@
 package com.eduflex.manage.direction.service;
 
-import java.util.List;
-import com.eduflex.manage.direction.domain.Direction;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.direction.domain.Direction;
+
+import java.util.List;
 
 /**
  * 课程方向 Service接口
@@ -18,4 +19,12 @@ public interface IDirectionService extends IService<Direction> {
      * @return 课程方向集合
      */
     List<Direction> selectDirectionList(Direction direction);
+
+    /**
+     * 删除课程方向信息
+     *
+     * @param idList 课程方向ID集合
+     * @return 结果
+     */
+    int removeDirection(List<Long> idList);
 }

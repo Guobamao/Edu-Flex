@@ -4,11 +4,14 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.bean.BeanUtils;
 import com.eduflex.manage.category.domain.Category;
 import com.eduflex.manage.category.domain.vo.CategoryVo;
 import com.eduflex.manage.category.mapper.CategoryMapper;
 import com.eduflex.manage.category.service.ICategoryService;
+import com.eduflex.manage.course.domain.Course;
+import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.direction.service.IDirectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Autowired
     private IDirectionService directionService;
+
+    @Autowired
+    private ICourseService courseService;
+
     /**
      * 查询课程分类列表
      *
@@ -43,7 +50,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
-    public List<Category> selectCourseListByDirectionId(Long directionId) {
+    public List<Category> selectCategoryListByDirectionId(Long directionId) {
         LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<Category>()
                 .eq(Category::getDirectionId, directionId)
                 .eq(Category::getStatus, EduFlexConstants.STATUS_ENABLED);
@@ -60,5 +67,18 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
             categoryVoList.add(categoryVo);
         }
         return categoryVoList;
+    }
+
+    @Override
+    public int removeCategory(Long categoryId) {
+        LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
+                .eq(Course::getCategoryId, categoryId);
+        List<Course> courseList = courseService.list(wrapper);
+        if (courseList.isEmpty()) {
+            return baseMapper.deleteById(categoryId);
+        } else {
+            Category category = getById(categoryId);
+            throw new ServiceException("【" + category.getName() + "】分类下有课程，无法删除");
+        }
     }
 }

@@ -62,10 +62,19 @@ public interface ITeacherService extends IService<Teacher>
 
     /**
      * 根据ID查询教师信息
-     * @param id 教师ID
+     * @param userId 教师ID
      * @return
      */
-    TeacherVo selectTeacherById(Long id);
+    TeacherVo selectTeacherByUserId(Long userId);
+
+    /**
+     * 导入教师数据
+     * @param tearcherList 教师数据
+     * @param uploadSupport 是否更新支持，如果已存在，则进行更新数据
+     * @param operName 操作用户
+     * @return 结果
+     */
+    String importTeacher(List<TeacherDto> tearcherList, boolean uploadSupport, String operName);
 
     /**
      * 构建教师集合Vo对象
@@ -74,4 +83,5 @@ public interface ITeacherService extends IService<Teacher>
      * @return 教师集合Vo对象
      */
     List<TeacherVo> buildVo(List<Teacher> teacherList, TeacherDto teacherDto);
+
 }

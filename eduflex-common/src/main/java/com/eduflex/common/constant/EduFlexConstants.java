@@ -11,22 +11,31 @@ import java.util.List;
 public class EduFlexConstants {
 
     // 教师状态：启用
-    public static final Integer TEACHER_STATUS_ENABLED = 1;
+    public static final Integer TEACHER_STATUS_ENABLED = 0;
 
     // 教师状态：停用
-    public static final Integer TEACHER_STATUS_DISABLED = 0;
+    public static final Integer TEACHER_STATUS_DISABLED = 1;
 
     // 学生状态：启用
-    public static final Integer STUDENT_STATUS_ENABLED = 1;
+    public static final Integer STUDENT_STATUS_ENABLED = 0;
 
     // 学生状态：停用
-    public static final Integer STUDENT_STATUS_DISABLED = 0;
+    public static final Integer STUDENT_STATUS_DISABLED = 1;
 
     // 角色字典 - 教师
     public static final Long ROLE_TEACHER = 3L;
 
     // 角色字典 - 学生
     public static final Long ROLE_STUDENT = 4L;
+
+    // 性别字典 - 男
+    public static final Integer SEX_MALE = 0;
+
+    // 性别字典 - 女
+    public static final Integer SEX_FEMALE = 1;
+
+    // 性别字典 - 未知
+    public static final Integer SEX_UNKNOWN = 2;
 
     // 文件类型列表 - 音频
     public static final List<String> FILE_TYPE_AUDIO_LIST = List.of("audio/mp3", "audio/mpeg", "audio/ogg", "audio/wav");

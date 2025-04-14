@@ -41,7 +41,6 @@ public class Course extends BaseEntity
     private Long categoryId;
 
     /** 任课老师ID */
-    @Excel(name = "任课老师ID")
     private Long teacherId;
 
     /** 课程封面 */

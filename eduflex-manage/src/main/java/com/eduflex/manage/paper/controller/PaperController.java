@@ -34,13 +34,13 @@ import java.util.List;
 public class PaperController extends BaseController
 {
     @Autowired
-    private IPaperService examPaperService;
+    private IPaperService paperService;
 
     @Autowired
-    private IPaperQuestionService examPaperQuestionService;
+    private IPaperQuestionService paperQuestionService;
 
     @Autowired
-    private IPaperRepoService examPaperRepoService;
+    private IPaperRepoService paperRepoService;
 
     /**
      * 查询试卷管理列表
@@ -50,8 +50,8 @@ public class PaperController extends BaseController
     public TableDataInfo list(Paper paper)
     {
         startPage();
-        PageInfo<Paper> pageInfo = new PageInfo<>(examPaperService.selectExamPaperList(paper));
-        List<PaperVo> list = examPaperService.buildVo(pageInfo.getList());
+        PageInfo<Paper> pageInfo = new PageInfo<>(paperService.selectExamPaperList(paper));
+        List<PaperVo> list = paperService.buildVo(pageInfo.getList());
         return getDataTable(list, pageInfo.getTotal());
     }
 
@@ -63,7 +63,7 @@ public class PaperController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, Paper paper)
     {
-        List<PaperVo> list = examPaperService.buildVo(examPaperService.selectExamPaperList(paper));
+        List<PaperVo> list = paperService.buildVo(paperService.selectExamPaperList(paper));
         ExcelUtil<PaperVo> util = new ExcelUtil<>(PaperVo.class);
         util.exportExcel(response, list, "试卷管理数据");
     }
@@ -75,7 +75,7 @@ public class PaperController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(examPaperService.getById(id));
+        return success(paperService.getById(id));
     }
 
     /**
@@ -86,7 +86,7 @@ public class PaperController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Paper paper)
     {
-        return toAjax(examPaperService.save(paper));
+        return toAjax(paperService.save(paper));
     }
 
     /**
@@ -97,7 +97,7 @@ public class PaperController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Paper paper)
     {
-        return toAjax(examPaperService.updateById(paper));
+        return toAjax(paperService.updateById(paper));
     }
 
     /**
@@ -109,7 +109,7 @@ public class PaperController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         List<Long> idList = CollUtil.toList(ids);
-        return toAjax(examPaperService.removeByIds(idList));
+        return toAjax(paperService.removeByIds(idList));
     }
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
@@ -117,30 +117,36 @@ public class PaperController extends BaseController
     @PostMapping("/question")
     public AjaxResult addQuestion(@RequestBody List<PaperQuestion> questionList)
     {
-        return toAjax(examPaperQuestionService.saveOrUpdateBatch(questionList));
+        return toAjax(paperQuestionService.saveOrUpdateBatch(questionList));
     }
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/question/{id}")
     public AjaxResult getPaperQuestion(@PathVariable Long id) {
-        return success(examPaperQuestionService.selectQuestionByPaperId(id));
+        return success(paperQuestionService.selectQuestionByPaperId(id));
     }
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @PostMapping("/generate")
     public AjaxResult generateQuestions(@RequestBody PaperDto paperDto) {
-        return success(examPaperService.generateQuestions(paperDto));
+        return success(paperService.generateQuestions(paperDto));
     }
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/repo/{id}")
     public AjaxResult getPaperRepo(@PathVariable Long id) {
-        return success(examPaperRepoService.selectRepoListByPaperId(id));
+        return success(paperRepoService.selectRepoListByPaperId(id));
+    }
+
+    @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
+    @DeleteMapping("/repo/{id}")
+    public AjaxResult removePaperRepo(@PathVariable Long id) {
+        return success(paperRepoService.removeById(id));
     }
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @PostMapping("/compose")
     public AjaxResult composePaper(@RequestBody PaperQuestionDto paperQuestionDto) {
-        return success(examPaperService.composePaper(paperQuestionDto));
+        return success(paperService.composePaper(paperQuestionDto));
     }
 }

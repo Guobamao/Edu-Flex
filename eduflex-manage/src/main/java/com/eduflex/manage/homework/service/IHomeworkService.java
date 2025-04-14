@@ -1,9 +1,9 @@
 package com.eduflex.manage.homework.service;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.homework.domain.Homework;
+
+import java.util.List;
 
 /**
  * 作业管理Service接口
@@ -19,6 +19,6 @@ public interface IHomeworkService extends IService<Homework>
      * @param homework 作业管理
      * @return 作业管理集合
      */
-    public List<Homework> selectHomeworkList(Homework homework);
+    List<Homework> selectHomeworkList(Homework homework);
 
 }

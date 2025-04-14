@@ -14,6 +14,7 @@ import com.eduflex.manage.course_chapter.mapper.CourseMapper;
 import com.eduflex.manage.course_chapter.service.ICourseChapterService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
+import com.eduflex.manage.direction.service.IDirectionService;
 import com.eduflex.manage.evaluation.domain.Evaluation;
 import com.eduflex.manage.evaluation.service.IEvaluationService;
 import com.eduflex.manage.student.domain.StudentCourse;
@@ -59,6 +60,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private IEvaluationService evaluationService;
+
+    @Autowired
+    private IDirectionService directionService;
 
 
     /**
@@ -255,6 +259,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             CourseVo courseVo = new CourseVo();
             BeanUtils.copyProperties(course, courseVo);
             courseVo.setTeacherName(userService.selectUserById(course.getTeacherId()).getNickName());
+            courseVo.setDirectionName(directionService.getById(course.getDirectionId()).getName());
             courseVo.setCategoryName(categoryService.getById(course.getCategoryId()).getName());
             courseVo.setSelectedNum((int) studentCourseService.count(new LambdaQueryWrapper<StudentCourse>()
                     .eq(StudentCourse::getCourseId, course.getId())));

@@ -3,7 +3,6 @@ package com.eduflex.manage.student.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.eduflex.common.annotation.Log;
-import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
@@ -19,6 +18,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -63,6 +63,35 @@ public class StudentController extends BaseController
     }
 
     /**
+     * 下载导入模板
+     * @param response 响应对象
+     */
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response)
+    {
+        ExcelUtil<StudentDto> util = new ExcelUtil<>(StudentDto.class);
+        util.importTemplateExcel(response, "用户数据");
+    }
+
+    /**
+     * 导入学生数据
+     * @param file 上传文件
+     * @param uploadSupport 是否更新支持，如果已存在，则进行更新数据
+     * @return 结果
+     * @throws Exception 异常
+     */
+    @Log(title = "学生管理", businessType = BusinessType.IMPORT)
+    @PreAuthorize("@ss.hasAnyRoles('admin')")
+    @PostMapping("/importData")
+    public AjaxResult importData(MultipartFile file, boolean uploadSupport) throws Exception {
+        ExcelUtil<StudentDto> util = new ExcelUtil<>(StudentDto.class);
+        List<StudentDto> studentList = util.importExcel(file.getInputStream());
+        String operName = getUsername();
+        String message = studentService.importStudent(studentList, uploadSupport, operName);
+        return success(message);
+    }
+
+    /**
      * 获取学生管理详细信息
      */
     @PreAuthorize("@ss.hasRole('admin')")
@@ -89,16 +118,7 @@ public class StudentController extends BaseController
             return error("新增学生‘" + studentDto.getUserName() + "'失败，邮箱账号已存在");
         }
 
-        // 设置角色为学生
-        studentDto.setRoleId(EduFlexConstants.ROLE_STUDENT);
         studentDto.setCreateBy(getUsername());
-        studentDto.setStatus(EduFlexConstants.STUDENT_STATUS_ENABLED);
-        studentDto.setAvatar(EduFlexConstants.DEFAULT_AVATAR);
-        if (StrUtil.isNotBlank(studentDto.getPassword())) {
-            studentDto.setPassword(SecurityUtils.encryptPassword(studentDto.getPassword()));
-        } else {
-            studentDto.setPassword(SecurityUtils.encryptPassword("Axy" + studentDto.getUserName()));
-        }
         return toAjax(studentService.insertStudent(studentDto));
     }
 
@@ -117,9 +137,7 @@ public class StudentController extends BaseController
         } else if (StrUtil.isNotBlank(studentDto.getEmail()) && studentService.checkEmailUnique(studentDto)) {
             return error("修改学生'" + studentDto.getUserName() + "'失败，邮箱账号已存在");
         }
-        studentDto.setRoleId(EduFlexConstants.ROLE_STUDENT);
         studentDto.setUpdateBy(getUsername());
-        studentDto.setUpdateTime(DateUtils.getNowDate());
         return toAjax(studentService.updateStudent(studentDto));
     }
 

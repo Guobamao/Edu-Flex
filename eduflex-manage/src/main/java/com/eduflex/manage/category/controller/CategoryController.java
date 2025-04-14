@@ -83,6 +83,6 @@ public class CategoryController extends BaseController
 	@DeleteMapping("/{categoryId}")
     public AjaxResult remove(@PathVariable Long categoryId)
     {
-        return toAjax(courseCategoryService.removeById(categoryId));
+        return toAjax(courseCategoryService.removeCategory(categoryId));
     }
 }

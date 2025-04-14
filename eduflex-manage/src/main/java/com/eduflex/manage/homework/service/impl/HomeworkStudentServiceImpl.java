@@ -71,7 +71,6 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
                 homeworkVo.setHomeworkId(v.getId());
                 homeworkVo.setTitle(v.getTitle());
                 homeworkVo.setContent(v.getContent());
-                homeworkVo.setDeadline(v.getDeadline());
                 homeworkVo.setCourseName(courseService.getById(v.getCourseId()).getName());
 
                 LambdaQueryWrapper<HomeworkStudent> wrapper = new LambdaQueryWrapper<HomeworkStudent>()
@@ -84,12 +83,6 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
                 } else {
                     homeworkVo.setHomeworkStatus(EduFlexConstants.HOMEWORK_STATUS_UNDO);
                     homeworkVo.setSubmitTime(null);
-                }
-                if (DateUtils.getNowDate().after(v.getDeadline())) {
-                    // 超时，显示已结束
-                    homeworkVo.setStatus(EduFlexConstants.STATUS_ENDED);
-                } else {
-                    homeworkVo.setStatus(EduFlexConstants.STATUS_IN_PROGRESS);
                 }
                 return homeworkVo;
             }).toList();
@@ -118,7 +111,6 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
         homeworkVo.setCourseName(course.getName());
         homeworkVo.setTitle(homework.getTitle());
         homeworkVo.setContent(homework.getContent());
-        homeworkVo.setDeadline(homework.getDeadline());
 
         if (homeworkStudent != null) {
             homeworkVo.setAnswer(homeworkStudent.getAnswer());
@@ -128,12 +120,6 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
             homeworkVo.setAnswer(null);
             homeworkVo.setSubmitTime(null);
             homeworkVo.setHomeworkStatus(EduFlexConstants.HOMEWORK_STATUS_UNDO);
-        }
-        if (DateUtils.getNowDate().after(homework.getDeadline())) {
-            // 超时，显示已结束
-            homeworkVo.setStatus(EduFlexConstants.STATUS_ENDED);
-        } else {
-            homeworkVo.setStatus(EduFlexConstants.STATUS_IN_PROGRESS);
         }
 
         return homeworkVo;

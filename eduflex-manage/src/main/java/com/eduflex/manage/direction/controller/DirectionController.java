@@ -100,6 +100,6 @@ public class DirectionController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         List<Long> idList = CollUtil.toList(ids);
-        return toAjax(directionService.removeByIds(idList));
+        return toAjax(directionService.removeDirection(idList));
     }
 }

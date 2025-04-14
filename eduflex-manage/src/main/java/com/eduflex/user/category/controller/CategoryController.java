@@ -29,6 +29,6 @@ public class CategoryController extends BaseController {
      */
     @GetMapping("/listByDirection")
     public AjaxResult list(@RequestParam Long directionId) {
-        return success(categoryService.selectCourseListByDirectionId(directionId));
+        return success(categoryService.selectCategoryListByDirectionId(directionId));
     }
 }

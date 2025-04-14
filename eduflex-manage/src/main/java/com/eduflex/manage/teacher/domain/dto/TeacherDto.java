@@ -1,17 +1,27 @@
 package com.eduflex.manage.teacher.domain.dto;
 
+import com.eduflex.common.annotation.Excel;
 import com.eduflex.manage.teacher.domain.Teacher;
 import lombok.Data;
 
 @Data
 public class TeacherDto extends Teacher {
+    @Excel(name = "登录名称")
     private String userName;
+    @Excel(name = "用户名称")
     private String nickName;
+    @Excel(name = "用户邮箱")
     private String email;
+    @Excel(name = "手机号码", cellType = Excel.ColumnType.TEXT)
     private String phonenumber;
-    private String sex;
+    private Integer sex;
     private Long avatar;
+    @Excel(name = "登录密码（默认Axy+登录名称）")
     private String password;
-    private Integer status; // 状态：0启用，1停用
-    private Long roleId; // 角色ID
+    // 状态：0启用，1停用
+    private Integer status;
+    // 角色ID
+    private Long roleId;
+
+    private String searchValue;
 }

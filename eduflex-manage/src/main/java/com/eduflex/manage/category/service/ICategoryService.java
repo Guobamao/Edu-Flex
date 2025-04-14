@@ -27,7 +27,7 @@ public interface ICategoryService extends IService<Category> {
      * @param directionId 课程方向ID
      * @return 结果
      */
-    List<Category> selectCourseListByDirectionId(Long directionId);
+    List<Category> selectCategoryListByDirectionId(Long directionId);
 
     /**
      * 构建课程分类Vo集合
@@ -35,4 +35,11 @@ public interface ICategoryService extends IService<Category> {
      * @return 课程分类Vo集合
      */
     List<CategoryVo> buildVo(List<Category> categoryList);
+
+    /**
+     * 删除课程分类
+     * @param categoryId 课程分类ID
+     * @return 结果
+     */
+    int removeCategory(Long categoryId);
 }

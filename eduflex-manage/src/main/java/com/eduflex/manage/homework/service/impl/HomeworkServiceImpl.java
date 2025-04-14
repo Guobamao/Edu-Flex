@@ -1,13 +1,13 @@
 package com.eduflex.manage.homework.service.impl;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
-import com.eduflex.manage.homework.mapper.HomeworkMapper;
 import com.eduflex.manage.homework.domain.Homework;
+import com.eduflex.manage.homework.mapper.HomeworkMapper;
 import com.eduflex.manage.homework.service.IHomeworkService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 作业管理Service业务层处理
@@ -29,9 +29,7 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
     {
         LambdaQueryWrapper<Homework> wrapper = new LambdaQueryWrapper<Homework>()
                 .eq(homework.getCourseId() != null, Homework::getCourseId, homework.getCourseId())
-                .like(homework.getTitle() != null && !homework.getTitle().isEmpty(), Homework::getTitle, homework.getTitle())
-                .ge(homework.getParams().get("startTime") != null, Homework::getDeadline, homework.getParams().get("startTime"))
-                .le(homework.getParams().get("endTime") != null, Homework::getDeadline, homework.getParams().get("endTime"));
+                .like(homework.getTitle() != null && !homework.getTitle().isEmpty(), Homework::getTitle, homework.getTitle());
         return baseMapper.selectList(wrapper);
     }
 }

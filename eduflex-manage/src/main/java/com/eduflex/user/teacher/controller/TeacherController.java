@@ -29,6 +29,6 @@ public class TeacherController extends BaseController {
      */
     @GetMapping("/{id}")
     public AjaxResult getTeacherInfo(@PathVariable("id") Long id) {
-        return AjaxResult.success(teacherService.selectTeacherById(id));
+        return AjaxResult.success(teacherService.selectTeacherByUserId(id));
     }
 }

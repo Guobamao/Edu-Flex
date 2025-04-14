@@ -2,13 +2,10 @@ package com.eduflex.manage.teacher.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
-import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
-import com.eduflex.common.utils.DateUtils;
-import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.StringUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.teacher.domain.Teacher;
@@ -19,6 +16,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -64,13 +62,42 @@ public class TeacherController extends BaseController
     }
 
     /**
+     * 下载导入模板
+     * @param response 响应对象
+     */
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response)
+    {
+        ExcelUtil<TeacherDto> util = new ExcelUtil<>(TeacherDto.class);
+        util.importTemplateExcel(response, "教师数据");
+    }
+
+    /**
+     * 导入教师数据
+     * @param file 上传文件
+     * @param uploadSupport 是否更新支持，如果已存在，则进行更新数据
+     * @return 结果
+     * @throws Exception 异常
+     */
+    @Log(title = "教师管理", businessType = BusinessType.IMPORT)
+    @PreAuthorize("@ss.hasAnyRoles('admin')")
+    @PostMapping("/importData")
+    public AjaxResult importData(MultipartFile file, boolean uploadSupport) throws Exception {
+        ExcelUtil<TeacherDto> util = new ExcelUtil<>(TeacherDto.class);
+        List<TeacherDto> tearcherList = util.importExcel(file.getInputStream());
+        String operName = getUsername();
+        String message = teacherService.importTeacher(tearcherList, uploadSupport, operName);
+        return success(message);
+    }
+
+    /**
      * 获取教师管理详细信息
      */
     @PreAuthorize("@ss.hasRole('admin')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    @GetMapping(value = "/{userId}")
+    public AjaxResult getInfo(@PathVariable("userId") Long userId)
     {
-        return success(teacherService.selectTeacherById(id));
+        return success(teacherService.selectTeacherByUserId(userId));
     }
 
     /**
@@ -90,12 +117,7 @@ public class TeacherController extends BaseController
             return error("新增教师‘" + teacherDto.getUserName() + "'失败，邮箱账号已存在");
         }
 
-        // 设置角色ID为教师
-        teacherDto.setRoleId(EduFlexConstants.ROLE_TEACHER);
         teacherDto.setCreateBy(getUsername());
-        teacherDto.setStatus(EduFlexConstants.TEACHER_STATUS_ENABLED);
-        teacherDto.setPassword(SecurityUtils.encryptPassword(teacherDto.getPassword()));
-        teacherDto.setAvatar(EduFlexConstants.DEFAULT_AVATAR);
         return toAjax(teacherService.insertTeacher(teacherDto));
     }
 
@@ -115,9 +137,7 @@ public class TeacherController extends BaseController
         } else if (StringUtils.isNotEmpty(teacherDto.getEmail()) && !teacherService.checkEmailUnique(teacherDto)) {
             return error("修改教师‘" + teacherDto.getUserName() + "'失败，邮箱账号已存在");
         }
-        teacherDto.setRoleId(EduFlexConstants.ROLE_TEACHER);
         teacherDto.setUpdateBy(getUsername());
-        teacherDto.setUpdateTime(DateUtils.getNowDate());
         return toAjax(teacherService.updateTeacher(teacherDto));
     }
 

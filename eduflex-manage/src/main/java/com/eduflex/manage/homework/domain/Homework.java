@@ -1,17 +1,14 @@
 package com.eduflex.manage.homework.domain;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
 
 /**
  * 作业管理对象 tb_homework
@@ -43,9 +40,4 @@ public class Homework extends BaseEntity
     /** 作业内容 */
     @Excel(name = "作业内容")
     private String content;
-
-    /** 截止日期 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "截止日期", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
-    private Date deadline;
 }
