@@ -9,7 +9,7 @@ import java.util.Date;
  * @author Administrator
  */
 @Data
-public class HomeworkVo {
+public class UserHomeworkVo {
     // 作业ID
     private Long homeworkId;
     // 课程ID
@@ -26,5 +26,5 @@ public class HomeworkVo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date submitTime;
     // 提交状态（0-未做 1-待批阅 2-已批阅）
-    private Integer homeworkStatus;
+    private Integer status;
 }

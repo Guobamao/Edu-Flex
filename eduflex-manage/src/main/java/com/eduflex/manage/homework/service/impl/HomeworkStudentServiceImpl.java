@@ -18,7 +18,7 @@ import com.eduflex.manage.student.domain.dto.StudentCourseDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
 import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.user.homework.domain.dto.HomeworkDto;
-import com.eduflex.user.homework.domain.vo.HomeworkVo;
+import com.eduflex.user.homework.domain.vo.UserHomeworkVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +46,7 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
     private ICourseService courseService;
 
     @Override
-    public List<HomeworkVo> selectHomeworkList(HomeworkDto homework) {
+    public List<UserHomeworkVo> selectHomeworkList(HomeworkDto homework) {
         // 获取学生已选课程ID
         StudentCourseDto studentCourse = new StudentCourseDto();
         studentCourse.setUserId(homework.getUserId());
@@ -66,39 +66,39 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
             List<Homework> homeworkList = homeworkService.list(homeworkWrapper);
 
             return homeworkList.stream().map(v -> {
-                HomeworkVo homeworkVo = new HomeworkVo();
-                homeworkVo.setCourseId(v.getCourseId());
-                homeworkVo.setHomeworkId(v.getId());
-                homeworkVo.setTitle(v.getTitle());
-                homeworkVo.setContent(v.getContent());
-                homeworkVo.setCourseName(courseService.getById(v.getCourseId()).getName());
+                UserHomeworkVo userHomeworkVo = new UserHomeworkVo();
+                userHomeworkVo.setCourseId(v.getCourseId());
+                userHomeworkVo.setHomeworkId(v.getId());
+                userHomeworkVo.setTitle(v.getTitle());
+                userHomeworkVo.setContent(v.getContent());
+                userHomeworkVo.setCourseName(courseService.getById(v.getCourseId()).getName());
 
                 LambdaQueryWrapper<HomeworkStudent> wrapper = new LambdaQueryWrapper<HomeworkStudent>()
                         .eq(HomeworkStudent::getUserId, homework.getUserId())
                         .eq(HomeworkStudent::getHomeworkId, v.getId());
                 HomeworkStudent homeworkStudent = getOne(wrapper);
                 if (homeworkStudent != null) {
-                    homeworkVo.setHomeworkStatus(homeworkStudent.getStatus());
-                    homeworkVo.setSubmitTime(homeworkStudent.getSubmitTime());
+                    userHomeworkVo.setStatus(homeworkStudent.getStatus());
+                    userHomeworkVo.setSubmitTime(homeworkStudent.getSubmitTime());
                 } else {
-                    homeworkVo.setHomeworkStatus(EduFlexConstants.HOMEWORK_STATUS_UNDO);
-                    homeworkVo.setSubmitTime(null);
+                    userHomeworkVo.setStatus(EduFlexConstants.HOMEWORK_STATUS_UNDO);
+                    userHomeworkVo.setSubmitTime(null);
                 }
-                return homeworkVo;
+                return userHomeworkVo;
             }).toList();
         }
         return List.of();
     }
 
     @Override
-    public HomeworkVo selectHomework(HomeworkDto homeworkDto) {
+    public UserHomeworkVo selectHomework(HomeworkDto homeworkDto) {
         LambdaQueryWrapper<HomeworkStudent> wrapper = new LambdaQueryWrapper<HomeworkStudent>()
                 .eq(HomeworkStudent::getUserId, homeworkDto.getUserId())
                 .eq(HomeworkStudent::getHomeworkId, homeworkDto.getHomeworkId());
         // 获取学生作业记录
         HomeworkStudent homeworkStudent = baseMapper.selectOne(wrapper);
 
-        HomeworkVo homeworkVo = new HomeworkVo();
+        UserHomeworkVo userHomeworkVo = new UserHomeworkVo();
 
         Homework homework = homeworkService.getById(homeworkDto.getHomeworkId());
         if (homework == null) {
@@ -106,23 +106,23 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
         }
         Course course = courseService.getById(homework.getCourseId());
 
-        homeworkVo.setHomeworkId(homeworkDto.getHomeworkId());
-        homeworkVo.setCourseId(homework.getCourseId());
-        homeworkVo.setCourseName(course.getName());
-        homeworkVo.setTitle(homework.getTitle());
-        homeworkVo.setContent(homework.getContent());
+        userHomeworkVo.setHomeworkId(homeworkDto.getHomeworkId());
+        userHomeworkVo.setCourseId(homework.getCourseId());
+        userHomeworkVo.setCourseName(course.getName());
+        userHomeworkVo.setTitle(homework.getTitle());
+        userHomeworkVo.setContent(homework.getContent());
 
         if (homeworkStudent != null) {
-            homeworkVo.setAnswer(homeworkStudent.getAnswer());
-            homeworkVo.setSubmitTime(homeworkStudent.getSubmitTime());
-            homeworkVo.setHomeworkStatus(homeworkStudent.getStatus());
+            userHomeworkVo.setAnswer(homeworkStudent.getAnswer());
+            userHomeworkVo.setSubmitTime(homeworkStudent.getSubmitTime());
+            userHomeworkVo.setStatus(homeworkStudent.getStatus());
         } else {
-            homeworkVo.setAnswer(null);
-            homeworkVo.setSubmitTime(null);
-            homeworkVo.setHomeworkStatus(EduFlexConstants.HOMEWORK_STATUS_UNDO);
+            userHomeworkVo.setAnswer(null);
+            userHomeworkVo.setSubmitTime(null);
+            userHomeworkVo.setStatus(EduFlexConstants.HOMEWORK_STATUS_UNDO);
         }
 
-        return homeworkVo;
+        return userHomeworkVo;
     }
 
     @Override

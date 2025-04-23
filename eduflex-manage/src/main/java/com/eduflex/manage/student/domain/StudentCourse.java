@@ -3,7 +3,6 @@ package com.eduflex.manage.student.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.core.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -37,19 +36,16 @@ public class StudentCourse extends BaseEntity {
     /**
      * 学生ID
      */
-    @Excel(name = "关联用户ID")
     private Long userId;
 
     /**
      * 课程ID
      */
-    @Excel(name = "课程ID")
     private Long courseId;
 
     /**
      * 学习进度(%)
      */
-    @Excel(name = "学习进度(%)")
     private Integer progress;
 
     /**

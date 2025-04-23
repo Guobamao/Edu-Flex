@@ -30,7 +30,6 @@ public class Homework extends BaseEntity
     private Long id;
 
     /** 所属课程ID */
-    @Excel(name = "所属课程ID")
     private Long courseId;
 
     /** 作业标题 */
@@ -38,6 +37,6 @@ public class Homework extends BaseEntity
     private String title;
 
     /** 作业内容 */
-    @Excel(name = "作业内容")
+    @Excel(name = "作业内容", width = 50)
     private String content;
 }

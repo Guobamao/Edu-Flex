@@ -28,7 +28,7 @@ public class Course extends BaseEntity
     private Long id;
 
     /** 课程名称 */
-    @Excel(name = "课程名称")
+    @Excel(name = "课程名称", width = 30)
     private String name;
 
     /** 课程描述 */

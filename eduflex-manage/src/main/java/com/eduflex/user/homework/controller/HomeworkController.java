@@ -5,7 +5,7 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.manage.homework.service.IHomeworkStudentService;
 import com.eduflex.user.homework.domain.dto.HomeworkDto;
-import com.eduflex.user.homework.domain.vo.HomeworkVo;
+import com.eduflex.user.homework.domain.vo.UserHomeworkVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ public class HomeworkController extends BaseController {
     public TableDataInfo list(HomeworkDto homework) {
         startPage();
         homework.setUserId(getUserId());
-        List<HomeworkVo> list = homeworkStudentService.selectHomeworkList(homework);
+        List<UserHomeworkVo> list = homeworkStudentService.selectHomeworkList(homework);
         return getDataTable(list);
     }
 
@@ -44,7 +44,7 @@ public class HomeworkController extends BaseController {
         HomeworkDto homeworkDto = new HomeworkDto();
         homeworkDto.setUserId(getUserId());
         homeworkDto.setHomeworkId(id);
-        HomeworkVo homework = homeworkStudentService.selectHomework(homeworkDto);
+        UserHomeworkVo homework = homeworkStudentService.selectHomework(homeworkDto);
         return success(homework);
     }
 
