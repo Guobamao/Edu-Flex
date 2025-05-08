@@ -1,22 +1,27 @@
 package com.eduflex.manage.homework.service.impl;
 
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.DateUtils;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.homework.domain.Homework;
 import com.eduflex.manage.homework.domain.HomeworkStudent;
+import com.eduflex.manage.homework.domain.vo.HomeworkStudentVo;
 import com.eduflex.manage.homework.mapper.HomeworkStudentMapper;
 import com.eduflex.manage.homework.service.IHomeworkService;
 import com.eduflex.manage.homework.service.IHomeworkStudentService;
 import com.eduflex.manage.student.domain.dto.StudentCourseDto;
 import com.eduflex.manage.student.domain.vo.StudentCourseVo;
 import com.eduflex.manage.student.service.IStudentCourseService;
+import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.homework.domain.dto.HomeworkDto;
 import com.eduflex.user.homework.domain.vo.UserHomeworkVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +49,9 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
 
     @Autowired
     private ICourseService courseService;
+
+    @Autowired
+    private ISysUserService userService;
 
     @Override
     public List<UserHomeworkVo> selectHomeworkList(HomeworkDto homework) {
@@ -150,6 +158,41 @@ public class HomeworkStudentServiceImpl extends ServiceImpl<HomeworkStudentMappe
                     .set(HomeworkStudent::getStatus, EduFlexConstants.HOMEWORK_STATUS_PENDING)
                     .set(HomeworkStudent::getUpdateBy, getUsername());
             return baseMapper.update(null, updateWrapper) > 0;
+        }
+    }
+
+    @Override
+    public List<HomeworkStudent> selectHomeworkStudentList(HomeworkDto homeworkDto) {
+        LambdaQueryWrapper<HomeworkStudent> wrapper = new LambdaQueryWrapper<HomeworkStudent>()
+                .eq(HomeworkStudent::getHomeworkId, homeworkDto.getHomeworkId())
+                .eq(homeworkDto.getStatus() != null, HomeworkStudent::getStatus, homeworkDto.getStatus());
+
+        return baseMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<HomeworkStudentVo> buildVo(List<HomeworkStudent> list) {
+        List<HomeworkStudentVo> homeworkStudentVoList = BeanUtil.copyToList(list, HomeworkStudentVo.class);
+        if (CollUtil.isNotEmpty(homeworkStudentVoList)) {
+            for (HomeworkStudentVo homeworkStudentVo : homeworkStudentVoList) {
+                SysUser sysUser = userService.selectUserById(homeworkStudentVo.getUserId());
+                homeworkStudentVo.setUserName(sysUser.getUserName());
+                homeworkStudentVo.setNickName(sysUser.getNickName());
+                Homework homework = homeworkService.getById(homeworkStudentVo.getHomeworkId());
+                homeworkStudentVo.setCourseName(courseService.getById(homework.getCourseId()).getName());
+            }
+            return homeworkStudentVoList;
+        }
+        return List.of();
+    }
+
+    @Override
+    public int checkHomework(HomeworkStudent homeworkStudent) {
+        homeworkStudent.setStatus(EduFlexConstants.HOMEWORK_STATUS_REVIEWED);
+        if (baseMapper.updateById(homeworkStudent) > 0) {
+            return 1;
+        } else {
+            throw new ServiceException("更新失败");
         }
     }
 }

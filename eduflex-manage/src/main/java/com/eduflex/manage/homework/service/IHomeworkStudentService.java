@@ -2,6 +2,7 @@ package com.eduflex.manage.homework.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.homework.domain.HomeworkStudent;
+import com.eduflex.manage.homework.domain.vo.HomeworkStudentVo;
 import com.eduflex.user.homework.domain.dto.HomeworkDto;
 import com.eduflex.user.homework.domain.vo.UserHomeworkVo;
 
@@ -36,4 +37,26 @@ public interface IHomeworkStudentService extends IService<HomeworkStudent> {
      * @return 修改结果
      */
     boolean submitHomework(HomeworkDto homeworkDto);
+
+    /**
+     * 获取学生作业列表
+     *
+     * @param homeworkDto 查询条件
+     * @return 结果
+     */
+    List<HomeworkStudent> selectHomeworkStudentList(HomeworkDto homeworkDto);
+
+    /**
+     * 构建vo
+     * @param list 原始数据
+     * @return 结果
+     */
+    List<HomeworkStudentVo> buildVo(List<HomeworkStudent> list);
+
+    /**
+     * 批阅作业
+     * @param homeworkStudent 条件
+     * @return 结果
+     */
+    int checkHomework(HomeworkStudent homeworkStudent);
 }

@@ -12,4 +12,7 @@ public class HomeworkDto {
     private Long courseId;
     private Long homeworkId;
     private String answer;
+
+    private Integer status;
+    private String searchValue;
 }

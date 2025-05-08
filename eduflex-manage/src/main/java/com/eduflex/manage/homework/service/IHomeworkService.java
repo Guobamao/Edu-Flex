@@ -2,6 +2,7 @@ package com.eduflex.manage.homework.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.manage.homework.domain.Homework;
+import com.eduflex.manage.homework.domain.vo.HomeworkVo;
 
 import java.util.List;
 
@@ -21,4 +22,10 @@ public interface IHomeworkService extends IService<Homework>
      */
     List<Homework> selectHomeworkList(Homework homework);
 
+    /**
+     * 构建Vo
+     * @param list 作业列表
+     * @return Vo对象
+     */
+    List<HomeworkVo> buildVo(List<Homework> list);
 }

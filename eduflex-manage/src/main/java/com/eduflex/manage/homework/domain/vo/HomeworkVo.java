@@ -9,4 +9,7 @@ public class HomeworkVo extends Homework {
 
     @Excel(name = "课程名称", sort = 1)
     private String courseName;
+
+    @Excel(name = "已提交作业", sort = 3)
+    private Integer submitCount;
 }

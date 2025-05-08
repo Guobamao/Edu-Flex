@@ -1,28 +1,23 @@
 package com.eduflex.manage.homework.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollUtil;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
-import com.eduflex.common.enums.BusinessType;
-import com.eduflex.manage.homework.domain.Homework;
-import com.eduflex.manage.homework.service.IHomeworkService;
-import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.common.core.page.TableDataInfo;
+import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.poi.ExcelUtil;
+import com.eduflex.manage.homework.domain.Homework;
+import com.eduflex.manage.homework.domain.vo.HomeworkVo;
+import com.eduflex.manage.homework.service.IHomeworkService;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作业管理Controller
@@ -45,8 +40,9 @@ public class HomeworkController extends BaseController
     public TableDataInfo list(Homework homework)
     {
         startPage();
-        List<Homework> list = homeworkService.selectHomeworkList(homework);
-        return getDataTable(list);
+        PageInfo<Homework> pageInfo = new PageInfo<>(homeworkService.selectHomeworkList(homework));
+        List<HomeworkVo> list = homeworkService.buildVo(pageInfo.getList());
+        return getDataTable(list, pageInfo.getTotal());
     }
 
     /**
@@ -57,8 +53,8 @@ public class HomeworkController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, Homework homework)
     {
-        List<Homework> list = homeworkService.selectHomeworkList(homework);
-        ExcelUtil<Homework> util = new ExcelUtil<Homework>(Homework.class);
+        List<HomeworkVo> list = homeworkService.buildVo(homeworkService.selectHomeworkList(homework));
+        ExcelUtil<HomeworkVo> util = new ExcelUtil<HomeworkVo>(HomeworkVo.class);
         util.exportExcel(response, list, "作业管理数据");
     }
 
@@ -80,6 +76,7 @@ public class HomeworkController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Homework homework)
     {
+        homework.setCreateBy(getUsername());
         return toAjax(homeworkService.save(homework));
     }
 
@@ -91,6 +88,7 @@ public class HomeworkController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Homework homework)
     {
+        homework.setUpdateBy(getUsername());
         return toAjax(homeworkService.updateById(homework));
     }
 

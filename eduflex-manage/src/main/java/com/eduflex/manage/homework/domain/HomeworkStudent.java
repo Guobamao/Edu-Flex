@@ -3,6 +3,7 @@ package com.eduflex.manage.homework.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.core.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -39,11 +40,22 @@ public class HomeworkStudent extends BaseEntity
 
     /** 提交时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "提交时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date submitTime;
 
     // 提交状态（0-未做 1-待批阅 2-已批阅）
+    @Excel(name = "提交状态", readConverterExp = "0=未做,1=待批阅,2=已批阅")
     private Integer status;
 
     // 作答内容
+    @Excel(name = "作答内容")
     private String answer;
+
+    // 分数
+    @Excel(name = "分数")
+    private Integer score;
+
+    // 批阅结果
+    @Excel(name = "批阅结果")
+    private String suggestion;
 }
