@@ -1,10 +1,11 @@
 package com.eduflex.system.domain;
 
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.annotation.Excel.ColumnType;
 import com.eduflex.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 /**
  * 系统访问记录表 sys_logininfor
@@ -49,7 +50,7 @@ public class SysLogininfor extends BaseEntity
 
     /** 访问时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "访问时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "访问时间", width = 20, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date loginTime;
 
     public Long getInfoId()

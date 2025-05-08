@@ -42,22 +42,25 @@ public class Goal extends BaseEntity {
     /**
      * 名称
      */
-    @Excel(name = "名称")
+    @Excel(name = "名称", sort = 3)
     private String goalName;
 
     /**
      * 目标描述
      */
+    @Excel(name = "目标描述", sort = 4)
     private String description;
 
     /**
      * 目标完成期限
      */
+    @Excel(name = "目标完成期限", sort = 5, width = 20, dateFormat = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
 
     /**
      * 完成状态（0-未完成 1-已完成）
      */
+    @Excel(name = "完成状态", sort = 6, dictType = "goal_status", comboReadDict = true)
     private Integer status;
 }

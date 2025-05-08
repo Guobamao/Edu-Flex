@@ -1,10 +1,11 @@
 package com.eduflex.system.domain;
 
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.annotation.Excel.ColumnType;
 import com.eduflex.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 /**
  * 操作日志记录表 oper_log
@@ -80,7 +81,7 @@ public class SysOperLog extends BaseEntity
 
     /** 操作时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "操作时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "操作时间", width = 20, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date operTime;
 
     /** 消耗时间 */

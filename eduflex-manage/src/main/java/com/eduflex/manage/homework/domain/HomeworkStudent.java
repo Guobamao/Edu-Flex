@@ -40,7 +40,7 @@ public class HomeworkStudent extends BaseEntity
 
     /** 提交时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "提交时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "提交时间", width = 20, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date submitTime;
 
     // 提交状态（0-未做 1-待批阅 2-已批阅）

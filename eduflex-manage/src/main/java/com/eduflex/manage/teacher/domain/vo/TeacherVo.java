@@ -27,7 +27,7 @@ public class TeacherVo {
     private Integer status;
     @Excel(name = "最后登录IP")
     private String loginIp;
-    @Excel(name = "最后登录时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "最后登录时间", width = 20, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date loginDate;
 
     /**

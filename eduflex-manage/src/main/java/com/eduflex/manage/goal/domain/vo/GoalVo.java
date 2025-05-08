@@ -1,5 +1,6 @@
 package com.eduflex.manage.goal.domain.vo;
 
+import com.eduflex.common.annotation.Excel;
 import com.eduflex.manage.goal.domain.Goal;
 import lombok.Data;
 
@@ -9,6 +10,8 @@ import lombok.Data;
  */
 @Data
 public class GoalVo extends Goal {
+    @Excel(name = "用户名称", sort = 1)
     private String userName;
+    @Excel(name = "用户昵称", sort = 2)
     private String nickName;
 }

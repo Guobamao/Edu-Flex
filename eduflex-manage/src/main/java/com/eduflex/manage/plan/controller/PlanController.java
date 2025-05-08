@@ -51,8 +51,8 @@ public class PlanController extends BaseController {
     @Log(title = "学习计划管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Plan plan) {
-        List<Plan> list = planService.selectPlanList(plan);
-        ExcelUtil<Plan> util = new ExcelUtil<>(Plan.class);
+        List<PlanVo> list = planService.buildVo(planService.selectPlanList(plan));
+        ExcelUtil<PlanVo> util = new ExcelUtil<>(PlanVo.class);
         util.exportExcel(response, list, "学习计划管理数据");
     }
 

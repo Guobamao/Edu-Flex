@@ -30,7 +30,7 @@ public class CommentVo extends Comment {
 
     private Long avatar;
 
-    @Excel(name = "发送时间", sort = 5, dateFormat = "yyyy-MM-dd HH:mm:ss", width = 30)
+    @Excel(name = "发送时间", sort = 5, dateFormat = "yyyy-MM-dd HH:mm:ss", width = 20)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 }

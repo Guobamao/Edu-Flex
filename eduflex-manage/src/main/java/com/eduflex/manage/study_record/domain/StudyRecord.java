@@ -1,18 +1,17 @@
 package com.eduflex.manage.study_record.domain;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 学习记录管理对象 tb_study_record
@@ -69,14 +68,14 @@ public class StudyRecord extends BaseEntity {
      * 开始时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "学习开始时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "学习开始时间", width = 20, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /**
      * 学习结束时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "学习结束时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "学习结束时间", width = 20, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
     /**
