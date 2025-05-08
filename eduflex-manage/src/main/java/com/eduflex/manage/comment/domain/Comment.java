@@ -34,24 +34,21 @@ public class Comment extends BaseEntity {
     /**
      * 课程ID
      */
-    @Excel(name = "课程ID")
     private Long courseId;
 
     /**
      * 用户ID
      */
-    @Excel(name = "用户ID")
     private Long userId;
 
     /**
      * 评论内容
      */
-    @Excel(name = "评论内容")
+    @Excel(name = "评论内容", sort = 4, width = 50)
     private String content;
 
     /**
      * 父级评论ID
      */
-    @Excel(name = "父级评论ID")
     private Long parentId;
 }

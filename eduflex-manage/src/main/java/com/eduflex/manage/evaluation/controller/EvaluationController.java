@@ -58,8 +58,8 @@ public class EvaluationController extends BaseController {
     @Log(title = "课程评价管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Evaluation evaluation) {
-        List<Evaluation> list = evaluationService.selectEvaluationList(evaluation);
-        ExcelUtil<Evaluation> util = new ExcelUtil<>(Evaluation.class);
+        List<EvaluationVo> list = evaluationService.buildVo(evaluationService.selectEvaluationList(evaluation));
+        ExcelUtil<EvaluationVo> util = new ExcelUtil<>(EvaluationVo.class);
         util.exportExcel(response, list, "课程评价管理数据");
     }
 

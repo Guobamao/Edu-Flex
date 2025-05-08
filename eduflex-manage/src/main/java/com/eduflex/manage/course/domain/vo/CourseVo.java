@@ -29,6 +29,30 @@ public class CourseVo extends Course {
     @Excel(name = "资源数")
     private Integer resourceNum;
 
+    // 评论数
+    @Excel(name = "评论数")
+    private Integer commentNum;
+
+    // 评价数
+    @Excel(name = "评价数")
+    private Integer evaluationNum;
+
+    // 考试数
+    @Excel(name = "考试数")
+    private Integer examNum;
+
+    // 作业数
+    @Excel(name = "作业数")
+    private Integer homeworkNum;
+
+    // 试卷数
+    @Excel(name = "试卷数")
+    private Integer paperNum;
+
+    // 题库数
+    @Excel(name = "题库数")
+    private Integer repoNum;
+
     private Boolean isSelected;
 
     // 用户端 - 课程节数（课程资源 - 视频数）

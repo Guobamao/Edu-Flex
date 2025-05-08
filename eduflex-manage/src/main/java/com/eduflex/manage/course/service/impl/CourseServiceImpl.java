@@ -2,10 +2,13 @@ package com.eduflex.manage.course.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.exception.ServiceException;
 import com.eduflex.manage.category.service.ICategoryService;
+import com.eduflex.manage.comment.domain.Comment;
+import com.eduflex.manage.comment.service.ICommentService;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.domain.vo.CourseVo;
 import com.eduflex.manage.course.service.ICourseService;
@@ -17,6 +20,14 @@ import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.direction.service.IDirectionService;
 import com.eduflex.manage.evaluation.domain.Evaluation;
 import com.eduflex.manage.evaluation.service.IEvaluationService;
+import com.eduflex.manage.exam.domain.Exam;
+import com.eduflex.manage.exam.service.IExamService;
+import com.eduflex.manage.homework.domain.Homework;
+import com.eduflex.manage.homework.service.IHomeworkService;
+import com.eduflex.manage.paper.domain.Paper;
+import com.eduflex.manage.paper.service.IPaperService;
+import com.eduflex.manage.repo.domain.Repo;
+import com.eduflex.manage.repo.service.IRepoService;
 import com.eduflex.manage.student.domain.StudentCourse;
 import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.system.service.ISysUserService;
@@ -63,6 +74,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private IDirectionService directionService;
+
+    @Autowired
+    private ICommentService commentService;
+
+    @Autowired
+    private IExamService examService;
+
+    @Autowired
+    private IHomeworkService homeworkService;
+
+    @Autowired
+    private IPaperService paperService;
+
+    @Autowired
+    private IRepoService repoService;
 
 
     /**
@@ -276,6 +302,13 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
                         .in(CourseMaterial::getChapterId, chapterIdList);
                 courseVo.setResourceNum((int) courseMaterialService.count(materialLambdaQueryWrapper));
             }
+
+            courseVo.setCommentNum((int) commentService.count(Wrappers.<Comment>lambdaQuery().eq(Comment::getCourseId, course.getId())));
+            courseVo.setEvaluationNum((int) evaluationService.count(Wrappers.<Evaluation>lambdaQuery().eq(Evaluation::getCourseId, course.getId())));
+            courseVo.setExamNum((int) examService.count(Wrappers.<Exam>lambdaQuery().eq(Exam::getCourseId, course.getId())));
+            courseVo.setHomeworkNum((int) homeworkService.count(Wrappers.<Homework>lambdaQuery().eq(Homework::getCourseId, course.getId())));
+            courseVo.setPaperNum((int) paperService.count(Wrappers.<Paper>lambdaQuery().eq(Paper::getCourseId, course.getId())));
+            courseVo.setRepoNum((int) repoService.count(Wrappers.<Repo>lambdaQuery().eq(Repo::getCourseId, course.getId())));
             courseVoList.add(courseVo);
         }
         return courseVoList;

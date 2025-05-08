@@ -124,6 +124,7 @@ public class SecurityConfig
                         .antMatchers(HttpMethod.GET, "/user/teacher/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/user/evaluation/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/user/student/register").permitAll()
+                        .antMatchers(HttpMethod.GET, "/user/carousel/list").permitAll()
                         // 字典 GET 请求
                         .antMatchers(HttpMethod.GET, "/system/dict/data/type/**").permitAll()
                     .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()

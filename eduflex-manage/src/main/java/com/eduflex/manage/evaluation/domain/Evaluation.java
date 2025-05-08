@@ -3,12 +3,12 @@ package com.eduflex.manage.evaluation.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
 
 /**
  * 课程评价管理对象 tb_evaluation
@@ -34,24 +34,22 @@ public class Evaluation extends BaseEntity {
     /**
      * 评分
      */
-    @Excel(name = "评分")
+    @Excel(name = "评分", sort = 4)
     private Integer score;
 
     /**
      * 评论
      */
-    @Excel(name = "评论")
+    @Excel(name = "评论", sort = 5, width = 50)
     private String content;
 
     /**
      * 用户ID
      */
-    @Excel(name = "用户ID")
     private Long userId;
 
     /**
      * 课程ID
      */
-    @Excel(name = "课程ID")
     private Long courseId;
 }
