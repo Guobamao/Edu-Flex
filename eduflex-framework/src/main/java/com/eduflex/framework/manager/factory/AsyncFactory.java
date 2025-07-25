@@ -69,7 +69,8 @@ public class AsyncFactory {
                     logininfor.setStatus(Constants.FAIL);
                 }
                 // 插入数据
-                SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(logininfor);
+                ISysLogininforService sysLogininforService = SpringUtils.getBean(ISysLogininforService.class);
+                sysLogininforService.save(logininfor);
             }
         };
     }

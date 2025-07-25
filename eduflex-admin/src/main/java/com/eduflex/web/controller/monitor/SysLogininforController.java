@@ -1,5 +1,6 @@
 package com.eduflex.web.controller.monitor;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
@@ -44,7 +45,7 @@ public class SysLogininforController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysLogininfor logininfor) {
         List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
-        ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
+        ExcelUtil<SysLogininfor> util = new ExcelUtil<>(SysLogininfor.class);
         util.exportExcel(response, list, "登录日志");
     }
 
@@ -52,7 +53,7 @@ public class SysLogininforController extends BaseController {
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{infoIds}")
     public AjaxResult remove(@PathVariable Long[] infoIds) {
-        return toAjax(logininforService.deleteLogininforByIds(infoIds));
+        return toAjax(logininforService.removeBatchByIds(CollUtil.toList(infoIds)));
     }
 
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:remove')")
