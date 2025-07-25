@@ -1,5 +1,6 @@
 package com.eduflex.web.controller.monitor;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
@@ -40,7 +41,7 @@ public class SysOperlogController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysOperLog operLog) {
         List<SysOperLog> list = operLogService.selectOperLogList(operLog);
-        ExcelUtil<SysOperLog> util = new ExcelUtil<SysOperLog>(SysOperLog.class);
+        ExcelUtil<SysOperLog> util = new ExcelUtil<>(SysOperLog.class);
         util.exportExcel(response, list, "操作日志");
     }
 
@@ -48,7 +49,7 @@ public class SysOperlogController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:operlog:remove')")
     @DeleteMapping("/{operIds}")
     public AjaxResult remove(@PathVariable Long[] operIds) {
-        return toAjax(operLogService.deleteOperLogByIds(operIds));
+        return toAjax(operLogService.removeBatchByIds(CollUtil.toList(operIds)));
     }
 
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
