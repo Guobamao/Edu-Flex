@@ -1,5 +1,6 @@
 package com.eduflex.web.controller.system;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
@@ -43,7 +44,7 @@ public class SysNoticeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:notice:query')")
     @GetMapping(value = "/{noticeId}")
     public AjaxResult getInfo(@PathVariable Long noticeId) {
-        return success(noticeService.selectNoticeById(noticeId));
+        return success(noticeService.getById(noticeId));
     }
 
     /**
@@ -54,7 +55,7 @@ public class SysNoticeController extends BaseController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysNotice notice) {
         notice.setCreateBy(getUsername());
-        return toAjax(noticeService.insertNotice(notice));
+        return toAjax(noticeService.save(notice));
     }
 
     /**
@@ -65,7 +66,7 @@ public class SysNoticeController extends BaseController {
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysNotice notice) {
         notice.setUpdateBy(getUsername());
-        return toAjax(noticeService.updateNotice(notice));
+        return toAjax(noticeService.updateById(notice));
     }
 
     /**
@@ -75,6 +76,6 @@ public class SysNoticeController extends BaseController {
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
     public AjaxResult remove(@PathVariable Long[] noticeIds) {
-        return toAjax(noticeService.deleteNoticeByIds(noticeIds));
+        return toAjax(noticeService.removeBatchByIds(CollUtil.toList(noticeIds)));
     }
 }
