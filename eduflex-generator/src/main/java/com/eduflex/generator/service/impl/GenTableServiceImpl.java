@@ -111,8 +111,8 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     public void updateGenTable(GenTable genTable) {
         String options = JSON.toJSONString(genTable.getParams());
         genTable.setOptions(options);
-        boolean flag = updateById(genTable);
-        if (flag) {
+        int row = baseMapper.updateById(genTable);
+        if (row > 0) {
             for (GenTableColumn cenTableColumn : genTable.getColumns()) {
                 genTableColumnService.updateById(cenTableColumn);
             }
@@ -138,8 +138,8 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
             for (GenTable table : tableList) {
                 String tableName = table.getTableName();
                 GenUtils.initTable(table, operName);
-                boolean flag = save(table);
-                if (flag) {
+                int row = baseMapper.insert(table);
+                if (row > 0) {
                     // 保存列信息
                     List<GenTableColumn> genTableColumns = genTableColumnService.selectDbTableColumnsByName(tableName);
                     for (GenTableColumn column : genTableColumns) {

@@ -19,12 +19,6 @@ import java.util.List;
 @Service
 public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice> implements ISysNoticeService {
 
-    /**
-     * 查询公告列表
-     *
-     * @param notice 公告信息
-     * @return 公告集合
-     */
     @Override
     public List<SysNotice> selectNoticeList(SysNotice notice) {
         LambdaQueryWrapper<SysNotice> wrapper = Wrappers.<SysNotice>lambdaQuery()

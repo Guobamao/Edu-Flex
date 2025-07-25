@@ -42,8 +42,9 @@ public interface ISysJobService extends IService<SysJob> {
      * 删除任务后，所对应的trigger也将被删除
      *
      * @param job 调度信息
+     * @return 结果
      */
-    void deleteJob(SysJob job) throws SchedulerException;
+    int deleteJob(SysJob job) throws SchedulerException;
 
     /**
      * 批量删除调度信息

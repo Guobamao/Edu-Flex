@@ -21,12 +21,6 @@ import java.util.List;
 @Service
 public class SysOperLogServiceImpl extends ServiceImpl<SysOperLogMapper, SysOperLog> implements ISysOperLogService {
 
-    /**
-     * 查询系统操作日志集合
-     *
-     * @param operLog 操作日志对象
-     * @return 操作日志集合
-     */
     @Override
     public List<SysOperLog> selectOperLogList(SysOperLog operLog) {
         LambdaQueryWrapper<SysOperLog> wrapper = Wrappers.<SysOperLog>lambdaQuery()
@@ -42,9 +36,6 @@ public class SysOperLogServiceImpl extends ServiceImpl<SysOperLogMapper, SysOper
         return list(wrapper);
     }
 
-    /**
-     * 清空操作日志
-     */
     @Override
     public void cleanOperLog() {
         baseMapper.cleanOperLog();

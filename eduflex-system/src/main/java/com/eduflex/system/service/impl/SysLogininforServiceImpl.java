@@ -32,9 +32,6 @@ public class SysLogininforServiceImpl extends ServiceImpl<SysLogininforMapper, S
         return list(wrapper);
     }
 
-    /**
-     * 清空系统登录日志
-     */
     @Override
     public void cleanLogininfor() {
         baseMapper.cleanLogininfor();

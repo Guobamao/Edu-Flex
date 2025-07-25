@@ -1,5 +1,6 @@
 package com.eduflex.web.controller.system;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
@@ -44,7 +45,7 @@ public class SysConfigController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysConfig config) {
         List<SysConfig> list = configService.selectConfigList(config);
-        ExcelUtil<SysConfig> util = new ExcelUtil<SysConfig>(SysConfig.class);
+        ExcelUtil<SysConfig> util = new ExcelUtil<>(SysConfig.class);
         util.exportExcel(response, list, "参数数据");
     }
 
@@ -54,7 +55,7 @@ public class SysConfigController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:config:query')")
     @GetMapping(value = "/{configId}")
     public AjaxResult getInfo(@PathVariable Long configId) {
-        return success(configService.selectConfigById(configId));
+        return success(configService.getById(configId));
     }
 
     /**
@@ -100,7 +101,7 @@ public class SysConfigController extends BaseController {
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{configIds}")
     public AjaxResult remove(@PathVariable Long[] configIds) {
-        configService.deleteConfigByIds(configIds);
+        configService.deleteConfigByIds(CollUtil.toList(configIds));
         return success();
     }
 

@@ -1,5 +1,6 @@
 package com.eduflex.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.system.domain.SysConfig;
 
 import java.util.List;
@@ -9,14 +10,7 @@ import java.util.List;
  *
  * @author ruoyi
  */
-public interface ISysConfigService {
-    /**
-     * 查询参数配置信息
-     *
-     * @param configId 参数配置ID
-     * @return 参数配置信息
-     */
-    SysConfig selectConfigById(Long configId);
+public interface ISysConfigService extends IService<SysConfig> {
 
     /**
      * 根据键名查询参数配置信息
@@ -62,7 +56,7 @@ public interface ISysConfigService {
      *
      * @param configIds 需要删除的参数ID
      */
-    void deleteConfigByIds(Long[] configIds);
+    void deleteConfigByIds(List<Long> configIds);
 
     /**
      * 加载参数缓存数据

@@ -61,11 +61,11 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
         job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
-        boolean flag = updateById(job);
-        if (flag) {
+        int row = baseMapper.updateById(job);
+        if (row > 0) {
             scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));
         }
-        return flag ? 1 : 0;
+        return row;
     }
 
     @Override
@@ -74,22 +74,23 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
         job.setStatus(ScheduleConstants.Status.NORMAL.getValue());
-        boolean flag = updateById(job);
-        if (flag) {
+        int row = baseMapper.updateById(job);
+        if (row > 0) {
             scheduler.resumeJob(ScheduleUtils.getJobKey(jobId, jobGroup));
         }
-        return flag ? 1 : 0;
+        return row;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteJob(SysJob job) throws SchedulerException {
+    public int deleteJob(SysJob job) throws SchedulerException {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
-        boolean flag = removeById(jobId);
-        if (flag) {
+        int row = baseMapper.deleteById(jobId);
+        if (row > 0) {
             scheduler.deleteJob(ScheduleUtils.getJobKey(jobId, jobGroup));
         }
+        return row;
     }
 
     @Override
@@ -138,22 +139,22 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         if (StrUtil.isBlank(job.getStatus())) {
             job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
         }
-        boolean flag = save(job);
-        if (flag) {
+        int row = baseMapper.insert(job);
+        if (row > 0) {
             ScheduleUtils.createScheduleJob(scheduler, job);
         }
-        return flag ? 1 : 0;
+        return row;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateJob(SysJob job) throws SchedulerException, TaskException {
         SysJob properties = getById(job.getJobId());
-        boolean flag = updateById(job);
-        if (flag) {
+        int row = baseMapper.updateById(job);
+        if (row > 0) {
             updateSchedulerJob(job, properties.getJobGroup());
         }
-        return flag ? 1 : 0;
+        return row;
     }
 
     public void updateSchedulerJob(SysJob job, String jobGroup) throws SchedulerException, TaskException {
