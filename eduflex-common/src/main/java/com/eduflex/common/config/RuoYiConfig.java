@@ -33,20 +33,45 @@ public class RuoYiConfig {
     /**
      * 上传路径
      */
-    @Getter
     private static String profile;
 
     /**
      * 获取地址开关
      */
-    @Getter
     private static boolean addressEnabled;
 
     /**
      * 验证码类型
      */
-    @Getter
     private static String captchaType;
+
+    public static String getProfile()
+    {
+        return profile;
+    }
+
+    public void setProfile(String profile)
+    {
+        RuoYiConfig.profile = profile;
+    }
+
+    public static boolean isAddressEnabled()
+    {
+        return addressEnabled;
+    }
+
+    public void setAddressEnabled(boolean addressEnabled)
+    {
+        RuoYiConfig.addressEnabled = addressEnabled;
+    }
+
+    public static String getCaptchaType() {
+        return captchaType;
+    }
+
+    public void setCaptchaType(String captchaType) {
+        RuoYiConfig.captchaType = captchaType;
+    }
 
     /**
      * 获取导入上传路径

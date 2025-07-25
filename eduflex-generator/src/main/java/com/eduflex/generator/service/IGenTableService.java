@@ -1,5 +1,6 @@
 package com.eduflex.generator.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.generator.domain.GenTable;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Map;
  *
  * @author ruoyi
  */
-public interface IGenTableService {
+public interface IGenTableService extends IService<GenTable> {
 
     /**
      * 查询业务列表
@@ -65,7 +66,7 @@ public interface IGenTableService {
      * @param tableIds 需要删除的表数据ID
      * @return 结果
      */
-    void deleteGenTableByIds(Long[] tableIds);
+    void deleteGenTableByIds(List<Long> tableIds);
 
     /**
      * 创建表

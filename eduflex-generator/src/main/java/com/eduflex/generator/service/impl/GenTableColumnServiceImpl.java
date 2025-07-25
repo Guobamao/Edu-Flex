@@ -1,5 +1,9 @@
 package com.eduflex.generator.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.text.Convert;
 import com.eduflex.generator.domain.GenTableColumn;
 import com.eduflex.generator.mapper.GenTableColumnMapper;
@@ -15,10 +19,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Service
-public class GenTableColumnServiceImpl implements IGenTableColumnService {
-
-    @Autowired
-    private GenTableColumnMapper genTableColumnMapper;
+public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper, GenTableColumn> implements IGenTableColumnService {
 
     /**
      * 查询业务字段列表
@@ -28,39 +29,26 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      */
     @Override
     public List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId) {
-        return genTableColumnMapper.selectGenTableColumnListByTableId(tableId);
+        LambdaQueryWrapper<GenTableColumn> wrapper = Wrappers.<GenTableColumn>lambdaQuery()
+                .eq(GenTableColumn::getTableId, tableId)
+                .orderByAsc(GenTableColumn::getSort);
+        return list(wrapper);
     }
 
-    /**
-     * 新增业务字段
-     *
-     * @param genTableColumn 业务字段信息
-     * @return 结果
-     */
+
     @Override
-    public int insertGenTableColumn(GenTableColumn genTableColumn) {
-        return genTableColumnMapper.insertGenTableColumn(genTableColumn);
+    public void removeBatchByTableIds(List<Long> tableIds) {
+        if (CollUtil.isNotEmpty(tableIds)) {
+            LambdaQueryWrapper<GenTableColumn> wrapper = Wrappers.<GenTableColumn>lambdaQuery()
+                    .in(GenTableColumn::getTableId, tableIds);
+            List<GenTableColumn> tableColumns = list(wrapper);
+            List<Long> columnIdList = tableColumns.stream().map(GenTableColumn::getColumnId).toList();
+            removeBatchByIds(columnIdList);
+        }
     }
 
-    /**
-     * 修改业务字段
-     *
-     * @param genTableColumn 业务字段信息
-     * @return 结果
-     */
     @Override
-    public int updateGenTableColumn(GenTableColumn genTableColumn) {
-        return genTableColumnMapper.updateGenTableColumn(genTableColumn);
-    }
-
-    /**
-     * 删除业务字段对象
-     *
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-    @Override
-    public int deleteGenTableColumnByIds(String ids) {
-        return genTableColumnMapper.deleteGenTableColumnByIds(Convert.toLongArray(ids));
+    public List<GenTableColumn> selectDbTableColumnsByName(String tableName) {
+        return baseMapper.selectDbTableColumnsByName(tableName);
     }
 }

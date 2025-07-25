@@ -1,5 +1,6 @@
 package com.eduflex.generator.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.generator.domain.GenTableColumn;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * @author ruoyi
  */
-public interface IGenTableColumnService {
+public interface IGenTableColumnService extends IService<GenTableColumn> {
 
     /**
      * 查询业务字段列表
@@ -20,26 +21,15 @@ public interface IGenTableColumnService {
     List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId);
 
     /**
-     * 新增业务字段
-     *
-     * @param genTableColumn 业务字段信息
-     * @return 结果
+     * 通过表ID批量删除表字段数据
+     * @param tableIds 表ID列表
      */
-    int insertGenTableColumn(GenTableColumn genTableColumn);
+    void removeBatchByTableIds(List<Long> tableIds);
 
     /**
-     * 修改业务字段
-     *
-     * @param genTableColumn 业务字段信息
-     * @return 结果
+     * 根据表名称查询列信息
+     * @param tableName 表名称
+     * @return 列信息
      */
-    int updateGenTableColumn(GenTableColumn genTableColumn);
-
-    /**
-     * 删除业务字段信息
-     *
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-    int deleteGenTableColumnByIds(String ids);
+    List<GenTableColumn> selectDbTableColumnsByName(String tableName);
 }
