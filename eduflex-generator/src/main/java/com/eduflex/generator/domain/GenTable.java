@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.eduflex.common.constant.GenConstants;
-import com.eduflex.common.core.domain.BaseEntity;
 import com.eduflex.common.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -203,6 +202,26 @@ public class GenTable implements Serializable {
     @TableField(exist = false)
     private Map<String, Object> params;
 
+    public static boolean isSub(String tplCategory) {
+        return tplCategory != null && StringUtils.equals(GenConstants.TPL_SUB, tplCategory);
+    }
+
+    public static boolean isTree(String tplCategory) {
+        return tplCategory != null && StringUtils.equals(GenConstants.TPL_TREE, tplCategory);
+    }
+
+    public static boolean isCrud(String tplCategory) {
+        return tplCategory != null && StringUtils.equals(GenConstants.TPL_CRUD, tplCategory);
+    }
+
+    public static boolean isSuperColumn(String tplCategory, String javaField) {
+        if (isTree(tplCategory)) {
+            return StringUtils.equalsAnyIgnoreCase(javaField,
+                    ArrayUtils.addAll(GenConstants.TREE_ENTITY, GenConstants.BASE_ENTITY));
+        }
+        return StringUtils.equalsAnyIgnoreCase(javaField, GenConstants.BASE_ENTITY);
+    }
+
     public Map<String, Object> getParams() {
         if (params == null) {
             params = new HashMap<>();
@@ -214,35 +233,15 @@ public class GenTable implements Serializable {
         return isSub(this.tplCategory);
     }
 
-    public static boolean isSub(String tplCategory) {
-        return tplCategory != null && StringUtils.equals(GenConstants.TPL_SUB, tplCategory);
-    }
-
     public boolean isTree() {
         return isTree(this.tplCategory);
-    }
-
-    public static boolean isTree(String tplCategory) {
-        return tplCategory != null && StringUtils.equals(GenConstants.TPL_TREE, tplCategory);
     }
 
     public boolean isCrud() {
         return isCrud(this.tplCategory);
     }
 
-    public static boolean isCrud(String tplCategory) {
-        return tplCategory != null && StringUtils.equals(GenConstants.TPL_CRUD, tplCategory);
-    }
-
     public boolean isSuperColumn(String javaField) {
         return isSuperColumn(this.tplCategory, javaField);
-    }
-
-    public static boolean isSuperColumn(String tplCategory, String javaField) {
-        if (isTree(tplCategory)) {
-            return StringUtils.equalsAnyIgnoreCase(javaField,
-                    ArrayUtils.addAll(GenConstants.TREE_ENTITY, GenConstants.BASE_ENTITY));
-        }
-        return StringUtils.equalsAnyIgnoreCase(javaField, GenConstants.BASE_ENTITY);
     }
 }

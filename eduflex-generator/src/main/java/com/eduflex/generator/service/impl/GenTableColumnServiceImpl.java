@@ -4,12 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.eduflex.common.core.text.Convert;
 import com.eduflex.generator.domain.GenTableColumn;
 import com.eduflex.generator.mapper.GenTableColumnMapper;
 import com.eduflex.generator.service.IGenTableColumnService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,12 +20,6 @@ import java.util.List;
 @Service
 public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper, GenTableColumn> implements IGenTableColumnService {
 
-    /**
-     * 查询业务字段列表
-     *
-     * @param tableId 业务字段编号
-     * @return 业务字段集合
-     */
     @Override
     public List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId) {
         LambdaQueryWrapper<GenTableColumn> wrapper = Wrappers.<GenTableColumn>lambdaQuery()
@@ -37,6 +30,7 @@ public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper,
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void removeBatchByTableIds(List<Long> tableIds) {
         if (CollUtil.isNotEmpty(tableIds)) {
             LambdaQueryWrapper<GenTableColumn> wrapper = Wrappers.<GenTableColumn>lambdaQuery()

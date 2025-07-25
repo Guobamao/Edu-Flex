@@ -1,9 +1,7 @@
 package com.eduflex.generator.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.eduflex.common.core.domain.BaseEntity;
 import com.eduflex.common.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -136,6 +134,19 @@ public class GenTableColumn implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
+    public static boolean isSuperColumn(String javaField) {
+        return StringUtils.equalsAnyIgnoreCase(javaField,
+                // BaseEntity
+                "createBy", "createTime", "updateBy", "updateTime", "remark",
+                // TreeEntity
+                "parentName", "parentId", "orderNum", "ancestors");
+    }
+
+    public static boolean isUsableColumn(String javaField) {
+        // isSuperColumn()中的名单用于避免生成多余Domain属性，若某些属性在生成页面时需要用到不能忽略，则放在此处白名单
+        return StringUtils.equalsAnyIgnoreCase(javaField, "parentId", "orderNum", "remark");
+    }
+
     public boolean isIncrement() {
         return isIncrement(this.isIncrement);
     }
@@ -200,21 +211,8 @@ public class GenTableColumn implements Serializable {
         return isSuperColumn(this.javaField);
     }
 
-    public static boolean isSuperColumn(String javaField) {
-        return StringUtils.equalsAnyIgnoreCase(javaField,
-                // BaseEntity
-                "createBy", "createTime", "updateBy", "updateTime", "remark",
-                // TreeEntity
-                "parentName", "parentId", "orderNum", "ancestors");
-    }
-
     public boolean isUsableColumn() {
         return isUsableColumn(javaField);
-    }
-
-    public static boolean isUsableColumn(String javaField) {
-        // isSuperColumn()中的名单用于避免生成多余Domain属性，若某些属性在生成页面时需要用到不能忽略，则放在此处白名单
-        return StringUtils.equalsAnyIgnoreCase(javaField, "parentId", "orderNum", "remark");
     }
 
     public String readConverterExp() {

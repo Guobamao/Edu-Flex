@@ -45,12 +45,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         }
     }
 
-    /**
-     * 获取quartz调度器的计划任务列表
-     *
-     * @param job 调度信息
-     * @return 调度任务日志集合
-     */
     @Override
     public List<SysJob> selectJobList(SysJob job) {
         LambdaQueryWrapper<SysJob> wrapper = Wrappers.<SysJob>lambdaQuery()
@@ -61,11 +55,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         return list(wrapper);
     }
 
-    /**
-     * 暂停任务
-     *
-     * @param job 调度信息
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int pauseJob(SysJob job) throws SchedulerException {
@@ -79,11 +68,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         return flag ? 1 : 0;
     }
 
-    /**
-     * 恢复任务
-     *
-     * @param job 调度信息
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int resumeJob(SysJob job) throws SchedulerException {
@@ -97,11 +81,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         return flag ? 1 : 0;
     }
 
-    /**
-     * 删除任务后，所对应的trigger也将被删除
-     *
-     * @param job 调度信息
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteJob(SysJob job) throws SchedulerException {
@@ -113,11 +92,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         }
     }
 
-    /**
-     * 批量删除调度信息
-     *
-     * @param jobIds 需要删除的任务ID
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteJobByIds(List<Long> jobIds) throws SchedulerException {
@@ -127,11 +101,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         }
     }
 
-    /**
-     * 任务调度状态修改
-     *
-     * @param job 调度信息
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int changeStatus(SysJob job) throws SchedulerException {
@@ -145,11 +114,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         return rows;
     }
 
-    /**
-     * 立即运行任务
-     *
-     * @param job 调度信息
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean run(SysJob job) throws SchedulerException {
@@ -168,11 +132,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         return result;
     }
 
-    /**
-     * 新增任务
-     *
-     * @param job 调度信息 调度信息
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertJob(SysJob job) throws SchedulerException, TaskException {
@@ -186,11 +145,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         return flag ? 1 : 0;
     }
 
-    /**
-     * 更新任务的时间表达式
-     *
-     * @param job 调度信息
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateJob(SysJob job) throws SchedulerException, TaskException {
@@ -202,12 +156,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         return flag ? 1 : 0;
     }
 
-    /**
-     * 更新任务
-     *
-     * @param job      任务对象
-     * @param jobGroup 任务组名
-     */
     public void updateSchedulerJob(SysJob job, String jobGroup) throws SchedulerException, TaskException {
         Long jobId = job.getJobId();
         // 判断是否存在
@@ -219,12 +167,6 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         ScheduleUtils.createScheduleJob(scheduler, job);
     }
 
-    /**
-     * 校验cron表达式是否有效
-     *
-     * @param cronExpression 表达式
-     * @return 结果
-     */
     @Override
     public boolean checkCronExpressionIsValid(String cronExpression) {
         return CronUtils.isValid(cronExpression);

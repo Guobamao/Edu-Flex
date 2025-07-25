@@ -56,12 +56,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     @Autowired
     private IGenTableColumnService genTableColumnService;
 
-    /**
-     * 查询业务信息
-     *
-     * @param id 业务ID
-     * @return 业务信息
-     */
     @Override
     public GenTable selectGenTableById(Long id) {
         GenTable genTable = selectTableByTableId(id);
@@ -69,12 +63,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         return genTable;
     }
 
-    /**
-     * 查询业务列表
-     *
-     * @param genTable 业务信息
-     * @return 业务集合
-     */
     @Override
     public List<GenTable> selectGenTableList(GenTable genTable) {
         LambdaQueryWrapper<GenTable> wrapper = Wrappers.<GenTable>lambdaQuery()
@@ -89,36 +77,19 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         return list(wrapper);
     }
 
-    /**
-     * 查询据库列表
-     *
-     * @param genTable 业务信息
-     * @return 数据库表集合
-     */
     @Override
     public List<GenTable> selectDbTableList(GenTable genTable) {
         return baseMapper.selectDbTableList(genTable);
     }
 
-    /**
-     * 查询据库列表
-     *
-     * @param tableNames 表名称组
-     * @return 数据库表集合
-     */
     @Override
     public List<GenTable> selectDbTableListByNames(String[] tableNames) {
         return baseMapper.selectDbTableListByNames(tableNames);
     }
 
-    /**
-     * 查询所有表信息
-     *
-     * @return 表信息集合
-     */
     @Override
     public List<GenTable> selectGenTableAll() {
-        LambdaQueryWrapper<GenTable> tableWrapper = Wrappers.<GenTable>lambdaQuery();
+        LambdaQueryWrapper<GenTable> tableWrapper = Wrappers.lambdaQuery();
         List<GenTable> tables = list(tableWrapper);
 
         LambdaQueryWrapper<GenTableColumn> columnWrapper = Wrappers.<GenTableColumn>lambdaQuery()
@@ -135,12 +106,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         return tables;
     }
 
-    /**
-     * 修改业务
-     *
-     * @param genTable 业务信息
-     * @return 结果
-     */
     @Override
     @Transactional
     public void updateGenTable(GenTable genTable) {
@@ -154,12 +119,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         }
     }
 
-    /**
-     * 删除业务对象
-     *
-     * @param tableIds 需要删除的数据ID
-     * @return 结果
-     */
     @Override
     @Transactional
     public void deleteGenTableByIds(List<Long> tableIds) {
@@ -167,22 +126,11 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         genTableColumnService.removeBatchByTableIds(tableIds);
     }
 
-    /**
-     * 创建表
-     *
-     * @param sql 创建表语句
-     * @return 结果
-     */
     @Override
     public boolean createTable(String sql) {
         return baseMapper.createTable(sql) == 0;
     }
 
-    /**
-     * 导入表结构
-     *
-     * @param tableList 导入表列表
-     */
     @Override
     @Transactional
     public void importGenTable(List<GenTable> tableList, String operName) {
@@ -205,12 +153,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         }
     }
 
-    /**
-     * 预览代码
-     *
-     * @param tableId 表编号
-     * @return 预览数据列表
-     */
     @Override
     public Map<String, String> previewCode(Long tableId) {
         Map<String, String> dataMap = new LinkedHashMap<>();
@@ -236,12 +178,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         return dataMap;
     }
 
-    /**
-     * 生成代码（下载方式）
-     *
-     * @param tableName 表名称
-     * @return 数据
-     */
     @Override
     public byte[] downloadCode(String tableName) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -251,11 +187,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         return outputStream.toByteArray();
     }
 
-    /**
-     * 生成代码（自定义路径）
-     *
-     * @param tableName 表名称
-     */
     @Override
     public void generatorCode(String tableName) {
         // 查询表信息
@@ -287,14 +218,9 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         }
     }
 
-    /**
-     * 同步数据库
-     *
-     * @param tableName 表名称
-     */
     @Override
     @Transactional
-    public void synchDb(String tableName) {
+    public void syncDb(String tableName) {
         GenTable table = selectTableByTableName(tableName);
         List<GenTableColumn> tableColumns = table.getColumns();
         Map<String, GenTableColumn> tableColumnMap = tableColumns.stream().collect(Collectors.toMap(GenTableColumn::getColumnName, Function.identity()));
@@ -303,7 +229,7 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         if (StringUtils.isEmpty(dbTableColumns)) {
             throw new ServiceException("同步数据失败，原表结构不存在");
         }
-        List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).collect(Collectors.toList());
+        List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).toList();
 
         dbTableColumns.forEach(column -> {
             GenUtils.initColumnField(column, table);
@@ -335,12 +261,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         }
     }
 
-    /**
-     * 批量生成代码（下载方式）
-     *
-     * @param tableNames 表数组
-     * @return 数据
-     */
     @Override
     public byte[] downloadCode(String[] tableNames) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -386,11 +306,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         }
     }
 
-    /**
-     * 修改保存参数校验
-     *
-     * @param genTable 业务信息
-     */
     @Override
     public void validateEdit(GenTable genTable) {
         if (GenConstants.TPL_TREE.equals(genTable.getTplCategory())) {

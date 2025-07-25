@@ -62,7 +62,7 @@ public class GenController extends BaseController {
         GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTable> tables = genTableService.selectGenTableAll();
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("info", table);
         map.put("rows", list);
         map.put("tables", tables);
@@ -126,7 +126,7 @@ public class GenController extends BaseController {
                     }
                 }
             }
-            List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames.toArray(new String[tableNames.size()]));
+            List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames.toArray(new String[0]));
             String operName = SecurityUtils.getUsername();
             genTableService.importGenTable(tableList, operName);
             return AjaxResult.success();
@@ -197,8 +197,8 @@ public class GenController extends BaseController {
     @PreAuthorize("@ss.hasPermi('tool:gen:edit')")
     @Log(title = "代码生成", businessType = BusinessType.UPDATE)
     @GetMapping("/synchDb/{tableName}")
-    public AjaxResult synchDb(@PathVariable("tableName") String tableName) {
-        genTableService.synchDb(tableName);
+    public AjaxResult syncDb(@PathVariable("tableName") String tableName) {
+        genTableService.syncDb(tableName);
         return success();
     }
 

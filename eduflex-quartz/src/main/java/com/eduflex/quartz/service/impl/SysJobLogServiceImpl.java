@@ -20,12 +20,6 @@ import java.util.List;
 @Service
 public class SysJobLogServiceImpl extends ServiceImpl<SysJobLogMapper, SysJobLog> implements ISysJobLogService {
 
-    /**
-     * 获取quartz调度器日志的计划任务
-     *
-     * @param jobLog 调度日志信息
-     * @return 调度任务日志集合
-     */
     @Override
     public List<SysJobLog> selectJobLogList(SysJobLog jobLog) {
         LambdaQueryWrapper<SysJobLog> wrapper = Wrappers.<SysJobLog>lambdaQuery()
@@ -39,9 +33,6 @@ public class SysJobLogServiceImpl extends ServiceImpl<SysJobLogMapper, SysJobLog
         return list(wrapper);
     }
 
-    /**
-     * 清空任务日志
-     */
     @Override
     public void cleanJobLog() {
         baseMapper.cleanJobLog();
