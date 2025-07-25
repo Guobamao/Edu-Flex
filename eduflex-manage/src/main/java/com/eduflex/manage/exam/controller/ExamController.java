@@ -28,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/manage/exam")
 public class ExamController extends BaseController {
+
     @Autowired
     private IExamService examService;
 

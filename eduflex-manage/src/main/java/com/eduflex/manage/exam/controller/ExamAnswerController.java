@@ -24,8 +24,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/exam/answer")
-public class ExamAnswerController extends BaseController
-{
+public class ExamAnswerController extends BaseController {
+
     @Autowired
     private IExamAnswerService examAnswerService;
 
@@ -34,8 +34,7 @@ public class ExamAnswerController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(ExamAnswer examAnswer)
-    {
+    public TableDataInfo list(ExamAnswer examAnswer) {
         startPage();
         List<ExamAnswer> list = examAnswerService.selectExamAnswerList(examAnswer);
         return getDataTable(list);
@@ -47,8 +46,7 @@ public class ExamAnswerController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试答案记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, ExamAnswer examAnswer)
-    {
+    public void export(HttpServletResponse response, ExamAnswer examAnswer) {
         List<ExamAnswer> list = examAnswerService.selectExamAnswerList(examAnswer);
         ExcelUtil<ExamAnswer> util = new ExcelUtil<>(ExamAnswer.class);
         util.exportExcel(response, list, "考试答案记录数据");
@@ -59,8 +57,7 @@ public class ExamAnswerController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(examAnswerService.getById(id));
     }
 
@@ -70,8 +67,7 @@ public class ExamAnswerController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试答案记录", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody ExamAnswer examAnswer)
-    {
+    public AjaxResult add(@RequestBody ExamAnswer examAnswer) {
         return toAjax(examAnswerService.save(examAnswer));
     }
 
@@ -81,8 +77,7 @@ public class ExamAnswerController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试答案记录", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody ExamAnswer examAnswer)
-    {
+    public AjaxResult edit(@RequestBody ExamAnswer examAnswer) {
         return toAjax(examAnswerService.updateById(examAnswer));
     }
 
@@ -91,9 +86,8 @@ public class ExamAnswerController extends BaseController
      */
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试答案记录", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(examAnswerService.removeByIds(idList));
     }

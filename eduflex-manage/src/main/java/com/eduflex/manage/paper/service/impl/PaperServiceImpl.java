@@ -166,7 +166,7 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
                 int remaining = totalRequired - easy - medium - hard;
 
                 // 动态分配余数
-                if  (remaining > 0) {
+                if (remaining > 0) {
                     int easyRemaining = (int) Math.round(remaining * 60.0 / 100);
                     int mediumRemaining = (int) Math.round(remaining * 30.0 / 100);
                     int hardRemaining = remaining - easyRemaining - mediumRemaining;

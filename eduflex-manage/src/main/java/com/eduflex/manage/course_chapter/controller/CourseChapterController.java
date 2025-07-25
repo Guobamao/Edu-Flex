@@ -27,8 +27,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/chapter")
-public class CourseChapterController extends BaseController
-{
+public class CourseChapterController extends BaseController {
+
     @Autowired
     private ICourseChapterService courseChapterService;
 
@@ -40,8 +40,7 @@ public class CourseChapterController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public AjaxResult list(CourseChapter courseChapter)
-    {
+    public AjaxResult list(CourseChapter courseChapter) {
         List<CourseChapterVo> list = courseChapterService.selectCourseChapterList(courseChapter);
         return success(list);
     }
@@ -52,8 +51,7 @@ public class CourseChapterController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程内容章节管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, CourseChapter courseChapter)
-    {
+    public void export(HttpServletResponse response, CourseChapter courseChapter) {
         List<CourseChapterVo> list = courseChapterService.selectCourseChapterList(courseChapter);
         ExcelUtil<CourseChapterVo> util = new ExcelUtil<>(CourseChapterVo.class);
         util.exportExcel(response, list, "课程内容章节管理数据");
@@ -64,8 +62,7 @@ public class CourseChapterController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(courseChapterService.getById(id));
     }
 
@@ -75,8 +72,7 @@ public class CourseChapterController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程内容章节管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody CourseChapter courseChapter)
-    {
+    public AjaxResult add(@RequestBody CourseChapter courseChapter) {
         courseChapter.setCreateBy(getUsername());
         return toAjax(courseChapterService.saveChapter(courseChapter));
     }
@@ -87,8 +83,7 @@ public class CourseChapterController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程内容章节管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody CourseChapter courseChapter)
-    {
+    public AjaxResult edit(@RequestBody CourseChapter courseChapter) {
         courseChapter.setUpdateBy(getUsername());
         return toAjax(courseChapterService.updateById(courseChapter));
     }
@@ -98,9 +93,8 @@ public class CourseChapterController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程内容章节管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(courseChapterService.deleteCourseChapterByIds(idList));
     }

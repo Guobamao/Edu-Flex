@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class StudentDto extends Student {
+
     @Excel(name = "登录名称")
     private String userName;
     @Excel(name = "用户名称")

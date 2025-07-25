@@ -5,6 +5,7 @@ import org.apache.ibatis.type.Alias;
 
 /**
  * 用户端 课程列表DTO
+ *
  * @author 林煜鋒
  */
 @Alias("UserCourseDto")

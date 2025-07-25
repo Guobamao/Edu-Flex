@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * 评价统计
+ *
  * @author 林煜鋒
  */
 @Data

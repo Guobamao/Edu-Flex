@@ -6,7 +6,6 @@ import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.page.TableDataInfo;
 import com.eduflex.common.enums.BusinessType;
-import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.poi.ExcelUtil;
 import com.eduflex.manage.question.domain.Question;
 import com.eduflex.manage.question.domain.vo.QuestionExportAndImportVo;
@@ -30,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/manage/question")
 public class QuestionController extends BaseController {
+
     @Autowired
     private IQuestionService examQuestionService;
 
@@ -59,18 +59,19 @@ public class QuestionController extends BaseController {
 
     /**
      * 下载导入模板
+     *
      * @param response 响应对象
      */
     @PostMapping("/importTemplate")
-    public void importTemplate(HttpServletResponse response)
-    {
+    public void importTemplate(HttpServletResponse response) {
         ExcelUtil<QuestionExportAndImportVo> util = new ExcelUtil<>(QuestionExportAndImportVo.class);
         util.importTemplateExcel(response, "题目数据");
     }
 
     /**
      * 导入题目数据
-     * @param file 上传文件
+     *
+     * @param file   上传文件
      * @param repoId 题库id
      * @return 结果
      * @throws Exception 异常
@@ -78,12 +79,11 @@ public class QuestionController extends BaseController {
     @Log(title = "题目管理", businessType = BusinessType.IMPORT)
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @PostMapping("/importData")
-    public AjaxResult importData(MultipartFile file, Long repoId) throws Exception
-    {
+    public AjaxResult importData(MultipartFile file, Long repoId) throws Exception {
         ExcelUtil<QuestionExportAndImportVo> util = new ExcelUtil<>(QuestionExportAndImportVo.class);
         List<QuestionExportAndImportVo> questionList = util.importExcel(file.getInputStream());
         String operName = getUsername();
-        String message =  examQuestionService.importData(questionList, repoId, operName);
+        String message = examQuestionService.importData(questionList, repoId, operName);
         return success(message);
     }
 

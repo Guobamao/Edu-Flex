@@ -23,8 +23,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/category")
-public class CategoryController extends BaseController
-{
+public class CategoryController extends BaseController {
+
     @Autowired
     private ICategoryService courseCategoryService;
 
@@ -33,8 +33,7 @@ public class CategoryController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(Category category)
-    {
+    public TableDataInfo list(Category category) {
         startPage();
         PageInfo<Category> pageInfo = new PageInfo<>(courseCategoryService.selectCategoryList(category));
         List<CategoryVo> list = courseCategoryService.buildVo(pageInfo.getList());
@@ -46,8 +45,7 @@ public class CategoryController extends BaseController
      */
     @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(courseCategoryService.getById(id));
     }
 
@@ -57,8 +55,7 @@ public class CategoryController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程分类", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Category category)
-    {
+    public AjaxResult add(@RequestBody Category category) {
         category.setCreateBy(getUsername());
         return toAjax(courseCategoryService.save(category));
     }
@@ -69,8 +66,7 @@ public class CategoryController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程分类", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Category category)
-    {
+    public AjaxResult edit(@RequestBody Category category) {
         category.setUpdateBy(getUsername());
         return toAjax(courseCategoryService.updateById(category));
     }
@@ -80,9 +76,8 @@ public class CategoryController extends BaseController
      */
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程分类", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{categoryId}")
-    public AjaxResult remove(@PathVariable Long categoryId)
-    {
+    @DeleteMapping("/{categoryId}")
+    public AjaxResult remove(@PathVariable Long categoryId) {
         return toAjax(courseCategoryService.removeCategory(categoryId));
     }
 }

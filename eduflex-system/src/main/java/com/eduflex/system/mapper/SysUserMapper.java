@@ -11,8 +11,7 @@ import java.util.List;
  *
  * @author ruoyi
  */
-public interface SysUserMapper extends BaseMapper<SysUser>
-{
+public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 根据条件分页查询用户列表
      *
@@ -73,7 +72,7 @@ public interface SysUserMapper extends BaseMapper<SysUser>
      * 修改用户头像
      *
      * @param userName 用户名
-     * @param fileId 头像地址
+     * @param fileId   头像地址
      * @return 结果
      */
     int updateUserAvatar(@Param("userName") String userName, @Param("fileId") Long fileId);

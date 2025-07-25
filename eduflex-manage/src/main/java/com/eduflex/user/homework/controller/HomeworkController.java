@@ -21,6 +21,7 @@ public class HomeworkController extends BaseController {
 
     /**
      * 获取作业列表
+     *
      * @param homework 查询条件
      * @return 作业列表
      */
@@ -35,6 +36,7 @@ public class HomeworkController extends BaseController {
 
     /**
      * 获取作业信息
+     *
      * @param id 作业ID
      * @return 作业信息
      */
@@ -50,6 +52,7 @@ public class HomeworkController extends BaseController {
 
     /**
      * 提交作业
+     *
      * @param homeworkDto 作业信息
      * @return 结果
      */

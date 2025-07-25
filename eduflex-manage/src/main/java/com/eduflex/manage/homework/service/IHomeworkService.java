@@ -12,8 +12,8 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2024-11-23
  */
-public interface IHomeworkService extends IService<Homework>
-{
+public interface IHomeworkService extends IService<Homework> {
+
     /**
      * 查询作业管理列表
      *
@@ -24,6 +24,7 @@ public interface IHomeworkService extends IService<Homework>
 
     /**
      * 构建Vo
+     *
      * @param list 作业列表
      * @return Vo对象
      */

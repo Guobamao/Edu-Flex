@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TableName("tb_comment")
 public class Comment extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
     /**

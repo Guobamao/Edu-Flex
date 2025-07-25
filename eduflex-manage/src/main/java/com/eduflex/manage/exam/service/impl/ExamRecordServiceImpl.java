@@ -480,7 +480,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
                         .eq(ExamAnswer::getQuestionId, question.getId());
                 ExamAnswer answer = examAnswerService.getOne(wrapper);
                 if (answer != null) {
-                    if (answer.getIsChecked().equals(EduFlexConstants.STATUS_DISABLED)){
+                    if (answer.getIsChecked().equals(EduFlexConstants.STATUS_DISABLED)) {
                         i += 1;
                     }
                 } else {
@@ -514,7 +514,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
                         .eq(ExamAnswer::getQuestionId, question.getId());
                 ExamAnswer answer = examAnswerService.getOne(wrapper);
                 if (answer != null) {
-                    if (answer.getIsChecked().equals(EduFlexConstants.STATUS_DISABLED)){
+                    if (answer.getIsChecked().equals(EduFlexConstants.STATUS_DISABLED)) {
                         i += 1;
                     }
                 } else {

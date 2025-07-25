@@ -17,6 +17,7 @@ import java.util.Map;
  * @date 2025-01-10
  */
 public interface IPaperService extends IService<Paper> {
+
     /**
      * 查询试卷管理列表
      *
@@ -43,6 +44,7 @@ public interface IPaperService extends IService<Paper> {
 
     /**
      * 构建试卷集合Vo对象
+     *
      * @param paperList 试卷集合
      * @return 试卷集合Vo对象
      */

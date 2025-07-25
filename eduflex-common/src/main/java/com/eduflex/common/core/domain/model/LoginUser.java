@@ -5,6 +5,7 @@ import com.eduflex.common.core.domain.entity.SysUser;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.Set;
 
@@ -14,8 +15,8 @@ import java.util.Set;
  * @author ruoyi
  */
 @Data
-public class LoginUser implements UserDetails
-{
+public class LoginUser implements UserDetails {
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -73,18 +74,15 @@ public class LoginUser implements UserDetails
      */
     private SysUser user;
 
-    public LoginUser()
-    {
+    public LoginUser() {
     }
 
-    public LoginUser(SysUser user, Set<String> permissions)
-    {
+    public LoginUser(SysUser user, Set<String> permissions) {
         this.user = user;
         this.permissions = permissions;
     }
 
-    public LoginUser(Long userId, Long deptId, SysUser user, Set<String> permissions)
-    {
+    public LoginUser(Long userId, Long deptId, SysUser user, Set<String> permissions) {
         this.userId = userId;
         this.deptId = deptId;
         this.user = user;
@@ -93,14 +91,12 @@ public class LoginUser implements UserDetails
 
     @JSONField(serialize = false)
     @Override
-    public String getPassword()
-    {
+    public String getPassword() {
         return user.getPassword();
     }
 
     @Override
-    public String getUsername()
-    {
+    public String getUsername() {
         return user.getUserName();
     }
 
@@ -109,8 +105,7 @@ public class LoginUser implements UserDetails
      */
     @JSONField(serialize = false)
     @Override
-    public boolean isAccountNonExpired()
-    {
+    public boolean isAccountNonExpired() {
         return true;
     }
 
@@ -121,8 +116,7 @@ public class LoginUser implements UserDetails
      */
     @JSONField(serialize = false)
     @Override
-    public boolean isAccountNonLocked()
-    {
+    public boolean isAccountNonLocked() {
         return true;
     }
 
@@ -133,8 +127,7 @@ public class LoginUser implements UserDetails
      */
     @JSONField(serialize = false)
     @Override
-    public boolean isCredentialsNonExpired()
-    {
+    public boolean isCredentialsNonExpired() {
         return true;
     }
 
@@ -145,14 +138,12 @@ public class LoginUser implements UserDetails
      */
     @JSONField(serialize = false)
     @Override
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return true;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities()
-    {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 }

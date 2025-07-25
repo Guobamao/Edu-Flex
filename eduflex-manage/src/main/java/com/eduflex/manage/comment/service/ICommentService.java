@@ -14,6 +14,7 @@ import java.util.List;
  * @date 2025-01-21
  */
 public interface ICommentService extends IService<Comment> {
+
     /**
      * 查询评论管理列表
      *
@@ -24,6 +25,7 @@ public interface ICommentService extends IService<Comment> {
 
     /**
      * 构建评论集合Vo对象
+     *
      * @param commentList 评论集合
      * @return 评论集合Vo对象
      */
@@ -31,6 +33,7 @@ public interface ICommentService extends IService<Comment> {
 
     /**
      * 查询用户端评论列表
+     *
      * @param comment 查询条件
      * @return 结果
      */
@@ -38,6 +41,7 @@ public interface ICommentService extends IService<Comment> {
 
     /**
      * 构建用户端
+     *
      * @param list 评论集合
      * @return 评论集合Vo对象
      */

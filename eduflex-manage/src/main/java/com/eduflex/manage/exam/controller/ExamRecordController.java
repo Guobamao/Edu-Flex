@@ -28,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/manage/exam/record")
 public class ExamRecordController extends BaseController {
+
     @Autowired
     private IExamRecordService examRecordService;
 
@@ -36,8 +37,7 @@ public class ExamRecordController extends BaseController {
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(ExamRecord examRecord)
-    {
+    public TableDataInfo list(ExamRecord examRecord) {
         startPage();
         PageInfo<ExamRecord> pageInfo = new PageInfo<>(examRecordService.selectExamRecordList(examRecord));
         List<ExamRecordVo> list = examRecordService.buildVo(pageInfo.getList());
@@ -50,8 +50,7 @@ public class ExamRecordController extends BaseController {
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "考试记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, ExamRecord examRecord)
-    {
+    public void export(HttpServletResponse response, ExamRecord examRecord) {
         List<ExamRecordVo> list = examRecordService.buildVo(examRecordService.selectExamRecordList(examRecord));
         ExcelUtil<ExamRecordVo> util = new ExcelUtil<>(ExamRecordVo.class);
         util.exportExcel(response, list, "考试记录数据");
@@ -62,8 +61,7 @@ public class ExamRecordController extends BaseController {
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(examRecordService.selectExamResultById(id));
     }
 
@@ -73,8 +71,7 @@ public class ExamRecordController extends BaseController {
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试记录", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody ExamRecord examRecord)
-    {
+    public AjaxResult add(@RequestBody ExamRecord examRecord) {
         return toAjax(examRecordService.save(examRecord));
     }
 
@@ -84,8 +81,7 @@ public class ExamRecordController extends BaseController {
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试记录", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody ExamRecord examRecord)
-    {
+    public AjaxResult edit(@RequestBody ExamRecord examRecord) {
         return toAjax(examRecordService.updateById(examRecord));
     }
 
@@ -95,21 +91,20 @@ public class ExamRecordController extends BaseController {
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "考试记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(examRecordService.removeByIds(idList));
     }
 
     /**
      * 批阅试卷
+     *
      * @param pendingDto 批阅信息
-     * @return  结果
+     * @return 结果
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @PutMapping("/pending")
-    public AjaxResult pending(@RequestBody PendingDto pendingDto)
-    {
+    public AjaxResult pending(@RequestBody PendingDto pendingDto) {
         return toAjax(examRecordService.pending(pendingDto));
     }
 

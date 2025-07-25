@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class HomeworkStudentVo extends HomeworkStudent {
+
     @Excel(name = "用户名", sort = 1)
     private String userName;
     @Excel(name = "昵称", sort = 2)

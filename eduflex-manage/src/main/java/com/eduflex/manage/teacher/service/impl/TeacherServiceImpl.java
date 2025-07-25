@@ -34,6 +34,7 @@ import java.util.List;
  */
 @Service
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements ITeacherService {
+
     @Autowired
     private ISysUserService userService;
 

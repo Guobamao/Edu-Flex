@@ -23,6 +23,7 @@ public interface IOssFileService extends IService<OssFile> {
 
     /**
      * 修改资源信息
+     *
      * @param ossFile 资源
      * @return 结果
      */

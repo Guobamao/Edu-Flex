@@ -31,6 +31,7 @@ public class CourseMaterialController extends BaseController {
 
     /**
      * 获取课程资料
+     *
      * @param courseMaterialDto 查询条件
      * @return 课程资料列表
      */
@@ -51,6 +52,7 @@ public class CourseMaterialController extends BaseController {
 
     /**
      * 获取课程资料详情
+     *
      * @param id 课程资料ID
      * @return 课程资料详情
      */

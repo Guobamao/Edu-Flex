@@ -23,11 +23,13 @@ import java.util.List;
 @RestController(value = "UserCourseChapterController")
 @RequestMapping("/user/chapter")
 public class CourseChapterController extends BaseController {
+
     @Autowired
     private ICourseChapterService courseChapterService;
 
     /**
      * 获取课程章节列表 - 带学习进度
+     *
      * @param courseChapterDto 查询条件
      * @return 课程章节列表
      */

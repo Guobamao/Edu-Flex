@@ -17,6 +17,7 @@ public class SearchController extends BaseController {
 
     /**
      * 获取搜索列表（热搜）
+     *
      * @return 搜索列表
      */
     @GetMapping("/list")

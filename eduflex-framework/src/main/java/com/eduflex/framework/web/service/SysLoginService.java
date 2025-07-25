@@ -33,6 +33,7 @@ import javax.annotation.Resource;
  */
 @Component
 public class SysLoginService {
+
     @Autowired
     private TokenService tokenService;
 

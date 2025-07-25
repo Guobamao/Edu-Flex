@@ -14,6 +14,7 @@ import java.util.List;
  * @date 2025-01-26
  */
 public interface IStudentCourseService extends IService<StudentCourse> {
+
     /**
      * 查询学生选课列表
      *
@@ -25,6 +26,7 @@ public interface IStudentCourseService extends IService<StudentCourse> {
 
     /**
      * 根据id查询学生选课信息
+     *
      * @param id ID
      * @return 学生选课VO对象
      */
@@ -32,7 +34,8 @@ public interface IStudentCourseService extends IService<StudentCourse> {
 
     /**
      * 根据用户ID和课程ID删除学生选课信息
-     * @param userId 用户ID
+     *
+     * @param userId   用户ID
      * @param courseId 学生ID
      * @return
      */
@@ -40,6 +43,7 @@ public interface IStudentCourseService extends IService<StudentCourse> {
 
     /**
      * 构建学生选课VO集合
+     *
      * @param studentCourses 学生选课集合
      * @return 学生选课VO集合
      */

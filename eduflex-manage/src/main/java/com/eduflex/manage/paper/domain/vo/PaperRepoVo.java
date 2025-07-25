@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class PaperRepoVo extends PaperRepo {
+
     private Integer singleChoiceTotal;
     private Integer multipleChoiceTotal;
     private Integer judgeTotal;

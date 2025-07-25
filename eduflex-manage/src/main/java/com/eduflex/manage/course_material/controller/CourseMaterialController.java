@@ -28,23 +28,20 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/material")
-public class CourseMaterialController extends BaseController
-{
+public class CourseMaterialController extends BaseController {
+
     @Autowired
     private ICourseMaterialService courseMaterialService;
 
     @Autowired
     private IStudentCourseService studentCourseService;
-    @Autowired
-    private CourseChapterController courseChapterController;
 
     /**
      * 查询课程资料列表
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(CourseMaterial courseMaterial)
-    {
+    public TableDataInfo list(CourseMaterial courseMaterial) {
         startPage();
         List<CourseMaterial> list = courseMaterialService.selectCourseMaterialList(courseMaterial);
         return getDataTable(list);
@@ -56,8 +53,7 @@ public class CourseMaterialController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程资料", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, CourseMaterial courseMaterial)
-    {
+    public void export(HttpServletResponse response, CourseMaterial courseMaterial) {
         List<CourseMaterial> list = courseMaterialService.selectCourseMaterialList(courseMaterial);
         ExcelUtil<CourseMaterial> util = new ExcelUtil<>(CourseMaterial.class);
         util.exportExcel(response, list, "课程资料数据");
@@ -68,8 +64,7 @@ public class CourseMaterialController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(courseMaterialService.getById(id));
     }
 
@@ -79,8 +74,7 @@ public class CourseMaterialController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程资料", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody CourseMaterial courseMaterial)
-    {
+    public AjaxResult add(@RequestBody CourseMaterial courseMaterial) {
         courseMaterial.setCreateBy(getUsername());
         return toAjax(courseMaterialService.save(courseMaterial));
     }
@@ -91,8 +85,7 @@ public class CourseMaterialController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程资料", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody CourseMaterial courseMaterial)
-    {
+    public AjaxResult edit(@RequestBody CourseMaterial courseMaterial) {
         courseMaterial.setUpdateBy(getUsername());
         return toAjax(courseMaterialService.updateById(courseMaterial));
     }
@@ -102,9 +95,8 @@ public class CourseMaterialController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程资料", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(courseMaterialService.deleteCourseMaterialByIds(idList));
     }

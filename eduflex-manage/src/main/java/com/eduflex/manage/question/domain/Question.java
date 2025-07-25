@@ -3,12 +3,12 @@ package com.eduflex.manage.question.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 /**
@@ -23,7 +23,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_question")
-public class  Question extends BaseEntity {
+public class Question extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

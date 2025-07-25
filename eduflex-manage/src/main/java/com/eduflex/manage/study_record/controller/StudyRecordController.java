@@ -26,8 +26,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/record")
-public class StudyRecordController extends BaseController
-{
+public class StudyRecordController extends BaseController {
+
     @Autowired
     private IStudyRecordService studyRecordService;
 
@@ -37,8 +37,7 @@ public class StudyRecordController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(StudyRecord studyRecord)
-    {
+    public TableDataInfo list(StudyRecord studyRecord) {
         startPage();
         PageInfo<StudyRecord> pageInfo = new PageInfo<>(studyRecordService.selectStudyRecordList(studyRecord));
         List<StudyRecordVo> list = studyRecordService.buildVo(pageInfo.getList());
@@ -51,8 +50,7 @@ public class StudyRecordController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "学习记录管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, StudyRecord studyRecord)
-    {
+    public void export(HttpServletResponse response, StudyRecord studyRecord) {
         List<StudyRecordVo> list = studyRecordService.buildVo(studyRecordService.selectStudyRecordList(studyRecord));
         ExcelUtil<StudyRecordVo> util = new ExcelUtil<>(StudyRecordVo.class);
         util.exportExcel(response, list, "学习记录管理数据");
@@ -63,8 +61,7 @@ public class StudyRecordController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(studyRecordService.selectById(id));
     }
 
@@ -74,8 +71,7 @@ public class StudyRecordController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学习记录管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody StudyRecord studyRecord)
-    {
+    public AjaxResult add(@RequestBody StudyRecord studyRecord) {
         return toAjax(studyRecordService.save(studyRecord));
     }
 
@@ -85,8 +81,7 @@ public class StudyRecordController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学习记录管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody StudyRecord studyRecord)
-    {
+    public AjaxResult edit(@RequestBody StudyRecord studyRecord) {
         return toAjax(studyRecordService.updateById(studyRecord));
     }
 
@@ -95,9 +90,8 @@ public class StudyRecordController extends BaseController
      */
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "学习记录管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(studyRecordService.removeByIds(idList));
     }

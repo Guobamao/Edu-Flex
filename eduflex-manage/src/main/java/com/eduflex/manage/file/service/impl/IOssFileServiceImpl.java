@@ -3,9 +3,8 @@ package com.eduflex.manage.file.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.eduflex.manage.course_material.service.ICourseMaterialService;
-
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.file.domain.OssFile;
 import com.eduflex.manage.file.mapper.OssFileMapper;
 import com.eduflex.manage.file.service.IOssFileService;

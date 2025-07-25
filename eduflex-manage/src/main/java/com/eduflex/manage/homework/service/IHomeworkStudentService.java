@@ -19,6 +19,7 @@ public interface IHomeworkStudentService extends IService<HomeworkStudent> {
 
     /**
      * 获取学生作业列表
+     *
      * @param homework 查询条件
      * @return 作业列表
      */
@@ -26,6 +27,7 @@ public interface IHomeworkStudentService extends IService<HomeworkStudent> {
 
     /**
      * 获取学生作业详情
+     *
      * @param homeworkDto 查询条件
      * @return 作业详情
      */
@@ -33,6 +35,7 @@ public interface IHomeworkStudentService extends IService<HomeworkStudent> {
 
     /**
      * 更新学生作业 （提交作业、批阅作业）
+     *
      * @param homeworkDto 更新条件
      * @return 修改结果
      */
@@ -48,6 +51,7 @@ public interface IHomeworkStudentService extends IService<HomeworkStudent> {
 
     /**
      * 构建vo
+     *
      * @param list 原始数据
      * @return 结果
      */
@@ -55,6 +59,7 @@ public interface IHomeworkStudentService extends IService<HomeworkStudent> {
 
     /**
      * 批阅作业
+     *
      * @param homeworkStudent 条件
      * @return 结果
      */

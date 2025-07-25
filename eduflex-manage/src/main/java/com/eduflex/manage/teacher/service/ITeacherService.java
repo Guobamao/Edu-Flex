@@ -13,8 +13,8 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2024-10-05
  */
-public interface ITeacherService extends IService<Teacher>
-{
+public interface ITeacherService extends IService<Teacher> {
+
     /**
      * 查询教师管理列表
      *
@@ -41,6 +41,7 @@ public interface ITeacherService extends IService<Teacher>
 
     /**
      * 检验登录名唯一性
+     *
      * @param teacherDto 教师DTO
      * @return 结果
      */
@@ -48,6 +49,7 @@ public interface ITeacherService extends IService<Teacher>
 
     /**
      * 检验手机号唯一性
+     *
      * @param teacherDto 教师DTO
      * @return 结果
      */
@@ -55,6 +57,7 @@ public interface ITeacherService extends IService<Teacher>
 
     /**
      * 检验邮箱唯一性
+     *
      * @param teacherDto 教师DTO
      * @return 结果
      */
@@ -62,6 +65,7 @@ public interface ITeacherService extends IService<Teacher>
 
     /**
      * 根据ID查询教师信息
+     *
      * @param userId 教师ID
      * @return
      */
@@ -69,17 +73,19 @@ public interface ITeacherService extends IService<Teacher>
 
     /**
      * 导入教师数据
-     * @param tearcherList 教师数据
+     *
+     * @param tearcherList  教师数据
      * @param uploadSupport 是否更新支持，如果已存在，则进行更新数据
-     * @param operName 操作用户
+     * @param operName      操作用户
      * @return 结果
      */
     String importTeacher(List<TeacherDto> tearcherList, boolean uploadSupport, String operName);
 
     /**
      * 构建教师集合Vo对象
+     *
      * @param teacherList 教师集合
-     * @param teacherDto 查询条件
+     * @param teacherDto  查询条件
      * @return 教师集合Vo对象
      */
     List<TeacherVo> buildVo(List<Teacher> teacherList, TeacherDto teacherDto);

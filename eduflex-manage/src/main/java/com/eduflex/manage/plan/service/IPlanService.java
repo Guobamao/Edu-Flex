@@ -25,6 +25,7 @@ public interface IPlanService extends IService<Plan> {
 
     /**
      * 构建学习计划集合视图对象
+     *
      * @param list 学习计划集合
      * @return 学习计划集合视图对象
      */
@@ -40,6 +41,7 @@ public interface IPlanService extends IService<Plan> {
 
     /**
      * 创建学习计划
+     *
      * @param plan 学习计划
      * @return 结果
      */
@@ -47,6 +49,7 @@ public interface IPlanService extends IService<Plan> {
 
     /**
      * 更新学习计划
+     *
      * @param plan 学习计划
      * @return 结果
      */
@@ -54,6 +57,7 @@ public interface IPlanService extends IService<Plan> {
 
     /**
      * 根据id查询学习计划
+     *
      * @param id 学习计划id
      * @return 结果
      */

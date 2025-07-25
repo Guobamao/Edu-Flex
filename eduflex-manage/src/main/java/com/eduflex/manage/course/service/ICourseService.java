@@ -12,9 +12,11 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2024-10-10
  */
-public interface ICourseService extends IService<Course>  {
+public interface ICourseService extends IService<Course> {
+
     /**
      * 查询课程管理列表
+     *
      * @param course 课程管理
      * @return 课程管理集合
      */
@@ -22,6 +24,7 @@ public interface ICourseService extends IService<Course>  {
 
     /**
      * 根据id集合查询课程管理列表
+     *
      * @param ids id集合
      * @return 结果
      */
@@ -29,13 +32,15 @@ public interface ICourseService extends IService<Course>  {
 
     /**
      * 根据课程ID查询课程信息
-     * @param id  课程ID
+     *
+     * @param id 课程ID
      * @return 课程信息
      */
     CourseVo selectCourseById(Long id);
 
     /**
      * 查询课程相关课程
+     *
      * @param id 课程ID
      * @return 结果
      */
@@ -51,12 +56,14 @@ public interface ICourseService extends IService<Course>  {
 
     /**
      * 查询推荐课程
+     *
      * @return 推荐课程列表
      */
     List<CourseVo> listRecommend();
 
     /**
      * 查询课程列表
+     *
      * @param courseDto 查询条件
      * @return 课程列表
      */
@@ -64,6 +71,7 @@ public interface ICourseService extends IService<Course>  {
 
     /**
      * 构建课程列表 Vo 对象
+     *
      * @param courseList 课程列表
      * @return 课程列表
      */
@@ -71,6 +79,7 @@ public interface ICourseService extends IService<Course>  {
 
     /**
      * 构建课程列表 Vo 对象 - 学生端
+     *
      * @param courseList 课程列表
      * @return 课程列表 Vo 对象
      */

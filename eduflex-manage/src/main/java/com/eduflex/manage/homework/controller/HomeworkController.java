@@ -27,8 +27,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/homework")
-public class HomeworkController extends BaseController
-{
+public class HomeworkController extends BaseController {
+
     @Autowired
     private IHomeworkService homeworkService;
 
@@ -37,8 +37,7 @@ public class HomeworkController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(Homework homework)
-    {
+    public TableDataInfo list(Homework homework) {
         startPage();
         PageInfo<Homework> pageInfo = new PageInfo<>(homeworkService.selectHomeworkList(homework));
         List<HomeworkVo> list = homeworkService.buildVo(pageInfo.getList());
@@ -51,8 +50,7 @@ public class HomeworkController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "作业管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Homework homework)
-    {
+    public void export(HttpServletResponse response, Homework homework) {
         List<HomeworkVo> list = homeworkService.buildVo(homeworkService.selectHomeworkList(homework));
         ExcelUtil<HomeworkVo> util = new ExcelUtil<HomeworkVo>(HomeworkVo.class);
         util.exportExcel(response, list, "作业管理数据");
@@ -63,8 +61,7 @@ public class HomeworkController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(homeworkService.getById(id));
     }
 
@@ -74,8 +71,7 @@ public class HomeworkController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "作业管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Homework homework)
-    {
+    public AjaxResult add(@RequestBody Homework homework) {
         homework.setCreateBy(getUsername());
         return toAjax(homeworkService.save(homework));
     }
@@ -86,8 +82,7 @@ public class HomeworkController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "作业管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Homework homework)
-    {
+    public AjaxResult edit(@RequestBody Homework homework) {
         homework.setUpdateBy(getUsername());
         return toAjax(homeworkService.updateById(homework));
     }
@@ -97,9 +92,8 @@ public class HomeworkController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "作业管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         ArrayList<Long> idList = CollUtil.toList(ids);
         return toAjax(homeworkService.removeByIds(idList));
     }

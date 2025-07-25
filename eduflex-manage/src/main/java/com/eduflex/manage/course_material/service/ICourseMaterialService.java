@@ -13,8 +13,8 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2024-10-14
  */
-public interface ICourseMaterialService extends IService<CourseMaterial>
-{
+public interface ICourseMaterialService extends IService<CourseMaterial> {
+
     /**
      * 查询课程资料列表
      *
@@ -34,6 +34,7 @@ public interface ICourseMaterialService extends IService<CourseMaterial>
 
     /**
      * 根据文件id查询课程资料
+     *
      * @param id 文件id
      * @return 结果
      */
@@ -48,6 +49,7 @@ public interface ICourseMaterialService extends IService<CourseMaterial>
 
     /**
      * 查看课程资料
+     *
      * @param id 课程资料id
      * @return 课程资料信息
      */
@@ -55,6 +57,7 @@ public interface ICourseMaterialService extends IService<CourseMaterial>
 
     /**
      * 查询课程资料列表  - 带进度
+     *
      * @param courseMaterialDto 查询条件
      * @return 结果
      */

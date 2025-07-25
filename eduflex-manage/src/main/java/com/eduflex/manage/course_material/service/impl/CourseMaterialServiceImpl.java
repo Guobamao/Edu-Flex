@@ -31,8 +31,8 @@ import static com.eduflex.common.utils.SecurityUtils.getUserId;
  * @date 2024-10-14
  */
 @Service
-public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper, CourseMaterial> implements ICourseMaterialService
-{
+public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper, CourseMaterial> implements ICourseMaterialService {
+
     @Autowired
     private ICourseChapterService courseChapterService;
 
@@ -49,8 +49,7 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
      * @return 课程资料
      */
     @Override
-    public List<CourseMaterial> selectCourseMaterialList(CourseMaterial courseMaterial)
-    {
+    public List<CourseMaterial> selectCourseMaterialList(CourseMaterial courseMaterial) {
         LambdaQueryWrapper<CourseMaterial> wrapper = new LambdaQueryWrapper<CourseMaterial>()
                 .eq(courseMaterial.getId() != null, CourseMaterial::getId, courseMaterial.getId())
                 .eq(courseMaterial.getChapterId() != null, CourseMaterial::getChapterId, courseMaterial.getChapterId())
@@ -65,8 +64,7 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
      * @return 结果
      */
     @Override
-    public int deleteCourseMaterialByIds(List<Long> idList)
-    {
+    public int deleteCourseMaterialByIds(List<Long> idList) {
         return baseMapper.deleteByIds(idList);
     }
 

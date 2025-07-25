@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TableName("tb_carousel")
 public class Carousel extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
     /**

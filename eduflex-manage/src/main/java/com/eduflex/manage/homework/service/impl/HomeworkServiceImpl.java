@@ -22,8 +22,7 @@ import java.util.List;
  * @date 2024-11-23
  */
 @Service
-public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> implements IHomeworkService
-{
+public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> implements IHomeworkService {
 
     @Autowired
     private ICourseService courseService;
@@ -32,8 +31,7 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
     private IHomeworkStudentService homeworkStudentService;
 
     @Override
-    public List<Homework> selectHomeworkList(Homework homework)
-    {
+    public List<Homework> selectHomeworkList(Homework homework) {
         LambdaQueryWrapper<Homework> wrapper = new LambdaQueryWrapper<Homework>()
                 .eq(homework.getCourseId() != null, Homework::getCourseId, homework.getCourseId())
                 .like(homework.getTitle() != null && !homework.getTitle().isEmpty(), Homework::getTitle, homework.getTitle());

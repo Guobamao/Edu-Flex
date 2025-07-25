@@ -14,11 +14,11 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2024-10-07
  */
-public interface IStudentService extends IService<Student>
-{
+public interface IStudentService extends IService<Student> {
 
     /**
      * 查询学生管理列表
+     *
      * @return 学生管理集合
      */
     List<Student> selectStudentList();
@@ -49,6 +49,7 @@ public interface IStudentService extends IService<Student>
 
     /**
      * 检验学生登录名唯一性
+     *
      * @param studentDto
      * @return
      */
@@ -56,6 +57,7 @@ public interface IStudentService extends IService<Student>
 
     /**
      * 检验学生手机号唯一性
+     *
      * @param studentDto
      * @return
      */
@@ -63,6 +65,7 @@ public interface IStudentService extends IService<Student>
 
     /**
      * 检验学生邮箱唯一性
+     *
      * @param studentDto
      * @return
      */
@@ -70,6 +73,7 @@ public interface IStudentService extends IService<Student>
 
     /**
      * 重置密码
+     *
      * @param studentDto 学生信息
      * @return 结果
      */
@@ -87,13 +91,14 @@ public interface IStudentService extends IService<Student>
      * 构建学生列表集合Vo对象
      *
      * @param studentList 学生列表
-     * @param studentDto 查询条件
+     * @param studentDto  查询条件
      * @return 学生列表Vo集合
      */
     List<StudentVo> buildVo(List<Student> studentList, StudentDto studentDto);
 
     /**
      * 注册学生账号
+     *
      * @param user 注册信息
      * @return 结果
      */
@@ -101,9 +106,10 @@ public interface IStudentService extends IService<Student>
 
     /**
      * 导入学生数据
-     * @param studentList 导入学生数据
+     *
+     * @param studentList   导入学生数据
      * @param uploadSupport 是否更新支持，如果已存在，则进行更新数据
-     * @param operName 操作用户
+     * @param operName      操作用户
      * @return 结果
      */
     String importStudent(List<StudentDto> studentList, boolean uploadSupport, String operName);

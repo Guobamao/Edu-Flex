@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TableName("tb_paper")
 public class Paper extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
     /**

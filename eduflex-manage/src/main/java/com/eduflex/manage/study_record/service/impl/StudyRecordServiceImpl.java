@@ -38,6 +38,7 @@ import static com.eduflex.common.utils.SecurityUtils.getUsername;
  */
 @Service
 public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, StudyRecord> implements IStudyRecordService {
+
     @Autowired
     private ICourseService courseService;
 

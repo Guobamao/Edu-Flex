@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * 用户端作业请求参数
+ *
  * @author 林煜鋒
  */
 @Data

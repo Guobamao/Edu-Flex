@@ -27,8 +27,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/comment")
-public class CommentController extends BaseController
-{
+public class CommentController extends BaseController {
+
     @Autowired
     private ICommentService commentService;
 
@@ -37,8 +37,7 @@ public class CommentController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(Comment comment)
-    {
+    public TableDataInfo list(Comment comment) {
         startPage();
         PageInfo<Comment> pageInfo = new PageInfo<>(commentService.selectCommentsList(comment));
         List<CommentVo> list = commentService.buildVo(pageInfo.getList());
@@ -51,8 +50,7 @@ public class CommentController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "评论管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Comment comment)
-    {
+    public void export(HttpServletResponse response, Comment comment) {
         List<CommentVo> list = commentService.buildVo(commentService.selectCommentsList(comment));
         ExcelUtil<CommentVo> util = new ExcelUtil<>(CommentVo.class);
         util.exportExcel(response, list, "评论管理数据");
@@ -63,8 +61,7 @@ public class CommentController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(commentService.getById(id));
     }
 
@@ -74,8 +71,7 @@ public class CommentController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "评论管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Comment comment)
-    {
+    public AjaxResult add(@RequestBody Comment comment) {
         comment.setCreateBy(getUsername());
         comment.setCreateTime(DateUtils.getNowDate());
         return toAjax(commentService.save(comment));
@@ -87,8 +83,7 @@ public class CommentController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "评论管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Comment comment)
-    {
+    public AjaxResult edit(@RequestBody Comment comment) {
         comment.setUpdateBy(getUsername());
         comment.setUpdateTime(DateUtils.getNowDate());
         return toAjax(commentService.updateById(comment));
@@ -99,9 +94,8 @@ public class CommentController extends BaseController
      */
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "评论管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(commentService.removeByIds(idList));
     }

@@ -20,6 +20,7 @@ import java.util.List;
  */
 
 public interface IExamRecordService extends IService<ExamRecord> {
+    
     /**
      * 查询考试记录列表
      *
@@ -30,6 +31,7 @@ public interface IExamRecordService extends IService<ExamRecord> {
 
     /**
      * 查询考试记录
+     *
      * @param id 记录ID
      * @return 考试记录
      */
@@ -37,6 +39,7 @@ public interface IExamRecordService extends IService<ExamRecord> {
 
     /**
      * 学生端 - 获取考试列表
+     *
      * @param examDto 查询条件
      * @return 考试列表
      */
@@ -44,6 +47,7 @@ public interface IExamRecordService extends IService<ExamRecord> {
 
     /**
      * 创建考试
+     *
      * @param examDto 查询条件
      * @return 考试记录ID
      */
@@ -51,12 +55,14 @@ public interface IExamRecordService extends IService<ExamRecord> {
 
     /**
      * 交卷操作
+     *
      * @param recordId 考试记录ID
      */
     void handExam(Long recordId);
 
     /**
      * 获取考试结果
+     *
      * @param id 考试记录ID
      * @return 考试结果
      */
@@ -72,6 +78,7 @@ public interface IExamRecordService extends IService<ExamRecord> {
 
     /**
      * 构建考试记录Vo集合
+     *
      * @param examRecordList 考试记录集合
      * @return 考试记录Vo集合
      */

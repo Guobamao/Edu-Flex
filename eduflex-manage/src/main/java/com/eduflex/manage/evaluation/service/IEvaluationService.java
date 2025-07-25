@@ -15,6 +15,7 @@ import java.util.List;
  * @date 2025-02-25
  */
 public interface IEvaluationService extends IService<Evaluation> {
+
     /**
      * 查询课程评价管理列表
      *
@@ -25,6 +26,7 @@ public interface IEvaluationService extends IService<Evaluation> {
 
     /**
      * 构建课程评价Vo对象
+     *
      * @param list 课程评价集合
      * @return 课程评价集合Vo
      */
@@ -32,6 +34,7 @@ public interface IEvaluationService extends IService<Evaluation> {
 
     /**
      * 构建课程评价Vo对象
+     *
      * @param evaluationList 课程评价集合
      * @return 课程评价Vo集合
      */
@@ -39,6 +42,7 @@ public interface IEvaluationService extends IService<Evaluation> {
 
     /**
      * 保存课程评价
+     *
      * @param evaluation 课程评价
      * @return 结果
      */
@@ -46,6 +50,7 @@ public interface IEvaluationService extends IService<Evaluation> {
 
     /**
      * 课程评价统计
+     *
      * @param courseId 课程ID
      * @return 课程评价统计
      */

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SysRegisterService {
+
     @Autowired
     private ISysUserService userService;
 

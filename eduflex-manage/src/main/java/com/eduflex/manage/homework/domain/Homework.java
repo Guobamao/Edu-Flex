@@ -21,22 +21,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_homework")
-public class Homework extends BaseEntity
-{
+public class Homework extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
-    /** 作业ID */
+    /**
+     * 作业ID
+     */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    /** 所属课程ID */
+    /**
+     * 所属课程ID
+     */
     private Long courseId;
 
-    /** 作业标题 */
+    /**
+     * 作业标题
+     */
     @Excel(name = "作业标题")
     private String title;
 
-    /** 作业内容 */
+    /**
+     * 作业内容
+     */
     @Excel(name = "作业内容", width = 50)
     private String content;
 }

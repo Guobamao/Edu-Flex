@@ -30,6 +30,7 @@ public class ExamController extends BaseController {
 
     /**
      * 获取考试列表
+     *
      * @param examDto 查询条件
      * @return 考试列表
      */
@@ -44,6 +45,7 @@ public class ExamController extends BaseController {
 
     /**
      * 获取考试详情
+     *
      * @param id 考试ID
      * @return 考试详情
      */
@@ -62,6 +64,7 @@ public class ExamController extends BaseController {
 
     /**
      * 创建考试
+     *
      * @param examDto 创建条件
      * @return 结果
      */
@@ -74,6 +77,7 @@ public class ExamController extends BaseController {
 
     /**
      * 交卷
+     *
      * @param examDto 查询条件
      * @return 结果
      */
@@ -86,6 +90,7 @@ public class ExamController extends BaseController {
 
     /**
      * 获取考试记录详情
+     *
      * @param id 考试记录ID
      * @return 考试记录详情
      */
@@ -97,6 +102,7 @@ public class ExamController extends BaseController {
 
     /**
      * 获取考试记录结果
+     *
      * @param id 考试记录ID
      * @return 考试记录结果
      */
@@ -108,6 +114,7 @@ public class ExamController extends BaseController {
 
     /**
      * 检查是否有进行中的考试
+     *
      * @return 结果
      */
     @PreAuthorize("@ss.hasRole('student')")

@@ -29,6 +29,7 @@ public class StudentCourseController extends BaseController {
 
     /**
      * 选课 / 推选
+     *
      * @param studentCourse 选课条件
      * @return 结果
      */

@@ -24,6 +24,7 @@ public class CategoryController extends BaseController {
 
     /**
      * 根据方向ID查询课程分类
+     *
      * @param directionId 方向ID
      * @return 课程分类列表
      */

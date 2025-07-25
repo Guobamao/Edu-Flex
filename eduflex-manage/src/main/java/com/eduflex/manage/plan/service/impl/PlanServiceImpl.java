@@ -114,8 +114,9 @@ public class PlanServiceImpl extends ServiceImpl<PlanMapper, Plan> implements IP
 
     /**
      * 调整学习计划时间
+     *
      * @param overduePlan 超期的学习计划
-     * @param nowDate 当前时间
+     * @param nowDate     当前时间
      */
     private void adjustPlanTime(Plan overduePlan, Date nowDate) {
         // 原计划时长
@@ -163,9 +164,10 @@ public class PlanServiceImpl extends ServiceImpl<PlanMapper, Plan> implements IP
 
     /**
      * 判断当前时间段是否存在冲突
-     * @param plan 学习计划
+     *
+     * @param plan         学习计划
      * @param newStartTime 新的开始时间
-     * @param newEndTime 新的结束时间
+     * @param newEndTime   新的结束时间
      * @return 是否存在冲突
      */
     private boolean hasConflict(Plan plan, DateTime newStartTime, DateTime newEndTime) {
@@ -191,6 +193,7 @@ public class PlanServiceImpl extends ServiceImpl<PlanMapper, Plan> implements IP
 
     /**
      * 根据计划拆分出每天计划
+     *
      * @param plan 学习计划
      * @return 学习计划列表
      */

@@ -31,6 +31,7 @@ public class CourseController extends BaseController {
 
     /**
      * 查询课程列表
+     *
      * @param courseDto 查询条件
      * @return 课程列表
      */
@@ -44,6 +45,7 @@ public class CourseController extends BaseController {
 
     /**
      * 获取课程详细信息
+     *
      * @param id 课程ID
      * @return 课程信息
      */
@@ -54,6 +56,7 @@ public class CourseController extends BaseController {
 
     /**
      * 相关课程列表
+     *
      * @param id 课程ID
      * @return 课程列表
      */
@@ -64,6 +67,7 @@ public class CourseController extends BaseController {
 
     /**
      * 关键词搜索课程
+     *
      * @param course 查询条件
      * @return 课程列表
      */
@@ -77,6 +81,7 @@ public class CourseController extends BaseController {
 
     /**
      * 获取推荐课程列表
+     *
      * @return 推荐课程列表
      */
     @GetMapping("/listRecommend")

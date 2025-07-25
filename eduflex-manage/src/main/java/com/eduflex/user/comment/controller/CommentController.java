@@ -27,6 +27,7 @@ public class CommentController extends BaseController {
 
     /**
      * 获取与课程评论列表
+     *
      * @param comment 查询条件
      * @return 课程评论列表
      */
@@ -40,6 +41,7 @@ public class CommentController extends BaseController {
 
     /**
      * 发表评论
+     *
      * @param comment 评论内容
      */
     @PreAuthorize("@ss.hasRole('student')")

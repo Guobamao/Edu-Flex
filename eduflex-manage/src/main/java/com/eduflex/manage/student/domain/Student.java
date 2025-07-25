@@ -21,14 +21,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_student")
-public class Student extends BaseEntity
-{
+public class Student extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
-    /** 学生ID */
+    /**
+     * 学生ID
+     */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    /** 关联sys_user表的ID */
+    /**
+     * 关联sys_user表的ID
+     */
     private Long userId;
 }

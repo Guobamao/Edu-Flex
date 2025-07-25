@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController("UserStudentController")
 @RequestMapping("/user/student")
 public class StudentController extends BaseController {
+
     @Autowired
     private ISysConfigService configService;
 
@@ -25,6 +26,7 @@ public class StudentController extends BaseController {
 
     /**
      * 学生个人信息
+     *
      * @return 学生个人信息
      */
     @PreAuthorize("@ss.hasRole('student')")
@@ -39,6 +41,7 @@ public class StudentController extends BaseController {
 
     /**
      * 注册学生账号
+     *
      * @param user 注册信息
      * @return 结果
      */

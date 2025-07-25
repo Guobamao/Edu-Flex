@@ -19,30 +19,44 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_course")
-public class Course extends BaseEntity
-{
+public class Course extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
-    /** 课程ID */
+    /**
+     * 课程ID
+     */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    /** 课程名称 */
+    /**
+     * 课程名称
+     */
     @Excel(name = "课程名称", width = 30)
     private String name;
 
-    /** 课程描述 */
+    /**
+     * 课程描述
+     */
     private String description;
 
-    /** 方向ID */
+    /**
+     * 方向ID
+     */
     private Long directionId;
 
-    /** 分类ID */
+    /**
+     * 分类ID
+     */
     private Long categoryId;
 
-    /** 任课老师ID */
+    /**
+     * 任课老师ID
+     */
     private Long teacherId;
 
-    /** 课程封面 */
+    /**
+     * 课程封面
+     */
     private Long cover;
 }

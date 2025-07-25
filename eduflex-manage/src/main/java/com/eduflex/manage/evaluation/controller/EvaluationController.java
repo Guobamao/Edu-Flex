@@ -27,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/manage/evaluation")
 public class EvaluationController extends BaseController {
+
     @Autowired
     private IEvaluationService evaluationService;
 

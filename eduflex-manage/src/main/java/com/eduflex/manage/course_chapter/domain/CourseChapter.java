@@ -21,21 +21,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_course_chapter")
-public class CourseChapter extends BaseEntity
-{
+public class CourseChapter extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
-    /** 主键ID */
+    /**
+     * 主键ID
+     */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    /** 关联课程ID */
+    /**
+     * 关联课程ID
+     */
     private Long courseId;
 
-    /** 章节名称 */
+    /**
+     * 章节名称
+     */
     @Excel(name = "章节名称")
     private String name;
 
-    /** 章节排序 */
+    /**
+     * 章节排序
+     */
     private Integer sort;
 }

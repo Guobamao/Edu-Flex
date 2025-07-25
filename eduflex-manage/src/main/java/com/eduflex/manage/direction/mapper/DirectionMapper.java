@@ -1,7 +1,5 @@
 package com.eduflex.manage.direction.mapper;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.eduflex.manage.direction.domain.Direction;
 

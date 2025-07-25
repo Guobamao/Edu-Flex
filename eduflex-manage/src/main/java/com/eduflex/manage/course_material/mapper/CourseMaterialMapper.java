@@ -9,6 +9,5 @@ import com.eduflex.manage.course_material.domain.CourseMaterial;
  * @author 林煜鋒
  * @date 2024-10-14
  */
-public interface CourseMaterialMapper extends BaseMapper<CourseMaterial>
-{
+public interface CourseMaterialMapper extends BaseMapper<CourseMaterial> {
 }

@@ -30,8 +30,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/teacher")
-public class TeacherController extends BaseController
-{
+public class TeacherController extends BaseController {
+
     @Autowired
     private ITeacherService teacherService;
 
@@ -40,8 +40,7 @@ public class TeacherController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(TeacherDto teacherDto)
-    {
+    public TableDataInfo list(TeacherDto teacherDto) {
         startPage();
         PageInfo<Teacher> pageInfo = new PageInfo<>(teacherService.selectTeacherList(teacherDto));
         List<TeacherVo> list = teacherService.buildVo(pageInfo.getList(), teacherDto);
@@ -54,8 +53,7 @@ public class TeacherController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "教师管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, TeacherDto teacherDto)
-    {
+    public void export(HttpServletResponse response, TeacherDto teacherDto) {
         List<TeacherVo> list = teacherService.buildVo(teacherService.selectTeacherList(teacherDto), teacherDto);
         ExcelUtil<TeacherVo> util = new ExcelUtil<>(TeacherVo.class);
         util.exportExcel(response, list, "教师管理数据");
@@ -63,18 +61,19 @@ public class TeacherController extends BaseController
 
     /**
      * 下载导入模板
+     *
      * @param response 响应对象
      */
     @PostMapping("/importTemplate")
-    public void importTemplate(HttpServletResponse response)
-    {
+    public void importTemplate(HttpServletResponse response) {
         ExcelUtil<TeacherDto> util = new ExcelUtil<>(TeacherDto.class);
         util.importTemplateExcel(response, "教师数据");
     }
 
     /**
      * 导入教师数据
-     * @param file 上传文件
+     *
+     * @param file          上传文件
      * @param uploadSupport 是否更新支持，如果已存在，则进行更新数据
      * @return 结果
      * @throws Exception 异常
@@ -95,8 +94,7 @@ public class TeacherController extends BaseController
      */
     @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{userId}")
-    public AjaxResult getInfo(@PathVariable("userId") Long userId)
-    {
+    public AjaxResult getInfo(@PathVariable("userId") Long userId) {
         return success(teacherService.selectTeacherByUserId(userId));
     }
 
@@ -106,8 +104,7 @@ public class TeacherController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "教师管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody TeacherDto teacherDto)
-    {
+    public AjaxResult add(@RequestBody TeacherDto teacherDto) {
         // 检验字段唯一性
         if (!teacherService.checkUserNameUnique(teacherDto)) {
             return error("新增教师‘" + teacherDto.getUserName() + "'失败，登录账号已存在");
@@ -127,8 +124,7 @@ public class TeacherController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "教师管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody TeacherDto teacherDto)
-    {
+    public AjaxResult edit(@RequestBody TeacherDto teacherDto) {
         // 检验字段唯一性
         if (!teacherService.checkUserNameUnique(teacherDto)) {
             return error("修改教师‘" + teacherDto.getUserName() + "'失败，登录账号已存在");
@@ -146,9 +142,8 @@ public class TeacherController extends BaseController
      */
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "教师管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         ArrayList<Long> idList = CollUtil.toList(ids);
         return toAjax(teacherService.removeByIds(idList));
     }

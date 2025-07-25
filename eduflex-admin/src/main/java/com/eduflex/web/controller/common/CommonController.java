@@ -38,7 +38,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/common")
 public class CommonController extends BaseController {
+
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
+    private static final String FILE_DELIMETER = ",";
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -48,8 +50,6 @@ public class CommonController extends BaseController {
 
     @Autowired
     private IFileImagesService fileImagesService;
-
-    private static final String FILE_DELIMETER = ",";
 
     /**
      * 通用下载请求
@@ -129,17 +129,17 @@ public class CommonController extends BaseController {
             FileInputStream fis = new FileInputStream(file);
 
             //设置响应头，指示浏览器以附件形式下载文件，并设置下载文件名为‘fileName’
-            response.setHeader("content-disposition","attachment;filename="+ossFile.getName());
+            response.setHeader("content-disposition", "attachment;filename=" + ossFile.getName());
 
             //获取响应的输出流，用于将文件内容写入响应体。
             ServletOutputStream sos = response.getOutputStream();
 
             //创建一个8KB的缓冲区，用于读取文件内容。
-            byte[] buffer = new byte[1024*8];
+            byte[] buffer = new byte[1024 * 8];
             int len = 0;
             //循环读取文件内容到缓冲区，直到文件读取完。
-            while((len = fis.read(buffer)) != -1){
-                sos.write(buffer,0,len);
+            while ((len = fis.read(buffer)) != -1) {
+                sos.write(buffer, 0, len);
             }
             //关闭文件输入流，释放资源。
             fis.close();
@@ -147,6 +147,7 @@ public class CommonController extends BaseController {
             log.error("预览视频失败", e);
         }
     }
+
     @GetMapping("/previewVideo/{id}")
     public void previewVideo(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
         OssFile ossFile = ossFileService.getById(id);
