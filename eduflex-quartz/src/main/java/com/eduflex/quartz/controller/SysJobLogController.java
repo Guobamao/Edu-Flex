@@ -1,5 +1,6 @@
 package com.eduflex.quartz.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
@@ -46,7 +47,7 @@ public class SysJobLogController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJobLog sysJobLog) {
         List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
-        ExcelUtil<SysJobLog> util = new ExcelUtil<SysJobLog>(SysJobLog.class);
+        ExcelUtil<SysJobLog> util = new ExcelUtil<>(SysJobLog.class);
         util.exportExcel(response, list, "调度日志");
     }
 
@@ -56,7 +57,7 @@ public class SysJobLogController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:job:query')")
     @GetMapping(value = "/{jobLogId}")
     public AjaxResult getInfo(@PathVariable Long jobLogId) {
-        return success(jobLogService.selectJobLogById(jobLogId));
+        return success(jobLogService.getById(jobLogId));
     }
 
 
@@ -67,7 +68,7 @@ public class SysJobLogController extends BaseController {
     @Log(title = "定时任务调度日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{jobLogIds}")
     public AjaxResult remove(@PathVariable Long[] jobLogIds) {
-        return toAjax(jobLogService.deleteJobLogByIds(jobLogIds));
+        return toAjax(jobLogService.removeBatchByIds(CollUtil.toList(jobLogIds)));
     }
 
     /**

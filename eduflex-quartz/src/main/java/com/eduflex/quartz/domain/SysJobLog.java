@@ -1,18 +1,27 @@
 package com.eduflex.quartz.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 定时任务调度日志表 sys_job_log
  *
  * @author ruoyi
  */
-public class SysJobLog extends BaseEntity {
+@Data
+public class SysJobLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,6 +29,7 @@ public class SysJobLog extends BaseEntity {
      * ID
      */
     @Excel(name = "日志序号")
+    @TableId(value = "job_log_id", type = IdType.ASSIGN_ID)
     private Long jobLogId;
 
     /**
@@ -61,83 +71,33 @@ public class SysJobLog extends BaseEntity {
     /**
      * 开始时间
      */
+    @TableField(exist = false)
     private Date startTime;
 
     /**
      * 停止时间
      */
+    @TableField(exist = false)
     private Date stopTime;
 
-    public Long getJobLogId() {
-        return jobLogId;
-    }
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
-    public void setJobLogId(Long jobLogId) {
-        this.jobLogId = jobLogId;
-    }
+    /**
+     * 请求参数
+     */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @TableField(exist = false)
+    private Map<String, Object> params;
 
-    public String getJobName() {
-        return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
-
-    public String getJobGroup() {
-        return jobGroup;
-    }
-
-    public void setJobGroup(String jobGroup) {
-        this.jobGroup = jobGroup;
-    }
-
-    public String getInvokeTarget() {
-        return invokeTarget;
-    }
-
-    public void setInvokeTarget(String invokeTarget) {
-        this.invokeTarget = invokeTarget;
-    }
-
-    public String getJobMessage() {
-        return jobMessage;
-    }
-
-    public void setJobMessage(String jobMessage) {
-        this.jobMessage = jobMessage;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getExceptionInfo() {
-        return exceptionInfo;
-    }
-
-    public void setExceptionInfo(String exceptionInfo) {
-        this.exceptionInfo = exceptionInfo;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getStopTime() {
-        return stopTime;
-    }
-
-    public void setStopTime(Date stopTime) {
-        this.stopTime = stopTime;
+    public Map<String, Object> getParams() {
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        return params;
     }
 
     @Override

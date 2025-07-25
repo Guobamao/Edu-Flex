@@ -205,7 +205,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         sysJob.setInvokeTarget("breakExamTask.ryParams(" + examRecord.getId() + "L)");
         sysJob.setStatus("0");
         sysJob.setMisfirePolicy("1");
-        jobService.insertJob(sysJob);
+        jobService.save(sysJob);
 
         examRecord.setJobId(sysJob.getJobId());
         baseMapper.updateById(examRecord);
@@ -276,7 +276,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             baseMapper.updateById(examRecord);
 
             // 终止定时任务
-            SysJob sysJob = jobService.selectJobById(examRecord.getJobId());
+            SysJob sysJob = jobService.getById(examRecord.getJobId());
             try {
                 jobService.changeStatus(sysJob);
             } catch (SchedulerException e) {

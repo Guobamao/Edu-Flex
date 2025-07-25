@@ -1,5 +1,6 @@
 package com.eduflex.quartz.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.constant.Constants;
 import com.eduflex.common.core.controller.BaseController;
@@ -52,7 +53,7 @@ public class SysJobController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJob sysJob) {
         List<SysJob> list = jobService.selectJobList(sysJob);
-        ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
+        ExcelUtil<SysJob> util = new ExcelUtil<>(SysJob.class);
         util.exportExcel(response, list, "定时任务");
     }
 
@@ -62,7 +63,7 @@ public class SysJobController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:job:query')")
     @GetMapping(value = "/{jobId}")
     public AjaxResult getInfo(@PathVariable("jobId") Long jobId) {
-        return success(jobService.selectJobById(jobId));
+        return success(jobService.getById(jobId));
     }
 
     /**
@@ -120,7 +121,7 @@ public class SysJobController extends BaseController {
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysJob job) throws SchedulerException {
-        SysJob newJob = jobService.selectJobById(job.getJobId());
+        SysJob newJob = jobService.getById(job.getJobId());
         newJob.setStatus(job.getStatus());
         return toAjax(jobService.changeStatus(newJob));
     }
@@ -143,7 +144,7 @@ public class SysJobController extends BaseController {
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
     @DeleteMapping("/{jobIds}")
     public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException, TaskException {
-        jobService.deleteJobByIds(jobIds);
+        jobService.deleteJobByIds(CollUtil.toList(jobIds));
         return success();
     }
 }

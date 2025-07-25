@@ -84,7 +84,8 @@ public abstract class AbstractQuartzJob implements Job {
         }
 
         // 写入数据库当中
-        SpringUtils.getBean(ISysJobLogService.class).addJobLog(sysJobLog);
+        ISysJobLogService jobLogService = SpringUtils.getBean(ISysJobLogService.class);
+        jobLogService.save(sysJobLog);
     }
 
     /**
