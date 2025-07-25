@@ -1,12 +1,16 @@
 package com.eduflex.generator.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.eduflex.common.core.domain.BaseEntity;
 import com.eduflex.common.utils.StringUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 代码生成业务字段表 gen_table_column
@@ -14,7 +18,7 @@ import javax.validation.constraints.NotBlank;
  * @author ruoyi
  */
 @Data
-public class GenTableColumn extends BaseEntity {
+public class GenTableColumn implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -109,6 +113,28 @@ public class GenTableColumn extends BaseEntity {
      * 排序
      */
     private Integer sort;
+
+    /**
+     * 创建者
+     */
+    private String createBy;
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
+    /**
+     * 更新者
+     */
+    private String updateBy;
+
+    /**
+     * 更新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
 
     public boolean isIncrement() {
         return isIncrement(this.isIncrement);
