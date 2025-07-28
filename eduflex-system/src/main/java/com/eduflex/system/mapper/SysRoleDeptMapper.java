@@ -24,7 +24,7 @@ public interface SysRoleDeptMapper {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteRoleDept(Long[] ids);
+    int deleteRoleDept(List<Long> ids);
 
     /**
      * 查询部门使用数量

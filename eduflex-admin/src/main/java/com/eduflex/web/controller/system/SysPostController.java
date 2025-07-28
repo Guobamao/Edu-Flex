@@ -1,5 +1,6 @@
 package com.eduflex.web.controller.system;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
@@ -44,7 +45,7 @@ public class SysPostController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysPost post) {
         List<SysPost> list = postService.selectPostList(post);
-        ExcelUtil<SysPost> util = new ExcelUtil<SysPost>(SysPost.class);
+        ExcelUtil<SysPost> util = new ExcelUtil<>(SysPost.class);
         util.exportExcel(response, list, "岗位数据");
     }
 
@@ -54,7 +55,7 @@ public class SysPostController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:post:query')")
     @GetMapping(value = "/{postId}")
     public AjaxResult getInfo(@PathVariable Long postId) {
-        return success(postService.selectPostById(postId));
+        return success(postService.getById(postId));
     }
 
     /**
@@ -70,7 +71,7 @@ public class SysPostController extends BaseController {
             return error("新增岗位'" + post.getPostName() + "'失败，岗位编码已存在");
         }
         post.setCreateBy(getUsername());
-        return toAjax(postService.insertPost(post));
+        return toAjax(postService.save(post));
     }
 
     /**
@@ -86,7 +87,7 @@ public class SysPostController extends BaseController {
             return error("修改岗位'" + post.getPostName() + "'失败，岗位编码已存在");
         }
         post.setUpdateBy(getUsername());
-        return toAjax(postService.updatePost(post));
+        return toAjax(postService.updateById(post));
     }
 
     /**
@@ -96,7 +97,7 @@ public class SysPostController extends BaseController {
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{postIds}")
     public AjaxResult remove(@PathVariable Long[] postIds) {
-        return toAjax(postService.deletePostByIds(postIds));
+        return toAjax(postService.deletePostByIds(CollUtil.toList(postIds)));
     }
 
     /**
@@ -104,7 +105,7 @@ public class SysPostController extends BaseController {
      */
     @GetMapping("/optionselect")
     public AjaxResult optionselect() {
-        List<SysPost> posts = postService.selectPostAll();
+        List<SysPost> posts = postService.list();
         return success(posts);
     }
 }

@@ -1,5 +1,6 @@
 package com.eduflex.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -21,6 +22,7 @@ import com.eduflex.system.domain.SysUserRole;
 import com.eduflex.system.mapper.*;
 import com.eduflex.system.service.ISysConfigService;
 import com.eduflex.system.service.ISysDeptService;
+import com.eduflex.system.service.ISysPostService;
 import com.eduflex.system.service.ISysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +53,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysRoleMapper roleMapper;
 
     @Autowired
-    private SysPostMapper postMapper;
+    private ISysPostService postService;
 
     @Autowired
     private SysUserRoleMapper userRoleMapper;
@@ -169,7 +171,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public String selectUserPostGroup(String userName) {
-        List<SysPost> list = postMapper.selectPostsByUserName(userName);
+        List<SysPost> list = postService.selectPostsByUserName(userName);
         if (CollectionUtils.isEmpty(list)) {
             return StringUtils.EMPTY;
         }
@@ -184,9 +186,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public boolean checkUserNameUnique(SysUser user) {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
         SysUser info = userMapper.checkUserNameUnique(user.getUserName());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getUserId() != userId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -196,13 +198,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * 校验手机号码是否唯一
      *
      * @param user 用户信息
-     * @return
+     * @return 结果
      */
     @Override
     public boolean checkPhoneUnique(SysUser user) {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
         SysUser info = userMapper.checkPhoneUnique(user.getPhonenumber());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getUserId() != userId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -452,7 +454,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName) {
-        if (StringUtils.isNull(userList) || userList.size() == 0) {
+        if (StringUtils.isNull(userList) || CollUtil.isEmpty(userList)) {
             throw new ServiceException("导入用户数据不能为空！");
         }
         int successNum = 0;

@@ -1,5 +1,6 @@
 package com.eduflex.web.controller.system;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
@@ -62,7 +63,7 @@ public class SysRoleController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysRole role) {
         List<SysRole> list = roleService.selectRoleList(role);
-        ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
+        ExcelUtil<SysRole> util = new ExcelUtil<>(SysRole.class);
         util.exportExcel(response, list, "角色数据");
     }
 
@@ -154,7 +155,7 @@ public class SysRoleController extends BaseController {
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{roleIds}")
     public AjaxResult remove(@PathVariable Long[] roleIds) {
-        return toAjax(roleService.deleteRoleByIds(roleIds));
+        return toAjax(roleService.deleteRoleByIds(CollUtil.toList(roleIds)));
     }
 
     /**
@@ -205,7 +206,7 @@ public class SysRoleController extends BaseController {
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/cancelAll")
     public AjaxResult cancelAuthUserAll(Long roleId, Long[] userIds) {
-        return toAjax(roleService.deleteAuthUsers(roleId, userIds));
+        return toAjax(roleService.deleteAuthUsers(roleId, CollUtil.toList(userIds)));
     }
 
     /**
@@ -216,7 +217,7 @@ public class SysRoleController extends BaseController {
     @PutMapping("/authUser/selectAll")
     public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds) {
         roleService.checkRoleDataScope(roleId);
-        return toAjax(roleService.insertAuthUsers(roleId, userIds));
+        return toAjax(roleService.insertAuthUsers(roleId, CollUtil.toList(userIds)));
     }
 
     /**

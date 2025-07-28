@@ -103,5 +103,5 @@ public interface SysRoleMapper {
      * @param roleIds 需要删除的角色ID
      * @return 结果
      */
-    int deleteRoleByIds(Long[] roleIds);
+    int deleteRoleByIds(List<Long> roleIds);
 }

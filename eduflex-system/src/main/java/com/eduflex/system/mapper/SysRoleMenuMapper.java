@@ -32,7 +32,7 @@ public interface SysRoleMenuMapper {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteRoleMenu(Long[] ids);
+    int deleteRoleMenu(List<Long> ids);
 
     /**
      * 批量新增角色菜单信息
