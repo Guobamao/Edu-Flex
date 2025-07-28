@@ -11,7 +11,7 @@
  Target Server Version : 80042 (8.0.42)
  File Encoding         : 65001
 
- Date: 28/07/2025 15:43:25
+ Date: 28/07/2025 17:50:23
 */
 
 SET NAMES utf8mb4;
@@ -614,13 +614,14 @@ CREATE TABLE `sys_config`  (
 -- ----------------------------
 -- Records of sys_config
 -- ----------------------------
-INSERT INTO `sys_config` VALUES (1, '主框架页-默认皮肤样式名称', 'sys.index.skinName', 'skin-blue', 'Y', 'admin', '2024-10-05 13:28:49', '', '2025-07-25 17:43:23', '蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow', 0);
-INSERT INTO `sys_config` VALUES (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', '2024-10-05 13:28:49', '', '2025-07-25 17:43:23', '初始化密码 123456', 0);
-INSERT INTO `sys_config` VALUES (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', '2024-10-05 13:28:49', '', '2025-07-25 17:43:23', '深色主题theme-dark，浅色主题theme-light', 0);
-INSERT INTO `sys_config` VALUES (4, '账号自助-验证码开关', 'sys.account.captchaEnabled', 'true', 'Y', 'admin', '2024-10-05 13:28:49', 'admin', '2025-07-25 17:43:23', '是否开启验证码功能（true开启，false关闭）', 0);
-INSERT INTO `sys_config` VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'true', 'Y', 'admin', '2024-10-05 13:28:49', 'admin', '2025-07-25 17:43:23', '是否开启注册用户功能（true开启，false关闭）', 0);
-INSERT INTO `sys_config` VALUES (6, '用户登录-黑名单列表', 'sys.login.blackIPList', '', 'Y', 'admin', '2024-10-05 13:28:49', '', '2025-07-25 17:43:23', '设置登录IP黑名单限制，多个匹配项以;分隔，支持匹配（*通配、网段）', 0);
-
+insert into sys_config values(1, '主框架页-默认皮肤样式名称',     'sys.index.skinName',               'skin-blue',     'Y', 'admin', sysdate(), '', null, '蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow' );
+insert into sys_config values(2, '用户管理-账号初始密码',         'sys.user.initPassword',            '123456',        'Y', 'admin', sysdate(), '', null, '初始化密码 123456' );
+insert into sys_config values(3, '主框架页-侧边栏主题',           'sys.index.sideTheme',              'theme-dark',    'Y', 'admin', sysdate(), '', null, '深色主题theme-dark，浅色主题theme-light' );
+insert into sys_config values(4, '账号自助-验证码开关',           'sys.account.captchaEnabled',       'true',          'Y', 'admin', sysdate(), '', null, '是否开启验证码功能（true开启，false关闭）');
+insert into sys_config values(5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser',         'false',         'Y', 'admin', sysdate(), '', null, '是否开启注册用户功能（true开启，false关闭）');
+insert into sys_config values(6, '用户登录-黑名单列表',           'sys.login.blackIPList',            '',              'Y', 'admin', sysdate(), '', null, '设置登录IP黑名单限制，多个匹配项以;分隔，支持匹配（*通配、网段）');
+insert into sys_config values(7, '用户管理-初始密码修改策略',     'sys.account.initPasswordModify',   '1',             'Y', 'admin', sysdate(), '', null, '0：初始密码修改策略关闭，没有任何提示，1：提醒用户，如果未修改初始密码，则在登录时就会提醒修改密码对话框');
+insert into sys_config values(8, '用户管理-账号密码更新周期',     'sys.account.passwordValidateDays', '0',             'Y', 'admin', sysdate(), '', null, '密码更新周期（填写数字，数据初始化值为0不限制，若修改必须为大于0小于365的正整数），如果超过这个周期登录系统时，则在登录时就会提醒修改密码对话框');
 -- ----------------------------
 -- Table structure for sys_dept
 -- ----------------------------
@@ -846,7 +847,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1949724216748916739 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1949767159652253698 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -1085,6 +1086,8 @@ INSERT INTO `sys_logininfor` VALUES (1949639654802882562, 'admin', '127.0.0.1', 
 INSERT INTO `sys_logininfor` VALUES (1949659391263932417, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-28 10:33:16');
 INSERT INTO `sys_logininfor` VALUES (1949670916678725634, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-28 11:19:04');
 INSERT INTO `sys_logininfor` VALUES (1949724216748916738, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-28 14:50:52');
+INSERT INTO `sys_logininfor` VALUES (1949767137737015297, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-07-28 17:41:25');
+INSERT INTO `sys_logininfor` VALUES (1949767159652253697, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-28 17:41:30');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -2553,9 +2556,10 @@ CREATE TABLE `sys_user`  (
   `sex` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
   `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '头像地址',
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '密码',
-  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '账号状态（0正常 1停用）',
   `login_ip` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '最后登录IP',
   `login_date` datetime NULL DEFAULT NULL COMMENT '最后登录时间',
+  `pwd_update_date` datetime NULL DEFAULT NULL COMMENT '密码最后更新时间',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime NULL DEFAULT (now()) COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
@@ -2568,19 +2572,19 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', NULL, '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '127.0.0.1', '2025-07-28 14:50:52', 'admin', '2024-10-05 13:28:48', '', '2025-07-28 14:50:52', '管理员', 0);
-INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '127.0.0.1', '2024-10-05 13:28:48', 'admin', '2024-10-05 13:28:48', 'admin', '2024-10-06 16:03:47', '测试员', 1);
-INSERT INTO `sys_user` VALUES (100, 100, 'zhangsan', '张三', '00', '1972212424@qq.com', '15815161602', '0', '', '$2a$10$gnDVpc1oEeeHL9oMuVrRaulVsqNuT1SPeSdpqkIh7ERDD65pPmkJa', '0', '127.0.0.1', '2025-02-12 23:23:15', 'admin', '2024-10-06 00:52:44', 'admin', '2025-07-28 11:46:49', NULL, 0);
-INSERT INTO `sys_user` VALUES (102, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$nZvTWdZ1BlIHdGlwHMkGMOTKKagqC8yN9piQ.6gHtaSzCHF1Bl0A2', '0', '', NULL, 'admin', '2024-10-06 16:56:27', '', NULL, NULL, 1);
-INSERT INTO `sys_user` VALUES (103, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$iUGV11YL2hDcxSe4w9d2PuFmmV85a732C50aNHemmTN2iLkMvqJxe', '0', '', NULL, 'admin', '2024-10-06 17:46:05', '', NULL, NULL, 0);
-INSERT INTO `sys_user` VALUES (104, NULL, '202325350123', '林煜鋒', '00', '', '', '0', '', '$2a$10$8.r0rhNkc3P1PxVYnJIiqO95d5jxreXGEoifrKjVNrrjIvZRJP2Ny', '0', '127.0.0.1', '2025-02-16 23:54:49', 'admin', '2024-10-08 10:47:31', 'admin', '2025-02-16 23:54:48', NULL, 0);
-INSERT INTO `sys_user` VALUES (105, NULL, '202325350124', '张三', '00', 'admin@qq.com', '15815161606', '0', '', '$2a$10$axR.MY2O2nNR.LlDbTRvTe2tDCYMbai7AmnoQKQk.iFiSIkqBG0Su', '0', '', NULL, 'admin', '2024-10-08 11:11:09', 'admin', '2025-02-07 11:42:34', NULL, 0);
-INSERT INTO `sys_user` VALUES (106, NULL, 'wangwu', '王五', '00', '13900000000@qq.com', '13900000000', '0', '', '$2a$10$RnCSylS/jYWsZJpL7Sko3ObfRkPD2b0es7NoJwl0MELTWQ4Ps6NpC', '0', '', NULL, 'admin', '2024-10-11 11:33:43', '', NULL, NULL, 0);
-INSERT INTO `sys_user` VALUES (107, NULL, '202325350130', '张三三', '00', '', '', '0', '', '$2a$10$62ShaMC7ZrJVSzgL8Cu4bOCJjDhXaqXemRB.DX1rekKnhRTG82s6S', '0', '', NULL, 'admin', '2024-12-08 13:49:32', 'admin', '2024-12-08 16:48:01', NULL, 0);
-INSERT INTO `sys_user` VALUES (110, NULL, '202325350132', '李思思', '00', '', '', '1', '', '$2a$10$OYaA6RqXeamfmxnx4c/3wOhXy1lcvyD1LRw0p0Hm7dYlDGCw9T60S', '0', '', NULL, 'admin', '2024-12-08 16:48:19', 'admin', '2025-02-07 11:42:39', NULL, 0);
-INSERT INTO `sys_user` VALUES (111, NULL, '202325350106', '郭沫若', '00', '', '', '0', '', '$2a$10$ti9OO2HodqYbgda8sS840uPYF23SPuYMO7UE5PuNQZB3BNlqkiKm6', '0', '', NULL, 'admin', '2025-02-07 11:42:56', '', NULL, NULL, 0);
-INSERT INTO `sys_user` VALUES (112, NULL, 'wangbingbing', '王冰冰', '00', '625587563@qq.com', '13800000000', '1', '', '$2a$10$tM1IBHuKzeUw7iive1wWduhN31b4vru2h2PR0MDmBtmSP5GtckK6S', '0', '127.0.0.1', '2025-02-12 21:24:43', 'admin', '2025-02-07 13:25:42', '', '2025-02-12 21:24:42', NULL, 0);
-INSERT INTO `sys_user` VALUES (113, NULL, 'yaya', '丫丫', '00', 'yaya@163.com', '13548481602', '1', '', '$2a$10$A8DE98HFrMsw1kGQ55n6SuxWxrl7X4N57aDVS84ZmVdR7E8XfGxla', '0', '', NULL, 'admin', '2025-02-07 13:26:15', '', NULL, NULL, 0);
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', NULL, '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '127.0.0.1', '2025-07-28 17:41:30', sysdate(), 'admin', '2024-10-05 13:28:48', '', '2025-07-28 17:41:30', '管理员', 0);
+INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '127.0.0.1', '2024-10-05 13:28:48', sysdate(), 'admin', '2024-10-05 13:28:48', 'admin', '2024-10-06 16:03:47', '测试员', 1);
+INSERT INTO `sys_user` VALUES (100, 100, 'zhangsan', '张三', '00', '1972212424@qq.com', '15815161602', '0', '', '$2a$10$gnDVpc1oEeeHL9oMuVrRaulVsqNuT1SPeSdpqkIh7ERDD65pPmkJa', '0', '127.0.0.1', '2025-02-12 23:23:15', NULL, 'admin', '2024-10-06 00:52:44', 'admin', '2025-07-28 11:46:49', NULL, 0);
+INSERT INTO `sys_user` VALUES (102, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$nZvTWdZ1BlIHdGlwHMkGMOTKKagqC8yN9piQ.6gHtaSzCHF1Bl0A2', '0', '', NULL, NULL, 'admin', '2024-10-06 16:56:27', '', NULL, NULL, 1);
+INSERT INTO `sys_user` VALUES (103, NULL, 'lisi', '李四', '00', 'admin123@qq.com', '13888888888', '1', '', '$2a$10$iUGV11YL2hDcxSe4w9d2PuFmmV85a732C50aNHemmTN2iLkMvqJxe', '0', '', NULL, NULL, 'admin', '2024-10-06 17:46:05', '', NULL, NULL, 0);
+INSERT INTO `sys_user` VALUES (104, NULL, '202325350123', '林煜鋒', '00', '', '', '0', '', '$2a$10$8.r0rhNkc3P1PxVYnJIiqO95d5jxreXGEoifrKjVNrrjIvZRJP2Ny', '0', '127.0.0.1', '2025-02-16 23:54:49', NULL, 'admin', '2024-10-08 10:47:31', 'admin', '2025-02-16 23:54:48', NULL, 0);
+INSERT INTO `sys_user` VALUES (105, NULL, '202325350124', '张三', '00', 'admin@qq.com', '15815161606', '0', '', '$2a$10$axR.MY2O2nNR.LlDbTRvTe2tDCYMbai7AmnoQKQk.iFiSIkqBG0Su', '0', '', NULL, NULL, 'admin', '2024-10-08 11:11:09', 'admin', '2025-02-07 11:42:34', NULL, 0);
+INSERT INTO `sys_user` VALUES (106, NULL, 'wangwu', '王五', '00', '13900000000@qq.com', '13900000000', '0', '', '$2a$10$RnCSylS/jYWsZJpL7Sko3ObfRkPD2b0es7NoJwl0MELTWQ4Ps6NpC', '0', '', NULL, NULL, 'admin', '2024-10-11 11:33:43', '', NULL, NULL, 0);
+INSERT INTO `sys_user` VALUES (107, NULL, '202325350130', '张三三', '00', '', '', '0', '', '$2a$10$62ShaMC7ZrJVSzgL8Cu4bOCJjDhXaqXemRB.DX1rekKnhRTG82s6S', '0', '', NULL, NULL, 'admin', '2024-12-08 13:49:32', 'admin', '2024-12-08 16:48:01', NULL, 0);
+INSERT INTO `sys_user` VALUES (110, NULL, '202325350132', '李思思', '00', '', '', '1', '', '$2a$10$OYaA6RqXeamfmxnx4c/3wOhXy1lcvyD1LRw0p0Hm7dYlDGCw9T60S', '0', '', NULL, NULL, 'admin', '2024-12-08 16:48:19', 'admin', '2025-02-07 11:42:39', NULL, 0);
+INSERT INTO `sys_user` VALUES (111, NULL, '202325350106', '郭沫若', '00', '', '', '0', '', '$2a$10$ti9OO2HodqYbgda8sS840uPYF23SPuYMO7UE5PuNQZB3BNlqkiKm6', '0', '', NULL, NULL, 'admin', '2025-02-07 11:42:56', '', NULL, NULL, 0);
+INSERT INTO `sys_user` VALUES (112, NULL, 'wangbingbing', '王冰冰', '00', '625587563@qq.com', '13800000000', '1', '', '$2a$10$tM1IBHuKzeUw7iive1wWduhN31b4vru2h2PR0MDmBtmSP5GtckK6S', '0', '127.0.0.1', '2025-02-12 21:24:43', NULL, 'admin', '2025-02-07 13:25:42', '', '2025-02-12 21:24:42', NULL, 0);
+INSERT INTO `sys_user` VALUES (113, NULL, 'yaya', '丫丫', '00', 'yaya@163.com', '13548481602', '1', '', '$2a$10$A8DE98HFrMsw1kGQ55n6SuxWxrl7X4N57aDVS84ZmVdR7E8XfGxla', '0', '', NULL, NULL, 'admin', '2025-02-07 13:26:15', '', NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for sys_user_post
