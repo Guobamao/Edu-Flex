@@ -35,6 +35,11 @@ public class GenConfig {
      */
     public static String tablePrefix;
 
+    /**
+     * 是否允许生成文件覆盖到本地（自定义路径）
+     */
+    public static boolean allowOverwrite;
+
     public static String getAuthor() {
         return author;
     }
@@ -69,5 +74,14 @@ public class GenConfig {
     @Value("${tablePrefix}")
     public void setTablePrefix(String tablePrefix) {
         GenConfig.tablePrefix = tablePrefix;
+    }
+
+    public static boolean isAllowOverwrite() {
+        return allowOverwrite;
+    }
+
+    @Value("${allowOverwrite}")
+    public void setAllowOverwrite(boolean allowOverwrite) {
+        GenConfig.allowOverwrite = allowOverwrite;
     }
 }

@@ -1,5 +1,6 @@
 package com.eduflex.quartz.util;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.utils.StringUtils;
 import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.quartz.domain.SysJob;
@@ -46,7 +47,7 @@ public class JobInvokeUtil {
     private static void invokeMethod(Object bean, String methodName, List<Object[]> methodParams)
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException {
-        if (StringUtils.isNotNull(methodParams) && methodParams.size() > 0) {
+        if (StringUtils.isNotNull(methodParams) && CollUtil.isNotEmpty(methodParams)) {
             Method method = bean.getClass().getMethod(methodName, getMethodParamsType(methodParams));
             method.invoke(bean, getMethodParamsValue(methodParams));
         } else {
@@ -94,14 +95,14 @@ public class JobInvokeUtil {
      * @return method方法相关参数列表
      */
     public static List<Object[]> getMethodParams(String invokeTarget) {
-        String methodStr = StringUtils.substringBetween(invokeTarget, "(", ")");
+        String methodStr = StringUtils.substringBetweenLast(invokeTarget, "(", ")");
         if (StringUtils.isEmpty(methodStr)) {
             return null;
         }
         String[] methodParams = methodStr.split(",(?=([^\"']*[\"'][^\"']*[\"'])*[^\"']*$)");
         List<Object[]> classs = new LinkedList<>();
-        for (int i = 0; i < methodParams.length; i++) {
-            String str = StringUtils.trimToEmpty(methodParams[i]);
+        for (String methodParam : methodParams) {
+            String str = StringUtils.trimToEmpty(methodParam);
             // String字符串类型，以'或"开头
             if (StringUtils.startsWithAny(str, "'", "\"")) {
                 classs.add(new Object[]{StringUtils.substring(str, 1, str.length() - 1), String.class});

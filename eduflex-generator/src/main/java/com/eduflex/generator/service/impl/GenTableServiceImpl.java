@@ -56,6 +56,21 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     @Autowired
     private IGenTableColumnService genTableColumnService;
 
+    /**
+     * 获取代码生成地址
+     *
+     * @param table    业务表信息
+     * @param template 模板文件路径
+     * @return 生成地址
+     */
+    public static String getGenPath(GenTable table, String template) {
+        String genPath = table.getGenPath();
+        if (StringUtils.equals(genPath, "/")) {
+            return System.getProperty("user.dir") + File.separator + "src" + File.separator + VelocityUtils.getFileName(template, table);
+        }
+        return genPath + File.separator + VelocityUtils.getFileName(template, table);
+    }
+
     @Override
     public GenTable selectGenTableById(Long id) {
         GenTable genTable = selectTableByTableId(id);
@@ -113,8 +128,8 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         genTable.setOptions(options);
         int row = baseMapper.updateById(genTable);
         if (row > 0) {
-            for (GenTableColumn cenTableColumn : genTable.getColumns()) {
-                genTableColumnService.updateById(cenTableColumn);
+            for (GenTableColumn genTableColumn : genTable.getColumns()) {
+                genTableColumnService.updateById(genTableColumn);
             }
         }
     }
@@ -317,12 +332,12 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
                 throw new ServiceException("树父编码字段不能为空");
             } else if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_NAME))) {
                 throw new ServiceException("树名称字段不能为空");
-            } else if (GenConstants.TPL_SUB.equals(genTable.getTplCategory())) {
-                if (StringUtils.isEmpty(genTable.getSubTableName())) {
-                    throw new ServiceException("关联子表的表名不能为空");
-                } else if (StringUtils.isEmpty(genTable.getSubTableFkName())) {
-                    throw new ServiceException("子表关联的外键名不能为空");
-                }
+            }
+        } else if (GenConstants.TPL_SUB.equals(genTable.getTplCategory())) {
+            if (StringUtils.isEmpty(genTable.getSubTableName())) {
+                throw new ServiceException("关联子表的表名不能为空");
+            } else if (StringUtils.isEmpty(genTable.getSubTableFkName())) {
+                throw new ServiceException("子表关联的外键名不能为空");
             }
         }
     }
@@ -391,22 +406,8 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     }
 
     /**
-     * 获取代码生成地址
-     *
-     * @param table    业务表信息
-     * @param template 模板文件路径
-     * @return 生成地址
-     */
-    public static String getGenPath(GenTable table, String template) {
-        String genPath = table.getGenPath();
-        if (StringUtils.equals(genPath, "/")) {
-            return System.getProperty("user.dir") + File.separator + "src" + File.separator + VelocityUtils.getFileName(template, table);
-        }
-        return genPath + File.separator + VelocityUtils.getFileName(template, table);
-    }
-
-    /**
      * 通过表ID查询表信息
+     *
      * @param id 表ID
      * @return 表信息
      */
@@ -418,6 +419,7 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
 
     /**
      * 通过表名查询表信息
+     *
      * @param tableName 表名
      * @return 表信息
      */
@@ -432,6 +434,7 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
 
     /**
      * 生成表的列信息
+     *
      * @param table 表信息
      * @return 包含列信息的表对象
      */

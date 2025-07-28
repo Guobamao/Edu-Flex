@@ -13,6 +13,7 @@ import com.eduflex.common.core.text.Convert;
 import com.eduflex.common.enums.BusinessType;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.sql.SqlUtil;
+import com.eduflex.generator.config.GenConfig;
 import com.eduflex.generator.domain.GenTable;
 import com.eduflex.generator.domain.GenTableColumn;
 import com.eduflex.generator.service.IGenTableColumnService;
@@ -54,7 +55,7 @@ public class GenController extends BaseController {
     }
 
     /**
-     * 修改代码生成业务
+     * 获取代码生成信息
      */
     @PreAuthorize("@ss.hasPermi('tool:gen:query')")
     @GetMapping(value = "/{tableId}")
@@ -187,6 +188,9 @@ public class GenController extends BaseController {
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/genCode/{tableName}")
     public AjaxResult genCode(@PathVariable("tableName") String tableName) {
+        if (!GenConfig.isAllowOverwrite()) {
+            return AjaxResult.error("【系统预设】不允许生成文件覆盖到本地");
+        }
         genTableService.generatorCode(tableName);
         return success();
     }

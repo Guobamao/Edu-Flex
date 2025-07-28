@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="deleted"      column="deleted"     />
         <result property="loginIp"      column="login_ip"     />
         <result property="loginDate"    column="login_date"   />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
         <result property="createBy"     column="create_by"    />
         <result property="createTime"   column="create_time"  />
         <result property="updateBy"     column="update_by"    />
@@ -46,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
 	<sql id="selectUserVo">
-        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.deleted, u.login_ip, u.login_date, u.create_by, u.create_time,
+        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.deleted, u.login_ip, u.login_date, u.pwd_update_date, u.create_by, u.create_time,
         d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.status as dept_status,
         r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
         from sys_user u
@@ -128,90 +129,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectUserVo"/>
 		where u.user_id = #{userId}
 	</select>
-
-	<select id="checkUserNameUnique" parameterType="String" resultMap="SysUserResult">
-		select user_id, user_name from sys_user where user_name = #{userName} and deleted = 0 limit 1
-	</select>
-
-	<select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
-		select user_id, phonenumber from sys_user where phonenumber = #{phonenumber} and deleted = 0 limit 1
-	</select>
-
-	<select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
-		select user_id, email from sys_user where email = #{email} and deleted = 0 limit 1
-	</select>
-
-	<insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
- 		insert into sys_user(
- 			<if test="userId != null and userId != 0">user_id,</if>
- 			<if test="deptId != null and deptId != 0">dept_id,</if>
- 			<if test="userName != null and userName != ''">user_name,</if>
- 			<if test="nickName != null and nickName != ''">nick_name,</if>
- 			<if test="email != null and email != ''">email,</if>
- 			<if test="avatar != null and avatar != ''">avatar,</if>
- 			<if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
- 			<if test="sex != null">sex,</if>
- 			<if test="password != null and password != ''">password,</if>
- 			<if test="status != null">status,</if>
- 			<if test="createBy != null and createBy != ''">create_by,</if>
- 			create_time
- 		)values(
- 			<if test="userId != null and userId != ''">#{userId},</if>
- 			<if test="deptId != null and deptId != ''">#{deptId},</if>
- 			<if test="userName != null and userName != ''">#{userName},</if>
- 			<if test="nickName != null and nickName != ''">#{nickName},</if>
- 			<if test="email != null and email != ''">#{email},</if>
- 			<if test="avatar != null and avatar != ''">#{avatar},</if>
- 			<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
- 			<if test="sex != null">#{sex},</if>
- 			<if test="password != null and password != ''">#{password},</if>
- 			<if test="status != null">#{status},</if>
- 			<if test="createBy != null and createBy != ''">#{createBy},</if>
- 			sysdate()
- 		)
-	</insert>
-
-	<update id="updateUser" parameterType="SysUser">
- 		update sys_user
- 		<set>
- 			<if test="deptId != null and deptId != 0">dept_id = #{deptId},</if>
- 			<if test="userName != null and userName != ''">user_name = #{userName},</if>
- 			<if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
- 			<if test="email != null ">email = #{email},</if>
- 			<if test="phonenumber != null ">phonenumber = #{phonenumber},</if>
- 			<if test="sex != null">sex = #{sex},</if>
- 			<if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
- 			<if test="password != null and password != ''">password = #{password},</if>
- 			<if test="status != null">status = #{status},</if>
- 			<if test="loginIp != null and loginIp != ''">login_ip = #{loginIp},</if>
- 			<if test="loginDate != null">login_date = #{loginDate},</if>
- 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
- 			update_time = sysdate()
- 		</set>
- 		where user_id = #{userId}
-	</update>
-
-	<update id="updateUserStatus" parameterType="SysUser">
- 		update sys_user set status = #{status} where user_id = #{userId}
-	</update>
-
-	<update id="updateUserAvatar" parameterType="SysUser">
- 		update sys_user set avatar = #{fileId} where user_name = #{userName}
-	</update>
-
-	<update id="resetUserPwd" parameterType="SysUser">
- 		update sys_user set password = #{password} where user_name = #{userName}
-	</update>
-
-	<delete id="deleteUserById" parameterType="Long">
- 		update sys_user set deleted = 1 where user_id = #{userId}
- 	</delete>
-
- 	<delete id="deleteUserByIds" parameterType="Long">
- 		update sys_user set deleted = 1 where user_id in
- 		<foreach collection="array" item="userId" open="(" separator="," close=")">
- 			#{userId}
-        </foreach>
- 	</delete>
-
 </mapper>

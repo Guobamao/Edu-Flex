@@ -82,9 +82,9 @@ public class SysUser extends BaseEntity {
     private String password;
 
     /**
-     * 帐号状态（0正常 1停用）
+     * 账号状态（0正常 1停用）
      */
-    @Excel(name = "帐号状态", readConverterExp = "0=正常,1=停用")
+    @Excel(name = "账号状态", readConverterExp = "0=正常,1=停用")
     private Integer status;
 
     /**
@@ -98,6 +98,11 @@ public class SysUser extends BaseEntity {
      */
     @Excel(name = "最后登录时间", width = 20, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
+
+    /**
+     * 密码最后更新时间
+     */
+    private Date pwdUpdateDate;
 
     /**
      * 部门对象
@@ -133,19 +138,17 @@ public class SysUser extends BaseEntity {
     @TableField(exist = false)
     private Long roleId;
 
-    public SysUser() {
-
-    }
+    public SysUser() {}
 
     public SysUser(Long userId) {
         this.userId = userId;
     }
 
-    public boolean isAdmin() {
-        return isAdmin(this.userId);
-    }
-
     public static boolean isAdmin(Long userId) {
         return userId != null && 1L == userId;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin(this.userId);
     }
 }
