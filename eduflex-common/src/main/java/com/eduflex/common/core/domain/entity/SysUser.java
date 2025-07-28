@@ -1,6 +1,7 @@
 package com.eduflex.common.core.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.annotation.Excel.ColumnType;
@@ -30,6 +31,7 @@ public class SysUser extends BaseEntity {
     /**
      * 用户ID
      */
+    @TableId(value = "user_id")
     @Excel(name = "用户序号", type = Type.EXPORT, cellType = ColumnType.NUMERIC, prompt = "用户编号")
     private Long userId;
 
