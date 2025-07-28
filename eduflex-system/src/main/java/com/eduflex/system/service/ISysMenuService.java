@@ -1,5 +1,6 @@
 package com.eduflex.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.eduflex.common.core.domain.TreeSelect;
 import com.eduflex.common.core.domain.entity.SysMenu;
 import com.eduflex.system.domain.vo.RouterVo;
@@ -12,7 +13,7 @@ import java.util.Set;
  *
  * @author ruoyi
  */
-public interface ISysMenuService {
+public interface ISysMenuService extends IService<SysMenu> {
     /**
      * 根据用户查询系统菜单列表
      *
@@ -87,14 +88,6 @@ public interface ISysMenuService {
     List<TreeSelect> buildMenuTreeSelect(List<SysMenu> menus);
 
     /**
-     * 根据菜单ID查询信息
-     *
-     * @param menuId 菜单ID
-     * @return 菜单信息
-     */
-    SysMenu selectMenuById(Long menuId);
-
-    /**
      * 是否存在菜单子节点
      *
      * @param menuId 菜单ID
@@ -109,30 +102,6 @@ public interface ISysMenuService {
      * @return 结果 true 存在 false 不存在
      */
     boolean checkMenuExistRole(Long menuId);
-
-    /**
-     * 新增保存菜单信息
-     *
-     * @param menu 菜单信息
-     * @return 结果
-     */
-    int insertMenu(SysMenu menu);
-
-    /**
-     * 修改保存菜单信息
-     *
-     * @param menu 菜单信息
-     * @return 结果
-     */
-    int updateMenu(SysMenu menu);
-
-    /**
-     * 删除菜单管理信息
-     *
-     * @param menuId 菜单ID
-     * @return 结果
-     */
-    int deleteMenuById(Long menuId);
 
     /**
      * 校验菜单名称是否唯一

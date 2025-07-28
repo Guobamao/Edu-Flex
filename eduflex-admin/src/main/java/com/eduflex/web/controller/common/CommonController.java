@@ -92,7 +92,6 @@ public class CommonController extends BaseController {
      * @param id       文件ID
      * @param request  HttpServletRequest
      * @param response HttpServletResponse
-     * @throws IOException
      */
     @GetMapping("/preview/{id}")
     public void preview(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
