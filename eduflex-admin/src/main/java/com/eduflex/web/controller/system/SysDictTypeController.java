@@ -1,5 +1,6 @@
 package com.eduflex.web.controller.system;
 
+import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.annotation.Log;
 import com.eduflex.common.core.controller.BaseController;
 import com.eduflex.common.core.domain.AjaxResult;
@@ -41,7 +42,7 @@ public class SysDictTypeController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysDictType dictType) {
         List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
-        ExcelUtil<SysDictType> util = new ExcelUtil<SysDictType>(SysDictType.class);
+        ExcelUtil<SysDictType> util = new ExcelUtil<>(SysDictType.class);
         util.exportExcel(response, list, "字典类型");
     }
 
@@ -51,7 +52,7 @@ public class SysDictTypeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:dict:query')")
     @GetMapping(value = "/{dictId}")
     public AjaxResult getInfo(@PathVariable Long dictId) {
-        return success(dictTypeService.selectDictTypeById(dictId));
+        return success(dictTypeService.getById(dictId));
     }
 
     /**
@@ -89,7 +90,7 @@ public class SysDictTypeController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{dictIds}")
     public AjaxResult remove(@PathVariable Long[] dictIds) {
-        dictTypeService.deleteDictTypeByIds(dictIds);
+        dictTypeService.deleteDictTypeByIds(CollUtil.toList(dictIds));
         return success();
     }
 
@@ -109,7 +110,7 @@ public class SysDictTypeController extends BaseController {
      */
     @GetMapping("/optionselect")
     public AjaxResult optionselect() {
-        List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
+        List<SysDictType> dictTypes = dictTypeService.list();
         return success(dictTypes);
     }
 }
