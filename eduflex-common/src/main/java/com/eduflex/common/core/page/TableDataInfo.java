@@ -1,6 +1,7 @@
 package com.eduflex.common.core.page;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Data
+@NoArgsConstructor
 public class TableDataInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,12 +36,6 @@ public class TableDataInfo implements Serializable {
      * 消息内容
      */
     private String msg;
-
-    /**
-     * 表格数据对象
-     */
-    public TableDataInfo() {
-    }
 
     /**
      * 分页

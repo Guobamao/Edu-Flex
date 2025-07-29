@@ -6,8 +6,6 @@ import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.annotation.Excel.ColumnType;
 import com.eduflex.common.core.domain.BaseEntity;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -60,20 +58,5 @@ public class SysDictType extends BaseEntity {
     @Pattern(regexp = "^[a-z][a-z0-9_]*$", message = "字典类型必须以字母开头，且只能为（小写字母，数字，下滑线）")
     public String getDictType() {
         return dictType;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("dictId", getDictId())
-                .append("dictName", getDictName())
-                .append("dictType", getDictType())
-                .append("status", getStatus())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .append("remark", getRemark())
-                .toString();
     }
 }

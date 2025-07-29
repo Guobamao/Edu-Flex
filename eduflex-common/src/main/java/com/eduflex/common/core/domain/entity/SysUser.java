@@ -11,6 +11,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @TableName("sys_user")
@@ -137,8 +139,6 @@ public class SysUser extends BaseEntity {
      */
     @TableField(exist = false)
     private Long roleId;
-
-    public SysUser() {}
 
     public SysUser(Long userId) {
         this.userId = userId;

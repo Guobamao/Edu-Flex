@@ -6,8 +6,6 @@ import com.eduflex.common.annotation.Excel;
 import com.eduflex.common.annotation.Excel.ColumnType;
 import com.eduflex.common.core.domain.BaseEntity;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -71,21 +69,5 @@ public class SysPost extends BaseEntity {
     @NotNull(message = "显示顺序不能为空")
     public Integer getPostSort() {
         return postSort;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("postId", getPostId())
-                .append("postCode", getPostCode())
-                .append("postName", getPostName())
-                .append("postSort", getPostSort())
-                .append("status", getStatus())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .append("remark", getRemark())
-                .toString();
     }
 }

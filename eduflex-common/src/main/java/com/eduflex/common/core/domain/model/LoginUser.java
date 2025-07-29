@@ -3,6 +3,7 @@ package com.eduflex.common.core.domain.model;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.eduflex.common.core.domain.entity.SysUser;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,6 +16,7 @@ import java.util.Set;
  * @author ruoyi
  */
 @Data
+@NoArgsConstructor
 public class LoginUser implements UserDetails {
 
     private static final long serialVersionUID = 1L;
@@ -73,9 +75,6 @@ public class LoginUser implements UserDetails {
      * 用户信息
      */
     private SysUser user;
-
-    public LoginUser() {
-    }
 
     public LoginUser(SysUser user, Set<String> permissions) {
         this.user = user;

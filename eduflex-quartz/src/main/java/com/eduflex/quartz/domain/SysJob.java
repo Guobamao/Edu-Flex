@@ -9,8 +9,6 @@ import com.eduflex.common.utils.StringUtils;
 import com.eduflex.quartz.util.CronUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -127,24 +125,5 @@ public class SysJob implements Serializable {
             return CronUtils.getNextExecution(cronExpression);
         }
         return null;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("jobId", getJobId())
-                .append("jobName", getJobName())
-                .append("jobGroup", getJobGroup())
-                .append("cronExpression", getCronExpression())
-                .append("nextValidTime", getNextValidTime())
-                .append("misfirePolicy", getMisfirePolicy())
-                .append("concurrent", getConcurrent())
-                .append("status", getStatus())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .append("remark", getRemark())
-                .toString();
     }
 }

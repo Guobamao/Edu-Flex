@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.eduflex.common.core.domain.BaseEntity;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -104,24 +102,5 @@ public class SysDept extends BaseEntity {
     @Size(min = 0, max = 50, message = "邮箱长度不能超过50个字符")
     public String getEmail() {
         return email;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("deptId", getDeptId())
-                .append("parentId", getParentId())
-                .append("ancestors", getAncestors())
-                .append("deptName", getDeptName())
-                .append("orderNum", getOrderNum())
-                .append("leader", getLeader())
-                .append("phone", getPhone())
-                .append("email", getEmail())
-                .append("status", getStatus())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .toString();
     }
 }

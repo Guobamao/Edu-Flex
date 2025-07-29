@@ -6,6 +6,7 @@ import com.eduflex.common.core.domain.entity.SysMenu;
 import com.eduflex.common.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
  * @author ruoyi
  */
 @Data
+@NoArgsConstructor
 public class TreeSelect implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,9 +43,6 @@ public class TreeSelect implements Serializable {
      */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<TreeSelect> children;
-
-    public TreeSelect() {
-    }
 
     public TreeSelect(SysDept dept) {
         this.id = dept.getDeptId();

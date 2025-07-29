@@ -7,8 +7,6 @@ import com.eduflex.common.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -98,19 +96,5 @@ public class SysJobLog implements Serializable {
             params = new HashMap<>();
         }
         return params;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("jobLogId", getJobLogId())
-                .append("jobName", getJobName())
-                .append("jobGroup", getJobGroup())
-                .append("jobMessage", getJobMessage())
-                .append("status", getStatus())
-                .append("exceptionInfo", getExceptionInfo())
-                .append("startTime", getStartTime())
-                .append("stopTime", getStopTime())
-                .toString();
     }
 }

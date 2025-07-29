@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.eduflex.common.core.domain.BaseEntity;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -142,31 +140,5 @@ public class SysMenu extends BaseEntity {
     @Size(min = 0, max = 100, message = "权限标识长度不能超过100个字符")
     public String getPerms() {
         return perms;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("menuId", getMenuId())
-                .append("menuName", getMenuName())
-                .append("parentId", getParentId())
-                .append("orderNum", getOrderNum())
-                .append("path", getPath())
-                .append("component", getComponent())
-                .append("query", getQuery())
-                .append("routeName", getRouteName())
-                .append("isFrame", getIsFrame())
-                .append("IsCache", getIsCache())
-                .append("menuType", getMenuType())
-                .append("visible", getVisible())
-                .append("status ", getStatus())
-                .append("perms", getPerms())
-                .append("icon", getIcon())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .append("remark", getRemark())
-                .toString();
     }
 }
