@@ -114,12 +114,4 @@ public interface ISysDeptService extends IService<SysDept> {
      * @return 结果
      */
     int updateDept(SysDept dept);
-
-    /**
-     * 删除部门管理信息
-     *
-     * @param deptId 部门ID
-     * @return 结果
-     */
-    int deleteDeptById(Long deptId);
 }

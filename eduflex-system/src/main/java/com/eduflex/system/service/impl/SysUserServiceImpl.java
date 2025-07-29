@@ -1,6 +1,7 @@
 package com.eduflex.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -336,5 +337,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void insertUserRole(SysUserRole userRole) {
         List<SysUserRole> userRoles = List.of(userRole);
         userRoleMapper.batchUserRole(userRoles);
+    }
+
+    @Override
+    public boolean checkDeptExistUser(Long deptId) {
+        LambdaQueryWrapper<SysUser> wrapper = Wrappers.<SysUser>lambdaQuery()
+                .eq(SysUser::getDeptId, deptId);
+        return CollUtil.isNotEmpty(list(wrapper));
     }
 }

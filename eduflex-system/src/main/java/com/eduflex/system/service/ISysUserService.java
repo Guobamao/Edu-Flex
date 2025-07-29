@@ -204,4 +204,11 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userRole 用户和角色关联信息
      */
     void insertUserRole(SysUserRole userRole);
+
+    /**
+     * 查询部门是否存在用户
+     * @param deptId 部门ID
+     * @return 结果
+     */
+    boolean checkDeptExistUser(Long deptId);
 }
