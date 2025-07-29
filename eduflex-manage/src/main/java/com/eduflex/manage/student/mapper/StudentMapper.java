@@ -9,6 +9,5 @@ import com.eduflex.manage.student.domain.Student;
  * @author 林煜鋒
  * @date 2024-10-07
  */
-public interface StudentMapper extends BaseMapper<Student>
-{
+public interface StudentMapper extends BaseMapper<Student> {
 }

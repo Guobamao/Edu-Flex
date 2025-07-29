@@ -1,8 +1,9 @@
 package com.eduflex.manage.carousel.service;
 
-import java.util.List;
-import com.eduflex.manage.carousel.domain.Carousel;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.eduflex.manage.carousel.domain.Carousel;
+
+import java.util.List;
 
 /**
  * 轮播图 Service接口
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @date 2025-05-07
  */
 public interface ICarouselService extends IService<Carousel> {
+
     /**
      * 查询轮播图列表
      *
@@ -21,6 +23,7 @@ public interface ICarouselService extends IService<Carousel> {
 
     /**
      * 启用轮播图
+     *
      * @param id 轮播图ID
      * @return 结果
      */

@@ -9,6 +9,5 @@ import com.eduflex.manage.course.domain.Course;
  * @author 林煜鋒
  * @date 2024-10-10
  */
-public interface CourseMapper extends BaseMapper<Course>
-{
+public interface CourseMapper extends BaseMapper<Course> {
 }

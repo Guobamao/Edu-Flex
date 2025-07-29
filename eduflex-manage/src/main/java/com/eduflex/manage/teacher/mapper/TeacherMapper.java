@@ -9,6 +9,5 @@ import com.eduflex.manage.teacher.domain.Teacher;
  * @author 林煜鋒
  * @date 2024-10-05
  */
-public interface TeacherMapper extends BaseMapper<Teacher>
-{
+public interface TeacherMapper extends BaseMapper<Teacher> {
 }

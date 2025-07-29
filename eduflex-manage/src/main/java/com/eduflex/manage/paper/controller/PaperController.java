@@ -31,8 +31,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/paper")
-public class PaperController extends BaseController
-{
+public class PaperController extends BaseController {
+
     @Autowired
     private IPaperService paperService;
 
@@ -47,8 +47,7 @@ public class PaperController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(Paper paper)
-    {
+    public TableDataInfo list(Paper paper) {
         startPage();
         PageInfo<Paper> pageInfo = new PageInfo<>(paperService.selectExamPaperList(paper));
         List<PaperVo> list = paperService.buildVo(pageInfo.getList());
@@ -61,8 +60,7 @@ public class PaperController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Paper paper)
-    {
+    public void export(HttpServletResponse response, Paper paper) {
         List<PaperVo> list = paperService.buildVo(paperService.selectExamPaperList(paper));
         ExcelUtil<PaperVo> util = new ExcelUtil<>(PaperVo.class);
         util.exportExcel(response, list, "试卷管理数据");
@@ -73,8 +71,7 @@ public class PaperController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(paperService.getById(id));
     }
 
@@ -84,8 +81,7 @@ public class PaperController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Paper paper)
-    {
+    public AjaxResult add(@RequestBody Paper paper) {
         return toAjax(paperService.save(paper));
     }
 
@@ -95,8 +91,7 @@ public class PaperController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Paper paper)
-    {
+    public AjaxResult edit(@RequestBody Paper paper) {
         return toAjax(paperService.updateById(paper));
     }
 
@@ -105,9 +100,8 @@ public class PaperController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(paperService.removeByIds(idList));
     }
@@ -115,8 +109,7 @@ public class PaperController extends BaseController
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷题目管理", businessType = BusinessType.INSERT)
     @PostMapping("/question")
-    public AjaxResult addQuestion(@RequestBody List<PaperQuestion> questionList)
-    {
+    public AjaxResult addQuestion(@RequestBody List<PaperQuestion> questionList) {
         return toAjax(paperQuestionService.saveOrUpdateBatch(questionList));
     }
 

@@ -32,8 +32,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/course")
-public class CourseController extends BaseController
-{
+public class CourseController extends BaseController {
+
     @Autowired
     private ICourseService courseService;
 
@@ -42,8 +42,7 @@ public class CourseController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(Course course)
-    {
+    public TableDataInfo list(Course course) {
         // 获取当前登录用户信息
         LoginUser loginUser = SecurityUtils.getLoginUser();
         // 获取当前登录用户对象
@@ -67,8 +66,7 @@ public class CourseController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Course course)
-    {
+    public void export(HttpServletResponse response, Course course) {
         List<CourseVo> list = courseService.buildVo(courseService.selectCourseList(course));
         ExcelUtil<CourseVo> util = new ExcelUtil<>(CourseVo.class);
         util.exportExcel(response, list, "课程管理数据");
@@ -79,8 +77,7 @@ public class CourseController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(courseService.getById(id));
     }
 
@@ -89,6 +86,7 @@ public class CourseController extends BaseController
     public AjaxResult getInfoByIds(@RequestBody List<Long> ids) {
         return success(courseService.selectCourseListByIds(ids));
     }
+
     /**
      * 新增课程管理
      */
@@ -116,9 +114,8 @@ public class CourseController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "课程管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         ArrayList<Long> idList = CollUtil.toList(ids);
         return toAjax(courseService.removeByIds(idList));
     }

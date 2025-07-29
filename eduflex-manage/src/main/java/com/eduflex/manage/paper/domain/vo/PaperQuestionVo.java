@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class PaperQuestionVo extends Question {
+
     private Integer orderNum;
     private Integer score;
 }

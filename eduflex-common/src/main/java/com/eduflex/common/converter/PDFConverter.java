@@ -22,6 +22,7 @@ import java.util.List;
 
 @Component
 public class PDFConverter {
+
     private static final Logger log = LoggerFactory.getLogger(PDFConverter.class);
 
     public static ByteArrayOutputStream convertTxtToPDF(String filePath) {
@@ -49,6 +50,7 @@ public class PDFConverter {
 
     /**
      * Word转换为PDF
+     *
      * @param filePath 文件路径
      * @return
      */
@@ -69,6 +71,7 @@ public class PDFConverter {
 
     /**
      * Excel转换为PDF
+     *
      * @param filePath 文件路径
      * @return
      */
@@ -87,6 +90,7 @@ public class PDFConverter {
 
     /**
      * PPT转换为PDF
+     *
      * @param filePath 文件路径
      * @return
      */
@@ -104,10 +108,10 @@ public class PDFConverter {
     public static List<byte[]> convertPDFToImages(ByteArrayOutputStream baos) {
         List<byte[]> imageList = new ArrayList<>();
         byte[] byteArray = baos.toByteArray();
-        try (PDDocument document = Loader.loadPDF(byteArray)){
+        try (PDDocument document = Loader.loadPDF(byteArray)) {
             int dpi = 300;
             PDFRenderer pdfRenderer = new PDFRenderer(document);
-            for (int page = 0; page < document.getNumberOfPages(); page ++) {
+            for (int page = 0; page < document.getNumberOfPages(); page++) {
                 float scale = dpi / 72f;
                 BufferedImage bufferedImage = pdfRenderer.renderImage(page, scale);
                 ByteArrayOutputStream imageBaos = new ByteArrayOutputStream();
@@ -123,10 +127,10 @@ public class PDFConverter {
 
     public static List<byte[]> convertPDFToImages(String filePath) {
         List<byte[]> imageList = new ArrayList<>();
-        try (PDDocument document = Loader.loadPDF(new File(filePath))){
+        try (PDDocument document = Loader.loadPDF(new File(filePath))) {
             int dpi = 300;
             PDFRenderer pdfRenderer = new PDFRenderer(document);
-            for (int page = 0; page < document.getNumberOfPages(); page ++) {
+            for (int page = 0; page < document.getNumberOfPages(); page++) {
                 float scale = dpi / 72f;
                 BufferedImage bufferedImage = pdfRenderer.renderImage(page, scale);
                 ByteArrayOutputStream imageBaos = new ByteArrayOutputStream();

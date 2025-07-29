@@ -8,6 +8,7 @@ import com.eduflex.common.core.domain.model.RegisterBody;
 import com.eduflex.common.core.redis.RedisCache;
 import com.eduflex.common.exception.user.CaptchaException;
 import com.eduflex.common.exception.user.CaptchaExpireException;
+import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.MessageUtils;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.StringUtils;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SysRegisterService {
+
     @Autowired
     private ISysUserService userService;
 
@@ -45,7 +47,7 @@ public class SysRegisterService {
         // 验证码开关
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         if (captchaEnabled) {
-            validateCaptcha(username, registerBody.getCode(), registerBody.getUuid());
+            validateCaptcha(registerBody.getCode(), registerBody.getUuid());
         }
 
         if (StringUtils.isEmpty(username)) {
@@ -62,6 +64,7 @@ public class SysRegisterService {
             msg = "保存用户'" + username + "'失败，注册账号已存在";
         } else {
             sysUser.setNickName(username);
+            sysUser.setPwdUpdateDate(DateUtils.getNowDate());
             sysUser.setPassword(SecurityUtils.encryptPassword(password));
             boolean regFlag = userService.registerUser(sysUser);
             if (!regFlag) {
@@ -76,12 +79,10 @@ public class SysRegisterService {
     /**
      * 校验验证码
      *
-     * @param username 用户名
-     * @param code     验证码
-     * @param uuid     唯一标识
-     * @return 结果
+     * @param code 验证码
+     * @param uuid 唯一标识
      */
-    public void validateCaptcha(String username, String code, String uuid) {
+    public void validateCaptcha(String code, String uuid) {
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
         String captcha = redisCache.getCacheObject(verifyKey);
         redisCache.deleteObject(verifyKey);

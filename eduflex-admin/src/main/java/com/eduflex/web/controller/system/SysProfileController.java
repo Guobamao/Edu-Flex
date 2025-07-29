@@ -6,12 +6,15 @@ import com.eduflex.common.core.domain.AjaxResult;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.core.domain.model.LoginUser;
 import com.eduflex.common.enums.BusinessType;
+import com.eduflex.common.utils.DateUtils;
 import com.eduflex.common.utils.SecurityUtils;
 import com.eduflex.common.utils.StringUtils;
 import com.eduflex.framework.web.service.TokenService;
 import com.eduflex.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * 个人信息 业务处理
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController {
+
     @Autowired
     private ISysUserService userService;
 
@@ -71,7 +75,9 @@ public class SysProfileController extends BaseController {
      */
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
-    public AjaxResult updatePwd(String oldPassword, String newPassword) {
+    public AjaxResult updatePwd(@RequestBody Map<String, String> params) {
+        String oldPassword = params.get("oldPassword");
+        String newPassword = params.get("newPassword");
         LoginUser loginUser = getLoginUser();
         String userName = loginUser.getUsername();
         String password = loginUser.getPassword();
@@ -83,7 +89,8 @@ public class SysProfileController extends BaseController {
         }
         newPassword = SecurityUtils.encryptPassword(newPassword);
         if (userService.resetUserPwd(userName, newPassword) > 0) {
-            // 更新缓存用户密码
+            // 更新缓存用户密码&密码最后更新时间
+            loginUser.getUser().setPwdUpdateDate(DateUtils.getNowDate());
             loginUser.getUser().setPassword(newPassword);
             tokenService.setLoginUser(loginUser);
             return success();
@@ -96,7 +103,7 @@ public class SysProfileController extends BaseController {
      */
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PutMapping("/avatar")
-    public AjaxResult avatar(@RequestParam Long fileId) throws Exception {
+    public AjaxResult avatar(@RequestParam Long fileId) {
         LoginUser loginUser = getLoginUser();
         if (userService.updateUserAvatar(loginUser.getUsername(), fileId)) {
             // 更新缓存用户头像

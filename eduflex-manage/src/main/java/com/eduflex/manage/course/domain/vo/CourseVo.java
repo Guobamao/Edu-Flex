@@ -6,10 +6,12 @@ import lombok.Data;
 
 /**
  * 课程管理视图对象
+ *
  * @author Administrator
  */
 @Data
 public class CourseVo extends Course {
+
     @Excel(name = "教师名称")
     private String teacherName;
     @Excel(name = "课程方向")

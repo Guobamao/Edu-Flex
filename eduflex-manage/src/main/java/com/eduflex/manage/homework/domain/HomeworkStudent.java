@@ -24,21 +24,29 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_homework_student")
-public class HomeworkStudent extends BaseEntity
-{
+public class HomeworkStudent extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
-    /** 学生作业ID */
+    /**
+     * 学生作业ID
+     */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    /** 用户ID */
+    /**
+     * 用户ID
+     */
     private Long userId;
 
-    /** 作业ID */
+    /**
+     * 作业ID
+     */
     private Long homeworkId;
 
-    /** 提交时间 */
+    /**
+     * 提交时间
+     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "提交时间", width = 20, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date submitTime;

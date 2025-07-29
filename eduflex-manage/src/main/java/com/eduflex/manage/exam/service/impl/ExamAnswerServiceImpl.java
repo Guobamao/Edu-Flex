@@ -3,16 +3,15 @@ package com.eduflex.manage.exam.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import java.util.List;
-
+import com.eduflex.manage.exam.domain.ExamAnswer;
 import com.eduflex.manage.exam.domain.ExamRecord;
+import com.eduflex.manage.exam.mapper.ExamAnswerMapper;
+import com.eduflex.manage.exam.service.IExamAnswerService;
 import com.eduflex.manage.exam.service.IExamRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.eduflex.manage.exam.mapper.ExamAnswerMapper;
-import com.eduflex.manage.exam.domain.ExamAnswer;
-import com.eduflex.manage.exam.service.IExamAnswerService;
+
+import java.util.List;
 
 /**
  * 考试答案记录Service业务层处理

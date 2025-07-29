@@ -7,6 +7,7 @@ import java.util.Date;
 
 /**
  * 用户端 - 课程评价 Vo对象
+ *
  * @author 林煜鋒
  */
 @Data

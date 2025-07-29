@@ -25,8 +25,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/manage/direction")
-public class DirectionController extends BaseController
-{
+public class DirectionController extends BaseController {
+
     @Autowired
     private IDirectionService directionService;
 
@@ -35,8 +35,7 @@ public class DirectionController extends BaseController
      */
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/list")
-    public TableDataInfo list(Direction direction)
-    {
+    public TableDataInfo list(Direction direction) {
         startPage();
         List<Direction> list = directionService.selectDirectionList(direction);
         return getDataTable(list);
@@ -48,8 +47,7 @@ public class DirectionController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程方向", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Direction direction)
-    {
+    public void export(HttpServletResponse response, Direction direction) {
         List<Direction> list = directionService.selectDirectionList(direction);
         ExcelUtil<Direction> util = new ExcelUtil<>(Direction.class);
         util.exportExcel(response, list, "课程方向数据");
@@ -60,8 +58,7 @@ public class DirectionController extends BaseController
      */
     @PreAuthorize("@ss.hasRole('admin')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(directionService.getById(id));
     }
 
@@ -71,8 +68,7 @@ public class DirectionController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程方向", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Direction direction)
-    {
+    public AjaxResult add(@RequestBody Direction direction) {
         direction.setCreateBy(getUsername());
         direction.setCreateTime(DateUtils.getNowDate());
         return toAjax(directionService.save(direction));
@@ -84,8 +80,7 @@ public class DirectionController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程方向", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Direction direction)
-    {
+    public AjaxResult edit(@RequestBody Direction direction) {
         direction.setUpdateBy(getUsername());
         direction.setUpdateTime(DateUtils.getNowDate());
         return toAjax(directionService.updateById(direction));
@@ -96,9 +91,8 @@ public class DirectionController extends BaseController
      */
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程方向", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(directionService.removeDirection(idList));
     }

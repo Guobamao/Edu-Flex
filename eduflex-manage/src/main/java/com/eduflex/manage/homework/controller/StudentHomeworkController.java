@@ -49,8 +49,7 @@ public class StudentHomeworkController extends BaseController {
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "批阅作业", businessType = BusinessType.UPDATE)
     @PutMapping("/check")
-    public AjaxResult check(@RequestBody HomeworkStudent homeworkStudent)
-    {
+    public AjaxResult check(@RequestBody HomeworkStudent homeworkStudent) {
         homeworkStudent.setUpdateBy(getUsername());
         return toAjax(homeworkStudentService.checkHomework(homeworkStudent));
     }
@@ -61,8 +60,7 @@ public class StudentHomeworkController extends BaseController {
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "学生作业管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, HomeworkDto homeworkDto)
-    {
+    public void export(HttpServletResponse response, HomeworkDto homeworkDto) {
         List<HomeworkStudentVo> list = homeworkStudentService.buildVo(homeworkStudentService.selectHomeworkStudentList(homeworkDto));
         ExcelUtil<HomeworkStudentVo> util = new ExcelUtil<HomeworkStudentVo>(HomeworkStudentVo.class);
         util.exportExcel(response, list, "学生作业数据");

@@ -29,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/manage/student_course")
 public class StudentCourseController extends BaseController {
+
     @Autowired
     private IStudentCourseService studentCourseService;
 

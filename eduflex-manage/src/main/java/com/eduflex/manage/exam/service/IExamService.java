@@ -13,6 +13,7 @@ import java.util.List;
  * @date 2025-02-11
  */
 public interface IExamService extends IService<Exam> {
+
     /**
      * 查询考试管理列表
      *
@@ -23,6 +24,7 @@ public interface IExamService extends IService<Exam> {
 
     /**
      * 构建考试集合Vo对象
+     *
      * @param examList 考试集合
      * @return 考试集合Vo对象
      */

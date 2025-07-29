@@ -11,6 +11,7 @@ import java.util.List;
 public interface ISearchService extends IService<Search> {
     /**
      * 查询搜索列表
+     *
      * @return 搜索列表
      */
     List<String> selectSearchList();

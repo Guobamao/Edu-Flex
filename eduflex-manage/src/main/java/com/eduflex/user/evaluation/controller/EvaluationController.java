@@ -25,6 +25,7 @@ public class EvaluationController extends BaseController {
 
     /**
      * 课程评价列表 - 用户端
+     *
      * @param evaluation 查询条件
      * @return 课程评价列表
      */
@@ -38,6 +39,7 @@ public class EvaluationController extends BaseController {
 
     /**
      * 用户新增课程评价
+     *
      * @param evaluation 课程评价信息
      * @return 结果
      */

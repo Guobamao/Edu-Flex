@@ -28,6 +28,7 @@ import java.util.List;
  */
 @Service
 public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, CourseChapter> implements ICourseChapterService {
+
     @Autowired
     private ICourseMaterialService courseMaterialService;
 

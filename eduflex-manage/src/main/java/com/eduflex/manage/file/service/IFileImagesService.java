@@ -23,6 +23,7 @@ public interface IFileImagesService extends IService<FileImages> {
 
     /**
      * 生成图片
+     *
      * @param fileId 文件ID
      */
     void generateFileImages(Long fileId);

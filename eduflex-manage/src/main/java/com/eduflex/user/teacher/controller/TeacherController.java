@@ -24,6 +24,7 @@ public class TeacherController extends BaseController {
 
     /**
      * 获取教师详细信息
+     *
      * @param id 教师用户ID
      * @return 教师详细信息
      */

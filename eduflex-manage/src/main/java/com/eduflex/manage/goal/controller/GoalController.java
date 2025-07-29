@@ -27,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/manage/goal")
 public class GoalController extends BaseController {
+
     @Autowired
     private IGoalService goalService;
 

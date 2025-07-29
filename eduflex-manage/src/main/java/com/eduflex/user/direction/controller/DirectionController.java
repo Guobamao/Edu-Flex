@@ -27,6 +27,7 @@ public class DirectionController extends BaseController {
 
     /**
      * 获取课程方向列表
+     *
      * @param direction 查询条件
      * @return 课程方向列表
      */

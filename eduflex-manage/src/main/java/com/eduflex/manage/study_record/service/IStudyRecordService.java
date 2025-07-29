@@ -25,6 +25,7 @@ public interface IStudyRecordService extends IService<StudyRecord> {
 
     /**
      * 根据id查询学习记录管理
+     *
      * @param id 记录ID
      * @return 结果
      */
@@ -32,6 +33,7 @@ public interface IStudyRecordService extends IService<StudyRecord> {
 
     /**
      * 保存学习记录
+     *
      * @param studyRecordDto 查询条件
      * @return 结果
      */
@@ -39,6 +41,7 @@ public interface IStudyRecordService extends IService<StudyRecord> {
 
     /**
      * 管理端 - 构建学习记录Vo集合
+     *
      * @param studyRecordList 学习记录集合
      * @return 学习记录Vo集合
      */

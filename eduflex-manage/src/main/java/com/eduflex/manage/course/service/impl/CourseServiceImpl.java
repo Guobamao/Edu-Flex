@@ -51,6 +51,7 @@ import static com.eduflex.common.utils.SecurityUtils.getUserId;
  */
 @Service
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements ICourseService {
+
     @Autowired
     private ICategoryService categoryService;
 
@@ -89,7 +90,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private IRepoService repoService;
-
 
     /**
      * 查询课程管理列表

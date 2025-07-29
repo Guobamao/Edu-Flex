@@ -3,9 +3,9 @@ ruoyi:
   # 名称
   name: RuoYi
   # 版本
-  version: 3.8.8
+  version: 3.9.0
   # 版权年份
-  copyrightYear: 2024
+  copyrightYear: 2025
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
   profile: D:/ruoyi/uploadPath
   # 获取ip地址开关
@@ -72,9 +72,9 @@ spring:
     # 端口，默认为6379
     port: 6379
     # 数据库索引
-    database: 0
+    database: 1
     # 密码
-    password: 617854
+    password:
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -103,8 +103,6 @@ mybatis-plus:
   typeAliasesPackage: com.eduflex.**.domain
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapperLocations: classpath*:mapper/**/*Mapper.xml
-  # 加载全局的配置文件
-#  configLocation: classpath:mybatis/mybatis-config.xml
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: true

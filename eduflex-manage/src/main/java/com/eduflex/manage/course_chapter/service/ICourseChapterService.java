@@ -13,8 +13,8 @@ import java.util.List;
  * @author 林煜鋒
  * @date 2024-10-14
  */
-public interface ICourseChapterService extends IService<CourseChapter>
-{
+public interface ICourseChapterService extends IService<CourseChapter> {
+
     /**
      * 查询课程内容章节管理列表
      *
@@ -33,6 +33,7 @@ public interface ICourseChapterService extends IService<CourseChapter>
 
     /**
      * 查询课程章节列表 - 带进度
+     *
      * @param courseChapter 查询条件
      * @return 课程章节列表
      */
@@ -40,6 +41,7 @@ public interface ICourseChapterService extends IService<CourseChapter>
 
     /**
      * 新增课程章节信息
+     *
      * @param courseChapter 课程章节信息
      * @return 结果
      */

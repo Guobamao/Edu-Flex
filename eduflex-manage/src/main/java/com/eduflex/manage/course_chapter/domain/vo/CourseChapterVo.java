@@ -5,11 +5,13 @@ import org.apache.ibatis.type.Alias;
 
 /**
  * 管理端 - 课程章节视图Vo对象
+ *
  * @author 林煜鋒
  */
 @Data
 @Alias("AdminCourseChapterVo")
 public class CourseChapterVo {
+
     // 章节ID
     private Long id;
     // 章节名称

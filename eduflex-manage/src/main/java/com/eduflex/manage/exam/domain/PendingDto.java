@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class PendingDto {
+
     // 考试记录ID
     private Long recordId;
     // 题目ID

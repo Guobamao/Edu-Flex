@@ -8,6 +8,12 @@ import java.io.InputStreamReader;
  */
 public class MediaUtil {
 
+    /**
+     * 获取媒体文件的时长
+     *
+     * @param filePath 媒体文件的路径
+     * @return 媒体文件的时长（单位：秒）
+     */
     public static Integer getMediaDuration(String filePath) {
         try {
             // 构建 FFmpeg 命令来获取媒体文件的时长
@@ -32,6 +38,12 @@ public class MediaUtil {
         return 0;
     }
 
+    /**
+     * 解析 FFmpeg 输出的Duration格式
+     *
+     * @param duration FFmpeg 输出的持续时间字符串
+     * @return 持续时间（单位：秒）
+     */
     private static Integer parseDuration(String duration) {
         String[] timeParts = duration.split(":");
         int hours = Integer.parseInt(timeParts[0]);

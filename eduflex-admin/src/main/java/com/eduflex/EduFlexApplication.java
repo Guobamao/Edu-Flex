@@ -8,16 +8,14 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 启动程序
- * 
+ *
  * @author ruoyi
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableFileStorage
 @EnableAsync
-public class EduFlexApplication
-{
-    public static void main(String[] args)
-    {
+public class EduFlexApplication {
+    public static void main(String[] args) {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(EduFlexApplication.class, args);
         System.out.println("(♥◠‿◠)ﾉﾞ  若依启动成功   ლ(´ڡ`ლ)ﾞ  \n" +

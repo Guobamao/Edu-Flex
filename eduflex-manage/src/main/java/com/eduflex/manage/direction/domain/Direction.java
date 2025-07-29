@@ -3,12 +3,12 @@ package com.eduflex.manage.direction.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.eduflex.common.annotation.Excel;
+import com.eduflex.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.eduflex.common.annotation.Excel;
-import com.eduflex.common.core.domain.BaseEntity;
 
 /**
  * 课程方向对象 tb_direction
@@ -23,6 +23,7 @@ import com.eduflex.common.core.domain.BaseEntity;
 @AllArgsConstructor
 @TableName("tb_direction")
 public class Direction extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
     /**

@@ -9,6 +9,5 @@ import com.eduflex.manage.homework.domain.HomeworkStudent;
  * @author 林煜鋒
  * @date 2025-02-18
  */
-public interface HomeworkStudentMapper extends BaseMapper<HomeworkStudent>
-{
+public interface HomeworkStudentMapper extends BaseMapper<HomeworkStudent> {
 }

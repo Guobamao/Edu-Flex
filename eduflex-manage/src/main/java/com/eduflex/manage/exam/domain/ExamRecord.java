@@ -16,6 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("tb_exam_record")
 public class ExamRecord extends BaseEntity {
+
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     private Long examId;

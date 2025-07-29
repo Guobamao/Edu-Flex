@@ -24,6 +24,7 @@ public interface ICategoryService extends IService<Category> {
 
     /**
      * 根据方向ID查询课程分类列表
+     *
      * @param directionId 课程方向ID
      * @return 结果
      */
@@ -31,6 +32,7 @@ public interface ICategoryService extends IService<Category> {
 
     /**
      * 构建课程分类Vo集合
+     *
      * @param categoryList 课程分类集合
      * @return 课程分类Vo集合
      */
@@ -38,6 +40,7 @@ public interface ICategoryService extends IService<Category> {
 
     /**
      * 删除课程分类
+     *
      * @param categoryId 课程分类ID
      * @return 结果
      */

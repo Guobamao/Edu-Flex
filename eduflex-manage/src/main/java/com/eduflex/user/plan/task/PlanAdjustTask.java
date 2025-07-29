@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 学习计划调整任务
+ *
  * @author 林煜鋒
  */
 @Component("planAdjustTask")

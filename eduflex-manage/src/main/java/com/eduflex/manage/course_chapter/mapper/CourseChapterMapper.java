@@ -10,6 +10,5 @@ import com.eduflex.manage.course_chapter.domain.CourseChapter;
  * @author 林煜鋒
  * @date 2024-10-14
  */
-public interface CourseChapterMapper extends BaseMapper<CourseChapter>
-{
+public interface CourseChapterMapper extends BaseMapper<CourseChapter> {
 }

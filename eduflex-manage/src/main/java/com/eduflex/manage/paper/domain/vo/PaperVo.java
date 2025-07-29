@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class PaperVo extends Paper {
+
     @Excel(name = "课程名称", sort = 1)
     private String courseName;
 }

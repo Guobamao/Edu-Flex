@@ -13,6 +13,7 @@ import java.util.List;
  * @date 2025-01-24
  */
 public interface IGoalService extends IService<Goal> {
+
     /**
      * 查询学习目标管理列表
      *
@@ -23,6 +24,7 @@ public interface IGoalService extends IService<Goal> {
 
     /**
      * 删除学习目标
+     *
      * @param id 学习目标id
      * @return 结果
      */
@@ -30,6 +32,7 @@ public interface IGoalService extends IService<Goal> {
 
     /**
      * 构建学习目标集合Vo对象
+     *
      * @param list 学习目标集合
      * @return 学习目标集合Vo对象集合
      */

@@ -26,6 +26,7 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("tb_goal")
 public class Goal extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
     /**

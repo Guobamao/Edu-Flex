@@ -33,6 +33,7 @@ public interface IQuestionService extends IService<Question> {
 
     /**
      * 构建题目集合Vo对象
+     *
      * @param questionList 题目集合
      * @return 题目集合Vo对象
      */
@@ -40,6 +41,7 @@ public interface IQuestionService extends IService<Question> {
 
     /**
      * 构建导出Vo对象
+     *
      * @param questions 题目集合
      * @return 题目集合Vo对象
      */
@@ -47,9 +49,10 @@ public interface IQuestionService extends IService<Question> {
 
     /**
      * 导入题目数据
+     *
      * @param questionList 导入题目数据集合
-     * @param repoId 关联题库ID
-     * @param operName 操作人员
+     * @param repoId       关联题库ID
+     * @param operName     操作人员
      * @return 结果
      */
     String importData(List<QuestionExportAndImportVo> questionList, Long repoId, String operName);

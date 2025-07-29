@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TableName("tb_exam_answer")
 public class ExamAnswer {
+
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     private Long recordId;

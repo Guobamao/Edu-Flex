@@ -1,76 +1,43 @@
 package com.eduflex.system.service.impl;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.system.domain.SysOperLog;
 import com.eduflex.system.mapper.SysOperLogMapper;
 import com.eduflex.system.service.ISysOperLogService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 操作日志 服务层处理
- * 
+ *
  * @author ruoyi
  */
 @Service
-public class SysOperLogServiceImpl implements ISysOperLogService
-{
-    @Autowired
-    private SysOperLogMapper operLogMapper;
+public class SysOperLogServiceImpl extends ServiceImpl<SysOperLogMapper, SysOperLog> implements ISysOperLogService {
 
-    /**
-     * 新增操作日志
-     * 
-     * @param operLog 操作日志对象
-     */
     @Override
-    public void insertOperlog(SysOperLog operLog)
-    {
-        operLogMapper.insertOperlog(operLog);
+    public List<SysOperLog> selectOperLogList(SysOperLog operLog) {
+        LambdaQueryWrapper<SysOperLog> wrapper = Wrappers.<SysOperLog>lambdaQuery()
+                .like(StrUtil.isNotBlank(operLog.getOperIp()), SysOperLog::getOperIp, operLog.getOperIp())
+                .like(StrUtil.isNotBlank(operLog.getTitle()), SysOperLog::getTitle, operLog.getTitle())
+                .eq(operLog.getBusinessType() != null, SysOperLog::getBusinessType, operLog.getBusinessType())
+                .in(CollUtil.isNotEmpty(operLog.getBusinessTypes()), SysOperLog::getBusinessType, operLog.getBusinessTypes())
+                .eq(operLog.getStatus() != null, SysOperLog::getStatus, operLog.getStatus())
+                .like(StrUtil.isNotBlank(operLog.getOperName()), SysOperLog::getOperName, operLog.getOperName())
+                .between(ObjectUtil.isAllNotEmpty(operLog.getParams().get("beginTime"), operLog.getParams().get("endTime")),
+                        SysOperLog::getOperTime, operLog.getParams().get("beginTime"), operLog.getParams().get("endTime"))
+                .orderByDesc(SysOperLog::getOperTime);
+        return list(wrapper);
     }
 
-    /**
-     * 查询系统操作日志集合
-     * 
-     * @param operLog 操作日志对象
-     * @return 操作日志集合
-     */
     @Override
-    public List<SysOperLog> selectOperLogList(SysOperLog operLog)
-    {
-        return operLogMapper.selectOperLogList(operLog);
-    }
-
-    /**
-     * 批量删除系统操作日志
-     * 
-     * @param operIds 需要删除的操作日志ID
-     * @return 结果
-     */
-    @Override
-    public int deleteOperLogByIds(Long[] operIds)
-    {
-        return operLogMapper.deleteOperLogByIds(operIds);
-    }
-
-    /**
-     * 查询操作日志详细
-     * 
-     * @param operId 操作ID
-     * @return 操作日志对象
-     */
-    @Override
-    public SysOperLog selectOperLogById(Long operId)
-    {
-        return operLogMapper.selectOperLogById(operId);
-    }
-
-    /**
-     * 清空操作日志
-     */
-    @Override
-    public void cleanOperLog()
-    {
-        operLogMapper.cleanOperLog();
+    public void cleanOperLog() {
+        baseMapper.cleanOperLog();
     }
 }

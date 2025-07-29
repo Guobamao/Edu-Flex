@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("tb_oss_file")
-@ApiModel(value="OssFile对象", description="文件管理表")
+@ApiModel(value = "OssFile对象", description = "文件管理表")
 public class OssFile extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -58,7 +58,9 @@ public class OssFile extends BaseEntity {
     @Excel(name = "文件类型", sort = 7, dictType = "material_type", comboReadDict = true)
     private Integer fileType;
 
-    /** 音视频时长 */
+    /**
+     * 音视频时长
+     */
     @Excel(name = "音视频时长", sort = 8, suffix = "秒")
     private Integer duration;
 
