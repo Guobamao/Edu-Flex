@@ -14,7 +14,6 @@ import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.direction.service.IDirectionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

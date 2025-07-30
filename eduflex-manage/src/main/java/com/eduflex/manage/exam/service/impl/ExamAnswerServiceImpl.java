@@ -9,7 +9,6 @@ import com.eduflex.manage.exam.domain.ExamRecord;
 import com.eduflex.manage.exam.mapper.ExamAnswerMapper;
 import com.eduflex.manage.exam.service.IExamAnswerService;
 import com.eduflex.manage.exam.service.IExamRecordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

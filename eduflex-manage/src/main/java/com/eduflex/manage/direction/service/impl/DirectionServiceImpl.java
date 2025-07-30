@@ -10,7 +10,6 @@ import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.direction.domain.Direction;
 import com.eduflex.manage.direction.mapper.DirectionMapper;
 import com.eduflex.manage.direction.service.IDirectionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

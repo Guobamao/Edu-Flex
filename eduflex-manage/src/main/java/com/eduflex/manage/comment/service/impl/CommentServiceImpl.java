@@ -12,7 +12,6 @@ import com.eduflex.manage.comment.service.ICommentService;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.comment.domain.vo.UserCommentVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

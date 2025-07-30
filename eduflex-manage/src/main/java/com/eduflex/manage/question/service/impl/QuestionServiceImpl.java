@@ -16,7 +16,6 @@ import com.eduflex.manage.question.domain.vo.QuestionVo;
 import com.eduflex.manage.question.mapper.QuestionMapper;
 import com.eduflex.manage.question.service.IQuestionService;
 import com.eduflex.manage.repo.service.IRepoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

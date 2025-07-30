@@ -21,9 +21,7 @@ import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.course_chapter.domain.CourseChapterVo;
 import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
 import com.eduflex.user.study_record.domain.dto.StudyRecordDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

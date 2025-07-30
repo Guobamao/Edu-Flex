@@ -34,7 +34,6 @@ import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.search.domain.Search;
 import com.eduflex.user.search.service.ISearchService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -9,7 +9,6 @@ import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.file.domain.OssFile;
 import com.eduflex.manage.file.mapper.OssFileMapper;
 import com.eduflex.manage.file.service.IOssFileService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
