@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.comment.domain.Comment;
 import com.eduflex.manage.comment.domain.vo.CommentVo;
 import com.eduflex.manage.comment.mapper.CommentMapper;
@@ -26,12 +27,6 @@ import java.util.List;
 @Service
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements ICommentService {
 
-    @Autowired
-    private ICourseService courseService;
-
-    @Autowired
-    private ISysUserService sysUserService;
-
     @Override
     public List<Comment> selectCommentsList(Comment comment) {
         LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<Comment>()
@@ -44,6 +39,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public List<CommentVo> buildVo(List<Comment> commentList) {
+        ICourseService courseService = SpringUtils.getBean(ICourseService.class);
+        ISysUserService userService = SpringUtils.getBean(ISysUserService.class);
+
         List<CommentVo> commentsVos = new ArrayList<>();
 
         for (Comment comment : commentList) {
@@ -52,7 +50,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
             commentsVo.setCourseName(courseService.getById(comment.getCourseId()).getName());
 
-            SysUser sysUser = sysUserService.selectUserById(comment.getUserId());
+            SysUser sysUser = userService.selectUserById(comment.getUserId());
             commentsVo.setAvatar(sysUser.getAvatar());
             commentsVo.setNickName(sysUser.getNickName());
             commentsVo.setUserName(sysUser.getUserName());
@@ -77,13 +75,16 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public List<UserCommentVo> buildUserVo(List<Comment> list) {
+        ICourseService courseService = SpringUtils.getBean(ICourseService.class);
+        ISysUserService userService = SpringUtils.getBean(ISysUserService.class);
+
         List<UserCommentVo> userCommentVos = new ArrayList<>();
         for (Comment comment : list) {
             UserCommentVo userCommentVo = new UserCommentVo();
             BeanUtil.copyProperties(comment, userCommentVo);
 
             userCommentVo.setCourseName(courseService.getById(comment.getCourseId()).getName());
-            SysUser sysUser = sysUserService.selectUserById(comment.getUserId());
+            SysUser sysUser = userService.selectUserById(comment.getUserId());
             userCommentVo.setAvatar(sysUser.getAvatar());
             userCommentVo.setNickName(sysUser.getNickName());
             userCommentVo.setUserName(sysUser.getUserName());

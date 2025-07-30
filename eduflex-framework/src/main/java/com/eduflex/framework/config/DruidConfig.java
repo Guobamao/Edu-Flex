@@ -1,8 +1,8 @@
 package com.eduflex.framework.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
-import com.alibaba.druid.spring.boot.autoconfigure.properties.DruidStatProperties;
+import com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceBuilder;
+import com.alibaba.druid.spring.boot3.autoconfigure.properties.DruidStatProperties;
 import com.alibaba.druid.util.Utils;
 import com.eduflex.common.enums.DataSourceType;
 import com.eduflex.common.utils.spring.SpringUtils;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-import javax.servlet.*;
+import jakarta.servlet.*;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.HashMap;
@@ -84,7 +84,7 @@ public class DruidConfig {
         // 创建filter进行过滤
         Filter filter = new Filter() {
             @Override
-            public void init(javax.servlet.FilterConfig filterConfig) throws ServletException {
+            public void init(jakarta.servlet.FilterConfig filterConfig) throws ServletException {
             }
 
             @Override

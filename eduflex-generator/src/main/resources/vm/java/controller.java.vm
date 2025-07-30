@@ -1,7 +1,7 @@
 package ${packageName}.controller;
 
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollUtil;
 import com.eduflex.common.utils.DateUtils;
@@ -109,7 +109,7 @@ public class ${ClassName}Controller extends BaseController {
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:remove')")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{${pkColumn.javaField}s}")
-    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
+    public AjaxResult remove(@PathVariable("${pkColumn.javaField}s") ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
         List<Long> idList = CollUtil.toList(${pkColumn.javaField}s)
         return toAjax(${className}Service.removeByIds(idList));
     }

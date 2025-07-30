@@ -77,7 +77,7 @@ public class CategoryController extends BaseController {
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "课程分类", businessType = BusinessType.DELETE)
     @DeleteMapping("/{categoryId}")
-    public AjaxResult remove(@PathVariable Long categoryId) {
+    public AjaxResult remove(@PathVariable("categoryId") Long categoryId) {
         return toAjax(courseCategoryService.removeCategory(categoryId));
     }
 }

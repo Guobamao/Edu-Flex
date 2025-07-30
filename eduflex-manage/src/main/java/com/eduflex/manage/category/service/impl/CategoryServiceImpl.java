@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.category.domain.Category;
 import com.eduflex.manage.category.domain.vo.CategoryVo;
 import com.eduflex.manage.category.mapper.CategoryMapper;
@@ -27,12 +28,6 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements ICategoryService {
-
-    @Autowired
-    private IDirectionService directionService;
-
-    @Autowired
-    private ICourseService courseService;
 
     /**
      * 查询课程分类列表
@@ -59,6 +54,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public List<CategoryVo> buildVo(List<Category> categoryList) {
+        IDirectionService directionService = SpringUtils.getBean(IDirectionService.class);
         List<CategoryVo> categoryVoList = new ArrayList<>();
         for (Category category : categoryList) {
             CategoryVo categoryVo = new CategoryVo();
@@ -71,6 +67,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public int removeCategory(Long categoryId) {
+        ICourseService courseService = SpringUtils.getBean(ICourseService.class);
         LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
                 .eq(Course::getCategoryId, categoryId);
         List<Course> courseList = courseService.list(wrapper);

@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.course_material.service.ICourseMaterialService;
 import com.eduflex.manage.file.domain.OssFile;
 import com.eduflex.manage.file.mapper.OssFileMapper;
@@ -25,9 +26,6 @@ import java.util.List;
 @Service
 public class IOssFileServiceImpl extends ServiceImpl<OssFileMapper, OssFile> implements IOssFileService {
 
-    @Autowired
-    private ICourseMaterialService courseMaterialService;
-
     @Override
     public List<OssFile> selectOssFileList(OssFile ossFile) {
         LambdaQueryWrapper<OssFile> wrapper = new LambdaQueryWrapper<OssFile>()
@@ -47,6 +45,7 @@ public class IOssFileServiceImpl extends ServiceImpl<OssFileMapper, OssFile> imp
     @Override
     @Transactional
     public boolean removeWithMaterialByIds(List<Long> idList) {
+        ICourseMaterialService courseMaterialService = SpringUtils.getBean(ICourseMaterialService.class);
         for (Long id : idList) {
             if (courseMaterialService.getByFileId(id) > 0) {
                 courseMaterialService.removeByFileId(id);

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_chapter.service.ICourseChapterService;
 import com.eduflex.manage.course_material.domain.CourseMaterial;
@@ -20,6 +21,7 @@ import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.course_chapter.domain.CourseChapterVo;
 import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
 import com.eduflex.user.study_record.domain.dto.StudyRecordDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,24 +40,6 @@ import static com.eduflex.common.utils.SecurityUtils.getUsername;
  */
 @Service
 public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, StudyRecord> implements IStudyRecordService {
-
-    @Autowired
-    private ICourseService courseService;
-
-    @Autowired
-    private ISysUserService userService;
-
-    @Autowired
-    private ICourseMaterialService courseMaterialService;
-
-    @Autowired
-    private IFileImagesService fileImagesService;
-
-    @Autowired
-    private IStudentCourseService studentCourseService;
-
-    @Autowired
-    private ICourseChapterService courseChapterService;
 
     /**
      * 查询学习记录管理列表
@@ -80,6 +64,10 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
 
     @Override
     public String saveStudyRecord(StudyRecordDto studyRecordDto) {
+        ICourseChapterService courseChapterService = SpringUtils.getBean(ICourseChapterService.class);
+        ICourseMaterialService courseMaterialService = SpringUtils.getBean(ICourseMaterialService.class);
+        IStudentCourseService studentCourseService = SpringUtils.getBean(IStudentCourseService.class);
+        IFileImagesService fileImagesService = SpringUtils.getBean(IFileImagesService.class);
         LambdaQueryWrapper<StudyRecord> studyRecordWrapper = new LambdaQueryWrapper<StudyRecord>()
                 .eq(StudyRecord::getUserId, studyRecordDto.getUserId())
                 .eq(StudyRecord::getCourseId, studyRecordDto.getCourseId())
@@ -213,6 +201,8 @@ public class StudyRecordServiceImpl extends ServiceImpl<StudyRecordMapper, Study
 
     @Override
     public List<StudyRecordVo> buildVo(List<StudyRecord> studyRecordList) {
+        ISysUserService userService = SpringUtils.getBean(ISysUserService.class);
+        ICourseService courseService = SpringUtils.getBean(ICourseService.class);
         List<StudyRecordVo> studyRecordVoList = new ArrayList<>();
         for (StudyRecord studyRecord : studyRecordList) {
             StudyRecordVo studyRecordVo = new StudyRecordVo();

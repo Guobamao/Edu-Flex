@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
 import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.goal.domain.Goal;
 import com.eduflex.manage.goal.domain.vo.GoalVo;
 import com.eduflex.manage.goal.mapper.GoalMapper;
@@ -31,9 +32,6 @@ public class GoalServiceImpl extends ServiceImpl<GoalMapper, Goal> implements IG
     @Autowired
     private ISysUserService sysUserService;
 
-    @Autowired
-    private IPlanService planService;
-
     @Override
     public List<Goal> selectGoalList(Goal goal) {
         LambdaQueryWrapper<Goal> wrapper = new LambdaQueryWrapper<Goal>()
@@ -46,6 +44,7 @@ public class GoalServiceImpl extends ServiceImpl<GoalMapper, Goal> implements IG
     @Override
     @Transactional
     public int removeGoal(Long id) {
+        IPlanService planService = SpringUtils.getBean(IPlanService.class);
         baseMapper.deleteById(id);
         LambdaQueryWrapper<Plan> wrapper = new LambdaQueryWrapper<Plan>()
                 .eq(Plan::getGoalId, id);

@@ -7,8 +7,8 @@ import com.eduflex.common.annotation.Excel.ColumnType;
 import com.eduflex.common.core.domain.BaseEntity;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * 参数配置表 sys_config

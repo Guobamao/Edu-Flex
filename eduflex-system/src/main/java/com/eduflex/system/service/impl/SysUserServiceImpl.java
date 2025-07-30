@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.validation.Validator;
+import jakarta.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,8 +59,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysUserPostMapper userPostMapper;
     @Autowired
     private ISysConfigService configService;
-    @Autowired
-    private ISysDeptService deptService;
 
     @Override
     @DataScope(deptAlias = "d", userAlias = "u")
@@ -283,6 +281,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName) {
+        ISysDeptService deptService = SpringUtils.getBean(ISysDeptService.class);
         if (StringUtils.isNull(userList) || CollUtil.isEmpty(userList)) {
             throw new ServiceException("导入用户数据不能为空！");
         }

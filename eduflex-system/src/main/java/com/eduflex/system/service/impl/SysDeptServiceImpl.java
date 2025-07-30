@@ -37,9 +37,6 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements ISysDeptService {
 
     @Autowired
-    private ISysUserService sysUserService;
-
-    @Autowired
     private ISysRoleService roleService;
 
     @Override
@@ -108,7 +105,8 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Override
     public boolean checkDeptExistUser(Long deptId) {
-        return sysUserService.checkDeptExistUser(deptId);
+        ISysUserService userService = SpringUtils.getBean(ISysUserService.class);
+        return userService.checkDeptExistUser(deptId);
     }
 
     @Override

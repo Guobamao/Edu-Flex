@@ -67,14 +67,14 @@ public class CacheController {
 
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping("/getKeys/{cacheName}")
-    public AjaxResult getCacheKeys(@PathVariable String cacheName) {
+    public AjaxResult getCacheKeys(@PathVariable("cacheName") String cacheName) {
         Set<String> cacheKeys = redisTemplate.keys(cacheName + "*");
         return AjaxResult.success(new TreeSet<>(cacheKeys));
     }
 
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping("/getValue/{cacheName}/{cacheKey}")
-    public AjaxResult getCacheValue(@PathVariable String cacheName, @PathVariable String cacheKey) {
+    public AjaxResult getCacheValue(@PathVariable("cacheName") String cacheName, @PathVariable("cacheKey") String cacheKey) {
         String cacheValue = redisTemplate.opsForValue().get(cacheKey);
         SysCache sysCache = new SysCache(cacheName, cacheKey, cacheValue);
         return AjaxResult.success(sysCache);
@@ -82,7 +82,7 @@ public class CacheController {
 
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @DeleteMapping("/clearCacheName/{cacheName}")
-    public AjaxResult clearCacheName(@PathVariable String cacheName) {
+    public AjaxResult clearCacheName(@PathVariable("cacheName") String cacheName) {
         Collection<String> cacheKeys = redisTemplate.keys(cacheName + "*");
         redisTemplate.delete(cacheKeys);
         return AjaxResult.success();
@@ -90,7 +90,7 @@ public class CacheController {
 
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @DeleteMapping("/clearCacheKey/{cacheKey}")
-    public AjaxResult clearCacheKey(@PathVariable String cacheKey) {
+    public AjaxResult clearCacheKey(@PathVariable("cacheKey") String cacheKey) {
         redisTemplate.delete(cacheKey);
         return AjaxResult.success();
     }

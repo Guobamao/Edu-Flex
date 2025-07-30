@@ -3,6 +3,7 @@ package com.eduflex.manage.exam.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.exam.domain.ExamAnswer;
 import com.eduflex.manage.exam.domain.ExamRecord;
 import com.eduflex.manage.exam.mapper.ExamAnswerMapper;
@@ -22,9 +23,6 @@ import java.util.List;
 @Service
 public class ExamAnswerServiceImpl extends ServiceImpl<ExamAnswerMapper, ExamAnswer> implements IExamAnswerService {
 
-    @Autowired
-    private IExamRecordService examRecordService;
-
     @Override
     public List<ExamAnswer> selectExamAnswerList(ExamAnswer examAnswer) {
         LambdaQueryWrapper<ExamAnswer> wrapper = new LambdaQueryWrapper<ExamAnswer>()
@@ -34,6 +32,7 @@ public class ExamAnswerServiceImpl extends ServiceImpl<ExamAnswerMapper, ExamAns
 
     @Override
     public String insertAnswer(ExamAnswer examAnswer) {
+        IExamRecordService examRecordService = SpringUtils.getBean(IExamRecordService.class);
         LambdaQueryWrapper<ExamAnswer> wrapper = new LambdaQueryWrapper<ExamAnswer>()
                 .eq(ExamAnswer::getRecordId, examAnswer.getRecordId())
                 .eq(ExamAnswer::getQuestionId, examAnswer.getQuestionId());

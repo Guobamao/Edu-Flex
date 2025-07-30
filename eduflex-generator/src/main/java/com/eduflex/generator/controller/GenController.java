@@ -24,7 +24,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
@@ -59,7 +59,7 @@ public class GenController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('tool:gen:query')")
     @GetMapping(value = "/{tableId}")
-    public AjaxResult getInfo(@PathVariable Long tableId) {
+    public AjaxResult getInfo(@PathVariable("tableId") Long tableId) {
         GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTable> tables = genTableService.selectGenTableAll();
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
@@ -155,7 +155,7 @@ public class GenController extends BaseController {
     @PreAuthorize("@ss.hasPermi('tool:gen:remove')")
     @Log(title = "代码生成", businessType = BusinessType.DELETE)
     @DeleteMapping("/{tableIds}")
-    public AjaxResult remove(@PathVariable Long[] tableIds) {
+    public AjaxResult remove(@PathVariable("tableIds") Long[] tableIds) {
         genTableService.deleteGenTableByIds(CollUtil.toList(tableIds));
         return success();
     }

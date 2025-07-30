@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.question.service.IQuestionService;
 import com.eduflex.manage.repo.domain.Repo;
@@ -31,9 +32,6 @@ public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements IR
     @Autowired
     private ICourseService courseService;
 
-    @Autowired
-    private IQuestionService questionService;
-
     @Override
     public List<Repo> selectRepoList(RepoDto repo) {
         LambdaQueryWrapper<Repo> wrapper = new LambdaQueryWrapper<Repo>()
@@ -49,6 +47,7 @@ public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements IR
 
     @Override
     public List<RepoVo> buildVo(List<Repo> repoList) {
+        IQuestionService questionService = SpringUtils.getBean(IQuestionService.class);
         List<RepoVo> repoVoList = new ArrayList<>();
         for (Repo repo : repoList) {
             RepoVo repoVo = new RepoVo();

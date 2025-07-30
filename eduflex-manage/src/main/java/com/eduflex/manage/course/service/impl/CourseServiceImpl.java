@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.exception.ServiceException;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.comment.domain.Comment;
 import com.eduflex.manage.comment.service.ICommentService;
@@ -33,6 +34,7 @@ import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.search.domain.Search;
 import com.eduflex.user.search.service.ISearchService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,43 +55,13 @@ import static com.eduflex.common.utils.SecurityUtils.getUserId;
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements ICourseService {
 
     @Autowired
-    private ICategoryService categoryService;
-
-    @Autowired
-    private ISysUserService userService;
-
-    @Autowired
     private IStudentCourseService studentCourseService;
-
-    @Autowired
-    private ICourseMaterialService courseMaterialService;
 
     @Autowired
     private ICourseChapterService courseChapterService;
 
     @Autowired
-    private ISearchService searchService;
-
-    @Autowired
-    private IEvaluationService evaluationService;
-
-    @Autowired
-    private IDirectionService directionService;
-
-    @Autowired
-    private ICommentService commentService;
-
-    @Autowired
-    private IExamService examService;
-
-    @Autowired
-    private IHomeworkService homeworkService;
-
-    @Autowired
-    private IPaperService paperService;
-
-    @Autowired
-    private IRepoService repoService;
+    private ICourseMaterialService courseMaterialService;
 
     /**
      * 查询课程管理列表
@@ -153,6 +125,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     public List<Course> searchCourse(Course course) {
+        ISearchService searchService = SpringUtils.getBean(ISearchService.class);
         LambdaQueryWrapper<Course> wrapper = new LambdaQueryWrapper<Course>()
                 .like(StrUtil.isNotBlank(course.getSearchValue()), Course::getName, course.getSearchValue())
                 .or()
@@ -280,6 +253,15 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     public List<CourseVo> buildVo(List<Course> courseList) {
+        ICategoryService categoryService = SpringUtils.getBean(ICategoryService.class);
+        ICommentService commentService = SpringUtils.getBean(ICommentService.class);
+        ISysUserService userService = SpringUtils.getBean(ISysUserService.class);
+        IDirectionService directionService = SpringUtils.getBean(IDirectionService.class);
+        IEvaluationService evaluationService = SpringUtils.getBean(IEvaluationService.class);
+        IExamService examService = SpringUtils.getBean(IExamService.class);
+        IHomeworkService homeworkService = SpringUtils.getBean(IHomeworkService.class);
+        IPaperService paperService = SpringUtils.getBean(IPaperService.class);
+        IRepoService repoService = SpringUtils.getBean(IRepoService.class);
         List<CourseVo> courseVoList = new ArrayList<>();
         for (Course course : courseList) {
             CourseVo courseVo = new CourseVo();
@@ -316,6 +298,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     public List<CourseVo> buildVoForStudent(List<Course> courseList) {
+        ICategoryService categoryService = SpringUtils.getBean(ICategoryService.class);
+        ISysUserService userService = SpringUtils.getBean(ISysUserService.class);
         List<CourseVo> courseVoList = new ArrayList<>();
         for (Course course : courseList) {
             CourseVo courseVo = new CourseVo();

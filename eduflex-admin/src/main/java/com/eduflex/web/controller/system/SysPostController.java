@@ -14,7 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -54,7 +54,7 @@ public class SysPostController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:post:query')")
     @GetMapping(value = "/{postId}")
-    public AjaxResult getInfo(@PathVariable Long postId) {
+    public AjaxResult getInfo(@PathVariable("postId") Long postId) {
         return success(postService.getById(postId));
     }
 
@@ -96,7 +96,7 @@ public class SysPostController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:post:remove')")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{postIds}")
-    public AjaxResult remove(@PathVariable Long[] postIds) {
+    public AjaxResult remove(@PathVariable("postIds") Long[] postIds) {
         return toAjax(postService.deletePostByIds(CollUtil.toList(postIds)));
     }
 

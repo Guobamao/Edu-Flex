@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.category.domain.Category;
 import com.eduflex.manage.category.service.ICategoryService;
 import com.eduflex.manage.direction.domain.Direction;
@@ -24,9 +25,6 @@ import java.util.List;
 @Service
 public class DirectionServiceImpl extends ServiceImpl<DirectionMapper, Direction> implements IDirectionService {
 
-    @Autowired
-    private ICategoryService categoryService;
-
     @Override
     public List<Direction> selectDirectionList(Direction direction) {
         LambdaQueryWrapper<Direction> wrapper = new LambdaQueryWrapper<Direction>()
@@ -38,6 +36,7 @@ public class DirectionServiceImpl extends ServiceImpl<DirectionMapper, Direction
     @Transactional
     @Override
     public int removeDirection(List<Long> idList) {
+        ICategoryService categoryService = SpringUtils.getBean(ICategoryService.class);
         if (CollUtil.isNotEmpty(idList)) {
             for (Long directionId : idList) {
                 LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<Category>()

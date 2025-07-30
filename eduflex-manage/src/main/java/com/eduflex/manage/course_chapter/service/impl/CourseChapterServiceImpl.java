@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.exception.ServiceException;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
 import com.eduflex.manage.course_chapter.mapper.CourseChapterMapper;
@@ -30,16 +31,14 @@ import java.util.List;
 public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, CourseChapter> implements ICourseChapterService {
 
     @Autowired
-    private ICourseMaterialService courseMaterialService;
-
-    @Autowired
     private IStudyRecordService studyRecordService;
 
     @Autowired
-    private ICourseService courseService;
+    private ICourseMaterialService courseMaterialService;
 
     @Override
     public List<com.eduflex.manage.course_chapter.domain.vo.CourseChapterVo> selectCourseChapterList(CourseChapter courseChapter) {
+        ICourseService courseService = SpringUtils.getBean(ICourseService.class);
         LambdaQueryWrapper<CourseChapter> chapterWrapper = new LambdaQueryWrapper<CourseChapter>()
                 .eq(courseChapter.getId() != null, CourseChapter::getId, courseChapter.getId())
                 .eq(courseChapter.getCourseId() != null, CourseChapter::getCourseId, courseChapter.getCourseId())
@@ -80,6 +79,7 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
 
     @Override
     public List<CourseChapterVo> selectCourseChapterListWithProgress(CourseChapterDto courseChapter) {
+        ICourseService courseService = SpringUtils.getBean(ICourseService.class);
         // 获取章节列表
         LambdaQueryWrapper<CourseChapter> courseChapterWrapper = new LambdaQueryWrapper<CourseChapter>()
                 .eq(courseChapter.getCourseId() != null, CourseChapter::getCourseId, courseChapter.getCourseId());

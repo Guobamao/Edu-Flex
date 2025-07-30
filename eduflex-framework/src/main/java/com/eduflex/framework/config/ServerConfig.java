@@ -3,7 +3,7 @@ package com.eduflex.framework.config;
 import com.eduflex.common.utils.ServletUtils;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 服务相关配置

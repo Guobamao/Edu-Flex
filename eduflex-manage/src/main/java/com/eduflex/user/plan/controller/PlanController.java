@@ -51,7 +51,7 @@ public class PlanController extends BaseController {
 
     @PreAuthorize("@ss.hasRole('student')")
     @DeleteMapping(value = "/{id}")
-    public AjaxResult remove(@PathVariable Long id) {
+    public AjaxResult remove(@PathVariable("id") Long id) {
         return toAjax(planService.removeById(id));
     }
 }

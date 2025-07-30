@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.question.domain.Option;
 import com.eduflex.manage.question.domain.Question;
 import com.eduflex.manage.question.domain.vo.QuestionExportAndImportVo;
@@ -32,9 +33,6 @@ import java.util.Map;
 @Service
 public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> implements IQuestionService {
 
-    @Autowired
-    private IRepoService repoService;
-
     @Override
     public List<Question> selectExamQuestionList(Question question) {
         LambdaQueryWrapper<Question> wrapper = new LambdaQueryWrapper<Question>()
@@ -56,6 +54,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
     @Override
     public List<QuestionVo> buildVo(List<Question> questionList) {
+        IRepoService repoService = SpringUtils.getBean(IRepoService.class);
         List<QuestionVo> questionVoList = new ArrayList<>();
         for (Question question : questionList) {
             QuestionVo questionVo = new QuestionVo();

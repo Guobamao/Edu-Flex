@@ -23,7 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -153,7 +153,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:user:remove')")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{userIds}")
-    public AjaxResult remove(@PathVariable Long[] userIds) {
+    public AjaxResult remove(@PathVariable("userIds") Long[] userIds) {
         if (ArrayUtils.contains(userIds, getUserId())) {
             return error("当前用户不能删除");
         }

@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -101,7 +101,7 @@ public class PaperController extends BaseController {
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "试卷管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids) {
+    public AjaxResult remove(@PathVariable("ids") Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(paperService.removeByIds(idList));
     }
@@ -115,7 +115,7 @@ public class PaperController extends BaseController {
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/question/{id}")
-    public AjaxResult getPaperQuestion(@PathVariable Long id) {
+    public AjaxResult getPaperQuestion(@PathVariable("id") Long id) {
         return success(paperQuestionService.selectQuestionByPaperId(id));
     }
 
@@ -127,13 +127,13 @@ public class PaperController extends BaseController {
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @GetMapping("/repo/{id}")
-    public AjaxResult getPaperRepo(@PathVariable Long id) {
+    public AjaxResult getPaperRepo(@PathVariable("id") Long id) {
         return success(paperRepoService.selectRepoListByPaperId(id));
     }
 
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @DeleteMapping("/repo/{id}")
-    public AjaxResult removePaperRepo(@PathVariable Long id) {
+    public AjaxResult removePaperRepo(@PathVariable("id") Long id) {
         return success(paperRepoService.removeById(id));
     }
 

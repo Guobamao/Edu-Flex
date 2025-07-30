@@ -6,8 +6,8 @@ import com.eduflex.common.core.domain.BaseEntity;
 import com.eduflex.common.xss.Xss;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * 通知公告表 sys_notice

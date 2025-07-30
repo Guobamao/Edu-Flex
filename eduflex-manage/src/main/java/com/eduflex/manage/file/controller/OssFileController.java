@@ -18,8 +18,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -93,18 +93,18 @@ public class OssFileController extends BaseController {
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "资源管理", businessType = com.eduflex.common.enums.BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids) {
+    public AjaxResult remove(@PathVariable("ids") Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(ossFileService.removeWithMaterialByIds(idList));
     }
 
     @GetMapping("/preview/{id}")
-    public AjaxResult preview(@PathVariable Long id) {
+    public AjaxResult preview(@PathVariable("id") Long id) {
         return success(fileImagesService.getByFileId(id));
     }
 
     @GetMapping("/previewFile/{id}")
-    public void previewFile(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void previewFile(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
         FileImages fileImages = fileImagesService.getById(id);
         OutputStream os = null;
         String path = "D:\\Temp\\" + fileImages.getPath();

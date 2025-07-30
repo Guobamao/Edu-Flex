@@ -17,7 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -125,7 +125,7 @@ public class QuestionController extends BaseController {
     @PreAuthorize("@ss.hasAnyRoles('admin, teacher')")
     @Log(title = "题目管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids) {
+    public AjaxResult remove(@PathVariable("ids") Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(examQuestionService.removeByIds(idList));
     }

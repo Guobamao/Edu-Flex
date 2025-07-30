@@ -45,9 +45,6 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
     private IQuestionService questionService;
 
     @Autowired
-    private IPaperService examPaperService;
-
-    @Autowired
     private IPaperQuestionService examPaperQuestionService;
 
     @Override
@@ -112,7 +109,7 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         Paper paper = new Paper();
         paper.setId(paperDto.getId());
         paper.setTotalScore(totalScore);
-        examPaperService.updateById(paper);
+        updateById(paper);
         examPaperRepoService.saveOrUpdateBatch(paperRepoList);
 
         return generateQuestions(repoInfos);

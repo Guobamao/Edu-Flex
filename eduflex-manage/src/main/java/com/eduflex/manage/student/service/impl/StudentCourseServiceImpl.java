@@ -3,6 +3,7 @@ package com.eduflex.manage.student.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.core.domain.entity.SysUser;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_chapter.service.ICourseChapterService;
@@ -14,6 +15,7 @@ import com.eduflex.manage.student.service.IStudentCourseService;
 import com.eduflex.system.service.ISysUserService;
 import com.eduflex.user.course_chapter.domain.CourseChapterVo;
 import com.eduflex.user.course_chapter.domain.dto.CourseChapterDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,11 +31,9 @@ import java.util.List;
  */
 @Service
 public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, StudentCourse> implements IStudentCourseService {
-    @Autowired
-    private ISysUserService sysUserService;
 
     @Autowired
-    private ICourseService courseService;
+    private ISysUserService sysUserService;
 
     @Autowired
     private ICourseChapterService courseChapterService;
@@ -52,6 +52,7 @@ public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, S
 
     @Override
     public List<StudentCourseVo> buildVo(List<StudentCourse> studentCourses) {
+        ICourseService courseService = SpringUtils.getBean(ICourseService.class);
         List<StudentCourseVo> studentCourseVos = new ArrayList<>();
         for (StudentCourse studentCourse : studentCourses) {
             StudentCourseVo studentCourseVo = new StudentCourseVo();

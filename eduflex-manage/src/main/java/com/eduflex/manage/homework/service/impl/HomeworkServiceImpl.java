@@ -3,6 +3,7 @@ package com.eduflex.manage.homework.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.homework.domain.Homework;
 import com.eduflex.manage.homework.domain.HomeworkStudent;
@@ -27,9 +28,6 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
     @Autowired
     private ICourseService courseService;
 
-    @Autowired
-    private IHomeworkStudentService homeworkStudentService;
-
     @Override
     public List<Homework> selectHomeworkList(Homework homework) {
         LambdaQueryWrapper<Homework> wrapper = new LambdaQueryWrapper<Homework>()
@@ -40,6 +38,7 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
 
     @Override
     public List<HomeworkVo> buildVo(List<Homework> list) {
+        IHomeworkStudentService homeworkStudentService = SpringUtils.getBean(IHomeworkStudentService.class);
         List<HomeworkVo> homeworkVoList = BeanUtil.copyToList(list, HomeworkVo.class);
         for (HomeworkVo homeworkVo : homeworkVoList) {
             homeworkVo.setCourseName(courseService.getById(homeworkVo.getCourseId()).getName());

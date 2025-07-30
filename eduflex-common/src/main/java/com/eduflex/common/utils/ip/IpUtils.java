@@ -3,7 +3,7 @@ package com.eduflex.common.utils.ip;
 import com.eduflex.common.utils.ServletUtils;
 import com.eduflex.common.utils.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 

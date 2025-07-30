@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -89,7 +89,7 @@ public class CarouselController extends BaseController {
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "轮播图", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids) {
+    public AjaxResult remove(@PathVariable("ids") Long[] ids) {
         List<Long> idList = CollUtil.toList(ids);
         return toAjax(carouselService.removeByIds(idList));
     }
@@ -100,7 +100,7 @@ public class CarouselController extends BaseController {
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "轮播图", businessType = BusinessType.UPDATE)
     @PutMapping("/enable/{id}")
-    public AjaxResult enable(@PathVariable Long id) {
+    public AjaxResult enable(@PathVariable("id") Long id) {
         return toAjax(carouselService.enableById(id));
     }
 }

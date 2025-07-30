@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eduflex.common.constant.EduFlexConstants;
 import com.eduflex.common.exception.ServiceException;
 import com.eduflex.common.utils.bean.BeanUtils;
+import com.eduflex.common.utils.spring.SpringUtils;
 import com.eduflex.manage.course.domain.Course;
 import com.eduflex.manage.course.service.ICourseService;
 import com.eduflex.manage.course_chapter.domain.CourseChapter;
@@ -34,13 +35,7 @@ import static com.eduflex.common.utils.SecurityUtils.getUserId;
 public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper, CourseMaterial> implements ICourseMaterialService {
 
     @Autowired
-    private ICourseChapterService courseChapterService;
-
-    @Autowired
     private IStudyRecordService studyRecordService;
-
-    @Autowired
-    private ICourseService courseService;
 
     /**
      * 查询课程资料列表
@@ -88,6 +83,9 @@ public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialMapper,
         if (courseMaterial == null) {
             throw new ServiceException("课程资料不存在");
         }
+
+        ICourseService courseService = SpringUtils.getBean(ICourseService.class);
+        ICourseChapterService courseChapterService = SpringUtils.getBean(ICourseChapterService.class);
         CourseChapter courseChapter = courseChapterService.getById(courseMaterial.getChapterId());
         Course course = courseService.getById(courseChapter.getCourseId());
 
